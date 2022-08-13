@@ -290,6 +290,21 @@ internal var SharedPreferences.brightScreen: Boolean
         putBoolean(BRIGHT_SCREEN_KEY, value)
     }
 
+// Custom storage location
+private const val CUSTOM_STORAGE_LOCATION = "custom_storage_location"
+
+internal var SharedPreferences.customStorageLocation: Uri?
+    get() {
+        return getString(CUSTOM_STORAGE_LOCATION, null)?.let {
+            Uri.parse(it)
+        }
+    }
+    set(value) {
+        edit {
+            putString(CUSTOM_STORAGE_LOCATION, value?.toString())
+        }
+    }
+
 // Save location
 private const val SAVE_LOCATION = "save_location"
 internal var SharedPreferences.saveLocation: Boolean?

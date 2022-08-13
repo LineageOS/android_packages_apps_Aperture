@@ -871,7 +871,8 @@ open class CameraActivity : AppCompatActivity() {
 
         // Create output options object which contains file + metadata
         val outputOptions = StorageUtils.getPhotoMediaStoreOutputOptions(
-            contentResolver,
+            this,
+            sharedPreferences.customStorageLocation,
             ImageCapture.Metadata().apply {
                 if (!singleCaptureMode) {
                     location = this@CameraActivity.location
@@ -903,17 +904,18 @@ open class CameraActivity : AppCompatActivity() {
                             viewFinder.foreground.alpha = anim.animatedValue as Int
                         }
                     }.start()
-                    Log.d(LOG_TAG, "Photo capture succeeded: ${output.savedUri}")
+                    val savedUri = output.savedUri ?: sharedPreferences.lastSavedUri
+                    Log.d(LOG_TAG, "Photo capture succeeded: $savedUri")
                     cameraState = CameraState.IDLE
                     shutterButton.isEnabled = true
                     if (!singleCaptureMode) {
-                        sharedPreferences.lastSavedUri = output.savedUri
+                        sharedPreferences.lastSavedUri = savedUri
                         tookSomething = true
-                        output.savedUri?.let {
+                        savedUri?.let {
                             BroadcastUtils.broadcastNewPicture(this@CameraActivity, it)
                         }
                     } else {
-                        output.savedUri?.let {
+                        savedUri?.let {
                             openCapturePreview(it, MediaType.PHOTO)
                         }
                         photoOutputStream?.use {
@@ -941,7 +943,8 @@ open class CameraActivity : AppCompatActivity() {
 
         // Create output options object which contains file + metadata
         val outputOptions = StorageUtils.getVideoMediaStoreOutputOptions(
-            contentResolver,
+            this,
+            sharedPreferences.customStorageLocation,
             location.takeUnless { singleCaptureMode }
         )
 

@@ -6,6 +6,7 @@
 package org.lineageos.aperture
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -19,6 +20,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
+import org.lineageos.aperture.ext.customStorageLocation
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.PermissionsUtils
 
@@ -60,6 +62,7 @@ class SettingsActivity : AppCompatActivity() {
         private val photoCaptureMode by lazy {
             findPreference<ListPreference>("photo_capture_mode")!!
         }
+        private val customStorageLocation by lazy { findPreference<SwitchPreference>("custom_storage_location") }
         private val saveLocation by lazy { findPreference<SwitchPreference>("save_location") }
         private val shutterSound by lazy { findPreference<SwitchPreference>("shutter_sound") }
 
@@ -74,6 +77,18 @@ class SettingsActivity : AppCompatActivity() {
                     requireContext(), getString(R.string.save_location_toast), Toast.LENGTH_SHORT
                 ).show()
             }
+        }
+
+        private val openDocumentTree = registerForActivityResult(
+            ActivityResultContracts.OpenDocumentTree()
+        ) {
+            if (it != null) {
+                context?.contentResolver?.takePersistableUriPermission(
+                    it, Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                )
+            }
+            customStorageLocation?.isChecked = it != null
+            customStorageLocation?.sharedPreferences?.customStorageLocation = it
         }
 
         private val photoCaptureModePreferenceChangeListener =
@@ -101,6 +116,18 @@ class SettingsActivity : AppCompatActivity() {
         @SuppressLint("UnsafeOptInUsageError")
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+            customStorageLocation?.apply {
+                isChecked = sharedPreferences?.customStorageLocation != null
+                onPreferenceChangeListener =
+                    Preference.OnPreferenceChangeListener { _, newValue ->
+                        if (newValue as Boolean) {
+                            openDocumentTree.launch(null)
+                        } else {
+                            sharedPreferences?.customStorageLocation = null
+                        }
+                        true
+                    }
+            }
             saveLocation?.let {
                 // Reset location back to off if permissions aren't granted
                 it.isChecked = it.isChecked && permissionsUtils.locationPermissionsGranted()

@@ -5,14 +5,18 @@
 
 package org.lineageos.aperture.utils
 
-import android.content.ContentResolver
 import android.content.ContentValues
+import android.content.Context
 import android.location.Location
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.camera.core.ImageCapture
 import androidx.camera.video.MediaStoreOutputOptions
+import androidx.documentfile.provider.DocumentFile
+import androidx.preference.PreferenceManager
+import org.lineageos.aperture.ext.lastSavedUri
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -25,10 +29,24 @@ object StorageUtils {
      * Returns a new ImageCapture.OutputFileOptions to use to store a JPEG photo
      */
     fun getPhotoMediaStoreOutputOptions(
-        contentResolver: ContentResolver,
+        context: Context,
+        customStorageLocation: Uri?,
         metadata: ImageCapture.Metadata,
         outputStream: OutputStream? = null
     ): ImageCapture.OutputFileOptions {
+        if (customStorageLocation != null) {
+            val documentFile = DocumentFile.fromTreeUri(context, customStorageLocation)
+            val file = documentFile?.createFile("image/jpeg", getCurrentTimeString())
+
+            // Store URI in shared preferences
+            PreferenceManager.getDefaultSharedPreferences(context).lastSavedUri = file!!.uri
+
+            return ImageCapture.OutputFileOptions
+                .Builder(context.contentResolver.openOutputStream(file.uri)!!)
+                .setMetadata(metadata)
+                .build()
+        }
+
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
@@ -41,7 +59,7 @@ object StorageUtils {
             ImageCapture.OutputFileOptions.Builder(outputStream)
         } else {
             ImageCapture.OutputFileOptions.Builder(
-                contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                context.contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 contentValues
             )
         }
@@ -55,9 +73,22 @@ object StorageUtils {
      */
     @androidx.camera.view.video.ExperimentalVideo
     fun getVideoMediaStoreOutputOptions(
-        contentResolver: ContentResolver,
+        context: Context,
+        customStorageLocation: Uri?,
         location: Location?
     ): MediaStoreOutputOptions {
+        if (customStorageLocation != null) {
+            val documentFile = DocumentFile.fromTreeUri(context, customStorageLocation)
+            val file = documentFile?.createFile("video/mp4", getCurrentTimeString())
+
+            // Store URI in shared preferences
+            PreferenceManager.getDefaultSharedPreferences(context).lastSavedUri = file!!.uri
+
+            return MediaStoreOutputOptions
+                .Builder(context.contentResolver, file.uri)
+                .build()
+        }
+
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
             put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
@@ -67,7 +98,7 @@ object StorageUtils {
         }
 
         return MediaStoreOutputOptions
-            .Builder(contentResolver, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
+            .Builder(context.contentResolver, MediaStore.Video.Media.EXTERNAL_CONTENT_URI)
             .setContentValues(contentValues)
             .setLocation(location)
             .build()

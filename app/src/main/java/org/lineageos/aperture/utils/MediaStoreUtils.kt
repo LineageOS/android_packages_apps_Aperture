@@ -28,6 +28,10 @@ object MediaStoreUtils {
                 )
                 putStringArray(
                     ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS,
+                    /* FIXME parseId will result in NumberFormatException
+                     *   if custom storage location was specified
+                     *   because for Long.parseLong the last path segment is expected to be numeric
+                     */
                     arrayOf(ContentUris.parseId(uri).toString())
                 )
             },
