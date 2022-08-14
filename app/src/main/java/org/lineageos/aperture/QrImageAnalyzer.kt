@@ -12,19 +12,22 @@ import android.content.ClipData
 import android.content.ClipDescription
 import android.content.ClipboardManager
 import android.content.Intent
+import android.os.Build
+import android.os.Handler
+import android.os.LocaleList
+import android.os.Looper
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
-import android.view.View
-import android.view.textclassifier.TextLinks
-import android.widget.AdapterView
 import android.widget.ImageButton
-import android.widget.Spinner
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.LinearLayoutCompat.LayoutParams
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
-import androidx.core.view.isVisible
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.zxing.BinaryBitmap
 import com.google.zxing.MultiFormatReader
 import com.google.zxing.Result
@@ -36,43 +39,29 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
             setContentView(R.layout.qr_bottom_sheet_dialog)
         }
     }
-    private val bottomSheetDialogBytes by lazy {
-        bottomSheetDialog.findViewById<TextView>(R.id.bytes)!!
+    private val bottomSheetDialogTitle by lazy {
+        bottomSheetDialog.findViewById<TextView>(R.id.title)!!
     }
-    private val bottomSheetDialogBytesTitle by lazy {
-        bottomSheetDialog.findViewById<TextView>(R.id.bytesTitle)!!
+    private val bottomSheetDialogData by lazy {
+        bottomSheetDialog.findViewById<TextView>(R.id.data)!!
     }
-    private val bottomSheetDialogText by lazy {
-        bottomSheetDialog.findViewById<TextView>(R.id.text)!!
+    private val bottomSheetDialogIcon by lazy {
+        bottomSheetDialog.findViewById<ImageView>(R.id.icon)!!
     }
-    private val bottomSheetDialogTextTitle by lazy {
-        bottomSheetDialog.findViewById<TextView>(R.id.textTitle)!!
+    private val bottomSheetDialogCopy by lazy {
+        bottomSheetDialog.findViewById<ImageButton>(R.id.copy)!!
     }
-    private val bottomSheetDialogType by lazy {
-        bottomSheetDialog.findViewById<TextView>(R.id.type)!!
+    private val bottomSheetDialogShare by lazy {
+        bottomSheetDialog.findViewById<ImageButton>(R.id.share)!!
     }
-    private val bottomSheetDialogSetType by lazy {
-        bottomSheetDialog.findViewById<Spinner>(R.id.setType)!!
+    private val bottomSheetDialogActionsLayout by lazy {
+        bottomSheetDialog.findViewById<LinearLayout>(R.id.actionsLayout)!!
     }
 
     private val reader by lazy { MultiFormatReader() }
 
     private val clipboardManager by lazy { activity.getSystemService(ClipboardManager::class.java) }
     private val keyguardManager by lazy { activity.getSystemService(KeyguardManager::class.java) }
-
-    enum class Type(val value: Int) {
-        BYTES(0),
-        TEXT(1),
-    }
-
-    private var type: Type = Type.TEXT
-        set(value) {
-            field = value
-            bottomSheetDialogBytes.isVisible = type == Type.BYTES
-            bottomSheetDialogBytesTitle.isVisible = type == Type.BYTES
-            bottomSheetDialogText.isVisible = type == Type.TEXT
-            bottomSheetDialogTextTitle.isVisible = type == Type.TEXT
-        }
 
     override fun analyze(image: ImageProxy) {
         val source = image.planarYUVLuminanceSource
@@ -97,86 +86,72 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
                 return@runOnUiThread
             }
 
-            // Set barcode type
-            bottomSheetDialogType.text = result.barcodeFormat.name
-
-            // Set bytes
-            bottomSheetDialogBytes.text =
-                result.rawBytes?.joinToString(" ") { "%02X".format(it) }
-
-            // Set type to text by default
-            type = Type.TEXT
-
             // Classify message
             val span = SpannableString(result.text)
-            bottomSheetDialogText.text = span
+            bottomSheetDialogData.text = span
             Thread {
-                val status = bottomSheetDialogText.textClassifier.generateLinks(
-                    TextLinks.Request.Builder(result.text).build()
-                ).apply(span, TextLinks.APPLY_STRATEGY_REPLACE, null)
+                val textClassification = bottomSheetDialogData.textClassifier.classifyText(
+                    span, 0, span.length, LocaleList.getDefault()
+                )
 
-                if (status == TextLinks.STATUS_LINKS_APPLIED) {
-                    activity.runOnUiThread {
-                        bottomSheetDialogText.text = span
+                activity.runOnUiThread {
+                    bottomSheetDialogData.text = textClassification.text
+                    bottomSheetDialogActionsLayout.removeAllViews()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
+                        textClassification.actions.isNotEmpty()
+                    ) {
+                        with(textClassification.actions[0]) {
+                            bottomSheetDialogData.setOnClickListener { this.actionIntent.send() }
+                            bottomSheetDialogTitle.text = this.title
+                            this.icon.loadDrawableAsync(activity, {
+                                bottomSheetDialogIcon.setImageDrawable(it)
+                            }, Handler(Looper.getMainLooper()))
+                        }
+                        for (action in textClassification.actions.drop(1)) {
+                            bottomSheetDialogActionsLayout.addView(inflateButton().apply {
+                                setOnClickListener { action.actionIntent.send() }
+                                text = action.title
+                                action.icon.loadDrawableAsync(activity, {
+                                    it.setBounds(0, 0, 15.px, 15.px)
+                                    setCompoundDrawables(
+                                        it, null, null, null
+                                    )
+                                }, Handler(Looper.getMainLooper()))
+                            })
+                        }
+                    } else {
+                        bottomSheetDialogData.setOnClickListener {}
+                        bottomSheetDialogTitle.text =
+                            activity.resources.getText(R.string.qr_type_text)
+                        bottomSheetDialogIcon.setImageDrawable(
+                            AppCompatResources.getDrawable(activity, R.drawable.ic_qr_type_text)
+                        )
                     }
                 }
             }.start()
 
             // Make links clickable if not on locked keyguard
-            bottomSheetDialogText.movementMethod =
+            bottomSheetDialogData.movementMethod =
                 if (!keyguardManager.isKeyguardLocked) LinkMovementMethod.getInstance()
                 else null
 
-            // Set type spinner
-            bottomSheetDialog.findViewById<Spinner>(R.id.setType)?.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        type = when (position) {
-                            0 -> Type.BYTES
-                            1 -> Type.TEXT
-                            else -> throw Exception("Unknown type spinner position: $position")
-                        }
-                    }
-                }
-            bottomSheetDialogSetType.setSelection(Type.TEXT.ordinal)
-            bottomSheetDialogSetType.isVisible = !bottomSheetDialogBytes.text.isNullOrEmpty()
-
             // Set buttons
-            bottomSheetDialog.findViewById<ImageButton>(R.id.copy)?.setOnClickListener {
+            bottomSheetDialogCopy.setOnClickListener {
                 clipboardManager.setPrimaryClip(
                     ClipData.newPlainText(
-                        "", when (type) {
-                            Type.TEXT -> result.text
-                            Type.BYTES -> bottomSheetDialogBytes.text
-                        }
+                        "", result.text
                     )
                 )
-                Toast.makeText(
-                    activity, when (type) {
-                        Type.BYTES -> activity.getString(R.string.qr_copy_toast_bytes)
-                        Type.TEXT -> activity.getString(R.string.qr_copy_toast_text)
-                    }, Toast.LENGTH_SHORT
-                ).show()
             }
 
-            bottomSheetDialog.findViewById<ImageButton>(R.id.share)?.setOnClickListener {
+            bottomSheetDialogShare.setOnClickListener {
                 activity.startActivity(
                     Intent.createChooser(
                         Intent().apply {
                             action = Intent.ACTION_SEND
                             type = ClipDescription.MIMETYPE_TEXT_PLAIN
                             putExtra(
-                                Intent.EXTRA_TEXT, when (this@QrImageAnalyzer.type) {
-                                    Type.TEXT -> result.text
-                                    Type.BYTES -> bottomSheetDialogBytes.text
-                                }
+                                Intent.EXTRA_TEXT, result.text
                             )
                         },
                         activity.getString(androidx.transition.R.string.abc_shareactionprovider_share_with)
@@ -186,6 +161,15 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
 
             // Show dialog
             bottomSheetDialog.show()
+        }
+    }
+
+    private fun inflateButton(): MaterialButton {
+        val button = activity.layoutInflater.inflate(
+            R.layout.qr_bottom_sheet_action_button, null
+        ) as MaterialButton
+        return button.apply {
+            layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         }
     }
 }

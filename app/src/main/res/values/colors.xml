@@ -9,7 +9,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#FF888888</color>
     <color name="gray_10">#FFF6FAFA</color>
+    <color name="gray_30">#FFBFC8C9</color>
+    <color name="gray_40">#FF808D8D</color>
+    <color name="gray_50">#FF495454</color>
     <color name="gray_60">#FF2A3232</color>
+    <color name="gray_70">#FF202626</color>
     <color name="dark_grey">#FF444444</color>
     <color name="yellow">#E9B650</color>
     <color name="blue">#4D84E9</color>
