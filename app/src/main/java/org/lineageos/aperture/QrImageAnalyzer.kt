@@ -75,7 +75,7 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
         }
 
     override fun analyze(image: ImageProxy) {
-        val source = image.planarYUVLuminanceSource
+        val source = image.luminanceSource
 
         val result = runCatching {
             reader.decodeWithState(BinaryBitmap(HybridBinarizer(source)))
