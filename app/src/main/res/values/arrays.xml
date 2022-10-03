@@ -5,19 +5,19 @@
 -->
 <resources>
     <!-- Photo capture mode Preference -->
-    <string-array name="photo_capture_mode_entries">
+    <string-array name="photo_capture_mode_entries" translatable="false">
         <item>@string/photo_capture_mode_maximize_quality</item>
         <item>@string/photo_capture_mode_minimize_latency</item>
         <item>@string/photo_capture_mode_zsl</item>
     </string-array>
 
-    <string-array name="photo_capture_mode_values">
+    <string-array name="photo_capture_mode_values" translatable="false">
         <item>maximize_quality</item>
         <item>minimize_latency</item>
         <item>zero_shutter_lag</item>
     </string-array>
 
-    <string-array name="qr_bottom_sheet_dialog_types">
+    <string-array name="qr_bottom_sheet_dialog_types" translatable="false">
         <item>@string/qr_type_bytes</item>
         <item>@string/qr_type_text</item>
     </string-array>
