@@ -807,7 +807,7 @@ open class CameraActivity : AppCompatActivity() {
     /**
      * Change the current camera mode and restarts the stream
      */
-    private fun changeCameraMode(cameraMode: CameraMode) {
+    protected fun changeCameraMode(cameraMode: CameraMode) {
         if (!canRestartCamera()) {
             return
         }
