@@ -71,6 +71,15 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".QrScannerActivity"
+            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="nosensor"
+            android:theme="@style/Theme.Aperture.Camera"
+            android:visibleToInstantApps="true"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+
         <!-- Video camera and capture use the Camcorder label and icon. -->
         <activity-alias
             android:name=".VideoCamera"

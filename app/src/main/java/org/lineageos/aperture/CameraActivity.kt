@@ -158,7 +158,7 @@ open class CameraActivity : AppCompatActivity() {
         get() = sharedPreferences.videoQuality
     private var recording: Recording? = null
 
-    private val sharedPreferences by lazy {
+    protected val sharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
 
