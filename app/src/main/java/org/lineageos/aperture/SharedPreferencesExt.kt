@@ -272,6 +272,16 @@ internal var SharedPreferences.shutterSound: Boolean
         putBoolean(SHUTTER_SOUND_KEY, value)
     }
 
+// Leveler
+private const val LEVELER_KEY = "leveler"
+private const val LEVELER_DEFAULT = false
+
+internal var SharedPreferences.leveler: Boolean
+    get() = getBoolean(LEVELER_KEY, LEVELER_DEFAULT)
+    set(value) = edit {
+        putBoolean(LEVELER_KEY, value)
+    }
+
 // Last saved URI
 private const val LAST_SAVED_URI_KEY = "saved_uri"
 
