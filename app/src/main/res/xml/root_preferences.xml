@@ -42,4 +42,16 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/advanced_header">
+
+        <SwitchPreference
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="leveler"
+            app:summary="@string/leveler_summary"
+            app:title="@string/leveler_title" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
