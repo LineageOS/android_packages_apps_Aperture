@@ -47,6 +47,7 @@
     <!-- Preference Titles -->
     <string name="general_header">General</string>
     <string name="photos_header">Photos</string>
+    <string name="advanced_header">Advanced</string>
 
     <!-- General Preferences -->
     <string name="bright_screen_title">Bright screen</string>
@@ -62,6 +63,10 @@
     <string name="photo_capture_mode_maximize_quality">Maximize quality</string>
     <string name="photo_capture_mode_minimize_latency">Minimize latency</string>
     <string name="photo_capture_mode_zsl">Zero shutter lag (experimental)</string>
+
+    <!-- Advanced Preferences -->
+    <string name="leveler_title">Leveler</string>
+    <string name="leveler_summary">Indicator that shows device orientation</string>
 
     <!-- Shortcuts -->
     <string name="shortcut_selfie">Take a selfie</string>

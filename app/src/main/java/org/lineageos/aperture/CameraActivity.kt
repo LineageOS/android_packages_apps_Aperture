@@ -70,6 +70,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
+import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.utils.CameraFacing
 import org.lineageos.aperture.utils.CameraMode
 import org.lineageos.aperture.utils.CameraSoundsUtils
@@ -99,6 +100,7 @@ open class CameraActivity : AppCompatActivity() {
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
+    private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
     private val settingsButton by lazy { findViewById<ImageButton>(R.id.settingsButton) }
     private val shutterButton by lazy { findViewById<ImageButton>(R.id.shutterButton) }
     private val timerButton by lazy { findViewById<ImageButton>(R.id.timerButton) }
@@ -462,6 +464,9 @@ open class CameraActivity : AppCompatActivity() {
 
         // Set bright screen
         setBrightScreen(sharedPreferences.brightScreen)
+
+        // Set leveler
+        setLeveler(sharedPreferences.leveler)
 
         // Reset tookSomething state
         tookSomething = false
@@ -1184,6 +1189,10 @@ open class CameraActivity : AppCompatActivity() {
                 if (brightScreen) WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_FULL
                 else WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE
         }
+    }
+
+    private fun setLeveler(enabled: Boolean) {
+        levelerView.visibility = if (enabled) View.VISIBLE else View.GONE
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
