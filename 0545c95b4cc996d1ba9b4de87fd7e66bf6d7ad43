@@ -16,6 +16,24 @@
       "message": "\u003e Patch Set 1:\n\u003e \n\u003e this patch is empty.\n\nYeah that\u0027s true. I\u0027m still learning about Gerrit and I have a problem, but that\u0027s currently being worked on.",
       "revId": "0545c95b4cc996d1ba9b4de87fd7e66bf6d7ad43",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "307c9a28_11b0a0f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2022-10-09T10:19:32Z",
+      "side": 1,
+      "message": "https://wiki.lineageos.org/how-to/submitting-patches\n+ https://wiki.lineageos.org/how-to/submitting-patches#submitting-patch-sets :)",
+      "parentUuid": "79f4eb47_25ad600c",
+      "revId": "0545c95b4cc996d1ba9b4de87fd7e66bf6d7ad43",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
