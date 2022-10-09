@@ -17,19 +17,9 @@ import androidx.camera.video.QualitySelector
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 class Camera(cameraInfo: CameraInfo) {
-    /**
-     * Camera2 CameraInfo
-     */
     val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
-
-    /**
-     * Camera2 compatible camera ID
-     */
     val cameraId = camera2CameraInfo.cameraId.toInt()
 
-    /**
-     * Facing of the camera
-     */
     val cameraFacing =
         when (camera2CameraInfo.getCameraCharacteristic(CameraCharacteristics.LENS_FACING)) {
             CameraCharacteristics.LENS_FACING_FRONT -> CameraFacing.FRONT
@@ -38,14 +28,8 @@ class Camera(cameraInfo: CameraInfo) {
             else -> CameraFacing.UNKNOWN
         }
 
-    /**
-     * Flash is available or not
-     */
     val hasFlashUnit = cameraInfo.hasFlashUnit()
 
-    /**
-     * Supported video qualities
-     */
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
 }
