@@ -13,10 +13,10 @@ import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
 
 /**
- * Class representing a physical device camera
+ * Class representing a device camera
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
-class PhysicalCamera(cameraInfo: CameraInfo) {
+class Camera(cameraInfo: CameraInfo) {
     /**
      * Camera2 CameraInfo
      */

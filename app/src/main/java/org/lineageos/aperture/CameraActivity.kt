@@ -70,12 +70,12 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
+import org.lineageos.aperture.utils.Camera
 import org.lineageos.aperture.utils.CameraFacing
 import org.lineageos.aperture.utils.CameraMode
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.CameraState
 import org.lineageos.aperture.utils.GridMode
-import org.lineageos.aperture.utils.PhysicalCamera
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
@@ -133,7 +133,7 @@ open class CameraActivity : AppCompatActivity() {
             updatePrimaryBarButtons()
         }
 
-    private lateinit var camera: PhysicalCamera
+    private lateinit var camera: Camera
 
     private lateinit var audioConfig: AudioConfig
 
@@ -720,7 +720,7 @@ open class CameraActivity : AppCompatActivity() {
 
         // Get a stable reference to CameraInfo
         // We can hardcode the first one in the filter as long as we use DEFAULT_*_CAMERA
-        camera = PhysicalCamera(cameraSelector.filter(cameraProvider.availableCameraInfos).first())
+        camera = Camera(cameraSelector.filter(cameraProvider.availableCameraInfos).first())
 
         // Get the supported vendor extensions for the given camera selector
         supportedExtensionModes = extensionsManager.getSupportedModes(cameraSelector)
