@@ -11,13 +11,16 @@ import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.core.CameraInfo
 import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
+import org.lineageos.aperture.getSupportedModes
 import kotlin.reflect.safeCast
 
 /**
  * Class representing a device camera
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
-class Camera(cameraInfo: CameraInfo) {
+class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
+    val cameraSelector = cameraInfo.cameraSelector
+
     val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
     val cameraId = camera2CameraInfo.cameraId.toInt()
 
@@ -35,6 +38,8 @@ class Camera(cameraInfo: CameraInfo) {
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
 
+    val supportedExtensionModes = cameraManager.extensionsManager.getSupportedModes(cameraSelector)
+
     override fun equals(other: Any?): Boolean {
         val camera = this::class.safeCast(other) ?: return false
         return this.cameraId == camera.cameraId
@@ -42,5 +47,9 @@ class Camera(cameraInfo: CameraInfo) {
 
     override fun hashCode(): Int {
         return this::class.qualifiedName.hashCode() + cameraId
+    }
+
+    fun supportsExtensionMode(extensionMode: Int): Boolean {
+        return supportedExtensionModes.contains(extensionMode)
     }
 }
