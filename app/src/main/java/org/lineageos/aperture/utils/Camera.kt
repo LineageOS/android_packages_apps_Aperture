@@ -38,6 +38,15 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val physicalCameraIds = camera2CameraInfo.physicalCameraIds
     val isLogical = physicalCameraIds.isNotEmpty()
 
+    val focalLengths = camera2CameraInfo.getCameraCharacteristic(
+        CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS
+    )!!
+    val sensorSize = camera2CameraInfo.getCameraCharacteristic(
+        CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE
+    )!!
+
+    val mm35FocalLengths = focalLengths.map { getMm35FocalLength(it) }
+
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
 
@@ -54,5 +63,9 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     fun supportsExtensionMode(extensionMode: Int): Boolean {
         return supportedExtensionModes.contains(extensionMode)
+    }
+
+    fun getMm35FocalLength(focalLength: Float): Float {
+        return (36.0f / sensorSize.width) * focalLength
     }
 }
