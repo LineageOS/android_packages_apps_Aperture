@@ -7,6 +7,7 @@
 package org.lineageos.aperture.utils
 
 import android.hardware.camera2.CameraCharacteristics
+import android.util.SizeF
 import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.core.CameraInfo
 import androidx.camera.video.Quality
@@ -39,6 +40,17 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val physicalCameraIds = camera2CameraInfo.physicalCameraIds
     val isLogical = physicalCameraIds.isNotEmpty()
 
+    val focalLengths = camera2CameraInfo.getCameraCharacteristic(
+        CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS
+    ) ?: FloatArray(0)
+    val sensorSize = camera2CameraInfo.getCameraCharacteristic(
+        CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE
+    )
+
+    val mm35FocalLengths = sensorSize?.let { sensorSize ->
+        focalLengths.map { getMm35FocalLength(it, sensorSize) }
+    }
+
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
 
@@ -55,5 +67,11 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     fun supportsExtensionMode(extensionMode: Int): Boolean {
         return supportedExtensionModes.contains(extensionMode)
+    }
+
+    companion object {
+        fun getMm35FocalLength(focalLength: Float, sensorSize: SizeF): Float {
+            return (36.0f / sensorSize.width) * focalLength
+        }
     }
 }
