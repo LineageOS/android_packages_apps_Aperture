@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d75c5a5c_0d169137",
+        "filename": "app/build.gradle.kts",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-10T12:24:57Z",
+      "side": 0,
+      "message": "🥰",
+      "revId": "0d4629e5d0d187e8729d8e62e9f55c1a535baa50",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
