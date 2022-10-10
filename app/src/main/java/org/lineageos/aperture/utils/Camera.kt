@@ -40,6 +40,15 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
         .map { it.toInt() }
     val isLogical = physicalCameraIds.isNotEmpty()
 
+    val focalLengths = camera2CameraInfo.getCameraCharacteristic(
+        CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS)!!
+    val apertures = camera2CameraInfo.getCameraCharacteristic(
+        CameraCharacteristics.LENS_INFO_AVAILABLE_APERTURES)!!
+    val sensorSize = camera2CameraInfo.getCameraCharacteristic(
+        CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE)!!
+
+    val mm35FocalLength = (36.0f / sensorSize.width) * focalLengths[0]
+
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
 
