@@ -49,8 +49,8 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.appcompat:appcompat:1.5.0")
+    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.appcompat:appcompat:1.5.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     implementation("androidx.preference:preference:1.2.0")
@@ -74,8 +74,8 @@ dependencies {
     implementation("com.google.zxing:core:3.5.0")
 
     // Coil
-    implementation("io.coil-kt:coil:2.2.0")
-    implementation("io.coil-kt:coil-video:2.2.0")
+    implementation("io.coil-kt:coil:2.2.2")
+    implementation("io.coil-kt:coil-video:2.2.2")
 }
 
 tasks.register("generateBp") {
@@ -134,11 +134,7 @@ tasks.register("generateBp") {
                 // We provide our own androidx.camera & lifecycle-common
                 !group.startsWith("androidx.camera") && artifactId != "lifecycle-common"
             }
-            group.startsWith("org.jetbrains") -> {
-                // kotlin-android-extensions-runtime & kotlin-parcelize-runtime aren't in AOSP
-                !artifactId.startsWith("kotlin-android-extensions-runtime") &&
-                        !artifactId.startsWith("kotlin-parcelize-runtime")
-            }
+            group.startsWith("org.jetbrains") -> true
             group == "com.google.auto.value" -> true
             group == "com.google.guava" -> true
             group == "junit" -> true

@@ -446,7 +446,7 @@ java_library_static {
 
 android_library_import {
     name: "Aperture_io.coil-kt_coil-base-nodeps",
-    aars: ["io/coil-kt/coil-base/2.2.0/coil-base-2.2.0.aar"],
+    aars: ["io/coil-kt/coil-base/2.2.2/coil-base-2.2.2.aar"],
     sdk_version: "31",
     min_sdk_version: "14",
     apex_available: [
@@ -456,8 +456,8 @@ android_library_import {
     static_libs: [
         "androidx.lifecycle_lifecycle-runtime",
         "kotlinx-coroutines-android",
+        "kotlin-stdlib-jdk8",
         "Aperture_com.squareup.okhttp3_okhttp",
-        "Aperture_org.jetbrains.kotlin_kotlin-parcelize-runtime",
         "androidx.annotation_annotation",
         "androidx.appcompat_appcompat-resources",
         "androidx.collection_collection",
@@ -474,13 +474,13 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil-base/2.2.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil-base/2.2.2/AndroidManifest.xml",
     static_libs: [
         "Aperture_io.coil-kt_coil-base-nodeps",
         "androidx.lifecycle_lifecycle-runtime",
         "kotlinx-coroutines-android",
+        "kotlin-stdlib-jdk8",
         "Aperture_com.squareup.okhttp3_okhttp",
-        "Aperture_org.jetbrains.kotlin_kotlin-parcelize-runtime",
         "androidx.annotation_annotation",
         "androidx.appcompat_appcompat-resources",
         "androidx.collection_collection",
@@ -492,7 +492,7 @@ android_library {
 
 android_library_import {
     name: "Aperture_io.coil-kt_coil-video-nodeps",
-    aars: ["io/coil-kt/coil-video/2.2.0/coil-video-2.2.0.aar"],
+    aars: ["io/coil-kt/coil-video/2.2.2/coil-video-2.2.2.aar"],
     sdk_version: "31",
     min_sdk_version: "14",
     apex_available: [
@@ -513,7 +513,7 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil-video/2.2.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil-video/2.2.2/AndroidManifest.xml",
     static_libs: [
         "Aperture_io.coil-kt_coil-video-nodeps",
         "Aperture_io.coil-kt_coil-base",
@@ -524,7 +524,7 @@ android_library {
 
 android_library_import {
     name: "Aperture_io.coil-kt_coil-nodeps",
-    aars: ["io/coil-kt/coil/2.2.0/coil-2.2.0.aar"],
+    aars: ["io/coil-kt/coil/2.2.2/coil-2.2.2.aar"],
     sdk_version: "31",
     min_sdk_version: "14",
     apex_available: [
@@ -544,63 +544,10 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil/2.2.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil/2.2.2/AndroidManifest.xml",
     static_libs: [
         "Aperture_io.coil-kt_coil-nodeps",
         "Aperture_io.coil-kt_coil-base",
-    ],
-    java_version: "1.7",
-}
-
-java_import {
-    name: "Aperture_org.jetbrains.kotlin_kotlin-android-extensions-runtime-nodeps",
-    jars: ["org/jetbrains/kotlin/kotlin-android-extensions-runtime/1.7.10/kotlin-android-extensions-runtime-1.7.10.jar"],
-    sdk_version: "31",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-}
-
-java_library_static {
-    name: "Aperture_org.jetbrains.kotlin_kotlin-android-extensions-runtime",
-    sdk_version: "31",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-    static_libs: [
-        "Aperture_org.jetbrains.kotlin_kotlin-android-extensions-runtime-nodeps",
-        "kotlin-stdlib",
-    ],
-    java_version: "1.7",
-}
-
-java_import {
-    name: "Aperture_org.jetbrains.kotlin_kotlin-parcelize-runtime-nodeps",
-    jars: ["org/jetbrains/kotlin/kotlin-parcelize-runtime/1.7.10/kotlin-parcelize-runtime-1.7.10.jar"],
-    sdk_version: "31",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-}
-
-java_library_static {
-    name: "Aperture_org.jetbrains.kotlin_kotlin-parcelize-runtime",
-    sdk_version: "31",
-    min_sdk_version: "14",
-    apex_available: [
-        "//apex_available:platform",
-        "//apex_available:anyapex",
-    ],
-    static_libs: [
-        "Aperture_org.jetbrains.kotlin_kotlin-parcelize-runtime-nodeps",
-        "kotlin-stdlib",
-        "Aperture_org.jetbrains.kotlin_kotlin-android-extensions-runtime",
     ],
     java_version: "1.7",
 }
