@@ -7,6 +7,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.lineageos.aperture">
 
+    <original-package android:name="com.android.camera2" />
+
     <uses-feature android:name="android.hardware.camera.any" />
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -45,7 +47,7 @@
         </activity>
 
         <activity-alias
-            android:name=".CameraLauncher"
+            android:name="com.android.camera.CameraActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:targetActivity=".CameraActivity">
