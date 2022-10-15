@@ -8,6 +8,7 @@ package org.lineageos.aperture
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -24,6 +25,9 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            setTheme(R.style.Theme_Aperture_Settings)
+        } else setTheme(R.style.Theme_Aperture)
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
