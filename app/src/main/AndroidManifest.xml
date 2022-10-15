@@ -14,6 +14,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
+    <uses-sdk
+        android:minSdkVersion="31"
+        android:targetSdkVersion="33" />
+
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
