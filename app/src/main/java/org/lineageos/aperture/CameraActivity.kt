@@ -67,6 +67,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
+import org.lineageos.aperture.ui.LensSelectorView
 import org.lineageos.aperture.utils.Camera
 import org.lineageos.aperture.utils.CameraFacing
 import org.lineageos.aperture.utils.CameraManager
@@ -92,6 +93,7 @@ open class CameraActivity : AppCompatActivity() {
     private val galleryButton by lazy { findViewById<ImageView>(R.id.galleryButton) }
     private val gridButton by lazy { findViewById<ImageButton>(R.id.gridButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
+    private val lensSelectorView by lazy { findViewById<LensSelectorView>(R.id.lensSelectorView) }
     private val micButton by lazy { findViewById<ImageButton>(R.id.micButton) }
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
@@ -449,6 +451,14 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         galleryButton.setOnClickListener { openGallery() }
+
+        // Set lens switching callback
+        lensSelectorView.onLensChangeCallback = {
+            if (canRestartCamera()) {
+                camera = it
+                bindCameraUseCases()
+            }
+        }
     }
 
     override fun onResume() {
@@ -783,6 +793,14 @@ open class CameraActivity : AppCompatActivity() {
         updateTorchModeIcon()
         updateFlashModeIcon()
         updateMicrophoneModeIcon()
+
+        // Update lens selector
+        lensSelectorView.setCamera(camera, when (camera.cameraFacing) {
+            CameraFacing.FRONT -> cameraManager.frontCameras
+            CameraFacing.BACK -> cameraManager.backCameras
+            CameraFacing.EXTERNAL -> cameraManager.externalCameras
+            else -> throw Exception("Unknown camera facing")
+        })
     }
 
     /**
