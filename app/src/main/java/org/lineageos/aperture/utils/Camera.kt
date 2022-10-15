@@ -12,6 +12,7 @@ import androidx.camera.core.CameraInfo
 import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
 import org.lineageos.aperture.getSupportedModes
+import org.lineageos.aperture.physicalCameraIds
 import kotlin.reflect.safeCast
 
 /**
@@ -34,6 +35,9 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
     val hasFlashUnit = cameraInfo.hasFlashUnit()
+
+    val physicalCameraIds = camera2CameraInfo.physicalCameraIds
+    val isLogical = physicalCameraIds.isNotEmpty()
 
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
