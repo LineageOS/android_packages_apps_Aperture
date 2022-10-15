@@ -34,6 +34,24 @@
       "parentUuid": "937f8fee_dc0058f5",
       "revId": "794685f30e5c5dc18f65dda451270e22f3f95226",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4f223592_0aa8df2f",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraSoundsUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-15T14:56:46Z",
+      "side": 1,
+      "message": "Also seems to be Camera API 1 specific...",
+      "parentUuid": "c16bbc4e_3edd7de2",
+      "revId": "794685f30e5c5dc18f65dda451270e22f3f95226",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
