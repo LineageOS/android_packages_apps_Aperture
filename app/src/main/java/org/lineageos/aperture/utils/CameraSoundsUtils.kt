@@ -7,8 +7,8 @@
 package org.lineageos.aperture.utils
 
 import android.annotation.SuppressLint
-import android.content.res.Resources
 import android.content.SharedPreferences
+import android.hardware.Camera
 import android.media.MediaActionSound
 import android.os.Build
 import org.lineageos.aperture.shutterSound
@@ -47,9 +47,9 @@ class CameraSoundsUtils(private val sharedPreferences: SharedPreferences) {
             get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 MediaActionSound.mustPlayShutterSound()
             } else {
-                val resources = Resources.getSystem()
-                val id = resources.getIdentifier("config_camera_sound_forced", "bool", "android")
-                id > 0 && resources.getBoolean(id)
+                // Deprecated
+                val info: Camera.CameraInfo = Camera.CameraInfo()
+                !info.canDisableShutterSound
             }
     }
 }
