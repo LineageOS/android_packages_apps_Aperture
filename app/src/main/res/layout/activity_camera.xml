@@ -224,6 +224,7 @@
             android:layout_height="75dp"
             android:background="@null"
             android:contentDescription="@string/shutter_button_description"
+            android:soundEffectsEnabled="false"
             android:src="@drawable/avd_photo_capture"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
