@@ -33,14 +33,10 @@ class CameraManager(private val activity: AppCompatActivity) {
         }
 
     // We expect device cameras to never change
-    val backCameras = cameras.values.filter {
-        it.cameraFacing == CameraFacing.BACK
-    }
+    val backCameras = prepareDeviceCamerasList(CameraFacing.BACK)
     val mainBackCamera = backCameras.firstOrNull()
 
-    val frontCameras = cameras.values.filter {
-        it.cameraFacing == CameraFacing.FRONT
-    }
+    val frontCameras = prepareDeviceCamerasList(CameraFacing.FRONT)
     val mainFrontCamera = frontCameras.firstOrNull()
 
     val externalCameras: List<Camera>
@@ -96,5 +92,31 @@ class CameraManager(private val activity: AppCompatActivity) {
 
     fun shutdown() {
         cameraExecutor.shutdown()
+    }
+
+    private fun prepareDeviceCamerasList(cameraFacing: CameraFacing): List<Camera> {
+        val facingCameras = cameras.values.filter {
+            it.cameraFacing == cameraFacing
+        }
+
+        if (facingCameras.isEmpty()) {
+            return listOf()
+        }
+
+        val mainCamera = facingCameras.first()
+        if (mainCamera.isLogical) {
+            // If first camera is logical, it's very likely that it merges all sensors and handles
+            // them with zoom (e.g. Pixels). Just expose only that
+            return listOf(mainCamera)
+        }
+
+        // Get rid of logical cameras, we want single sensor cameras for now
+        val physicalCameras = facingCameras.filter { !it.isLogical }
+        val auxCameras = physicalCameras.drop(1)
+        for (camera in auxCameras) {
+            camera.zoomRatio = camera.mm35FocalLength / mainCamera.mm35FocalLength
+        }
+
+        return physicalCameras
     }
 }
