@@ -11,6 +11,7 @@ import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.core.CameraInfo
 import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
+import kotlin.reflect.safeCast
 
 /**
  * Class representing a device camera
@@ -33,4 +34,13 @@ class Camera(cameraInfo: CameraInfo) {
 
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
+
+    override fun equals(other: Any?): Boolean {
+        val camera = this::class.safeCast(other) ?: return false
+        return this.cameraId == camera.cameraId
+    }
+
+    override fun hashCode(): Int {
+        return this::class.qualifiedName.hashCode() + cameraId
+    }
 }
