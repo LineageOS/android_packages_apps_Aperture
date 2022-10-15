@@ -50,6 +50,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     )!!
 
     val mm35FocalLength = (36.0f / sensorSize.width) * focalLengths[0]
+    var zoomRatio = 1f
 
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
