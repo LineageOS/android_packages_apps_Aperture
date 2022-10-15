@@ -52,6 +52,24 @@
       "parentUuid": "c16bbc4e_3edd7de2",
       "revId": "794685f30e5c5dc18f65dda451270e22f3f95226",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "52d8dd1b_ddba3558",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraSoundsUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 18796
+      },
+      "writtenOn": "2022-10-15T15:01:55Z",
+      "side": 1,
+      "message": "oh. Camera shutter sound is hidden in my device with this.",
+      "parentUuid": "4f223592_0aa8df2f",
+      "revId": "794685f30e5c5dc18f65dda451270e22f3f95226",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
