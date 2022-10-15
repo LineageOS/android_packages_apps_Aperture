@@ -16,6 +16,23 @@
       "message": "i think it\u0027s ok?",
       "revId": "da112761b05f892ee3efaa7c8198f83d52469118",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d153eb28_7d6ca28b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-15T13:31:08Z",
+      "side": 1,
+      "message": "makes sense",
+      "revId": "da112761b05f892ee3efaa7c8198f83d52469118",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
