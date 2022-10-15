@@ -47,6 +47,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     )!!
 
     val mm35FocalLengths = focalLengths.map { getMm35FocalLength(it) }
+    var zoomRatio = 1f
 
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
