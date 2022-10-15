@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d92654b4_f40e2224",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-10-15T21:22:41Z",
+      "side": 1,
+      "message": "It\u0027s gonna be needed for single take intent preview",
+      "revId": "3e6ac7a0289fa2412a1f6a19d44bece4c6edf576",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
