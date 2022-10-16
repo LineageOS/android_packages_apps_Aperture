@@ -121,8 +121,8 @@ open class CameraActivity : AppCompatActivity() {
     private val cameraExecutor: ExecutorService
         get() = cameraManager.cameraExecutor
 
-    private lateinit var cameraMode: CameraMode
-    private lateinit var cameraFacing: CameraFacing
+    protected lateinit var cameraMode: CameraMode
+    protected lateinit var cameraFacing: CameraFacing
 
     private var cameraState = CameraState.IDLE
         set(value) {
@@ -286,6 +286,9 @@ open class CameraActivity : AppCompatActivity() {
         intent.action?.let {
             intentActions[it]?.invoke()
         }
+
+        // Override camera mode if a child class needs it
+        overrideInitialCameraMode()
 
         // Select a camera
         camera = cameraManager.getCameraOfFacingOrFirstAvailable(cameraFacing, cameraMode)
@@ -538,6 +541,12 @@ open class CameraActivity : AppCompatActivity() {
             else -> super.onKeyUp(keyCode, event)
         }
     }
+
+    /**
+     * This is a method that can be overridden to set the initial camera mode and facing.
+     * It's gonna have priority over shared preferences and intents.
+     */
+    protected open fun overrideInitialCameraMode() {}
 
     private fun startShutterAnimation(shutterAnimation: ShutterAnimation) {
         // Get appropriate drawable
