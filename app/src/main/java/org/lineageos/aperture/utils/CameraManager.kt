@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.LifecycleCameraController
+import org.lineageos.aperture.R
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -24,6 +25,10 @@ class CameraManager(activity: AppCompatActivity) {
     ).get()
     val cameraController = LifecycleCameraController(activity)
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
+
+    val ignoredAuxCameraIds by lazy {
+        activity.resources.getStringArray(R.array.config_ignoredAuxCameraIds)
+    }
 
     val cameras: Map<Int, Camera>
         get() = cameraProvider.availableCameraInfos.associate {
@@ -90,7 +95,7 @@ class CameraManager(activity: AppCompatActivity) {
 
     private fun prepareDeviceCamerasList(cameraFacing: CameraFacing): List<Camera> {
         val facingCameras = cameras.values.filter {
-            it.cameraFacing == cameraFacing
+            it.cameraFacing == cameraFacing && !ignoredAuxCameraIds.contains(it.cameraId)
         }
 
         if (facingCameras.isEmpty()) {
