@@ -13,8 +13,5 @@ import org.lineageos.aperture.utils.CameraMode
 @androidx.camera.core.ExperimentalZeroShutterLag
 @androidx.camera.view.video.ExperimentalVideo
 class QrScannerActivity : CameraActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        changeCameraMode(CameraMode.QR)
-    }
+    override fun overrideInitialCameraMode() = CameraMode.QR
 }

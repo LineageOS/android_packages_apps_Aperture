@@ -289,7 +289,7 @@ open class CameraActivity : AppCompatActivity() {
         cameraSoundsUtils = CameraSoundsUtils(sharedPreferences)
 
         // Initialize camera mode and facing
-        cameraMode = sharedPreferences.lastCameraMode
+        cameraMode = overrideInitialCameraMode() ?: sharedPreferences.lastCameraMode
         cameraFacing = sharedPreferences.lastCameraFacing
 
         // Handle intent
@@ -538,6 +538,12 @@ open class CameraActivity : AppCompatActivity() {
             else -> super.onKeyUp(keyCode, event)
         }
     }
+
+    /**
+     * This is a method that can be overridden to set the initial camera mode and facing.
+     * It's gonna have priority over shared preferences and intents.
+     */
+    protected open fun overrideInitialCameraMode(): CameraMode? = null
 
     private fun startShutterAnimation(shutterAnimation: ShutterAnimation) {
         // Get appropriate drawable
