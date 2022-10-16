@@ -51,6 +51,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
+    val supportsVideoRecording = supportedVideoQualities.isNotEmpty()
 
     val supportedExtensionModes = cameraManager.extensionsManager.getSupportedModes(cameraSelector)
 
@@ -69,5 +70,12 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     fun getMm35FocalLength(focalLength: Float): Float {
         return (36.0f / sensorSize.width) * focalLength
+    }
+
+    fun supportsCameraMode(cameraMode: CameraMode): Boolean {
+        return when (cameraMode) {
+            CameraMode.VIDEO -> supportsVideoRecording
+            else -> true
+        }
     }
 }

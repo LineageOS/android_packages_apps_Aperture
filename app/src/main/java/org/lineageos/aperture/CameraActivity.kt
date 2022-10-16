@@ -297,7 +297,7 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         // Select a camera
-        camera = cameraManager.getCameraOfFacingOrFirstAvailable(cameraFacing)
+        camera = cameraManager.getCameraOfFacingOrFirstAvailable(cameraFacing, cameraMode)
 
         // Set secondary bar button callbacks
         aspectRatioButton.setOnClickListener { cycleAspectRatio() }
@@ -754,8 +754,18 @@ open class CameraActivity : AppCompatActivity() {
 
         // Get the desired camera
         camera = when (cameraMode) {
-            CameraMode.QR -> cameraManager.getCameraOfFacingOrFirstAvailable(CameraFacing.BACK)
+            CameraMode.QR -> cameraManager.getCameraOfFacingOrFirstAvailable(
+                CameraFacing.BACK, cameraMode
+            )
             else -> camera
+        }
+
+        // If the current camera doesn't support the selected camera mode
+        // pick a different one, giving priority to camera facing
+        if (!camera.supportsCameraMode(cameraMode)) {
+            camera = cameraManager.getCameraOfFacingOrFirstAvailable(
+                camera.cameraFacing, cameraMode
+            )
         }
 
         // Fallback to ExtensionMode.NONE if necessary
@@ -764,7 +774,9 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         // Fallback to highest supported video quality
-        if (!camera.supportedVideoQualities.contains(videoQuality)) {
+        if (cameraMode == CameraMode.VIDEO &&
+            !camera.supportedVideoQualities.contains(videoQuality)
+        ) {
             sharedPreferences.videoQuality = camera.supportedVideoQualities.first()
         }
 
@@ -843,12 +855,7 @@ open class CameraActivity : AppCompatActivity() {
 
         // Update lens selector
         lensSelectorView.setCamera(
-            camera, when (camera.cameraFacing) {
-                CameraFacing.FRONT -> cameraManager.frontCameras
-                CameraFacing.BACK -> cameraManager.backCameras
-                CameraFacing.EXTERNAL -> cameraManager.externalCameras
-                else -> throw Exception("Unknown camera facing")
-            }
+            camera, cameraManager.getCameras(cameraMode, camera.cameraFacing)
         )
     }
 
@@ -898,7 +905,7 @@ open class CameraActivity : AppCompatActivity() {
 
         (flipCameraButton.drawable as AnimatedVectorDrawable).start()
 
-        camera = cameraManager.getNextCamera(camera)
+        camera = cameraManager.getNextCamera(camera, cameraMode)
         sharedPreferences.lastCameraFacing = camera.cameraFacing
 
         bindCameraUseCases()
