@@ -33,6 +33,24 @@
       "message": "Instead of doing this, I would do the opposite: when the user switches to video mode, let him not select the cameras that don\u0027t support video mode (we can easily do that by filtering availableCameras), if they\u0027re on a camera that doesn\u0027t support video recording, switch to the first available camera that supports it",
       "revId": "9563d599d9ef684532d4cc1b80531ca197417126",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "37a335bc_02daaa46",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-16T11:39:57Z",
+      "side": 1,
+      "message": "Hmm, I guess we could additionally do that, but I still think my change is ok since it\u0027d prevent from ever getting to a state where one would need to clear app data.",
+      "parentUuid": "26b18b2f_50f76413",
+      "revId": "9563d599d9ef684532d4cc1b80531ca197417126",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
