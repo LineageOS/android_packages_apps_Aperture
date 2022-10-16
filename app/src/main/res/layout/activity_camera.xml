@@ -197,17 +197,19 @@
             android:textSize="125sp" />
     </org.lineageos.aperture.ui.CountDownView>
 
-    <com.google.android.material.slider.Slider
+    <org.lineageos.aperture.ui.VerticalSlider
         android:id="@+id/zoomLevel"
-        android:layout_width="250dp"
-        android:layout_height="0dp"
-        android:valueFrom="0.0"
-        android:valueTo="1.0"
+        android:layout_width="32dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="8dp"
         android:visibility="gone"
-        app:labelBehavior="visible"
         app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewFinder"
+        app:thumbColor="@color/white"
+        app:thumbTextColor="@color/black"
+        app:thumbTextSize="10dp"
+        app:trackColor="#CCCCCC" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/primaryBarLayout"
