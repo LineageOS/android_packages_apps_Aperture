@@ -54,6 +54,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     val supportedVideoQualities: MutableList<Quality> =
         QualitySelector.getSupportedQualities(cameraInfo)
+    val supportsVideoRecording = supportedVideoQualities.isNotEmpty()
 
     val supportedExtensionModes = cameraManager.extensionsManager.getSupportedModes(cameraSelector)
 
@@ -68,6 +69,13 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     fun supportsExtensionMode(extensionMode: Int): Boolean {
         return supportedExtensionModes.contains(extensionMode)
+    }
+
+    fun supportsCameraMode(cameraMode: CameraMode): Boolean {
+        return when (cameraMode) {
+            CameraMode.VIDEO -> supportsVideoRecording
+            else -> true
+        }
     }
 
     companion object {
