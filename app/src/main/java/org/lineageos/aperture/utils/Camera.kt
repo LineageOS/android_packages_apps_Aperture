@@ -33,6 +33,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
             else -> CameraFacing.UNKNOWN
         }
 
+    val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
     val hasFlashUnit = cameraInfo.hasFlashUnit()
 
     val physicalCameraIds = camera2CameraInfo.physicalCameraIds
