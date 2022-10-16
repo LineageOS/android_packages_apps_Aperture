@@ -98,8 +98,9 @@ class CameraManager(activity: AppCompatActivity) {
         }
 
         val mainCamera = facingCameras.first()
-        if (mainCamera.isLogical) {
-            // If first camera is logical, it's very likely that it merges all sensors and handles
+        if (mainCamera.isLogical && mainCamera.focalLengths.size >= 2) {
+            // If first camera is logical and it has more focal lengths,
+            // it's very likely that it merges all sensors and handles
             // them with zoom (e.g. Pixels). Just expose only that
             return listOf(mainCamera)
         }
