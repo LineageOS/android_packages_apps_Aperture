@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List of ID of auxiliary cameras that must be ignored by the app. -->
+    <integer-array name="config_ignoredAuxCameraIds">
+        <!-- No camera is ignored by default. -->
+    </integer-array>
+</resources>
