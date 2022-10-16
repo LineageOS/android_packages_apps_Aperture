@@ -39,6 +39,11 @@ class PhysicalCamera(cameraInfo: CameraInfo) {
         }
 
     /**
+     * Exposure compensation range
+     */
+    val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
+
+    /**
      * Flash is available or not
      */
     val hasFlashUnit = cameraInfo.hasFlashUnit()

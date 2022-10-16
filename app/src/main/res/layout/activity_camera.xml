@@ -209,6 +209,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <org.lineageos.aperture.ui.VerticalSlider
+        android:id="@+id/exposureLevel"
+        android:layout_width="32dp"
+        android:layout_height="250dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewFinder"
+        app:thumbColor="@color/white"
+        app:thumbTextColor="@color/black"
+        app:thumbTextSize="10dp"
+        app:trackColor="#7FCCCCCC" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/primaryBarLayout"
         android:layout_width="0dp"

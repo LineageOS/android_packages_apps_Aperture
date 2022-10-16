@@ -7,6 +7,7 @@
 package org.lineageos.aperture
 
 import android.content.res.Resources.getSystem
+import android.util.Range
 import kotlin.math.roundToInt
 
 val Int.px
@@ -14,3 +15,7 @@ val Int.px
 
 val Int.dp
     get() = (this / getSystem().displayMetrics.density).roundToInt()
+
+internal fun Int.Companion.mapToRange(range: Range<Int>, percentage: Float): Int {
+    return (((range.upper - range.lower) * percentage) + range.lower).roundToInt()
+}
