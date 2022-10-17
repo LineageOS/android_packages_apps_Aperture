@@ -4,4 +4,12 @@
     <integer-array name="config_ignoredAuxCameraIds">
         <!-- No camera is ignored by default. -->
     </integer-array>
+
+    <!-- Decide whether to ignore auxiliary cameras that
+         are logical (made of multiple physical sensors).
+         Set this to false if your camera HAL doesn't expose
+         one or more aux cameras as a standalone camera device.
+         Note that you will probably need to add
+         more camera IDs to ignoreCameraIds. -->
+    <bool name="config_ignoreLogicalAuxCameras">true</bool>
 </resources>
