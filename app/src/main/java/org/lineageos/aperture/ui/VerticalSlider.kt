@@ -10,11 +10,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.Rect
 import android.graphics.RectF
+import android.graphics.Shader
 import android.util.AttributeSet
 import android.util.Range
 import android.view.MotionEvent
@@ -51,12 +53,29 @@ class VerticalSlider @JvmOverloads constructor(
         "%.01f".format(it)
     }
 
+    private var gradientColors: IntArray
+
     var steps = 0
 
     init {
         context.obtainStyledAttributes(attrs, R.styleable.VerticalSlider, 0, 0).apply {
             try {
-                trackPaint.color = getColor(R.styleable.VerticalSlider_trackColor, Color.WHITE)
+                if (getBoolean(R.styleable.VerticalSlider_trackColorGradient, false)) {
+                    val trackColorGradientStart =
+                        getColor(R.styleable.VerticalSlider_trackColorGradientStart, Color.WHITE)
+                    val trackColorGradientCenter =
+                        getColor(R.styleable.VerticalSlider_trackColorGradientCenter, Color.WHITE)
+                    val trackColorGradientEnd =
+                        getColor(R.styleable.VerticalSlider_trackColorGradientEnd, Color.WHITE)
+                    gradientColors = intArrayOf(
+                        trackColorGradientStart,
+                        trackColorGradientCenter,
+                        trackColorGradientEnd
+                    )
+                } else {
+                    gradientColors = intArrayOf()
+                    trackPaint.color = getColor(R.styleable.VerticalSlider_trackColor, Color.WHITE)
+                }
                 thumbPaint.color = getColor(R.styleable.VerticalSlider_thumbColor, Color.BLACK)
                 thumbTextPaint.color =
                     getColor(R.styleable.VerticalSlider_thumbTextColor, Color.WHITE)
@@ -110,6 +129,18 @@ class VerticalSlider @JvmOverloads constructor(
     private fun drawTrack(canvas: Canvas) {
         val track = track()
         val trackRadius = track.width() * 0.75f
+
+        if (gradientColors.isNotEmpty()) {
+            trackPaint.shader = LinearGradient(
+                track().width() / 2,
+                0f,
+                track().width() / 2,
+                track.height(),
+                gradientColors,
+                null,
+                Shader.TileMode.CLAMP
+            )
+        }
 
         // Draw round rect
         canvas.drawRoundRect(track, trackRadius, trackRadius, trackPaint)

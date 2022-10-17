@@ -230,7 +230,10 @@
         app:thumbColor="@color/white"
         app:thumbTextColor="@color/black"
         app:thumbTextSize="10dp"
-        app:trackColor="#7FCCCCCC" />
+        app:trackColorGradient="true"
+        app:trackColorGradientCenter="@color/grey"
+        app:trackColorGradientEnd="@color/black"
+        app:trackColorGradientStart="@color/white" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/primaryBarLayout"
