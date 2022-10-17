@@ -759,22 +759,9 @@ open class CameraActivity : AppCompatActivity() {
             sharedPreferences.photoEffect = ExtensionMode.NONE
         }
 
-        if (camera.supportedVideoQualities.isEmpty()) {
-            // Hide video mode button
-            videoModeButton.isVisible = false
-
-            // Switch to photo mode if we are in video mode
-            if (cameraMode == CameraMode.VIDEO) {
-                changeCameraMode(CameraMode.PHOTO)
-            }
-        } else {
-            // Show video mode button
-            videoModeButton.isVisible = true
-
-            // Fallback to highest supported video quality
-            if (!camera.supportedVideoQualities.contains(videoQuality)) {
-                sharedPreferences.videoQuality = camera.supportedVideoQualities.first()
-            }
+        // Fallback to highest supported video quality
+        if (!camera.supportedVideoQualities.contains(videoQuality)) {
+            sharedPreferences.videoQuality = camera.supportedVideoQualities.first()
         }
 
         // Initialize the use case we want and set its properties
