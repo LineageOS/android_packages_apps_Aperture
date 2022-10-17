@@ -106,7 +106,10 @@
         app:thumbColor="@android:color/white"
         app:thumbTextColor="@android:color/black"
         app:thumbTextSize="10dp"
-        app:trackColor="#7FCCCCCC" />
+        app:trackColorGradient="true"
+        app:trackColorGradientCenter="@color/grey"
+        app:trackColorGradientEnd="@android:color/black"
+        app:trackColorGradientStart="@android:color/white" />
 
     <HorizontalScrollView
         android:id="@+id/secondaryTopBarLayout"
