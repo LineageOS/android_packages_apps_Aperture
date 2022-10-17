@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c092a47_ddf61951",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/Camera.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-17T02:25:07Z",
+      "side": 1,
+      "message": "is this value documented anywhere?",
+      "revId": "3b16c6881be844480785e7cfad375146ecb6d469",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
