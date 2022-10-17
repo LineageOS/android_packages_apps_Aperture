@@ -12,6 +12,7 @@ import android.annotation.SuppressLint
 import android.app.KeyguardManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
@@ -573,6 +574,13 @@ open class CameraActivity : AppCompatActivity() {
 
         // Re-bind the use cases
         bindCameraUseCases()
+
+        val id = resources.getIdentifier(
+            "config_backward_compatible_camera_ids", "array", packageName
+        )
+        if (id > 0) {
+            val ids = resources.getStringArray(id)
+        }
     }
 
     override fun onPause() {
