@@ -68,6 +68,23 @@
       "message": "This standalone change is fine, if we do proper filtering at source it may be unneeded\nBut let\u0027s start with that for now.",
       "revId": "9563d599d9ef684532d4cc1b80531ca197417126",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb6900df_feea2a0a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-17T09:20:33Z",
+      "side": 1,
+      "message": "Your current filtering change won\u0027t cover the case none of the cams support recording, let\u0027s do that",
+      "revId": "9563d599d9ef684532d4cc1b80531ca197417126",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
