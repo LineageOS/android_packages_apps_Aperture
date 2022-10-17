@@ -369,6 +369,10 @@ open class CameraActivity : AppCompatActivity() {
             return@setOnTouchListener false
         }
         viewFinder.setOnClickListener { view ->
+            // Reset exposure level to 0 EV
+            cameraController.cameraControl?.setExposureCompensationIndex(0)
+            exposureLevel.progress = 0.5f
+
             exposureLevel.isVisible = true
             viewFinderTouchEvent?.let {
                 viewFinderFocus.x = it.x - (viewFinderFocus.width / 2)
