@@ -29,6 +29,9 @@ class CameraManager(activity: AppCompatActivity) {
     val ignoredAuxCameraIds by lazy {
         activity.resources.getStringArray(R.array.config_ignoredAuxCameraIds)
     }
+    val ignoreLogicalAuxCameras by lazy {
+        activity.resources.getBoolean(R.bool.config_ignoreLogicalAuxCameras)
+    }
 
     val cameras: Map<Int, Camera>
         get() = cameraProvider.availableCameraInfos.associate {
@@ -155,8 +158,10 @@ class CameraManager(activity: AppCompatActivity) {
             return listOf(mainCamera)
         }
 
-        // Get rid of logical cameras, we want single sensor cameras for now
-        val auxCameras = facingCameras.drop(1).filter { !it.isLogical }
+        // Get the list of aux cameras
+        val auxCameras = facingCameras
+            .drop(1)
+            .filter { !ignoreLogicalAuxCameras || !it.isLogical }
         // Setup zoom ratio for aux cameras
         mainCamera.mm35FocalLengths?.getOrNull(0)?.let { mainCameraMm35FocalLength ->
             for (camera in auxCameras) {
