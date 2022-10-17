@@ -436,6 +436,11 @@ open class CameraActivity : AppCompatActivity() {
         photoModeButton.setOnClickListener { changeCameraMode(CameraMode.PHOTO) }
         videoModeButton.setOnClickListener { changeCameraMode(CameraMode.VIDEO) }
 
+        // Hide video mode button if no internal camera supports video recoding
+        if (cameraManager.internalCamerasSupportingVideoRecoding.isEmpty()) {
+            videoModeButton.isVisible = false
+        }
+
         flipCameraButton.setOnClickListener { flipCamera() }
 
         videoRecordingStateButton.setOnClickListener {
