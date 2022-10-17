@@ -232,6 +232,18 @@
         app:thumbTextSize="10dp"
         app:trackColor="#7FCCCCCC" />
 
+    <org.lineageos.aperture.ui.LensSelectorView
+        android:id="@+id/lensSelectorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/lens_selector_view_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/secondaryBarLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/primaryBarLayout"
         android:layout_width="0dp"
