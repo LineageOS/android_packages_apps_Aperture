@@ -16,6 +16,24 @@
       "message": "I don\u0027t think that\u0027s necessary.",
       "revId": "f9a25e2639ceb016e44186d029385e74669666eb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "696d3fda_1e02d6f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-10-17T12:25:33Z",
+      "side": 1,
+      "message": "We do it with this https://review.lineageos.org/c/LineageOS/android_packages_apps_Aperture/+/341883",
+      "parentUuid": "b584ffff_7846b55b",
+      "revId": "f9a25e2639ceb016e44186d029385e74669666eb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
