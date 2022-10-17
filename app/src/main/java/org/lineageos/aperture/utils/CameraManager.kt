@@ -45,6 +45,9 @@ class CameraManager(activity: AppCompatActivity) {
     val mainFrontCamera = frontCameras.firstOrNull()
     val frontCamerasSupportingVideoRecording = frontCameras.filter { it.supportsVideoRecording }
 
+    val internalCamerasSupportingVideoRecoding =
+        backCamerasSupportingVideoRecording + frontCamerasSupportingVideoRecording
+
     val externalCameras: List<Camera>
         get() = cameras.values.filter {
             it.cameraFacing == CameraFacing.EXTERNAL
