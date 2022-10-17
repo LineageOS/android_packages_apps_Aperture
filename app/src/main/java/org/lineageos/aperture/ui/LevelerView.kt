@@ -12,6 +12,7 @@ import android.graphics.Paint
 import android.hardware.SensorManager
 import android.util.AttributeSet
 import android.view.OrientationEventListener
+import android.view.OrientationEventListener.ORIENTATION_UNKNOWN
 import android.view.View
 import org.lineageos.aperture.R
 import kotlin.math.PI
@@ -21,7 +22,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sin
 
 class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context, attributeSet) {
-    private var currentOrientation = 0
+    private var currentOrientation = ORIENTATION_UNKNOWN
     private val orientationEventListener =
         object : OrientationEventListener(context, SensorManager.SENSOR_DELAY_UI) {
             override fun onOrientationChanged(orientation: Int) {
@@ -68,12 +69,14 @@ class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context,
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val isLevel = isLevel()
-        drawBase(canvas, isLevel, isLandscape())
+        currentOrientation.takeUnless { it == ORIENTATION_UNKNOWN }?.let {
+            val isLevel = isLevel(it)
+            drawBase(canvas, isLevel, isLandscape(it))
 
-        if (!isLevel) {
-            val radians = -((currentOrientation.toFloat() / 180F) * PI).toFloat()
-            drawLevelLine(canvas, radians)
+            if (!isLevel) {
+                val radians = -((it.toFloat() / 180F) * PI.toFloat())
+                drawLevelLine(canvas, radians)
+            }
         }
     }
 
@@ -121,12 +124,12 @@ class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context,
         canvas.drawLine(wStart, hStart, wEnd, hEnd, defaultLevelPaint)
     }
 
-    private fun isLevel(): Boolean {
+    private fun isLevel(currentOrientation: Int): Boolean {
         val o = currentOrientation % 90
         return o < LEVEL_ZONE || (90 - o) < LEVEL_ZONE
     }
 
-    private fun isLandscape(): Boolean {
+    private fun isLandscape(currentOrientation: Int): Boolean {
         return currentOrientation in 45..134 || currentOrientation in 225..314
     }
 
