@@ -12,4 +12,13 @@
          Note that you will probably need to add
          more camera IDs to ignoreCameraIds. -->
     <bool name="config_ignoreLogicalAuxCameras">true</bool>
+
+    <!-- List of ID of camera devices that doesn't advertise
+         REQUEST_AVAILABLE_CAPABILITIES_BACKWARD_COMPATIBLE yet are
+         able to produce a JPEG or a YUV stream. The camera IDs specified
+         here won't be excluded by CameraX. Please be sure to test all
+         modes exposed by the app with those cameras. -->
+    <string-array name="config_backwardCompatibleCameraIds">
+        <!-- No camera is unignored by default. -->
+    </string-array>
 </resources>
