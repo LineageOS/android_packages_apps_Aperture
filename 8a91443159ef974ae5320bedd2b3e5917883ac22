@@ -22,6 +22,30 @@
       },
       "revId": "8a91443159ef974ae5320bedd2b3e5917883ac22",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b67d46e5_3e9cbea1",
+        "filename": "app/src/main/res/values/config.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-17T18:54:18Z",
+      "side": 1,
+      "message": "eh, actually we\u0027d want config_ignoreCameraIds",
+      "parentUuid": "8403636d_e000f717",
+      "range": {
+        "startLine": 4,
+        "startChar": 25,
+        "endLine": 4,
+        "endChar": 40
+      },
+      "revId": "8a91443159ef974ae5320bedd2b3e5917883ac22",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
