@@ -16,6 +16,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.ColorDrawable
+import android.icu.number.NumberFormatter
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -80,6 +81,7 @@ import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
+import java.util.Locale
 import java.util.concurrent.ExecutorService
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
@@ -424,7 +426,8 @@ open class CameraActivity : AppCompatActivity() {
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_EXPOSURE_SLIDER), 2000)
         }
         exposureLevel.textFormatter = {
-            Int.mapToRange(camera.exposureCompensationRange, it).toString()
+            EXPOSURE_LEVEL_FORMATTER.format(Int.mapToRange(camera.exposureCompensationRange, it))
+                .toString()
         }
 
         // Set primary bar button callbacks
@@ -1401,5 +1404,9 @@ open class CameraActivity : AppCompatActivity() {
         private const val MSG_HIDE_ZOOM_SLIDER = 0
         private const val MSG_HIDE_FOCUS_RING = 1
         private const val MSG_HIDE_EXPOSURE_SLIDER = 2
+
+        private val EXPOSURE_LEVEL_FORMATTER = NumberFormatter.with()
+            .locale(Locale.US)
+            .sign(NumberFormatter.SignDisplay.EXCEPT_ZERO)
     }
 }
