@@ -12,4 +12,9 @@
          Note that you will probably need to add
          more camera IDs to ignoreCameraIds. -->
     <bool name="ignoreLogicalAuxCameras">true</bool>
+
+    <!-- List of ID of auxiliary cameras that must not be ignored by the app. -->
+    <string-array name="config_backwardCompatibleCameraIds">
+        <!-- No camera is unignored by default. -->
+    </string-array>
 </resources>
