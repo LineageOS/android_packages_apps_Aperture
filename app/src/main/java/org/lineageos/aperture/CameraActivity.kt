@@ -68,6 +68,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
+import org.lineageos.aperture.ui.LensSelectorView
 import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.VerticalSlider
 import org.lineageos.aperture.utils.Camera
@@ -97,6 +98,7 @@ open class CameraActivity : AppCompatActivity() {
     private val galleryButton by lazy { findViewById<ImageView>(R.id.galleryButton) }
     private val gridButton by lazy { findViewById<ImageButton>(R.id.gridButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
+    private val lensSelectorView by lazy { findViewById<LensSelectorView>(R.id.lensSelectorView) }
     private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
     private val micButton by lazy { findViewById<ImageButton>(R.id.micButton) }
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
@@ -169,6 +171,7 @@ open class CameraActivity : AppCompatActivity() {
             when (msg.what) {
                 MSG_HIDE_ZOOM_SLIDER -> {
                     zoomLevel.visibility = View.GONE
+                    lensSelectorView.visibility = View.VISIBLE
                 }
                 MSG_HIDE_FOCUS_RING -> {
                     viewFinderFocus.visibility = View.GONE
@@ -398,6 +401,7 @@ open class CameraActivity : AppCompatActivity() {
             }
 
             zoomLevel.value = it.linearZoom
+            lensSelectorView.visibility = View.GONE
             zoomLevel.visibility = View.VISIBLE
 
             handler.removeMessages(MSG_HIDE_ZOOM_SLIDER)
@@ -475,6 +479,17 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         galleryButton.setOnClickListener { openGallery() }
+
+        // Set lens switching callback
+        lensSelectorView.onCameraChangeCallback = {
+            if (canRestartCamera()) {
+                camera = it
+                bindCameraUseCases()
+            }
+        }
+        lensSelectorView.onFocalLengthChangeCallback = {
+            cameraController.setZoomRatio(it / camera.focalLengths[0])
+        }
     }
 
     override fun onResume() {
@@ -838,6 +853,16 @@ open class CameraActivity : AppCompatActivity() {
         updateTorchModeIcon()
         updateFlashModeIcon()
         updateMicrophoneModeIcon()
+
+        // Update lens selector
+        lensSelectorView.setCamera(
+            camera, when (camera.cameraFacing) {
+                CameraFacing.FRONT -> cameraManager.frontCameras
+                CameraFacing.BACK -> cameraManager.backCameras
+                CameraFacing.EXTERNAL -> cameraManager.externalCameras
+                else -> throw Exception("Unknown camera facing")
+            }
+        )
     }
 
     /**
