@@ -20,6 +20,8 @@ import android.icu.number.NumberFormatter
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -48,6 +50,7 @@ import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.camera.view.video.AudioConfig
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -55,8 +58,10 @@ import androidx.core.view.WindowCompat.getInsetsController
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.doOnLayout
+import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentContainerView
 import androidx.preference.PreferenceManager
 import coil.decode.VideoFrameDecoder
 import coil.load
@@ -68,9 +73,11 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
+import org.lineageos.aperture.ui.ImagePreviewFragment
 import org.lineageos.aperture.ui.LensSelectorView
 import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.VerticalSlider
+import org.lineageos.aperture.ui.VideoPreviewFragment
 import org.lineageos.aperture.utils.Camera
 import org.lineageos.aperture.utils.CameraFacing
 import org.lineageos.aperture.utils.CameraManager
@@ -81,6 +88,7 @@ import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
+import java.io.FileNotFoundException
 import java.util.Locale
 import java.util.concurrent.ExecutorService
 
@@ -96,8 +104,11 @@ open class CameraActivity : AppCompatActivity() {
     private val flashButton by lazy { findViewById<ImageButton>(R.id.flashButton) }
     private val flipCameraButton by lazy { findViewById<ImageButton>(R.id.flipCameraButton) }
     private val galleryButton by lazy { findViewById<ImageView>(R.id.galleryButton) }
+    private val galleryButtonCardView by lazy { findViewById<CardView>(R.id.galleryButtonCardView) }
     private val gridButton by lazy { findViewById<ImageButton>(R.id.gridButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
+    private val imagePreviewFragment by lazy { supportFragmentManager.findFragmentById(R.id.imagePreviewFragment) as ImagePreviewFragment }
+    private val imagePreviewFragmentView by lazy { findViewById<FragmentContainerView>(R.id.imagePreviewFragment) }
     private val lensSelectorView by lazy { findViewById<LensSelectorView>(R.id.lensSelectorView) }
     private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
     private val micButton by lazy { findViewById<ImageButton>(R.id.micButton) }
@@ -110,6 +121,8 @@ open class CameraActivity : AppCompatActivity() {
     private val torchButton by lazy { findViewById<ImageButton>(R.id.torchButton) }
     private val videoDuration by lazy { findViewById<MaterialButton>(R.id.videoDuration) }
     private val videoModeButton by lazy { findViewById<MaterialButton>(R.id.videoModeButton) }
+    private val videoPreviewFragment by lazy { supportFragmentManager.findFragmentById(R.id.videoPreviewFragment) as VideoPreviewFragment }
+    private val videoPreviewFragmentView by lazy { findViewById<FragmentContainerView>(R.id.videoPreviewFragment) }
     private val videoQualityButton by lazy { findViewById<ToggleButton>(R.id.videoQualityButton) }
     private val videoRecordingStateButton by lazy { findViewById<ImageButton>(R.id.videoRecordingStateButton) }
     private val viewFinder by lazy { findViewById<PreviewView>(R.id.viewFinder) }
@@ -129,6 +142,14 @@ open class CameraActivity : AppCompatActivity() {
 
     private lateinit var cameraMode: CameraMode
     private lateinit var cameraFacing: CameraFacing
+
+    private var singleCaptureMode = false
+        set(value) {
+            field = value
+            updateSecondaryBarButtons()
+            updatePrimaryBarButtons()
+            updateCameraModeButtons()
+        }
 
     private var cameraState = CameraState.IDLE
         set(value) {
@@ -238,6 +259,18 @@ open class CameraActivity : AppCompatActivity() {
 
     private val intentActions = mapOf(
         // Intents
+        MediaStore.ACTION_IMAGE_CAPTURE to {
+            cameraMode = CameraMode.PHOTO
+            singleCaptureMode = true
+        },
+        MediaStore.ACTION_IMAGE_CAPTURE_SECURE to {
+            cameraMode = CameraMode.PHOTO
+            singleCaptureMode = true
+        },
+        MediaStore.ACTION_VIDEO_CAPTURE to {
+            cameraMode = CameraMode.VIDEO
+            singleCaptureMode = true
+        },
         MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA to {
             cameraMode = CameraMode.PHOTO
         },
@@ -300,6 +333,12 @@ open class CameraActivity : AppCompatActivity() {
             // Hide video mode button if no internal camera supports video recoding
             videoModeButton.isVisible = false
             if (cameraMode == CameraMode.VIDEO) {
+                // If an app asked for a video we have to bail out
+                if (singleCaptureMode) {
+                    Toast.makeText(this, "No camera supports video recoding", Toast.LENGTH_LONG)
+                        .show()
+                    finish()
+                }
                 // Fallback to photo mode
                 cameraMode = CameraMode.PHOTO
             }
@@ -499,6 +538,24 @@ open class CameraActivity : AppCompatActivity() {
         lensSelectorView.onFocalLengthChangeCallback = {
             cameraController.setZoomRatio(it / camera.focalLengths[0])
         }
+
+        // Set image preview callback
+        imagePreviewFragment.onChoiceCallback = { uri ->
+            uri?.let {
+                sendIntentResultAndExit(it)
+            } ?: run {
+                imagePreviewFragmentView.isGone = true
+            }
+        }
+
+        // Set video preview callback
+        videoPreviewFragment.onChoiceCallback = { uri ->
+            uri?.let {
+                sendIntentResultAndExit(it)
+            } ?: run {
+                videoPreviewFragmentView.isGone = true
+            }
+        }
     }
 
     override fun onResume() {
@@ -657,11 +714,17 @@ open class CameraActivity : AppCompatActivity() {
                             viewFinder.foreground.alpha = anim.animatedValue as Int
                         }
                     }.start()
-                    sharedPreferences.lastSavedUri = output.savedUri
                     Log.d(LOG_TAG, "Photo capture succeeded: ${output.savedUri}")
                     cameraState = CameraState.IDLE
                     shutterButton.isEnabled = true
-                    tookSomething = true
+                    if (!singleCaptureMode) {
+                        sharedPreferences.lastSavedUri = output.savedUri
+                        tookSomething = true
+                    } else {
+                        output.savedUri?.let {
+                            openImagePreview(it)
+                        }
+                    }
                 }
             }
         )
@@ -694,9 +757,9 @@ open class CameraActivity : AppCompatActivity() {
             ) {
                 val updateRecordingStatus = { enabled: Boolean, duration: Long ->
                     // Hide mode buttons
-                    photoModeButton.isInvisible = enabled
-                    videoModeButton.isInvisible = enabled
-                    qrModeButton.isInvisible = enabled
+                    photoModeButton.isInvisible = enabled || singleCaptureMode
+                    videoModeButton.isInvisible = enabled || singleCaptureMode
+                    qrModeButton.isInvisible = enabled || singleCaptureMode
 
                     // Update duration text and visibility state
                     videoDuration.text = TimeUtils.convertNanosToString(duration)
@@ -732,9 +795,13 @@ open class CameraActivity : AppCompatActivity() {
                         }
                         cameraSoundsUtils.playStopVideoRecording()
                         if (it.error != VideoRecordEvent.Finalize.ERROR_NO_VALID_DATA) {
-                            sharedPreferences.lastSavedUri = it.outputResults.outputUri
                             Log.d(LOG_TAG, "Video capture succeeded: ${it.outputResults.outputUri}")
-                            tookSomething = true
+                            if (!singleCaptureMode) {
+                                sharedPreferences.lastSavedUri = it.outputResults.outputUri
+                                tookSomething = true
+                            } else {
+                                openVideoPreview(it.outputResults.outputUri)
+                            }
                         }
                         cameraState = CameraState.IDLE
                         recording = null
@@ -922,6 +989,11 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updateCameraModeButtons() {
         runOnUiThread {
+            cameraModeHighlight.isInvisible = singleCaptureMode
+            photoModeButton.isInvisible = singleCaptureMode
+            videoModeButton.isInvisible = singleCaptureMode
+            qrModeButton.isInvisible = singleCaptureMode
+
             cameraMode.let {
                 qrModeButton.isEnabled = it != CameraMode.QR
                 photoModeButton.isEnabled = it != CameraMode.PHOTO
@@ -967,6 +1039,7 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updatePrimaryBarButtons() {
         runOnUiThread {
+            galleryButtonCardView.isInvisible = singleCaptureMode
             galleryButton.isEnabled = cameraState == CameraState.IDLE
             // Shutter button must stay enabled
             flipCameraButton.isEnabled = cameraState == CameraState.IDLE
@@ -1360,6 +1433,59 @@ open class CameraActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun openImagePreview(uri: Uri) {
+        runOnUiThread {
+            imagePreviewFragment.updateUri(uri)
+            imagePreviewFragmentView.isVisible = true
+        }
+    }
+
+    private fun openVideoPreview(uri: Uri) {
+        runOnUiThread {
+            videoPreviewFragment.updateUri(uri)
+            videoPreviewFragmentView.isVisible = true
+        }
+    }
+
+    /**
+     * When the user took a photo or a video and confirmed it, its URI gets sent back to the
+     * app that sent the intent and closes the camera.
+     */
+    private fun sendIntentResultAndExit(uri: Uri) {
+        // The user confirmed the choice
+        var outputUri: Uri? = null
+        if (intent.extras?.containsKey(MediaStore.EXTRA_OUTPUT) == true) {
+            outputUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.extras?.getParcelable(MediaStore.EXTRA_OUTPUT, Uri::class.java)
+            } else {
+                intent.extras?.get(MediaStore.EXTRA_OUTPUT) as Uri
+            }
+        }
+
+        outputUri?.let {
+            try {
+                val inputStream = contentResolver.openInputStream(uri)!!
+                val outputStream = contentResolver.openOutputStream(it)!!
+
+                inputStream.copyTo(outputStream)
+
+                inputStream.close()
+                outputStream.close()
+
+                setResult(RESULT_OK)
+            } catch (exc: FileNotFoundException) {
+                Log.e(LOG_TAG, "Failed to open URI")
+                setResult(RESULT_CANCELED)
+            }
+        } ?: setResult(RESULT_OK, Intent().apply {
+            data = uri
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            putExtra(MediaStore.EXTRA_OUTPUT, uri)
+        })
+
+        finish()
     }
 
     private fun openSettings() {
