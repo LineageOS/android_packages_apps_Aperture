@@ -299,6 +299,15 @@ open class CameraActivity : AppCompatActivity() {
             intentActions[it]?.invoke()
         }
 
+        if (cameraManager.internalCamerasSupportingVideoRecoding.isEmpty()) {
+            // Hide video mode button if no internal camera supports video recoding
+            videoModeButton.isVisible = false
+            if (cameraMode == CameraMode.VIDEO) {
+                // Fallback to photo mode
+                cameraMode = CameraMode.PHOTO
+            }
+        }
+
         // Select a camera
         camera = cameraManager.getCameraOfFacingOrFirstAvailable(cameraFacing, cameraMode)
 
