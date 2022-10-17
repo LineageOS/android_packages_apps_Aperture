@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f3081f73_559c388f",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/LevelerView.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-17T08:48:14Z",
+      "side": 1,
+      "message": "not needed, we\u0027re going to use visibility to first enable it.",
+      "revId": "b06b3d73c7baabca56efd23f09ce84b1dd849aba",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf3a641e_5e4ac48b",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/LevelerView.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-17T08:48:14Z",
+      "side": 1,
+      "message": "if not visible and we want to hide it, the ctor would\u0027ve already enabled the listener and this path won\u0027t turn it off\n\nI\u0027d remove the check altogether",
+      "revId": "b06b3d73c7baabca56efd23f09ce84b1dd849aba",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
