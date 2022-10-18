@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95743433_c4147119",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-10-18T10:39:38Z",
+      "side": 1,
+      "message": "config_backwardCompatibleCameraIds",
+      "range": {
+        "startLine": 579,
+        "startChar": 13,
+        "endLine": 579,
+        "endChar": 50
+      },
+      "revId": "714dcc1be87f95f47e04e9b7afd728c9938c30c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c619a597_978788dc",
+        "filename": "app/src/main/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-10-18T10:39:38Z",
+      "side": 1,
+      "message": "Needs a better description mentioning REQUEST_AVAILABLE_CAPABILITIES_BACKWARD_COMPATIBLE",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 77
+      },
+      "revId": "714dcc1be87f95f47e04e9b7afd728c9938c30c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
