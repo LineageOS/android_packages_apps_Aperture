@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be5bb889_ee9171d2",
+        "filename": "app/src/main/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-10-18T09:32:11Z",
+      "side": 1,
+      "message": "config_ignoreLogicalAuxCameras",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 39
+      },
+      "revId": "1fe34fce4d5430adb68430a0c3f88bc9051ee74e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
