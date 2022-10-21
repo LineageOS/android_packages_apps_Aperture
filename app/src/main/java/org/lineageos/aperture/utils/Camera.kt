@@ -24,7 +24,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val cameraSelector = cameraInfo.cameraSelector
 
     val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
-    val cameraId = camera2CameraInfo.cameraId.toInt()
+    val cameraId = camera2CameraInfo.cameraId
 
     val cameraFacing =
         when (camera2CameraInfo.getCameraCharacteristic(CameraCharacteristics.LENS_FACING)) {
@@ -64,7 +64,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     }
 
     override fun hashCode(): Int {
-        return this::class.qualifiedName.hashCode() + cameraId
+        return this::class.qualifiedName.hashCode() + cameraId.hashCode()
     }
 
     fun supportsExtensionMode(extensionMode: Int): Boolean {
