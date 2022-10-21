@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Aperture" parent="Theme.Material3.Dark">
+    <style name="Theme.Aperture" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/white</item>
@@ -62,5 +62,15 @@
     <!-- Video duration button theme -->
     <style name="ApertureVideoDurationButton" parent="@style/ApertureModeSelectorButton">
         <item name="android:backgroundTint">@color/rec_red</item>
+    </style>
+
+    <!-- Collapsing toolbar style -->
+    <style name="ApertureToolbarCollapsed" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="ApertureToolbarExpanded" parent="ApertureToolbarCollapsed">
+        <item name="android:textSize">32sp</item>
+        <item name="android:drawablePadding">10dp</item>
     </style>
 </resources>
