@@ -20,6 +20,7 @@
     <string name="video_mode_button_description">Switch to video mode</string>
     <string name="video_quality_button_description">Video quality</string>
     <string name="video_recording_state_button_description">Pause/resume video recording</string>
+    <string name="settings_back_button_description">Go back to camera mode</string>
 
     <!-- Selector chip -->
     <string name="selector_photo">PHOTO</string>
