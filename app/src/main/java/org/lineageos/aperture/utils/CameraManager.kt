@@ -26,12 +26,12 @@ class CameraManager(activity: AppCompatActivity) {
     val cameraController = LifecycleCameraController(activity)
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
-    val ignoreCameraIds by lazy { activity.resources.getIntArray(R.array.config_ignoreCameraIds) }
+    val ignoreCameraIds by lazy { activity.resources.getStringArray(R.array.config_ignoreCameraIds) }
     val ignoreLogicalAuxCameras by lazy {
         activity.resources.getBoolean(R.bool.config_ignoreLogicalAuxCameras)
     }
 
-    val cameras: Map<Int, Camera>
+    val cameras: Map<String, Camera>
         get() = cameraProvider.availableCameraInfos.associate {
             val camera = Camera(it, this)
             camera.cameraId to camera
