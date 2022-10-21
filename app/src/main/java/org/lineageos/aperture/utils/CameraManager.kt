@@ -33,7 +33,7 @@ class CameraManager(activity: AppCompatActivity) {
         activity.resources.getBoolean(R.bool.config_ignoreLogicalAuxCameras)
     }
 
-    val cameras: Map<Int, Camera>
+    val cameras: Map<String, Camera>
         get() = cameraProvider.availableCameraInfos.associate {
             val camera = Camera(it, this)
             camera.cameraId to camera
