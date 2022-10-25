@@ -232,6 +232,18 @@
         app:thumbTextSize="10dp"
         app:trackColor="#7FCCCCCC" />
 
+    <org.lineageos.aperture.ui.LensSelectorView
+        android:id="@+id/lensSelectorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/lens_selector_view_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/secondaryBarLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/primaryBarLayout"
         android:layout_width="0dp"
@@ -388,4 +400,26 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="3:13:37" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/imagePreviewFragment"
+        android:name="org.lineageos.aperture.ui.ImagePreviewFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/videoPreviewFragment"
+        android:name="org.lineageos.aperture.ui.VideoPreviewFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

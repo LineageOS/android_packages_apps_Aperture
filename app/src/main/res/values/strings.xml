@@ -13,6 +13,7 @@
     <string name="mic_button_description">Microphone</string>
     <string name="photo_mode_button_description">Switch to photo mode</string>
     <string name="qr_mode_button_description">Switch to QR scanner mode</string>
+    <string name="settings_back_button_description">Go back to camera mode</string>
     <string name="settings_button_description">Settings</string>
     <string name="shutter_button_description">Shutter</string>
     <string name="timer_button_description">Timer</string>

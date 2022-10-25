@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List of ID of auxiliary cameras that must be ignored by the app. -->
+    <string-array name="config_ignoreCameraIds">
+        <!-- No camera is ignored by default. -->
+    </string-array>
+
+    <!-- Decide whether to ignore auxiliary cameras that
+         are logical (made of multiple physical sensors).
+         Set this to false if your camera HAL doesn't expose
+         one or more aux cameras as a standalone camera device.
+         Note that you will probably need to add
+         more camera IDs to ignoreCameraIds. -->
+    <bool name="config_ignoreLogicalAuxCameras">true</bool>
+
+    <!-- List of ID of camera devices that doesn't advertise
+         REQUEST_AVAILABLE_CAPABILITIES_BACKWARD_COMPATIBLE yet are
+         able to produce a JPEG or a YUV stream. The camera IDs specified
+         here won't be excluded by CameraX. Please be sure to test all
+         modes exposed by the app with those cameras. -->
+    <string-array name="config_backwardCompatibleCameraIds">
+        <!-- No camera is unignored by default. -->
+    </string-array>
+</resources>
