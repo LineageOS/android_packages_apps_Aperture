@@ -33,6 +33,23 @@
       "message": "The app is still labelled \"Camera\". Even Snap Camera used camera path.",
       "revId": "4275fe56dd8fa84a221e7559a1f90af470f634fb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b554f919_e3c72cab",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 24834
+      },
+      "writtenOn": "2022-10-25T12:10:31Z",
+      "side": 1,
+      "message": "Please don\u0027t change default and well-known path, users won\u0027t like that.",
+      "revId": "4275fe56dd8fa84a221e7559a1f90af470f634fb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
