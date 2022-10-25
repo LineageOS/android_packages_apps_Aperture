@@ -67,6 +67,23 @@
       "message": "I do want to easily know what photos has been taken with which app, my -1 still stands",
       "revId": "4275fe56dd8fa84a221e7559a1f90af470f634fb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "acafbdd6_ee475c7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-25T12:40:19Z",
+      "side": 1,
+      "message": "I\u0027d use the default path as well.",
+      "revId": "4275fe56dd8fa84a221e7559a1f90af470f634fb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
