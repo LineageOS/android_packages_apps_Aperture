@@ -71,11 +71,12 @@
 
     <!-- Collapsing toolbar style -->
     <style name="ApertureToolbarCollapsed" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
-        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="ApertureToolbarExpanded" parent="ApertureToolbarCollapsed">
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">36sp</item>
         <item name="android:drawablePadding">10dp</item>
     </style>
 </resources>
