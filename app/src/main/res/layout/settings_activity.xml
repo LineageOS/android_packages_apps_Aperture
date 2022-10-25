@@ -13,11 +13,11 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="179dp"
             app:collapsedTitleGravity="start"
             app:collapsedTitleTextAppearance="@style/ApertureToolbarCollapsed"
             app:contentScrim="?android:colorBackgroundFloating"
-            app:expandedTitleMarginBottom="58dp"
+            app:expandedTitleMarginBottom="31dp"
             app:expandedTitleMarginStart="24dp"
             app:expandedTitleMarginTop="0dp"
             app:expandedTitleTextAppearance="@style/ApertureToolbarExpanded"
