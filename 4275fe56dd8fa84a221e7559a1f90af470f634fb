@@ -189,6 +189,24 @@
       "message": "While we\u0027re at it\nSTORAGE_DESTINATION \u003d     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + \"/Camera\"",
       "revId": "4275fe56dd8fa84a221e7559a1f90af470f634fb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c8abd272_d6483aaf",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/StorageUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-25T15:50:13Z",
+      "side": 1,
+      "message": "We can\u0027t use getExternalStoragePublicDirectory() here.",
+      "parentUuid": "a9d8283b_02d02bfe",
+      "revId": "4275fe56dd8fa84a221e7559a1f90af470f634fb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
