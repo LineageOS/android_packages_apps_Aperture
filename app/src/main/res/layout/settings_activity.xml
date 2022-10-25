@@ -7,47 +7,44 @@
     tools:context=".SettingsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:colorBackgroundFloating">
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="true"
+        android:outlineAmbientShadowColor="@android:color/transparent"
+        android:outlineSpotShadowColor="@android:color/transparent"
+        android:theme="@style/Theme.CollapsingToolbar.Settings">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar_layout"
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:collapsedTitleGravity="start"
-            app:collapsedTitleTextAppearance="@style/ApertureToolbarCollapsed"
-            app:contentScrim="?android:colorBackgroundFloating"
-            app:expandedTitleGravity="bottom"
-            app:expandedTitleTextAppearance="@style/ApertureToolbarExpanded"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:layout_height="@dimen/settingslib_toolbar_layout_height"
+            android:clipToPadding="false"
+            app:collapsedTitleTextAppearance="@style/CollapsingToolbarTitle.Collapsed"
+            app:contentScrim="@color/settingslib_colorSurfaceHeader"
+            app:expandedTitleMarginEnd="@dimen/expanded_title_margin_end"
+            app:expandedTitleMarginStart="@dimen/expanded_title_margin_start"
+            app:expandedTitleTextAppearance="@style/CollapsingToolbarTitle.Expanded"
+            app:extraMultilineHeightEnabled="true"
+            app:forceApplySystemWindowInsetTop="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:maxLines="3"
             app:scrimAnimationDuration="50"
-            app:titleCollapseMode="scale"
-            app:toolbarId="@id/toolbar">
+            app:scrimVisibleHeightTrigger="@dimen/settingslib_scrim_visible_height_trigger"
+            app:statusBarScrim="@null"
+            app:titleCollapseMode="fade"
+            app:toolbarId="@id/action_bar">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+                android:id="@+id/action_bar"
                 android:layout_width="match_parent"
-                android:layout_height="?actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="?android:attr/actionBarTheme"
                 android:transitionName="shared_element_view"
-                app:layout_collapseMode="pin">
-
-                <ImageView
-                    android:id="@+id/back_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginEnd="10dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/settings_back_button_description"
-                    android:gravity="center"
-                    android:src="@drawable/ic_arrow_back"
-                    app:tint="?android:textColorPrimary" />
-
-            </androidx.appcompat.widget.Toolbar>
+                app:layout_collapseMode="pin" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout

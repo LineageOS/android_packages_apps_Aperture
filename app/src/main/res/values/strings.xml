@@ -73,4 +73,6 @@
     <string name="shortcut_selfie">Take a selfie</string>
     <string name="shortcut_video">Take a video</string>
     <string name="shortcut_qr">Scan a barcode</string>
+
+    <string name="settingslib_config_headlineFontFamily" translatable="false"></string>
 </resources>

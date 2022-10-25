@@ -12,12 +12,14 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import org.lineageos.aperture.utils.CameraSoundsUtils
 
 class SettingsActivity : AppCompatActivity() {
@@ -33,11 +35,10 @@ class SettingsActivity : AppCompatActivity() {
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        setSupportActionBar(findViewById(R.id.toolbar))
-
-        findViewById<ImageView>(R.id.back_arrow).setOnClickListener {
-            finish()
-        }
+        setSupportActionBar(findViewById(R.id.action_bar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
