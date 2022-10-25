@@ -84,6 +84,23 @@
       "message": "I\u0027d use the default path as well.",
       "revId": "4275fe56dd8fa84a221e7559a1f90af470f634fb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9d8283b_02d02bfe",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/StorageUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-25T12:40:53Z",
+      "side": 1,
+      "message": "While we\u0027re at it\nSTORAGE_DESTINATION \u003d     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).toString() + \"/Camera\"",
+      "revId": "4275fe56dd8fa84a221e7559a1f90af470f634fb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
