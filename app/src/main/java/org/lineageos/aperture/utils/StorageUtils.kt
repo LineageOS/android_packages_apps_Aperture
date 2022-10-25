@@ -17,7 +17,7 @@ import java.util.Locale
 
 object StorageUtils {
     private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-    private const val STORAGE_DESTINATION = "DCIM/Aperture"
+    private const val STORAGE_DESTINATION = "DCIM/Camera"
 
     /**
      * Returns a new ImageCapture.OutputFileOptions to use to store a JPEG photo
