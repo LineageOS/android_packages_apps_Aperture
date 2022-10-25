@@ -122,6 +122,23 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc82c29c_1f5be15c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29578
+      },
+      "writtenOn": "2022-10-25T13:44:40Z",
+      "side": 1,
+      "message": "I also think that is better to use default path",
+      "revId": "4275fe56dd8fa84a221e7559a1f90af470f634fb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a9d8283b_02d02bfe",
