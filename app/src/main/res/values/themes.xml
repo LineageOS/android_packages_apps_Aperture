@@ -28,6 +28,11 @@
     <!-- Settings activity theme. -->
     <style name="Theme.Aperture.Settings" parent="Theme.Aperture">
         <item name="android:switchStyle">@style/Theme.Aperture.Settings.Switch</item>
+
+        <item name="android:statusBarColor">?android:attr/colorBackground</item>
+
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:enforceNavigationBarContrast">false</item>
     </style>
 
     <!-- Settings switch theme. -->
