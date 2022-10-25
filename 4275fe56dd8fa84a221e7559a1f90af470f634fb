@@ -88,6 +88,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b16f6c1a_806858b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 6360
+      },
+      "writtenOn": "2022-10-25T12:52:33Z",
+      "side": 1,
+      "message": "\u003e I do want to easily know what photos has been taken with which app, my -1 still stands\n\nAnd how many default Camera apps you ship with ROM?",
+      "parentUuid": "d8fcd466_d31d76c5",
+      "revId": "4275fe56dd8fa84a221e7559a1f90af470f634fb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a9d8283b_02d02bfe",
         "filename": "app/src/main/java/org/lineageos/aperture/utils/StorageUtils.kt",
         "patchSetId": 1
