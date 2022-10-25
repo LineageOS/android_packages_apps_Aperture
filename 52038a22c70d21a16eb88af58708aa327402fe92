@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7967cbc3_f2f7254d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-10-25T10:29:05Z",
+      "side": 1,
+      "message": "This is horrible, we either use the exact code/lib Settings uses or we can keep the current one",
+      "revId": "52038a22c70d21a16eb88af58708aa327402fe92",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
