@@ -1349,6 +1349,7 @@ open class CameraActivity : AppCompatActivity() {
                         data = uri
                         flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                     }
+                    intent.putExtra("from-snapcam", true)
                     runCatching {
                         startActivity(intent)
                         return@dismissKeyguardAndRun
