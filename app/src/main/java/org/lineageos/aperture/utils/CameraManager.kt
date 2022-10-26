@@ -26,6 +26,7 @@ class CameraManager(activity: AppCompatActivity) {
     val cameraController = LifecycleCameraController(activity)
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
+    val enableAuxCameras by lazy { activity.resources.getBoolean(R.bool.config_enableAuxCameras) }
     val ignoredAuxCameraIds by lazy {
         activity.resources.getStringArray(R.array.config_ignoredAuxCameraIds)
     }
@@ -151,6 +152,12 @@ class CameraManager(activity: AppCompatActivity) {
         }
 
         val mainCamera = facingCameras.first()
+
+        if (!enableAuxCameras) {
+            // Return only the main camera
+            return listOf(mainCamera)
+        }
+
         if (mainCamera.isLogical && mainCamera.focalLengths.size >= 2) {
             // If first camera is logical and it has more focal lengths,
             // it's very likely that it merges all sensors and handles
