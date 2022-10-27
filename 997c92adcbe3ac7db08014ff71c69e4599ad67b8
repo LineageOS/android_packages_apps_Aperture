@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "efb19fd5_01c12d06",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-27T11:26:10Z",
+      "side": 1,
+      "message": "It\u0027s fine... we need to decide on a better way to shown some UI elements for sure",
+      "revId": "997c92adcbe3ac7db08014ff71c69e4599ad67b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
