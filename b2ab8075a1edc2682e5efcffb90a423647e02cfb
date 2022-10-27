@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a2f9897c_047c68c4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-27T11:05:41Z",
+      "side": 1,
+      "message": "I\u0027d move it after setting proper left padding ( or squash them )",
+      "revId": "b2ab8075a1edc2682e5efcffb90a423647e02cfb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
