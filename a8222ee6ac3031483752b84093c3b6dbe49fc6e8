@@ -16,6 +16,24 @@
       "message": "ugh no, the gallery is being a bitch, allow edit in there regardless of the origin...",
       "revId": "a8222ee6ac3031483752b84093c3b6dbe49fc6e8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4dc84011_2521a6ee",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 18796
+      },
+      "writtenOn": "2022-10-27T12:17:53Z",
+      "side": 1,
+      "message": "Gallery supports http live. It can stream video/photo live from web. We can\u0027t edit that image or video.",
+      "parentUuid": "653f79be_e88eded3",
+      "revId": "a8222ee6ac3031483752b84093c3b6dbe49fc6e8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
