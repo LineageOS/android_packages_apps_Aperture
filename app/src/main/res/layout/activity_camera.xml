@@ -7,6 +7,89 @@
     android:layout_height="match_parent"
     tools:context=".CameraActivity">
 
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/secondaryBarLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:scaleType="fitCenter" />
+
+    <ImageView
+        android:id="@+id/viewFinderFocus"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/camera_focus_circle"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
+        app:layout_constraintEnd_toEndOf="@+id/viewFinder"
+        app:layout_constraintStart_toStartOf="@+id/viewFinder"
+        app:layout_constraintTop_toTopOf="@+id/viewFinder"
+        tools:ignore="ContentDescription" />
+
+    <org.lineageos.aperture.ui.GridView
+        android:id="@+id/gridView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
+        app:layout_constraintEnd_toEndOf="@+id/viewFinder"
+        app:layout_constraintStart_toStartOf="@+id/viewFinder"
+        app:layout_constraintTop_toTopOf="@+id/viewFinder" />
+
+    <org.lineageos.aperture.ui.LevelerView
+        android:id="@+id/levelerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
+        app:layout_constraintEnd_toEndOf="@+id/viewFinder"
+        app:layout_constraintStart_toStartOf="@+id/viewFinder"
+        app:layout_constraintTop_toTopOf="@+id/viewFinder" />
+
+    <org.lineageos.aperture.ui.CountDownView
+        android:id="@+id/countDownView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/remainingSeconds"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="125sp" />
+    </org.lineageos.aperture.ui.CountDownView>
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/zoomLevel"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:valueFrom="0.0"
+        android:valueTo="1.0"
+        android:visibility="gone"
+        app:labelBehavior="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <org.lineageos.aperture.ui.VerticalSlider
+        android:id="@+id/exposureLevel"
+        android:layout_width="32dp"
+        android:layout_height="250dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewFinder"
+        app:thumbColor="@color/white"
+        app:thumbTextColor="@color/black"
+        app:thumbTextSize="10dp"
+        app:trackColor="#7FCCCCCC" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/secondaryBarLayout"
         android:layout_width="0dp"
@@ -148,89 +231,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.camera.view.PreviewView
-        android:id="@+id/viewFinder"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/secondaryBarLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:scaleType="fitCenter" />
-
-    <ImageView
-        android:id="@+id/viewFinderFocus"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:src="@drawable/camera_focus_circle"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
-        app:layout_constraintEnd_toEndOf="@+id/viewFinder"
-        app:layout_constraintStart_toStartOf="@+id/viewFinder"
-        app:layout_constraintTop_toTopOf="@+id/viewFinder"
-        tools:ignore="ContentDescription" />
-
-    <org.lineageos.aperture.ui.GridView
-        android:id="@+id/gridView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
-        app:layout_constraintEnd_toEndOf="@+id/viewFinder"
-        app:layout_constraintStart_toStartOf="@+id/viewFinder"
-        app:layout_constraintTop_toTopOf="@+id/viewFinder" />
-
-    <org.lineageos.aperture.ui.LevelerView
-        android:id="@+id/levelerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
-        app:layout_constraintEnd_toEndOf="@+id/viewFinder"
-        app:layout_constraintStart_toStartOf="@+id/viewFinder"
-        app:layout_constraintTop_toTopOf="@+id/viewFinder" />
-
-    <org.lineageos.aperture.ui.CountDownView
-        android:id="@+id/countDownView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/remainingSeconds"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="125sp" />
-    </org.lineageos.aperture.ui.CountDownView>
-
-    <com.google.android.material.slider.Slider
-        android:id="@+id/zoomLevel"
-        android:layout_width="250dp"
-        android:layout_height="0dp"
-        android:valueFrom="0.0"
-        android:valueTo="1.0"
-        android:visibility="gone"
-        app:labelBehavior="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <org.lineageos.aperture.ui.VerticalSlider
-        android:id="@+id/exposureLevel"
-        android:layout_width="32dp"
-        android:layout_height="250dp"
-        android:layout_marginEnd="8dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/viewFinder"
-        app:thumbColor="@color/white"
-        app:thumbTextColor="@color/black"
-        app:thumbTextSize="10dp"
-        app:trackColor="#7FCCCCCC" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/primaryBarLayout"
