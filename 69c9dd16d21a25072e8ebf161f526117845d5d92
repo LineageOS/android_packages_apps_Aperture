@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8136c22_10f537e6",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/LevelerView.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-28T14:53:41Z",
+      "side": 1,
+      "message": "runCatching?",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "69c9dd16d21a25072e8ebf161f526117845d5d92",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
