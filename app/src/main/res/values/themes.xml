@@ -20,6 +20,8 @@
 
     <!-- Main activity theme. -->
     <style name="Theme.Aperture.Camera" parent="Theme.Aperture">
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">monospace</item>
         <item name="android:windowBackground">?attr/colorOnPrimary</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -55,8 +57,6 @@
     <style name="ApertureModeSelectorButton" parent="@style/Widget.Material3.Button.TonalButton">
         <item name="android:backgroundTint">@color/camera_mode_selector_icon</item>
         <item name="android:textColor">@color/camera_mode_selector_text</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:typeface">monospace</item>
     </style>
 
     <!-- Camera mode bar icons highlight theme -->
