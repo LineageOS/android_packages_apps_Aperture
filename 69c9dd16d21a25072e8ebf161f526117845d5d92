@@ -46,6 +46,30 @@
       },
       "revId": "69c9dd16d21a25072e8ebf161f526117845d5d92",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d947033a_a924b3eb",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/LevelerView.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-28T14:58:38Z",
+      "side": 1,
+      "message": "Yeah, that looks good. Leveler still works, right?",
+      "parentUuid": "e4fc6be8_c579432c",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "69c9dd16d21a25072e8ebf161f526117845d5d92",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
