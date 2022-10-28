@@ -23,7 +23,7 @@ import kotlin.math.sin
 
 class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context, attributeSet) {
     private var currentOrientation = ORIENTATION_UNKNOWN
-    private val orientationEventListener =
+    private val orientationEventListener = try {
         object : OrientationEventListener(context, SensorManager.SENSOR_DELAY_UI) {
             override fun onOrientationChanged(orientation: Int) {
                 if (orientation == ORIENTATION_UNKNOWN) {
@@ -34,6 +34,9 @@ class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context,
                 postInvalidate()
             }
         }
+    } catch (_: AssertionError) {
+        null
+    }
 
     private val defaultLevelPaint = Paint().apply {
         isAntiAlias = true
@@ -60,9 +63,9 @@ class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context,
         super.setVisibility(visibility)
 
         if (visibility == VISIBLE) {
-            orientationEventListener.enable()
+            orientationEventListener?.enable()
         } else {
-            orientationEventListener.disable()
+            orientationEventListener?.disable()
         }
     }
 
