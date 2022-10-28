@@ -46,7 +46,7 @@
     </style>
 
     <!-- Secondary bar icons theme -->
-    <style name="ApertureSecondaryBarButton">
+    <style name="Theme.Aperture.Camera.SecondaryBarButton">
         <item name="tint">@color/secondary_bar_button_icon</item>
         <item name="backgroundTint">?attr/colorOnPrimary</item>
         <item name="android:padding">0dp</item>
@@ -54,28 +54,28 @@
     </style>
 
     <!-- Camera mode bar icons theme -->
-    <style name="ApertureModeSelectorButton" parent="@style/Widget.Material3.Button.TonalButton">
+    <style name="Theme.Aperture.Camera.CameraModeSelectorButton" parent="@style/Widget.Material3.Button.TonalButton">
         <item name="android:backgroundTint">@color/camera_mode_selector_icon</item>
         <item name="android:textColor">@color/camera_mode_selector_text</item>
     </style>
 
     <!-- Camera mode bar icons highlight theme -->
-    <style name="ApertureModeSelectorButtonHighlight" parent="@style/ApertureModeSelectorButton">
+    <style name="Theme.Aperture.Camera.CameraModeSelectorButtonHighlight" parent="@style/Theme.Aperture.Camera.CameraModeSelectorButton">
         <item name="android:backgroundTint">@color/camera_mode_selector_icon_highlight</item>
     </style>
 
     <!-- Video duration button theme -->
-    <style name="ApertureVideoDurationButton" parent="@style/ApertureModeSelectorButton">
+    <style name="Theme.Aperture.Camera.VideoDurationButton" parent="@style/Theme.Aperture.Camera.CameraModeSelectorButton">
         <item name="android:backgroundTint">@color/rec_red</item>
     </style>
 
     <!-- Collapsing toolbar style -->
-    <style name="ApertureToolbarCollapsed" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
+    <style name="Theme.Aperture.Camera.ToolbarCollapsed" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="ApertureToolbarExpanded" parent="ApertureToolbarCollapsed">
+    <style name="Theme.Aperture.Camera.ToolbarExpanded" parent="Theme.Aperture.Camera.ToolbarCollapsed">
         <item name="android:textSize">36sp</item>
         <item name="android:drawablePadding">10dp</item>
     </style>
