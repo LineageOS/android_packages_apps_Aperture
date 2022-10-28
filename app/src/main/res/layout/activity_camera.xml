@@ -105,9 +105,6 @@
         <ImageButton
             android:id="@+id/timerButton"
             style="@style/Theme.Aperture.Camera.SecondaryBarButton"
-            android:layout_width="@dimen/secondary_bar_button_size"
-            android:layout_height="@dimen/secondary_bar_button_size"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/timer_button_description"
             android:src="@drawable/ic_timer_off"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -120,9 +117,6 @@
         <ToggleButton
             android:id="@+id/aspectRatioButton"
             style="@style/Theme.Aperture.Camera.SecondaryBarButton"
-            android:layout_width="@dimen/secondary_bar_button_size"
-            android:layout_height="@dimen/secondary_bar_button_size"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/aspect_ratio_button_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/videoQualityButton"
@@ -133,9 +127,6 @@
         <ToggleButton
             android:id="@+id/videoQualityButton"
             style="@style/Theme.Aperture.Camera.SecondaryBarButton"
-            android:layout_width="@dimen/secondary_bar_button_size"
-            android:layout_height="@dimen/secondary_bar_button_size"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/video_quality_button_description"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/effectButton"
@@ -146,9 +137,6 @@
         <ImageButton
             android:id="@+id/effectButton"
             style="@style/Theme.Aperture.Camera.SecondaryBarButton"
-            android:layout_width="@dimen/secondary_bar_button_size"
-            android:layout_height="@dimen/secondary_bar_button_size"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/effect_button_description"
             android:src="@drawable/ic_effect_none"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -160,9 +148,6 @@
         <ImageButton
             android:id="@+id/gridButton"
             style="@style/Theme.Aperture.Camera.SecondaryBarButton"
-            android:layout_width="@dimen/secondary_bar_button_size"
-            android:layout_height="@dimen/secondary_bar_button_size"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/grid_button_description"
             android:src="@drawable/ic_grid_off"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -174,9 +159,6 @@
         <ImageButton
             android:id="@+id/torchButton"
             style="@style/Theme.Aperture.Camera.SecondaryBarButton"
-            android:layout_width="@dimen/secondary_bar_button_size"
-            android:layout_height="@dimen/secondary_bar_button_size"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/torch_button_description"
             android:src="@drawable/ic_torch_on"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -189,9 +171,6 @@
         <ImageButton
             android:id="@+id/flashButton"
             style="@style/Theme.Aperture.Camera.SecondaryBarButton"
-            android:layout_width="@dimen/secondary_bar_button_size"
-            android:layout_height="@dimen/secondary_bar_button_size"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/flash_button_description"
             android:src="@drawable/ic_flash_off"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -204,9 +183,6 @@
         <ImageButton
             android:id="@+id/micButton"
             style="@style/Theme.Aperture.Camera.SecondaryBarButton"
-            android:layout_width="@dimen/secondary_bar_button_size"
-            android:layout_height="@dimen/secondary_bar_button_size"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/mic_button_description"
             android:src="@drawable/ic_mic_off"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -219,9 +195,6 @@
         <ImageButton
             android:id="@+id/settingsButton"
             style="@style/Theme.Aperture.Camera.SecondaryBarButton"
-            android:layout_width="@dimen/secondary_bar_button_size"
-            android:layout_height="@dimen/secondary_bar_button_size"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/settings_button_description"
             android:src="@drawable/ic_settings"
             app:layout_constraintBottom_toBottomOf="parent"
