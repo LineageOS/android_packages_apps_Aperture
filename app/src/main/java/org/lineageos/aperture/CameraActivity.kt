@@ -32,6 +32,7 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
@@ -105,6 +106,7 @@ open class CameraActivity : AppCompatActivity() {
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
+    private val secondaryBarLayout by lazy { findViewById<HorizontalScrollView>(R.id.secondaryBarLayout) }
     private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
     private val shutterButton by lazy { findViewById<ImageButton>(R.id.shutterButton) }
     private val timerButton by lazy { findViewById<Button>(R.id.timerButton) }
@@ -814,15 +816,18 @@ open class CameraActivity : AppCompatActivity() {
         when (cameraMode) {
             CameraMode.QR -> {
                 timerButton.isVisible = false
-                primaryBarLayout.isInvisible = true
+                secondaryBarLayout.isVisible = false
+                primaryBarLayout.isVisible = false
             }
             CameraMode.PHOTO -> {
                 timerButton.isVisible = true
-                primaryBarLayout.isInvisible = false
+                secondaryBarLayout.isVisible = true
+                primaryBarLayout.isVisible = true
             }
             CameraMode.VIDEO -> {
                 timerButton.isVisible = true
-                primaryBarLayout.isInvisible = false
+                secondaryBarLayout.isVisible = true
+                primaryBarLayout.isVisible = true
             }
         }
 
