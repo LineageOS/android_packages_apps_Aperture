@@ -105,8 +105,10 @@ open class CameraActivity : AppCompatActivity() {
     private val micButton by lazy { findViewById<Button>(R.id.micButton) }
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
+    private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
-    private val secondaryBarLayout by lazy { findViewById<HorizontalScrollView>(R.id.secondaryBarLayout) }
+    private val secondaryBottomBarLayout by lazy { findViewById<ConstraintLayout>(R.id.secondaryBottomBarLayout) }
+    private val secondaryTopBarLayout by lazy { findViewById<HorizontalScrollView>(R.id.secondaryTopBarLayout) }
     private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
     private val shutterButton by lazy { findViewById<ImageButton>(R.id.shutterButton) }
     private val timerButton by lazy { findViewById<Button>(R.id.timerButton) }
@@ -306,7 +308,7 @@ open class CameraActivity : AppCompatActivity() {
             intentActions[it]?.invoke()
         }
 
-        // Set secondary bar button callbacks
+        // Set secondary top bar button callbacks
         aspectRatioButton.setOnClickListener { cycleAspectRatio() }
         videoQualityButton.setOnClickListener { cycleVideoQuality() }
         effectButton.setOnClickListener { cyclePhotoEffects() }
@@ -316,6 +318,11 @@ open class CameraActivity : AppCompatActivity() {
         flashButton.setOnClickListener { cycleFlashMode() }
         micButton.setOnClickListener { toggleMicrophoneMode() }
         settingsButton.setOnClickListener { openSettings() }
+
+        // Set secondary bottom bar button callbacks
+        proButton.setOnClickListener {
+            secondaryTopBarLayout.isVisible = !secondaryTopBarLayout.isVisible
+        }
 
         // Initialize camera mode highlight position
         (cameraModeHighlight.parent as View).doOnLayout {
@@ -387,6 +394,8 @@ open class CameraActivity : AppCompatActivity() {
             }
             handler.removeMessages(MSG_HIDE_EXPOSURE_SLIDER)
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_EXPOSURE_SLIDER), 2000)
+
+            secondaryTopBarLayout.isVisible = false
         }
 
         // Observe preview stream state
@@ -816,17 +825,17 @@ open class CameraActivity : AppCompatActivity() {
         when (cameraMode) {
             CameraMode.QR -> {
                 timerButton.isVisible = false
-                secondaryBarLayout.isVisible = false
+                secondaryBottomBarLayout.isVisible = false
                 primaryBarLayout.isVisible = false
             }
             CameraMode.PHOTO -> {
                 timerButton.isVisible = true
-                secondaryBarLayout.isVisible = true
+                secondaryBottomBarLayout.isVisible = true
                 primaryBarLayout.isVisible = true
             }
             CameraMode.VIDEO -> {
                 timerButton.isVisible = true
-                secondaryBarLayout.isVisible = true
+                secondaryBottomBarLayout.isVisible = true
                 primaryBarLayout.isVisible = true
             }
         }
@@ -897,6 +906,9 @@ open class CameraActivity : AppCompatActivity() {
 
         this.cameraMode = cameraMode
         sharedPreferences.lastCameraMode = cameraMode
+
+        // Hide secondary top bar
+        secondaryTopBarLayout.isVisible = false
 
         bindCameraUseCases()
     }

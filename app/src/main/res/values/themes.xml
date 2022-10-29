@@ -45,17 +45,40 @@
         <item name="android:thumb">@drawable/settingslib_switch_thumb</item>
     </style>
 
-    <!-- Secondary bar icons theme -->
+    <!-- Secondary bar icons base theme -->
     <style name="Theme.Aperture.Camera.SecondaryBarButton">
         <item name="tint">@color/secondary_bar_button_icon</item>
         <item name="backgroundTint">?attr/colorOnPrimary</item>
         <item name="drawableTint">@color/secondary_bar_button_icon</item>
         <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:textColor">@color/secondary_bar_button_icon</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Secondary top bar icons theme -->
+    <style name="Theme.Aperture.Camera.SecondaryTopBarButton" parent="Theme.Aperture.Camera.SecondaryBarButton">
         <item name="android:layout_width">108dp</item>
         <item name="android:layout_height">72dp</item>
         <item name="android:paddingHorizontal">0dp</item>
-        <item name="android:textColor">@color/secondary_bar_button_icon</item>
-        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- Secondary bottom bar icons theme -->
+    <style name="Theme.Aperture.Camera.SecondaryBottomBarButton" parent="Theme.Aperture.Camera.SecondaryBarButton">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+
+    <!-- Lens selector button style -->
+    <style name="Theme.Aperture.Camera.LensSelectorButton">
+        <item name="tint">@color/white</item>
+        <item name="backgroundTint">@color/lens_selector_button_background</item>
+        <item name="android:background">@drawable/lens_selector_button_background</item>
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:paddingHorizontal">0dp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <!-- Camera mode bar icons theme -->
