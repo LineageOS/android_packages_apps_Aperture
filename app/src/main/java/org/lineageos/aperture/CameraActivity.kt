@@ -790,7 +790,6 @@ open class CameraActivity : AppCompatActivity() {
         // Initialize the use case we want and set its properties
         val cameraUseCases = when (cameraMode) {
             CameraMode.QR -> {
-                cameraController.imageAnalysisTargetSize = CameraController.OutputSize(aspectRatio)
                 cameraController.setImageAnalysisAnalyzer(cameraExecutor, imageAnalyzer)
                 CameraController.IMAGE_ANALYSIS
             }
@@ -838,7 +837,9 @@ open class CameraActivity : AppCompatActivity() {
         cameraController.bindToLifecycle(this)
 
         // Restore settings that can be set on the fly
-        setGridMode(sharedPreferences.lastGridMode)
+        setGridMode(
+            if (cameraMode != CameraMode.QR) sharedPreferences.lastGridMode else GridMode.OFF
+        )
         setFlashMode(sharedPreferences.photoFlashMode)
         setMicrophoneMode(sharedPreferences.lastMicMode)
 
