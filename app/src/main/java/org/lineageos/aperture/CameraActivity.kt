@@ -31,10 +31,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
-import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
@@ -90,28 +90,28 @@ import java.util.concurrent.Executors
 @androidx.camera.core.ExperimentalZeroShutterLag
 @androidx.camera.view.video.ExperimentalVideo
 open class CameraActivity : AppCompatActivity() {
-    private val aspectRatioButton by lazy { findViewById<ToggleButton>(R.id.aspectRatioButton) }
+    private val aspectRatioButton by lazy { findViewById<Button>(R.id.aspectRatioButton) }
     private val cameraModeHighlight by lazy { findViewById<MaterialButton>(R.id.cameraModeHighlight) }
     private val countDownView by lazy { findViewById<CountDownView>(R.id.countDownView) }
-    private val effectButton by lazy { findViewById<ImageButton>(R.id.effectButton) }
+    private val effectButton by lazy { findViewById<Button>(R.id.effectButton) }
     private val exposureLevel by lazy { findViewById<VerticalSlider>(R.id.exposureLevel) }
-    private val flashButton by lazy { findViewById<ImageButton>(R.id.flashButton) }
+    private val flashButton by lazy { findViewById<Button>(R.id.flashButton) }
     private val flipCameraButton by lazy { findViewById<ImageButton>(R.id.flipCameraButton) }
     private val galleryButton by lazy { findViewById<ImageView>(R.id.galleryButton) }
-    private val gridButton by lazy { findViewById<ImageButton>(R.id.gridButton) }
+    private val gridButton by lazy { findViewById<Button>(R.id.gridButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
     private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
-    private val micButton by lazy { findViewById<ImageButton>(R.id.micButton) }
+    private val micButton by lazy { findViewById<Button>(R.id.micButton) }
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
-    private val settingsButton by lazy { findViewById<ImageButton>(R.id.settingsButton) }
+    private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
     private val shutterButton by lazy { findViewById<ImageButton>(R.id.shutterButton) }
-    private val timerButton by lazy { findViewById<ImageButton>(R.id.timerButton) }
-    private val torchButton by lazy { findViewById<ImageButton>(R.id.torchButton) }
+    private val timerButton by lazy { findViewById<Button>(R.id.timerButton) }
+    private val torchButton by lazy { findViewById<Button>(R.id.torchButton) }
     private val videoDuration by lazy { findViewById<MaterialButton>(R.id.videoDuration) }
     private val videoModeButton by lazy { findViewById<MaterialButton>(R.id.videoModeButton) }
-    private val videoQualityButton by lazy { findViewById<ToggleButton>(R.id.videoQualityButton) }
+    private val videoQualityButton by lazy { findViewById<Button>(R.id.videoQualityButton) }
     private val videoRecordingStateButton by lazy { findViewById<ImageButton>(R.id.videoRecordingStateButton) }
     private val viewFinder by lazy { findViewById<PreviewView>(R.id.viewFinder) }
     private val viewFinderFocus by lazy { findViewById<ImageView>(R.id.viewFinderFocus) }
@@ -1011,17 +1011,27 @@ open class CameraActivity : AppCompatActivity() {
      * Update the grid button icon based on the value set in grid view
      */
     private fun updateGridIcon() {
-        gridButton.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                when (sharedPreferences.lastGridMode) {
+        sharedPreferences.lastGridMode.let {
+            gridButton.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                when (it) {
                     GridMode.OFF -> R.drawable.ic_grid_off
                     GridMode.ON_3 -> R.drawable.ic_grid_on_3
                     GridMode.ON_4 -> R.drawable.ic_grid_on_4
                     GridMode.ON_GOLDENRATIO -> R.drawable.ic_grid_on_goldenratio
+                },
+                0,
+                0
+            )
+            gridButton.text = resources.getText(
+                when (it) {
+                    GridMode.OFF -> R.string.grid_off
+                    GridMode.ON_3 -> R.string.grid_on_3
+                    GridMode.ON_4 -> R.string.grid_on_4
+                    GridMode.ON_GOLDENRATIO -> R.string.grid_on_goldenratio
                 }
             )
-        )
+        }
     }
 
     /**
@@ -1046,16 +1056,25 @@ open class CameraActivity : AppCompatActivity() {
      * Update the timer mode button icon based on the value set in settings
      */
     private fun updateTimerModeIcon() {
-        timerButton.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                when (sharedPreferences.timerMode) {
+        sharedPreferences.timerMode.let {
+            timerButton.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                when (it) {
                     3 -> R.drawable.ic_timer_3
                     10 -> R.drawable.ic_timer_10
                     else -> R.drawable.ic_timer_off
+                },
+                0,
+                0
+            )
+            timerButton.text = resources.getText(
+                when (it) {
+                    3 -> R.string.timer_3
+                    10 -> R.string.timer_10
+                    else -> R.string.timer_off
                 }
             )
-        )
+        }
     }
 
     /**
@@ -1072,21 +1091,53 @@ open class CameraActivity : AppCompatActivity() {
 
     private fun updateAspectRatioIcon() {
         aspectRatioButton.isVisible = cameraMode != CameraMode.VIDEO
-        aspectRatioButton.text = when (sharedPreferences.aspectRatio) {
-            AspectRatio.RATIO_4_3 -> "4:3"
-            AspectRatio.RATIO_16_9 -> "16:9"
-            else -> throw Exception("Unknown aspect ratio ${sharedPreferences.aspectRatio}")
+
+        sharedPreferences.aspectRatio.let {
+            aspectRatioButton.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                when (it) {
+                    AspectRatio.RATIO_4_3 -> R.drawable.ic_aspect_ratio_4_3
+                    AspectRatio.RATIO_16_9 -> R.drawable.ic_aspect_ratio_16_9
+                    else -> throw Exception("Unknown aspect ratio $it")
+                },
+                0,
+                0
+            )
+            aspectRatioButton.text = resources.getText(
+                when (it) {
+                    AspectRatio.RATIO_4_3 -> R.string.aspect_ratio_4_3
+                    AspectRatio.RATIO_16_9 -> R.string.aspect_ratio_16_9
+                    else -> throw Exception("Unknown aspect ratio $it")
+                }
+            )
         }
     }
 
     private fun updateVideoQualityIcon() {
         videoQualityButton.isVisible = cameraMode == CameraMode.VIDEO
-        videoQualityButton.text = when (videoQuality) {
-            Quality.SD -> "SD"
-            Quality.HD -> "HD"
-            Quality.FHD -> "FHD"
-            Quality.UHD -> "UHD"
-            else -> throw Exception("Unknown video quality $videoQuality")
+
+        videoQuality.let {
+            videoQualityButton.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                when (it) {
+                    Quality.SD -> R.drawable.ic_video_quality_sd
+                    Quality.HD -> R.drawable.ic_video_quality_hd
+                    Quality.FHD -> R.drawable.ic_video_quality_hd
+                    Quality.UHD -> R.drawable.ic_video_quality_uhd
+                    else -> throw Exception("Unknown video quality $it")
+                },
+                0,
+                0
+            )
+            videoQualityButton.text = resources.getText(
+                when (it) {
+                    Quality.SD -> R.string.video_quality_sd
+                    Quality.HD -> R.string.video_quality_hd
+                    Quality.FHD -> R.string.video_quality_fhd
+                    Quality.UHD -> R.string.video_quality_uhd
+                    else -> throw Exception("Unknown video quality $it")
+                }
+            )
         }
     }
 
@@ -1095,16 +1146,26 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updateTorchModeIcon() {
         torchButton.isVisible = cameraController.cameraInfo?.hasFlashUnit() == true
-        torchButton.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                when (cameraController.torchState.value) {
+
+        cameraController.torchState.value.let {
+            torchButton.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                when (it) {
                     TorchState.OFF -> R.drawable.ic_torch_off
                     TorchState.ON -> R.drawable.ic_torch_on
                     else -> R.drawable.ic_torch_off
+                },
+                0,
+                0
+            )
+            torchButton.text = resources.getText(
+                when (it) {
+                    TorchState.OFF -> R.string.torch_off
+                    TorchState.ON -> R.string.torch_on
+                    else -> R.string.torch_off
                 }
             )
-        )
+        }
     }
 
     /**
@@ -1119,17 +1180,28 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updateFlashModeIcon() {
         flashButton.isVisible = cameraMode == CameraMode.PHOTO && camera.hasFlashUnit
-        flashButton.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                when (cameraController.imageCaptureFlashMode) {
+
+        cameraController.imageCaptureFlashMode.let {
+            flashButton.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                when (it) {
                     ImageCapture.FLASH_MODE_AUTO -> R.drawable.ic_flash_auto
                     ImageCapture.FLASH_MODE_ON -> R.drawable.ic_flash_on
                     ImageCapture.FLASH_MODE_OFF -> R.drawable.ic_flash_off
                     else -> R.drawable.ic_flash_off
+                },
+                0,
+                0
+            )
+            flashButton.text = resources.getText(
+                when (it) {
+                    ImageCapture.FLASH_MODE_AUTO -> R.string.flash_auto
+                    ImageCapture.FLASH_MODE_ON -> R.string.flash_on
+                    ImageCapture.FLASH_MODE_OFF -> R.string.flash_off
+                    else -> R.string.flash_off
                 }
             )
-        )
+        }
     }
 
     /**
@@ -1161,12 +1233,16 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updateMicrophoneModeIcon() {
         micButton.isVisible = cameraMode == CameraMode.VIDEO
-        micButton.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                if (audioConfig.audioEnabled) R.drawable.ic_mic_on else R.drawable.ic_mic_off
+
+        audioConfig.audioEnabled.let {
+            micButton.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                if (it) R.drawable.ic_mic_on else R.drawable.ic_mic_off,
+                0,
+                0
             )
-        )
+            micButton.text = resources.getText(if (it) R.string.mic_on else R.string.mic_off)
+        }
     }
 
     /**
@@ -1209,10 +1285,11 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updatePhotoEffectIcon() {
         effectButton.isVisible = cameraMode == CameraMode.PHOTO && supportedExtensionModes.size > 1
-        effectButton.setImageDrawable(
-            ContextCompat.getDrawable(
-                this,
-                when (extensionMode) {
+
+        extensionMode.let {
+            effectButton.setCompoundDrawablesWithIntrinsicBounds(
+                0,
+                when (it) {
                     ExtensionMode.NONE -> R.drawable.ic_effect_none
                     ExtensionMode.BOKEH -> R.drawable.ic_effect_bokeh
                     ExtensionMode.HDR -> R.drawable.ic_effect_hdr
@@ -1220,9 +1297,22 @@ open class CameraActivity : AppCompatActivity() {
                     ExtensionMode.FACE_RETOUCH -> R.drawable.ic_effect_face_retouch
                     ExtensionMode.AUTO -> R.drawable.ic_effect_auto
                     else -> R.drawable.ic_effect_none
+                },
+                0,
+                0
+            )
+            effectButton.text = resources.getText(
+                when (it) {
+                    ExtensionMode.NONE -> R.string.effect_none
+                    ExtensionMode.BOKEH -> R.string.effect_bokeh
+                    ExtensionMode.HDR -> R.string.effect_hdr
+                    ExtensionMode.NIGHT -> R.string.effect_night
+                    ExtensionMode.FACE_RETOUCH -> R.string.effect_face_retouch
+                    ExtensionMode.AUTO -> R.string.effect_auto
+                    else -> R.string.effect_none
                 }
             )
-        )
+        }
     }
 
     /**
