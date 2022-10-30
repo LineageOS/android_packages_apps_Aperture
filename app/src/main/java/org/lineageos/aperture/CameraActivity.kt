@@ -275,7 +275,9 @@ open class CameraActivity : AppCompatActivity() {
         hideStatusBars()
 
         setContentView(R.layout.activity_camera)
-        setShowWhenLocked(true)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            setShowWhenLocked(true)
+        }
 
         // Register shortcuts
         ShortcutsUtils.registerShortcuts(this)
