@@ -9,6 +9,7 @@ package org.lineageos.aperture.utils
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.location.Location
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.camera.core.ImageCapture
@@ -30,7 +31,9 @@ object StorageUtils {
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            put(MediaStore.Images.Media.RELATIVE_PATH, STORAGE_DESTINATION)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.Images.Media.RELATIVE_PATH, STORAGE_DESTINATION)
+            }
         }
 
         return ImageCapture.OutputFileOptions
@@ -53,7 +56,9 @@ object StorageUtils {
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
             put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
-            put(MediaStore.Video.Media.RELATIVE_PATH, STORAGE_DESTINATION)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.Video.Media.RELATIVE_PATH, STORAGE_DESTINATION)
+            }
         }
 
         return MediaStoreOutputOptions
