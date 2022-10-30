@@ -39,13 +39,10 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.AspectRatio
-import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.TorchState
 import androidx.camera.extensions.ExtensionMode
-import androidx.camera.extensions.ExtensionsManager
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.Quality
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoRecordEvent
@@ -77,6 +74,7 @@ import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.VerticalSlider
 import org.lineageos.aperture.utils.Camera
 import org.lineageos.aperture.utils.CameraFacing
+import org.lineageos.aperture.utils.CameraManager
 import org.lineageos.aperture.utils.CameraMode
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.CameraState
@@ -85,7 +83,6 @@ import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
 import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalZeroShutterLag
@@ -126,12 +123,11 @@ open class CameraActivity : AppCompatActivity() {
 
     private val imageAnalyzer by lazy { QrImageAnalyzer(this) }
 
-    private lateinit var cameraProvider: ProcessCameraProvider
-    private lateinit var extensionsManager: ExtensionsManager
-
-    private lateinit var cameraExecutor: ExecutorService
-
-    private lateinit var cameraController: LifecycleCameraController
+    private lateinit var cameraManager: CameraManager
+    private val cameraController: LifecycleCameraController
+        get() = cameraManager.cameraController
+    private val cameraExecutor: ExecutorService
+        get() = cameraManager.cameraExecutor
 
     private lateinit var cameraMode: CameraMode
     private lateinit var cameraFacing: CameraFacing
@@ -152,7 +148,6 @@ open class CameraActivity : AppCompatActivity() {
 
     private val extensionMode: Int
         get() = sharedPreferences.photoEffect
-    private lateinit var supportedExtensionModes: List<Int>
 
     private var tookSomething: Boolean = false
         set(value) {
@@ -289,14 +284,8 @@ open class CameraActivity : AppCompatActivity() {
             )
         }
 
-        // Initialize camera provider
-        cameraProvider = ProcessCameraProvider.getInstance(this).get()
-
-        // Initialize camera controller
-        cameraController = LifecycleCameraController(this)
-
-        // Get vendor extensions manager
-        extensionsManager = ExtensionsManager.getInstanceAsync(this, cameraProvider).get()
+        // Initialize camera manager
+        cameraManager = CameraManager(this)
 
         // Initialize sounds utils
         cameraSoundsUtils = CameraSoundsUtils(sharedPreferences)
@@ -309,6 +298,9 @@ open class CameraActivity : AppCompatActivity() {
         intent.action?.let {
             intentActions[it]?.invoke()
         }
+
+        // Select a camera
+        camera = cameraManager.getCameraOfFacingOrFirstAvailable(cameraFacing)
 
         // Set secondary top bar button callbacks
         aspectRatioButton.setOnClickListener { cycleAspectRatio() }
@@ -494,8 +486,6 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         galleryButton.setOnClickListener { openGallery() }
-
-        cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
     override fun onResume() {
@@ -526,7 +516,7 @@ open class CameraActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        cameraExecutor.shutdown()
+        cameraManager.shutdown()
     }
 
     override fun onRequestPermissionsResult(
@@ -758,25 +748,14 @@ open class CameraActivity : AppCompatActivity() {
         // Hide grid until preview is ready
         gridView.alpha = 0f
 
-        // Select front/back camera
-        var cameraSelector = when (cameraMode) {
-            CameraMode.QR -> CameraSelector.DEFAULT_BACK_CAMERA
-            else -> when (cameraFacing) {
-                CameraFacing.FRONT -> CameraSelector.DEFAULT_FRONT_CAMERA
-                CameraFacing.BACK -> CameraSelector.DEFAULT_BACK_CAMERA
-                else -> CameraSelector.DEFAULT_BACK_CAMERA
-            }
+        // Get the desired camera
+        camera = when (cameraMode) {
+            CameraMode.QR -> cameraManager.getCameraOfFacingOrFirstAvailable(CameraFacing.BACK)
+            else -> camera
         }
 
-        // Get a stable reference to CameraInfo
-        // We can hardcode the first one in the filter as long as we use DEFAULT_*_CAMERA
-        camera = Camera(cameraSelector.filter(cameraProvider.availableCameraInfos).first())
-
-        // Get the supported vendor extensions for the given camera selector
-        supportedExtensionModes = extensionsManager.getSupportedModes(cameraSelector)
-
         // Fallback to ExtensionMode.NONE if necessary
-        if (!supportedExtensionModes.contains(extensionMode)) {
+        if (!camera.supportsExtensionMode(extensionMode)) {
             sharedPreferences.photoEffect = ExtensionMode.NONE
         }
 
@@ -815,10 +794,12 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         // Only photo mode supports vendor extensions for now
-        if (cameraMode == CameraMode.PHOTO && supportedExtensionModes.contains(extensionMode)) {
-            cameraSelector = extensionsManager.getExtensionEnabledCameraSelector(
-                cameraSelector, extensionMode
+        val cameraSelector = if (cameraMode == CameraMode.PHOTO) {
+            cameraManager.extensionsManager.getExtensionEnabledCameraSelector(
+                camera.cameraSelector, extensionMode
             )
+        } else {
+            camera.cameraSelector
         }
 
         // Setup UI depending on camera mode
@@ -923,13 +904,8 @@ open class CameraActivity : AppCompatActivity() {
 
         (flipCameraButton.drawable as AnimatedVectorDrawable).start()
 
-        cameraFacing = when (cameraFacing) {
-            // We can definitely do it better
-            CameraFacing.FRONT -> CameraFacing.BACK
-            CameraFacing.BACK -> CameraFacing.FRONT
-            else -> CameraFacing.BACK
-        }
-        sharedPreferences.lastCameraFacing = cameraFacing
+        camera = cameraManager.getNextCamera(camera)
+        sharedPreferences.lastCameraFacing = camera.cameraFacing
 
         bindCameraUseCases()
     }
@@ -1302,7 +1278,8 @@ open class CameraActivity : AppCompatActivity() {
      * Update the photo effect icon based on the current value of extensionMode
      */
     private fun updatePhotoEffectIcon() {
-        effectButton.isVisible = cameraMode == CameraMode.PHOTO && supportedExtensionModes.size > 1
+        effectButton.isVisible =
+            cameraMode == CameraMode.PHOTO && camera.supportedExtensionModes.size > 1
 
         extensionMode.let {
             effectButton.setCompoundDrawablesWithIntrinsicBounds(
@@ -1338,8 +1315,10 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun cyclePhotoEffects() {
         setExtensionMode(
-            if (extensionMode == supportedExtensionModes.last()) supportedExtensionModes.first()
-            else supportedExtensionModes[supportedExtensionModes.indexOf(extensionMode) + 1]
+            if (extensionMode == camera.supportedExtensionModes.last())
+                camera.supportedExtensionModes.first()
+            else camera.supportedExtensionModes[
+                    camera.supportedExtensionModes.indexOf(extensionMode) + 1]
         )
     }
 
