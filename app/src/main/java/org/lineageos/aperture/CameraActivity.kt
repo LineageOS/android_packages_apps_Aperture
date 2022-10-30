@@ -16,10 +16,11 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.ColorDrawable
-import android.icu.number.NumberFormatter
+import android.icu.text.DecimalFormat
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -83,7 +84,6 @@ import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
-import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -440,8 +440,8 @@ open class CameraActivity : AppCompatActivity() {
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_EXPOSURE_SLIDER), 2000)
         }
         exposureLevel.textFormatter = {
-            EXPOSURE_LEVEL_FORMATTER.format(Int.mapToRange(camera.exposureCompensationRange, it))
-                .toString()
+            val ev = Int.mapToRange(camera.exposureCompensationRange, it)
+            if (ev == 0) "0" else EXPOSURE_LEVEL_FORMATTER.format(ev).toString()
         }
 
         // Set primary bar button callbacks
@@ -1514,8 +1514,6 @@ open class CameraActivity : AppCompatActivity() {
         private const val MSG_HIDE_FOCUS_RING = 1
         private const val MSG_HIDE_EXPOSURE_SLIDER = 2
 
-        private val EXPOSURE_LEVEL_FORMATTER = NumberFormatter.with()
-            .locale(Locale.US)
-            .sign(NumberFormatter.SignDisplay.EXCEPT_ZERO)
+        private val EXPOSURE_LEVEL_FORMATTER = DecimalFormat("+#;-#")
     }
 }
