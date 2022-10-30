@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ecd08875_4cd86f67",
+        "filename": "app/src/main/res/layout/activity_camera.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-30T16:51:42Z",
+      "side": 1,
+      "message": "not sure if this was intended to land in this change.",
+      "revId": "5c6e48bc7913c247e99b97876567ddc8133a8ea3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
