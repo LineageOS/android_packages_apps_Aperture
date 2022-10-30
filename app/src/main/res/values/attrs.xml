@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="VerticalSlider">
+    <declare-styleable name="Slider">
         <attr name="trackColor" format="color" />
         <attr name="thumbColor" format="color" />
         <attr name="thumbTextColor" format="color" />
