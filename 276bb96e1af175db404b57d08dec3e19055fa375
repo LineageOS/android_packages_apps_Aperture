@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cd4052fa_780f68de",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2022-10-30T12:44:07Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "276bb96e1af175db404b57d08dec3e19055fa375",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9ca4976_86d7052e",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2022-10-30T12:44:07Z",
+      "side": 1,
+      "message": "line length",
+      "revId": "276bb96e1af175db404b57d08dec3e19055fa375",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2f88bf53_26bc3011",
+        "filename": "app/src/main/res/color/lens_selector_button_background.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2022-10-30T12:44:07Z",
+      "side": 1,
+      "message": "no newline at end",
+      "revId": "276bb96e1af175db404b57d08dec3e19055fa375",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "276bfcd2_e0a3008c",
+        "filename": "app/src/main/res/drawable/lens_selector_button_background.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2022-10-30T12:44:07Z",
+      "side": 1,
+      "message": "no newline at end",
+      "revId": "276bb96e1af175db404b57d08dec3e19055fa375",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
