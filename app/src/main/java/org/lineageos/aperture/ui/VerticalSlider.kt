@@ -115,11 +115,10 @@ class VerticalSlider @JvmOverloads constructor(
         canvas.drawRoundRect(track, trackRadius, trackRadius, trackPaint)
     }
 
-    private fun drawThumb(canvas: Canvas) {
+    private fun thumb(): Triple<Float, Float, Float> {
         val track = track()
         val trackHeight = track.height()
 
-        // Draw circle
         val cx = width / 2f
         val cy = if (steps > 0) {
             val progress = Int.mapToRange(Range(0, steps), progress).toFloat() / steps
@@ -127,7 +126,14 @@ class VerticalSlider @JvmOverloads constructor(
         } else {
             (trackHeight - (trackHeight * progress)) + track.top
         }
-        canvas.drawCircle(cx, cy, width / 2.15f, thumbPaint)
+
+        return Triple(cx, cy, width / 2.15f)
+    }
+
+    private fun drawThumb(canvas: Canvas) {
+        // Draw circle
+        val thumb = thumb()
+        canvas.drawCircle(thumb.first, thumb.second, thumb.third, thumbPaint)
 
         // Draw text
         val text = textFormatter(progress)
@@ -135,7 +141,10 @@ class VerticalSlider @JvmOverloads constructor(
             thumbTextPaint.getTextBounds(text, 0, text.length, this)
         }
         canvas.drawText(
-            text, (width - textBounds.width()) / 2f, cy + (textBounds.height() / 2), thumbTextPaint
+            text,
+            thumb.first - (textBounds.width() / 2),
+            thumb.second + (textBounds.height() / 2),
+            thumbTextPaint
         )
     }
 }
