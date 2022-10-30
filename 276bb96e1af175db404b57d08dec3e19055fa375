@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd37d05a_10341e16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2022-10-30T16:07:29Z",
+      "side": 1,
+      "message": "What do you mean by \"we don\u0027t care about those\"? I mean, it\u0027s obvious that you don\u0027t, but https://developer.android.com/kotlin/style-guide has only a few exemptions, with the ones i commented on not among them",
+      "revId": "276bb96e1af175db404b57d08dec3e19055fa375",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd4052fa_780f68de",
