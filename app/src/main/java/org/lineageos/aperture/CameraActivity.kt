@@ -69,9 +69,9 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.size.Scale
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.slider.Slider
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
+import org.lineageos.aperture.ui.HorizontalSlider
 import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.VerticalSlider
 import org.lineageos.aperture.utils.Camera
@@ -119,7 +119,7 @@ open class CameraActivity : AppCompatActivity() {
     private val videoRecordingStateButton by lazy { findViewById<ImageButton>(R.id.videoRecordingStateButton) }
     private val viewFinder by lazy { findViewById<PreviewView>(R.id.viewFinder) }
     private val viewFinderFocus by lazy { findViewById<ImageView>(R.id.viewFinderFocus) }
-    private val zoomLevel by lazy { findViewById<Slider>(R.id.zoomLevel) }
+    private val zoomLevel by lazy { findViewById<HorizontalSlider>(R.id.zoomLevel) }
 
     private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
     private val locationManager by lazy { getSystemService(LocationManager::class.java) }
@@ -416,19 +416,17 @@ open class CameraActivity : AppCompatActivity() {
                 return@observe
             }
 
-            zoomLevel.value = it.linearZoom
+            zoomLevel.progress = it.linearZoom
             zoomLevel.visibility = View.VISIBLE
 
             handler.removeMessages(MSG_HIDE_ZOOM_SLIDER)
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_ZOOM_SLIDER), 2000)
         }
 
-        zoomLevel.addOnChangeListener { _, value, fromUser ->
-            if (fromUser) {
-                cameraController.setLinearZoom(value)
-            }
+        zoomLevel.onProgressChangedByUser = {
+            cameraController.setLinearZoom(it)
         }
-        zoomLevel.setLabelFormatter {
+        zoomLevel.textFormatter = {
             "%.1fx".format(cameraController.zoomState.value?.zoomRatio)
         }
 
