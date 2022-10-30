@@ -39,14 +39,18 @@ class CameraManager(activity: AppCompatActivity) {
     // We expect device cameras to never change
     val backCameras = prepareDeviceCamerasList(CameraFacing.BACK)
     val mainBackCamera = backCameras.firstOrNull()
+    val backCamerasSupportingVideoRecording = backCameras.filter { it.supportsVideoRecording }
 
     val frontCameras = prepareDeviceCamerasList(CameraFacing.FRONT)
     val mainFrontCamera = frontCameras.firstOrNull()
+    val frontCamerasSupportingVideoRecording = frontCameras.filter { it.supportsVideoRecording }
 
     val externalCameras: List<Camera>
         get() = cameras.values.filter {
             it.cameraFacing == CameraFacing.EXTERNAL
         }
+    val externalCamerasSupportingVideoRecording: List<Camera>
+        get() = externalCameras.filter { it.supportsVideoRecording }
 
     // Google recommends cycling between all externals, back and front
     // We're gonna do back, front and all externals instead, makes more sense
@@ -60,20 +64,58 @@ class CameraManager(activity: AppCompatActivity) {
             }
             addAll(externalCameras)
         }
+    val availableCamerasSupportingVideoRecording: List<Camera>
+        get() = availableCameras.filter { it.supportsVideoRecording }
 
-    fun getCameraOfFacingOrFirstAvailable(cameraFacing: CameraFacing): Camera {
-        return when (cameraFacing) {
+    fun getCameras(
+        cameraMode: CameraMode, cameraFacing: CameraFacing,
+    ): List<Camera> {
+        return when (cameraMode) {
+            CameraMode.VIDEO -> when (cameraFacing) {
+                CameraFacing.BACK -> backCamerasSupportingVideoRecording
+                CameraFacing.FRONT -> frontCamerasSupportingVideoRecording
+                CameraFacing.EXTERNAL -> externalCamerasSupportingVideoRecording
+                else -> throw Exception("Unknown facing")
+            }
+            else -> when (cameraFacing) {
+                CameraFacing.BACK -> backCameras
+                CameraFacing.FRONT -> frontCameras
+                CameraFacing.EXTERNAL -> externalCameras
+                else -> throw Exception("Unknown facing")
+            }
+        }
+    }
+
+    fun getCameraOfFacingOrFirstAvailable(
+        cameraFacing: CameraFacing, cameraMode: CameraMode
+    ): Camera {
+        val camera = when (cameraFacing) {
             CameraFacing.BACK -> mainBackCamera
             CameraFacing.FRONT -> mainFrontCamera
             CameraFacing.EXTERNAL -> externalCameras.firstOrNull()
             else -> throw Exception("Unknown facing")
-        } ?: availableCameras.first()
+        }
+        return camera?.let {
+            if (cameraMode == CameraMode.VIDEO && !it.supportsVideoRecording) {
+                availableCamerasSupportingVideoRecording.first()
+            } else {
+                it
+            }
+        } ?: when (cameraMode) {
+            CameraMode.VIDEO -> availableCamerasSupportingVideoRecording.first()
+            else -> availableCameras.first()
+        }
     }
 
-    fun getNextCamera(camera: Camera): Camera {
+    fun getNextCamera(camera: Camera, cameraMode: CameraMode): Camera {
+        val cameras = when (cameraMode) {
+            CameraMode.VIDEO -> availableCamerasSupportingVideoRecording
+            else -> availableCameras
+        }
+
         // If value is -1 it will just pick the first available camera
         // This should only happen when an external camera is disconnected
-        val newCameraIndex = availableCameras.indexOf(
+        val newCameraIndex = cameras.indexOf(
             when (camera.cameraFacing) {
                 CameraFacing.BACK -> mainBackCamera
                 CameraFacing.FRONT -> mainFrontCamera
@@ -82,10 +124,10 @@ class CameraManager(activity: AppCompatActivity) {
             }
         ) + 1
 
-        return if (newCameraIndex >= availableCameras.size) {
-            availableCameras.first()
+        return if (newCameraIndex >= cameras.size) {
+            cameras.first()
         } else {
-            availableCameras[newCameraIndex]
+            cameras[newCameraIndex]
         }
     }
 
