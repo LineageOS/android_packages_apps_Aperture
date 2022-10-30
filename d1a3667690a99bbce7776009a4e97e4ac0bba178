@@ -33,6 +33,24 @@
       "message": "not open, not anymore",
       "revId": "d1a3667690a99bbce7776009a4e97e4ac0bba178",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20af2a37_d3cc7454",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/VerticalSlider.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-30T18:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b63976d_a28b97c9",
+      "revId": "d1a3667690a99bbce7776009a4e97e4ac0bba178",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
