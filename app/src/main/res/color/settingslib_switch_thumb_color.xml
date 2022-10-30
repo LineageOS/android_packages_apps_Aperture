@@ -5,9 +5,9 @@
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Disabled status of thumb -->
-    <item android:color="@android:color/system_neutral1_700" android:state_enabled="false" />
+    <item android:color="#454749" android:state_enabled="false" />
     <!-- Toggle off status of thumb -->
-    <item android:color="@android:color/system_neutral1_400" android:state_checked="false" />
+    <item android:color="#8F9193" android:state_checked="false" />
     <!-- Enabled or toggle on status of thumb -->
-    <item android:color="@android:color/system_accent1_100" />
+    <item android:color="#C1E8FF" />
 </selector>
