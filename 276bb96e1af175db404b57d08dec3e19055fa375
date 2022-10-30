@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "bb7d77c8_982c2438",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-30T15:59:49Z",
+      "side": 1,
+      "message": "we don\u0027t care about line length for these",
+      "parentUuid": "cd4052fa_780f68de",
+      "revId": "276bb96e1af175db404b57d08dec3e19055fa375",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e9ca4976_86d7052e",
         "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
         "patchSetId": 1
