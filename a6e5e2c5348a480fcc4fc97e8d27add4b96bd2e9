@@ -16,6 +16,24 @@
       "message": "Can\u0027t we make a generic abstract Slider to override?\nOverriding Vertical to get Horizontal is weird",
       "revId": "a6e5e2c5348a480fcc4fc97e8d27add4b96bd2e9",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "646db744_85b12933",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/HorizontalSlider.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-30T18:14:49Z",
+      "side": 1,
+      "message": "Actually, yeah I guess I could.",
+      "parentUuid": "72b9b943_30eecb31",
+      "revId": "a6e5e2c5348a480fcc4fc97e8d27add4b96bd2e9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
