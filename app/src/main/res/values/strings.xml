@@ -55,8 +55,9 @@
     <string name="select_video">VIDEO</string>
     <string name="select_scan">SCAN</string>
 
-    <!-- Permissions toast -->
+    <!-- Toast messages -->
     <string name="app_permissions_toast">Permissions not granted by the user.</string>
+    <string name="camcorder_unsupported_toast">No camera supports video recoding.</string>
 
     <!-- QR dialog -->
     <string name="qr_copy_description">Copy to clipboard</string>
