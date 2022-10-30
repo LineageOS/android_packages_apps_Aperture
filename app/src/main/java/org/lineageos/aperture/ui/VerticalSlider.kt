@@ -23,7 +23,7 @@ import org.lineageos.aperture.R
 import org.lineageos.aperture.mapToRange
 import org.lineageos.aperture.px
 
-class VerticalSlider @JvmOverloads constructor(
+open class VerticalSlider @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
     private val trackPaint = Paint().apply {
@@ -83,7 +83,15 @@ class VerticalSlider @JvmOverloads constructor(
             return false
         }
 
-        when (event?.action) {
+        event?.let {
+            handleTouchEvent(it)
+        }
+
+        return true
+    }
+
+    open fun handleTouchEvent(event: MotionEvent) {
+        when (event.action) {
             MotionEvent.ACTION_DOWN,
             MotionEvent.ACTION_MOVE,
             MotionEvent.ACTION_UP -> {
@@ -91,11 +99,9 @@ class VerticalSlider @JvmOverloads constructor(
                 onProgressChangedByUser?.invoke(progress)
             }
         }
-
-        return true
     }
 
-    private fun track(): RectF {
+    open fun track(): RectF {
         val trackWidth = width / 5
 
         val left = (width - trackWidth) / 2f
@@ -115,7 +121,7 @@ class VerticalSlider @JvmOverloads constructor(
         canvas.drawRoundRect(track, trackRadius, trackRadius, trackPaint)
     }
 
-    private fun thumb(): Triple<Float, Float, Float> {
+    open fun thumb(): Triple<Float, Float, Float> {
         val track = track()
         val trackHeight = track.height()
 
