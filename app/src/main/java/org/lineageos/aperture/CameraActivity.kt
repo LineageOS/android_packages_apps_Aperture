@@ -70,6 +70,7 @@ import com.google.android.material.button.MaterialButton
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
 import org.lineageos.aperture.ui.HorizontalSlider
+import org.lineageos.aperture.ui.LensSelectorLayout
 import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.VerticalSlider
 import org.lineageos.aperture.utils.Camera
@@ -98,6 +99,7 @@ open class CameraActivity : AppCompatActivity() {
     private val galleryButton by lazy { findViewById<ImageView>(R.id.galleryButton) }
     private val gridButton by lazy { findViewById<Button>(R.id.gridButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
+    private val lensSelectorLayout by lazy { findViewById<LensSelectorLayout>(R.id.lensSelectorLayout) }
     private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
     private val micButton by lazy { findViewById<Button>(R.id.micButton) }
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
@@ -495,6 +497,17 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         galleryButton.setOnClickListener { openGallery() }
+
+        // Set lens switching callback
+        lensSelectorLayout.onCameraChangeCallback = {
+            if (canRestartCamera()) {
+                camera = it
+                bindCameraUseCases()
+            }
+        }
+        lensSelectorLayout.onFocalLengthChangeCallback = {
+            cameraController.setZoomRatio(it / camera.focalLengths.first())
+        }
     }
 
     override fun onResume() {
@@ -858,6 +871,11 @@ open class CameraActivity : AppCompatActivity() {
         updateTorchModeIcon()
         updateFlashModeIcon()
         updateMicrophoneModeIcon()
+
+        // Update lens selector
+        lensSelectorLayout.setCamera(
+            camera, cameraManager.getCameras(cameraMode, camera.cameraFacing)
+        )
     }
 
     /**
