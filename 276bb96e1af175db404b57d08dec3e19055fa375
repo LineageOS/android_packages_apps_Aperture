@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5b4669a_165f19a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-10-30T16:09:43Z",
+      "side": 1,
+      "message": "We have our own ~ exception ~ that we don\u0027t care about line width for stupid view bindings.",
+      "parentUuid": "dd37d05a_10341e16",
+      "revId": "276bb96e1af175db404b57d08dec3e19055fa375",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "cd4052fa_780f68de",
