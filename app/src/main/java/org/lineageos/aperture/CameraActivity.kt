@@ -1440,7 +1440,9 @@ open class CameraActivity : AppCompatActivity() {
             }
 
             // This ensure we took at least one photo/video in the secure use-case
-            if (tookSomething && keyguardManager.isKeyguardLocked) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+                tookSomething && keyguardManager.isKeyguardLocked
+            ) {
                 val intent = Intent().apply {
                     action = MediaStore.ACTION_REVIEW_SECURE
                     data = uri
@@ -1454,7 +1456,12 @@ open class CameraActivity : AppCompatActivity() {
 
             // Try to open the Uri in the non secure gallery
             dismissKeyguardAndRun {
-                listOf(MediaStore.ACTION_REVIEW, Intent.ACTION_VIEW).forEach {
+                mutableListOf<String>().apply {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        add(MediaStore.ACTION_REVIEW)
+                    }
+                    add(Intent.ACTION_VIEW)
+                }.forEach {
                     val intent = Intent().apply {
                         action = it
                         data = uri
