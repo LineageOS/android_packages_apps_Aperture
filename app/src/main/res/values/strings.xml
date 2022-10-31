@@ -38,12 +38,10 @@
     <string name="grid_on_4">GRID 4x4</string>
     <string name="grid_on_goldenratio">GRID φ</string>
 
-    <string name="torch_off">TORCH OFF</string>
-    <string name="torch_on">TORCH ON</string>
-
+    <string name="flash_off">FLASH OFF</string>
     <string name="flash_auto">FLASH AUTO</string>
     <string name="flash_on">FLASH ON</string>
-    <string name="flash_off">FLASH OFF</string>
+    <string name="flash_torch">FLASH TORCH</string>
 
     <string name="mic_off">MIC OFF</string>
     <string name="mic_on">MIC ON</string>
