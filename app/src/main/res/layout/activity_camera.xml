@@ -155,22 +155,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/flashButton"
-                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_flash_off"
-                android:text="@string/flash_off"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/gridButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Button
                 android:id="@+id/micButton"
                 style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
                 android:drawableTop="@drawable/ic_mic_off"
                 android:text="@string/mic_off"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/flashButton"
+                app:layout_constraintStart_toEndOf="@+id/gridButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -214,6 +204,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/flashButton"
+            style="@style/Theme.Aperture.Camera.SecondaryBottomBarButton"
+            android:layout_marginEnd="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_flash_off" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
