@@ -283,7 +283,7 @@ java_library_static {
 
 android_library_import {
     name: "Aperture_com.google.android.material_material-nodeps",
-    aars: ["com/google/android/material/material/1.8.0-alpha01/material-1.8.0-alpha01.aar"],
+    aars: ["com/google/android/material/material/1.8.0-alpha02/material-1.8.0-alpha02.aar"],
     sdk_version: "26",
     min_sdk_version: "14",
     apex_available: [
@@ -318,7 +318,7 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "com/google/android/material/material/1.8.0-alpha01/AndroidManifest.xml",
+    manifest: "com/google/android/material/material/1.8.0-alpha02/AndroidManifest.xml",
     static_libs: [
         "Aperture_com.google.android.material_material-nodeps",
         "androidx.annotation_annotation",
