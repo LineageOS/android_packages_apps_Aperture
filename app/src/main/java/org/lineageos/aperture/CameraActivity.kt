@@ -85,6 +85,7 @@ import org.lineageos.aperture.utils.FlashMode
 import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.MediaType
+import org.lineageos.aperture.utils.SceneMode
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StabilizationMode
 import org.lineageos.aperture.utils.StorageUtils
@@ -118,6 +119,7 @@ open class CameraActivity : AppCompatActivity() {
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
     private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
+    private val sceneModeButton by lazy { findViewById<Button>(R.id.sceneModeButton) }
     private val secondaryBottomBarLayout by lazy { findViewById<ConstraintLayout>(R.id.secondaryBottomBarLayout) }
     private val secondaryTopBarLayout by lazy { findViewById<HorizontalScrollView>(R.id.secondaryTopBarLayout) }
     private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
@@ -384,6 +386,7 @@ open class CameraActivity : AppCompatActivity() {
         videoQualityButton.setOnClickListener { cycleVideoQuality() }
         videoFramerateButton.setOnClickListener { cycleVideoFramerate() }
         effectButton.setOnClickListener { cyclePhotoEffects() }
+        sceneModeButton.setOnClickListener { cycleSceneMode() }
         gridButton.setOnClickListener { cycleGridMode() }
         timerButton.setOnClickListener { toggleTimerMode() }
         micButton.setOnClickListener { toggleMicrophoneMode() }
@@ -868,6 +871,11 @@ open class CameraActivity : AppCompatActivity() {
             sharedPreferences.photoEffect = ExtensionMode.NONE
         }
 
+        // Fallback to SceneMode.DISABLED if necessary
+        if (!camera.supportsSceneMode(sharedPreferences.sceneMode)) {
+            sharedPreferences.sceneMode = SceneMode.DISABLED
+        }
+
         // Initialize the use case we want and set its properties
         val cameraUseCases = when (cameraMode) {
             CameraMode.QR -> {
@@ -947,6 +955,13 @@ open class CameraActivity : AppCompatActivity() {
                                 null
                             }
                         )
+                        setSceneMode(
+                            if (cameraMode == CameraMode.PHOTO) {
+                                sharedPreferences.sceneMode
+                            } else {
+                                null
+                            }
+                        )
                         setStabilizationMode(
                             (StabilizationMode::getClosestMode)(
                                 when (cameraMode) {
@@ -987,6 +1002,7 @@ open class CameraActivity : AppCompatActivity() {
         updateVideoQualityIcon()
         updateVideoFramerateIcon()
         updatePhotoEffectIcon()
+        updateSceneModeButton()
         updateGridIcon()
         updateFlashModeIcon()
         updateMicrophoneModeIcon()
@@ -1445,6 +1461,36 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         sharedPreferences.photoEffect = newExtensionMode
+
+        bindCameraUseCases()
+    }
+
+
+    /**
+     * Update the scene mode text based on the current value of sceneMode
+     */
+    private fun updateSceneModeButton() {
+        sceneModeButton.isVisible =
+            cameraMode == CameraMode.PHOTO && camera.supportedSceneModes.isNotEmpty()
+        sceneModeButton.text = getString(sharedPreferences.sceneMode.title)
+    }
+
+    /**
+     * Cycle between supported scene modes
+     */
+    private fun cycleSceneMode() {
+        if (!canRestartCamera()) {
+            return
+        }
+
+        val currentSceneMode = sharedPreferences.sceneMode
+        val newSceneMode = camera.supportedSceneModes.next(currentSceneMode)
+
+        if (newSceneMode == currentSceneMode) {
+            return
+        }
+
+        sharedPreferences.sceneMode = newSceneMode
 
         bindCameraUseCases()
     }
