@@ -146,12 +146,21 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/sceneModeButton"
+                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
+                android:drawableTop="@drawable/ic_scene_mode"
+                android:text="@string/scene_mode_disabled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/effectButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
                 android:id="@+id/gridButton"
                 style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
                 android:drawableTop="@drawable/ic_grid_off"
                 android:text="@string/grid_off"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/effectButton"
+                app:layout_constraintStart_toEndOf="@+id/sceneModeButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
