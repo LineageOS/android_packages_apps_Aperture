@@ -149,9 +149,20 @@
                 android:drawableTop="@drawable/ic_effect_none"
                 android:text="@string/effect_none"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/gridButton"
+                app:layout_constraintEnd_toStartOf="@+id/sceneModeButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/videoQualityButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/sceneModeButton"
+                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
+                android:drawableTop="@drawable/ic_scene_mode"
+                android:text="@string/scene_mode_disabled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/gridButton"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/effectButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
@@ -162,7 +173,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/micButton"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/effectButton"
+                app:layout_constraintStart_toEndOf="@+id/sceneModeButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
