@@ -155,22 +155,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/torchButton"
-                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_torch_on"
-                android:text="@string/torch_on"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/gridButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <Button
                 android:id="@+id/flashButton"
                 style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
                 android:drawableTop="@drawable/ic_flash_off"
                 android:text="@string/flash_off"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/torchButton"
+                app:layout_constraintStart_toEndOf="@+id/gridButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 

@@ -42,7 +42,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.TorchState
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.camera.video.Recording
@@ -82,6 +81,7 @@ import org.lineageos.aperture.utils.CameraManager
 import org.lineageos.aperture.utils.CameraMode
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.CameraState
+import org.lineageos.aperture.utils.FlashMode
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.MediaType
 import org.lineageos.aperture.utils.ShortcutsUtils
@@ -118,7 +118,6 @@ open class CameraActivity : AppCompatActivity() {
     private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
     private val shutterButton by lazy { findViewById<ImageButton>(R.id.shutterButton) }
     private val timerButton by lazy { findViewById<Button>(R.id.timerButton) }
-    private val torchButton by lazy { findViewById<Button>(R.id.torchButton) }
     private val videoDuration by lazy { findViewById<MaterialButton>(R.id.videoDuration) }
     private val videoModeButton by lazy { findViewById<MaterialButton>(R.id.videoModeButton) }
     private val videoQualityButton by lazy { findViewById<Button>(R.id.videoQualityButton) }
@@ -353,7 +352,6 @@ open class CameraActivity : AppCompatActivity() {
         effectButton.setOnClickListener { cyclePhotoEffects() }
         gridButton.setOnClickListener { cycleGridMode() }
         timerButton.setOnClickListener { toggleTimerMode() }
-        torchButton.setOnClickListener { toggleTorchMode() }
         flashButton.setOnClickListener { cycleFlashMode() }
         micButton.setOnClickListener { toggleMicrophoneMode() }
         settingsButton.setOnClickListener { openSettings() }
@@ -377,7 +375,7 @@ open class CameraActivity : AppCompatActivity() {
 
         // Observe torch state
         cameraController.torchState.observe(this) {
-            updateTorchModeIcon()
+            updateFlashModeIcon()
         }
 
         // Observe focus state
@@ -906,7 +904,11 @@ open class CameraActivity : AppCompatActivity() {
         setGridMode(
             if (cameraMode != CameraMode.QR) sharedPreferences.lastGridMode else GridMode.OFF
         )
-        setFlashMode(sharedPreferences.photoFlashMode)
+        setFlashMode(when (cameraMode) {
+            CameraMode.PHOTO -> sharedPreferences.photoFlashMode
+            CameraMode.VIDEO -> sharedPreferences.videoFlashMode
+            CameraMode.QR -> FlashMode.OFF
+        })
         setMicrophoneMode(sharedPreferences.lastMicMode)
 
         // Reset exposure level
@@ -921,7 +923,6 @@ open class CameraActivity : AppCompatActivity() {
         updateVideoQualityIcon()
         updatePhotoEffectIcon()
         updateGridIcon()
-        updateTorchModeIcon()
         updateFlashModeIcon()
         updateMicrophoneModeIcon()
 
@@ -1218,63 +1219,29 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     /**
-     * Update the torch mode button icon based on the value set in camera
-     */
-    private fun updateTorchModeIcon() {
-        torchButton.isVisible = cameraController.cameraInfo?.hasFlashUnit() == true
-
-        cameraController.torchState.value.let {
-            torchButton.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                when (it) {
-                    TorchState.OFF -> R.drawable.ic_torch_off
-                    TorchState.ON -> R.drawable.ic_torch_on
-                    else -> R.drawable.ic_torch_off
-                },
-                0,
-                0
-            )
-            torchButton.text = resources.getText(
-                when (it) {
-                    TorchState.OFF -> R.string.torch_off
-                    TorchState.ON -> R.string.torch_on
-                    else -> R.string.torch_off
-                }
-            )
-        }
-    }
-
-    /**
-     * Toggle torch mode
-     */
-    private fun toggleTorchMode() {
-        cameraController.enableTorch(cameraController.torchState.value != TorchState.ON)
-    }
-
-    /**
      * Update the flash mode button icon based on the value set in imageCapture
      */
     private fun updateFlashModeIcon() {
-        flashButton.isVisible = cameraMode == CameraMode.PHOTO && camera.hasFlashUnit
+        flashButton.isVisible = camera.hasFlashUnit
 
-        cameraController.imageCaptureFlashMode.let {
+        cameraController.flashMode.let {
             flashButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
-                    ImageCapture.FLASH_MODE_AUTO -> R.drawable.ic_flash_auto
-                    ImageCapture.FLASH_MODE_ON -> R.drawable.ic_flash_on
-                    ImageCapture.FLASH_MODE_OFF -> R.drawable.ic_flash_off
-                    else -> R.drawable.ic_flash_off
+                    FlashMode.OFF -> R.drawable.ic_flash_off
+                    FlashMode.AUTO -> R.drawable.ic_flash_auto
+                    FlashMode.ON -> R.drawable.ic_flash_on
+                    FlashMode.TORCH -> R.drawable.ic_flash_torch
                 },
                 0,
                 0
             )
             flashButton.text = resources.getText(
                 when (it) {
-                    ImageCapture.FLASH_MODE_AUTO -> R.string.flash_auto
-                    ImageCapture.FLASH_MODE_ON -> R.string.flash_on
-                    ImageCapture.FLASH_MODE_OFF -> R.string.flash_off
-                    else -> R.string.flash_off
+                    FlashMode.OFF -> R.string.flash_off
+                    FlashMode.AUTO -> R.string.flash_auto
+                    FlashMode.ON -> R.string.flash_on
+                    FlashMode.TORCH -> R.string.flash_torch
                 }
             )
         }
@@ -1283,25 +1250,31 @@ open class CameraActivity : AppCompatActivity() {
     /**
      * Set the specified flash mode, saving the value to shared prefs and updating the icon
      */
-    private fun setFlashMode(flashMode: Int) {
-        cameraController.imageCaptureFlashMode = flashMode
+    private fun setFlashMode(flashMode: FlashMode) {
+        cameraController.flashMode = flashMode
         updateFlashModeIcon()
 
-        sharedPreferences.photoFlashMode = flashMode
+        when (cameraMode) {
+            CameraMode.PHOTO -> sharedPreferences.photoFlashMode = flashMode
+            CameraMode.VIDEO -> sharedPreferences.videoFlashMode = flashMode
+            else -> {}
+        }
     }
 
     /**
-     * Cycle flash mode between auto, on and off
+     * Cycle flash mode
      */
     private fun cycleFlashMode() {
-        setFlashMode(
-            when (cameraController.imageCaptureFlashMode) {
-                ImageCapture.FLASH_MODE_AUTO -> ImageCapture.FLASH_MODE_ON
-                ImageCapture.FLASH_MODE_ON -> ImageCapture.FLASH_MODE_OFF
-                ImageCapture.FLASH_MODE_OFF -> ImageCapture.FLASH_MODE_AUTO
-                else -> ImageCapture.FLASH_MODE_AUTO
-            }
-        )
+        setFlashMode(when (cameraMode) {
+            CameraMode.PHOTO -> cameraController.flashMode.next()
+            CameraMode.VIDEO ->
+                if (cameraController.flashMode != FlashMode.OFF) {
+                    FlashMode.OFF
+                } else {
+                    FlashMode.TORCH
+                }
+            else -> FlashMode.OFF
+        })
     }
 
     /**
