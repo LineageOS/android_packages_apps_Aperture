@@ -34,6 +34,24 @@
       "parentUuid": "395f6cb6_bd4a9647",
       "revId": "c4ce7b79ab44aa6c07b36462eb210e57d498827b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0f0ef55a_7780b7ae",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1456,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-10-31T03:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46f2efa5_754ff64c",
+      "revId": "c4ce7b79ab44aa6c07b36462eb210e57d498827b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
