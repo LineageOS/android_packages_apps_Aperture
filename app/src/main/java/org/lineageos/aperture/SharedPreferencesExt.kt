@@ -17,6 +17,7 @@ import org.lineageos.aperture.utils.CameraMode
 import org.lineageos.aperture.utils.FlashMode
 import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.GridMode
+import org.lineageos.aperture.utils.SceneMode
 import org.lineageos.aperture.utils.StabilizationMode
 
 // Generic prefs
@@ -193,6 +194,15 @@ internal var SharedPreferences.photoEffect: Int
                 else -> PHOTO_EFFECT_DEFAULT
             }
         )
+    }
+
+private const val SCENE_MODE_KEY = "scene_mode"
+private val SCENE_MODE_DEFAULT = SceneMode.FACE_PRIORITY
+
+internal var SharedPreferences.sceneMode: SceneMode
+    get() = SceneMode.fromValue(getInt(SCENE_MODE_KEY, -1)) ?: SCENE_MODE_DEFAULT
+    set(value) = edit {
+        putInt(SCENE_MODE_KEY, value.value)
     }
 
 // Video prefs
