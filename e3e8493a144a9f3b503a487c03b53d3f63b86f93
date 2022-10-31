@@ -16,6 +16,24 @@
       "message": "last time I checked xzing/camera2 that\u0027s always true.",
       "revId": "e3e8493a144a9f3b503a487c03b53d3f63b86f93",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "15165800_86094747",
+        "filename": "app/src/main/java/org/lineageos/aperture/ImageProxyExt.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-31T17:41:00Z",
+      "side": 1,
+      "message": "Seba: ^",
+      "parentUuid": "da48a258_7f44e90b",
+      "revId": "e3e8493a144a9f3b503a487c03b53d3f63b86f93",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
