@@ -186,8 +186,8 @@ tasks.register("generateBp") {
 
         // Parse dependencies
         val dependencies =
-            it.file.parentFile.parentFile.walk().first { file -> file.extension == "pom" }
-                .let { file ->
+            it.file.parentFile.parentFile.walk().filter { file -> file.extension == "pom" }
+                .map { file ->
                     val ret = mutableListOf<String>()
 
                     val pom = XmlParser().parse(file)
@@ -205,7 +205,7 @@ tasks.register("generateBp") {
                     }
 
                     ret
-                }
+                }.flatten()
 
         var targetSdkVersion = android.defaultConfig.minSdk
         var minSdkVersion = 14
