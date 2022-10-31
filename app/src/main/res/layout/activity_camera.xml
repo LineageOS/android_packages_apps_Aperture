@@ -93,7 +93,7 @@
 
     <HorizontalScrollView
         android:id="@+id/secondaryTopBarLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#99000000"
         android:scrollbars="none"
@@ -114,6 +114,8 @@
                 android:drawableTop="@drawable/ic_timer_off"
                 android:text="@string/timer_off"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/aspectRatioButton"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
@@ -124,6 +126,8 @@
                 android:drawableTop="@drawable/ic_aspect_ratio_4_3"
                 android:text="@string/aspect_ratio_4_3"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/videoQualityButton"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/timerButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -133,6 +137,8 @@
                 android:drawableTop="@drawable/ic_video_quality_hd"
                 android:text="@string/video_quality_fhd"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/effectButton"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/aspectRatioButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -142,6 +148,8 @@
                 android:drawableTop="@drawable/ic_effect_none"
                 android:text="@string/effect_none"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/sceneModeButton"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/videoQualityButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -151,6 +159,8 @@
                 android:drawableTop="@drawable/ic_scene_mode"
                 android:text="@string/scene_mode_disabled"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/gridButton"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/effectButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -160,6 +170,8 @@
                 android:drawableTop="@drawable/ic_grid_off"
                 android:text="@string/grid_off"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/micButton"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/sceneModeButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -169,6 +181,8 @@
                 android:drawableTop="@drawable/ic_mic_off"
                 android:text="@string/mic_off"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/settingsButton"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/gridButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
@@ -179,6 +193,8 @@
                 android:drawableTop="@drawable/ic_settings"
                 android:text="@string/settings"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/micButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
