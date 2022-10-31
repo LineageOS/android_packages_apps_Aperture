@@ -113,6 +113,7 @@ open class CameraActivity : AppCompatActivity() {
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
     private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
+    private val sceneModeButton by lazy { findViewById<Button>(R.id.sceneModeButton) }
     private val secondaryBottomBarLayout by lazy { findViewById<ConstraintLayout>(R.id.secondaryBottomBarLayout) }
     private val secondaryTopBarLayout by lazy { findViewById<HorizontalScrollView>(R.id.secondaryTopBarLayout) }
     private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
@@ -350,6 +351,7 @@ open class CameraActivity : AppCompatActivity() {
         aspectRatioButton.setOnClickListener { cycleAspectRatio() }
         videoQualityButton.setOnClickListener { cycleVideoQuality() }
         effectButton.setOnClickListener { cyclePhotoEffects() }
+        sceneModeButton.setOnClickListener { cycleSceneMode() }
         gridButton.setOnClickListener { cycleGridMode() }
         timerButton.setOnClickListener { toggleTimerMode() }
         micButton.setOnClickListener { toggleMicrophoneMode() }
@@ -922,6 +924,7 @@ open class CameraActivity : AppCompatActivity() {
         updateAspectRatioIcon()
         updateVideoQualityIcon()
         updatePhotoEffectIcon()
+        updateSceneModeButton()
         updateGridIcon()
         updateFlashModeIcon()
         updateMicrophoneModeIcon()
@@ -1379,6 +1382,31 @@ open class CameraActivity : AppCompatActivity() {
 
     private fun setLeveler(enabled: Boolean) {
         levelerView.isVisible = enabled
+    }
+
+    private fun cycleSceneMode() {
+        if (camera.availableSceneModes.isEmpty()) {
+            return
+        }
+
+        val currentSceneMode = cameraController.cameraControl.sceneMode
+        val currentSceneModeIndex = camera.availableSceneModes.indexOf(currentSceneMode)
+
+        val newSceneMode = camera.availableSceneModes.getOrElse(currentSceneModeIndex + 1) {
+            camera.availableSceneModes.first()
+        }
+
+        cameraController.cameraControl.sceneMode = newSceneMode
+
+        updateSceneModeButton()
+    }
+
+    private fun updateSceneModeButton() {
+        with(cameraController.cameraControl.sceneMode) {
+            runOnUiThread {
+                sceneModeButton.text = resources.getText(this.title)
+            }
+        }
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
