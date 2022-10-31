@@ -38,6 +38,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.camera2.interop.CaptureRequestOptions
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -919,6 +920,15 @@ open class CameraActivity : AppCompatActivity() {
 
         // Bind camera controller to lifecycle
         cameraController.bindToLifecycle(this)
+
+        // Wait for camera to be ready
+        cameraController.initializationFuture.addListener({
+            // Set Camera2 CaptureRequest options
+            cameraController.camera2CameraControl?.apply {
+                captureRequestOptions = CaptureRequestOptions.Builder()
+                    .build()
+            } ?: Log.wtf(LOG_TAG, "Camera2CameraControl not available even with camera ready?")
+        }, ContextCompat.getMainExecutor(this))
 
         // Restore settings that can be set on the fly
         setGridMode(
