@@ -100,7 +100,7 @@ open class CameraActivity : AppCompatActivity() {
     private val countDownView by lazy { findViewById<CountDownView>(R.id.countDownView) }
     private val effectButton by lazy { findViewById<Button>(R.id.effectButton) }
     private val exposureLevel by lazy { findViewById<VerticalSlider>(R.id.exposureLevel) }
-    private val flashButton by lazy { findViewById<Button>(R.id.flashButton) }
+    private val flashButton by lazy { findViewById<ImageButton>(R.id.flashButton) }
     private val flipCameraButton by lazy { findViewById<ImageButton>(R.id.flipCameraButton) }
     private val galleryButton by lazy { findViewById<ImageView>(R.id.galleryButton) }
     private val galleryButtonCardView by lazy { findViewById<CardView>(R.id.galleryButtonCardView) }
@@ -352,7 +352,6 @@ open class CameraActivity : AppCompatActivity() {
         effectButton.setOnClickListener { cyclePhotoEffects() }
         gridButton.setOnClickListener { cycleGridMode() }
         timerButton.setOnClickListener { toggleTimerMode() }
-        flashButton.setOnClickListener { cycleFlashMode() }
         micButton.setOnClickListener { toggleMicrophoneMode() }
         settingsButton.setOnClickListener { openSettings() }
 
@@ -360,6 +359,7 @@ open class CameraActivity : AppCompatActivity() {
         proButton.setOnClickListener {
             secondaryTopBarLayout.isVisible = !secondaryTopBarLayout.isVisible
         }
+        flashButton.setOnClickListener { cycleFlashMode() }
 
         // Initialize camera mode highlight position
         (cameraModeHighlight.parent as View).doOnLayout {
@@ -1225,24 +1225,16 @@ open class CameraActivity : AppCompatActivity() {
         flashButton.isVisible = camera.hasFlashUnit
 
         cameraController.flashMode.let {
-            flashButton.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                when (it) {
-                    FlashMode.OFF -> R.drawable.ic_flash_off
-                    FlashMode.AUTO -> R.drawable.ic_flash_auto
-                    FlashMode.ON -> R.drawable.ic_flash_on
-                    FlashMode.TORCH -> R.drawable.ic_flash_torch
-                },
-                0,
-                0
-            )
-            flashButton.text = resources.getText(
-                when (it) {
-                    FlashMode.OFF -> R.string.flash_off
-                    FlashMode.AUTO -> R.string.flash_auto
-                    FlashMode.ON -> R.string.flash_on
-                    FlashMode.TORCH -> R.string.flash_torch
-                }
+            flashButton.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    when (it) {
+                        FlashMode.OFF -> R.drawable.ic_flash_off
+                        FlashMode.AUTO -> R.drawable.ic_flash_auto
+                        FlashMode.ON -> R.drawable.ic_flash_on
+                        FlashMode.TORCH -> R.drawable.ic_flash_torch
+                    }
+                )
             )
         }
     }
