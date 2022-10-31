@@ -15,6 +15,7 @@ import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import org.lineageos.aperture.utils.CameraFacing
 import org.lineageos.aperture.utils.CameraMode
+import org.lineageos.aperture.utils.FlashMode
 import org.lineageos.aperture.utils.GridMode
 
 @SuppressLint("ApplySharedPref")
@@ -137,22 +138,43 @@ internal var SharedPreferences.photoCaptureMode: Int
 private const val PHOTO_FLASH_MODE_KEY = "photo_flash_mode"
 private const val PHOTO_FLASH_MODE_DEFAULT = "auto"
 
-internal var SharedPreferences.photoFlashMode: Int
+internal var SharedPreferences.photoFlashMode: FlashMode
     get() = when (getString(PHOTO_FLASH_MODE_KEY, PHOTO_FLASH_MODE_DEFAULT)) {
-        "auto" -> ImageCapture.FLASH_MODE_AUTO
-        "on" -> ImageCapture.FLASH_MODE_ON
-        "off" -> ImageCapture.FLASH_MODE_OFF
+        "off" -> FlashMode.OFF
+        "auto" -> FlashMode.AUTO
+        "on" -> FlashMode.ON
+        "torch" -> FlashMode.TORCH
         // Default to auto
-        else -> ImageCapture.FLASH_MODE_AUTO
+        else -> FlashMode.AUTO
     }
     set(value) = edit {
         putString(
             PHOTO_FLASH_MODE_KEY, when (value) {
-                ImageCapture.FLASH_MODE_AUTO -> "auto"
-                ImageCapture.FLASH_MODE_ON -> "on"
-                ImageCapture.FLASH_MODE_OFF -> "off"
-                // Default to auto
-                else -> PHOTO_FLASH_MODE_DEFAULT
+                FlashMode.OFF -> "off"
+                FlashMode.AUTO -> "auto"
+                FlashMode.ON -> "on"
+                FlashMode.TORCH -> "torch"
+            }
+        )
+    }
+
+private const val VIDEO_FLASH_MODE_KEY = "video_flash_mode"
+private const val VIDEO_FLASH_MODE_DEFAULT = "off"
+
+internal var SharedPreferences.videoFlashMode: FlashMode
+    get() = when (getString(VIDEO_FLASH_MODE_KEY, VIDEO_FLASH_MODE_DEFAULT)) {
+        "off" -> FlashMode.OFF
+        "torch" -> FlashMode.TORCH
+        // Default to off
+        else -> FlashMode.OFF
+    }
+    set(value) = edit {
+        putString(
+            VIDEO_FLASH_MODE_KEY, when (value) {
+                FlashMode.OFF -> "off"
+                FlashMode.TORCH -> "torch"
+                // Default to off
+                else -> VIDEO_FLASH_MODE_DEFAULT
             }
         )
     }
