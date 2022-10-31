@@ -107,6 +107,26 @@
     <string name="video_stabilization_preview_title">Enable stabilization on preview when available</string>
     <string name="video_stabilization_preview_summary">If available, apply image stabilization also to the preview and, if the hardware supports it, automatically enable optical image stabilization (OIS) together with electronic image stabilization (EIS) if the device deems that appropriate. Only some devices launched with Android 13 or newer supports this mode</string>
 
+    <!-- Scene modes -->
+    <string name="scene_mode_disabled">DISABLED</string>
+    <string name="scene_mode_face_priority">FACE FOCUS</string>
+    <string name="scene_mode_action">ACTION</string>
+    <string name="scene_mode_portrait">PORTRAIT</string>
+    <string name="scene_mode_landscape">LANDSCAPE</string>
+    <string name="scene_mode_night">NIGHT</string>
+    <string name="scene_mode_night_portrait">NIGHT PORTRAIT</string>
+    <string name="scene_mode_theatre">THEATRE</string>
+    <string name="scene_mode_beach">BEACH</string>
+    <string name="scene_mode_snow">SNOW</string>
+    <string name="scene_mode_sunset">SUNSET</string>
+    <string name="scene_mode_steadyphoto">STEADY PHOTO</string>
+    <string name="scene_mode_fireworks">FIREWORKS</string>
+    <string name="scene_mode_sports">SPORTS</string>
+    <string name="scene_mode_party">PARTY</string>
+    <string name="scene_mode_candlelight">CANDLE LIGHT</string>
+    <string name="scene_mode_barcode">BARCODE</string>
+    <string name="scene_mode_hdr">HDR</string>
+
     <!-- Shortcuts -->
     <string name="shortcut_selfie">Take a selfie</string>
     <string name="shortcut_video">Take a video</string>

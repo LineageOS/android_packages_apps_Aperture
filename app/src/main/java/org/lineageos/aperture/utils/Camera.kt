@@ -92,6 +92,10 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     val supportedExtensionModes = cameraManager.extensionsManager.getSupportedModes(cameraSelector)
 
+    val supportedSceneModes = camera2CameraInfo.getCameraCharacteristic(
+        CameraCharacteristics.CONTROL_AVAILABLE_SCENE_MODES
+    )?.map { SceneMode.fromValue(it) }?.filterNotNull() ?: listOf()
+
     val supportedStabilizationModes = mutableListOf(StabilizationMode.OFF).apply {
         val availableVideoStabilizationModes = camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.CONTROL_AVAILABLE_VIDEO_STABILIZATION_MODES

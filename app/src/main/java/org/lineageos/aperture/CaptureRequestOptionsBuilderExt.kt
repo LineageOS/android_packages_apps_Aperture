@@ -10,6 +10,7 @@ import android.hardware.camera2.CaptureRequest
 import android.os.Build
 import androidx.camera.camera2.interop.CaptureRequestOptions
 import org.lineageos.aperture.utils.Framerate
+import org.lineageos.aperture.utils.SceneMode
 import org.lineageos.aperture.utils.StabilizationMode
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
@@ -20,6 +21,17 @@ fun CaptureRequestOptions.Builder.setFramerate(framerate: Framerate?) {
         )
     } ?: run {
         clearCaptureRequestOption(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE)
+    }
+}
+
+@androidx.camera.camera2.interop.ExperimentalCamera2Interop
+fun CaptureRequestOptions.Builder.setSceneMode(sceneMode: SceneMode?) {
+    sceneMode?.let {
+        setCaptureRequestOption(
+            CaptureRequest.CONTROL_SCENE_MODE, sceneMode.value
+        )
+    } ?: run {
+        clearCaptureRequestOption(CaptureRequest.CONTROL_SCENE_MODE)
     }
 }
 
