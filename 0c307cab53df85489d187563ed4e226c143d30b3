@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "12d81ed7_513ae0af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-10-31T20:26:51Z",
+      "side": 1,
+      "message": "not exactly happy about the drawable, not sure but I can\u0027t recognize it ",
+      "revId": "0c307cab53df85489d187563ed4e226c143d30b3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
