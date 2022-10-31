@@ -5,6 +5,7 @@
 
 package org.lineageos.aperture
 
+import androidx.camera.camera2.interop.Camera2CameraControl
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.TorchState
 import androidx.camera.view.CameraController
@@ -31,3 +32,7 @@ var CameraController.flashMode: FlashMode
             FlashMode.TORCH -> ImageCapture.FLASH_MODE_OFF
         }
     }
+
+val CameraController.camera2CameraControl: Camera2CameraControl?
+    @androidx.camera.camera2.interop.ExperimentalCamera2Interop
+    get() = cameraControl?.let { Camera2CameraControl.from(it) }
