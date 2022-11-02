@@ -5,6 +5,7 @@
 
 package org.lineageos.aperture
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.KeyguardManager
 import android.content.ClipData
@@ -163,6 +164,7 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
         }
     }
 
+    @SuppressLint("InflateParams")
     private fun inflateButton(): MaterialButton {
         val button = activity.layoutInflater.inflate(
             R.layout.qr_bottom_sheet_action_button, null
