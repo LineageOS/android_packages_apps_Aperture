@@ -18,49 +18,55 @@ import java.util.concurrent.Executors
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 class CameraManager(activity: AppCompatActivity) {
-    val cameraProvider: ProcessCameraProvider = ProcessCameraProvider.getInstance(activity).get()
+    private val cameraProvider: ProcessCameraProvider = ProcessCameraProvider.getInstance(
+        activity
+    ).get()
     val extensionsManager: ExtensionsManager = ExtensionsManager.getInstanceAsync(
         activity, cameraProvider
     ).get()
     val cameraController = LifecycleCameraController(activity)
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
-    val enableAuxCameras by lazy { activity.resources.getBoolean(R.bool.config_enableAuxCameras) }
-    val ignoredAuxCameraIds by lazy {
+    private val enableAuxCameras by lazy { activity.resources.getBoolean(R.bool.config_enableAuxCameras) }
+    private val ignoredAuxCameraIds by lazy {
         activity.resources.getStringArray(R.array.config_ignoredAuxCameraIds)
     }
-    val ignoreLogicalAuxCameras by lazy {
+    private val ignoreLogicalAuxCameras by lazy {
         activity.resources.getBoolean(R.bool.config_ignoreLogicalAuxCameras)
     }
 
-    val cameras: Map<String, Camera>
+    private val cameras: Map<String, Camera>
         get() = cameraProvider.availableCameraInfos.associate {
             val camera = Camera(it, this)
             camera.cameraId to camera
         }
 
     // We expect device cameras to never change
-    val backCameras = prepareDeviceCamerasList(CameraFacing.BACK)
-    val mainBackCamera = backCameras.firstOrNull()
-    val backCamerasSupportingVideoRecording = backCameras.filter { it.supportsVideoRecording }
+    private val backCameras = prepareDeviceCamerasList(CameraFacing.BACK)
+    private val mainBackCamera = backCameras.firstOrNull()
+    private val backCamerasSupportingVideoRecording = backCameras.filter {
+        it.supportsVideoRecording
+    }
 
-    val frontCameras = prepareDeviceCamerasList(CameraFacing.FRONT)
-    val mainFrontCamera = frontCameras.firstOrNull()
-    val frontCamerasSupportingVideoRecording = frontCameras.filter { it.supportsVideoRecording }
+    private val frontCameras = prepareDeviceCamerasList(CameraFacing.FRONT)
+    private val mainFrontCamera = frontCameras.firstOrNull()
+    private val frontCamerasSupportingVideoRecording = frontCameras.filter {
+        it.supportsVideoRecording
+    }
 
     val internalCamerasSupportingVideoRecoding =
         backCamerasSupportingVideoRecording + frontCamerasSupportingVideoRecording
 
-    val externalCameras: List<Camera>
+    private val externalCameras: List<Camera>
         get() = cameras.values.filter {
             it.cameraFacing == CameraFacing.EXTERNAL
         }
-    val externalCamerasSupportingVideoRecording: List<Camera>
+    private val externalCamerasSupportingVideoRecording: List<Camera>
         get() = externalCameras.filter { it.supportsVideoRecording }
 
     // Google recommends cycling between all externals, back and front
     // We're gonna do back, front and all externals instead, makes more sense
-    val availableCameras: List<Camera>
+    private val availableCameras: List<Camera>
         get() = mutableListOf<Camera>().apply {
             mainBackCamera?.let {
                 add(it)
@@ -70,7 +76,7 @@ class CameraManager(activity: AppCompatActivity) {
             }
             addAll(externalCameras)
         }
-    val availableCamerasSupportingVideoRecording: List<Camera>
+    private val availableCamerasSupportingVideoRecording: List<Camera>
         get() = availableCameras.filter { it.supportsVideoRecording }
 
     fun getCameras(
