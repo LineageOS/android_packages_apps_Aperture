@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "33c3ffeb_ab5f9def",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 13648
+      },
+      "writtenOn": "2022-11-02T10:29:25Z",
+      "side": 1,
+      "message": "Over 100 chars. Make it look like as lines #31-33",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 106
+      },
+      "revId": "508a678718cf07471d704db023d645ac71ebcd88",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
