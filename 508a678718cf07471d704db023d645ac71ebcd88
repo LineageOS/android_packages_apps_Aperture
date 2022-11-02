@@ -22,6 +22,30 @@
       },
       "revId": "508a678718cf07471d704db023d645ac71ebcd88",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "621c323a_439ce1b8",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-11-02T10:31:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33c3ffeb_ab5f9def",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 106
+      },
+      "revId": "508a678718cf07471d704db023d645ac71ebcd88",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
