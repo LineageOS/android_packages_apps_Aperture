@@ -16,7 +16,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Secondary container -->
         <item name="colorOnSecondaryContainer">@color/white</item>
-        <item name="colorSecondaryContainer">#2a3232</item>
+        <item name="colorSecondaryContainer">@color/gray_60</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorOnPrimary</item>
         <!-- Customize your theme here. -->
