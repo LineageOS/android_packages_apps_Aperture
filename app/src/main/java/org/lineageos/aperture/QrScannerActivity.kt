@@ -5,7 +5,6 @@
 
 package org.lineageos.aperture
 
-import android.os.Bundle
 import org.lineageos.aperture.utils.CameraMode
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
