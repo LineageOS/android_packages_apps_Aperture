@@ -83,6 +83,7 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
         updateButtonsAttributes()
     }
 
+    @SuppressLint("InflateParams")
     private fun inflateButton(): Button {
         val button = layoutInflater.inflate(R.layout.lens_selector_button, null) as Button
         return button.apply {
