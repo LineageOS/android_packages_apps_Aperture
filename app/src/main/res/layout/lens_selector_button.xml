@@ -3,6 +3,15 @@
      SPDX-FileCopyrightText: 2022 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
-<Button xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Theme.Aperture.Camera.LensSelectorButton"
-    android:layout_weight="1" />
+<androidx.appcompat.widget.AppCompatButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="32dp"
+    android:layout_height="32dp"
+    android:layout_weight="1"
+    android:background="@drawable/lens_selector_button_background"
+    android:backgroundTint="@color/lens_selector_button_background"
+    android:paddingHorizontal="0dp"
+    android:textAlignment="center"
+    android:textColor="@color/white"
+    android:textSize="10dp"
+    tools:ignore="SpUsage" />

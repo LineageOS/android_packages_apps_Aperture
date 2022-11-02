@@ -72,19 +72,6 @@
         <item name="android:layout_height">40dp</item>
     </style>
 
-    <!-- Lens selector button style -->
-    <style name="Theme.Aperture.Camera.LensSelectorButton">
-        <item name="tint">@color/white</item>
-        <item name="backgroundTint">@color/lens_selector_button_background</item>
-        <item name="android:background">@drawable/lens_selector_button_background</item>
-        <item name="android:layout_width">32dp</item>
-        <item name="android:layout_height">32dp</item>
-        <item name="android:paddingHorizontal">0dp</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">10dp</item>
-    </style>
-
     <!-- Camera mode bar icons theme -->
     <style name="Theme.Aperture.Camera.CameraModeSelectorButton" parent="@style/Widget.Material3.Button.TonalButton">
         <item name="android:backgroundTint">@color/camera_mode_selector_icon</item>
