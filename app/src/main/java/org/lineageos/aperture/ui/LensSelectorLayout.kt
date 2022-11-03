@@ -27,6 +27,8 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
 
     private lateinit var activeCamera: Camera
 
+    private val buttonToZoomRatio = mutableMapOf<Button, Float>()
+
     private val buttonToCamera = mutableMapOf<Button, Camera>()
     private val buttonToFocalLength = mutableMapOf<Button, Float>()
 
@@ -40,6 +42,8 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
         this.activeCamera = activeCamera
 
         removeAllViews()
+        buttonToZoomRatio.clear()
+
         buttonToCamera.clear()
         buttonToFocalLength.clear()
 
@@ -64,6 +68,7 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
 
                 addView(button)
                 buttonToFocalLength[button] = focalLength
+                buttonToZoomRatio[button] = zoomRatio
             }
             currentFocalLength = buttonToFocalLength.values.first()
         } else {
@@ -77,6 +82,7 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
 
                 addView(button)
                 buttonToCamera[button] = camera
+                buttonToZoomRatio[button] = camera.zoomRatio
             }
         }
 
@@ -108,8 +114,11 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
     @SuppressLint("SetTextI18n")
     private fun updateButtonAttributes(button: Button, currentCamera: Boolean) {
         button.isEnabled = !currentCamera
-        if (currentCamera) {
-            button.text = "${button.text}×"
+        val formattedZoomRatio = formatZoomRatio(buttonToZoomRatio[button]!!)
+        button.text = if (currentCamera) {
+            "${formattedZoomRatio}×"
+        } else {
+            formattedZoomRatio
         }
     }
 
