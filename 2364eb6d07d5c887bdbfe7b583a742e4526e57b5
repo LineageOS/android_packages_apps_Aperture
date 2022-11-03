@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7750bd07_083c346f",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-11-03T23:51:52Z",
+      "side": 1,
+      "message": "yuck",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 45
+      },
+      "revId": "2364eb6d07d5c887bdbfe7b583a742e4526e57b5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
