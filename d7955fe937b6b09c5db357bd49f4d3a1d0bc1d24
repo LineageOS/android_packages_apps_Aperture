@@ -51,6 +51,24 @@
       "parentUuid": "66716de5_3ed10dbe",
       "revId": "d7955fe937b6b09c5db357bd49f4d3a1d0bc1d24",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38245607_a30ceac6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2022-11-03T22:21:55Z",
+      "side": 1,
+      "message": "From what I see all Camera2 preferences start with pref_ and none of our do, so there should be no side effect.",
+      "parentUuid": "ad56819f_df0c25ef",
+      "revId": "d7955fe937b6b09c5db357bd49f4d3a1d0bc1d24",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
