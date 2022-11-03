@@ -61,6 +61,7 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
                         buttonToFocalLength[it]?.let { focalLength ->
                             onFocalLengthChangeCallback(focalLength)
                             currentFocalLength = focalLength
+                            updateButtonsAttributes()
                         }
                     }
                     text = formatZoomRatio(zoomRatio)
