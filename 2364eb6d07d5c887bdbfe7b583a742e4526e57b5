@@ -3,6 +3,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7c24ccef_12e16671",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/Camera.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-11-03T23:53:32Z",
+      "side": 1,
+      "message": "runCatching ^.^",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 17
+      },
+      "revId": "2364eb6d07d5c887bdbfe7b583a742e4526e57b5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7750bd07_083c346f",
         "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
         "patchSetId": 1
