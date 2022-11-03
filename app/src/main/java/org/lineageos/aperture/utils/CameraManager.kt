@@ -5,6 +5,7 @@
 
 package org.lineageos.aperture.utils
 
+import android.hardware.camera2.CameraManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -20,6 +21,7 @@ import java.util.concurrent.Executors
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 class CameraManager(activity: AppCompatActivity) {
+    val camera2CameraManager: CameraManager = activity.getSystemService(CameraManager::class.java)
     private val cameraProvider: ProcessCameraProvider = ProcessCameraProvider.getInstance(
         activity
     ).get()
