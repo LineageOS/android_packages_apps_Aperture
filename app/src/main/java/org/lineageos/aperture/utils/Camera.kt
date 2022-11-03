@@ -39,9 +39,26 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val physicalCameraIds = camera2CameraInfo.physicalCameraIds
     val isLogical = physicalCameraIds.isNotEmpty()
 
-    val focalLengths = camera2CameraInfo.getCameraCharacteristic(
-        CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS
-    ) ?: FloatArray(0)
+    val focalLengths = mutableSetOf<Float>().apply {
+        addAll(camera2CameraInfo.getCameraCharacteristic(
+            CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS
+        )?.toSet() ?: setOf())
+
+        for (physicalCameraId in physicalCameraIds) {
+            try {
+                val camera2CameraCharacteristics =
+                    cameraManager.camera2CameraManager.getCameraCharacteristics(physicalCameraId)
+                val physicalFocalLengths = camera2CameraCharacteristics.get(
+                    CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS
+                ) ?: FloatArray(0)
+                for (focalLength in physicalFocalLengths) {
+                    add(focalLength)
+                }
+            } catch (_: Exception) {
+                // Nothing
+            }
+        }
+    }.toSet()
     val sensorSize = camera2CameraInfo.getCameraCharacteristic(
         CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE
     )

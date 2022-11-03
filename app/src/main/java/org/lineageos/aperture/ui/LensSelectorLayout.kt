@@ -71,7 +71,7 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
                 buttonToFocalLength[button] = focalLength
                 buttonToZoomRatio[button] = zoomRatio
             }
-            currentFocalLength = buttonToFocalLength.values.first()
+            currentFocalLength = activeCamera.focalLengths.first()
         } else {
             for (camera in availableCameras.sortedBy { it.zoomRatio }) {
                 val button = inflateButton().apply {
