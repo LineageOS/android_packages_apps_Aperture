@@ -932,11 +932,13 @@ open class CameraActivity : AppCompatActivity() {
         setGridMode(
             if (cameraMode != CameraMode.QR) sharedPreferences.lastGridMode else GridMode.OFF
         )
-        setFlashMode(when (cameraMode) {
-            CameraMode.PHOTO -> sharedPreferences.photoFlashMode
-            CameraMode.VIDEO -> sharedPreferences.videoFlashMode
-            CameraMode.QR -> FlashMode.OFF
-        })
+        setFlashMode(
+            when (cameraMode) {
+                CameraMode.PHOTO -> sharedPreferences.photoFlashMode
+                CameraMode.VIDEO -> sharedPreferences.videoFlashMode
+                CameraMode.QR -> FlashMode.OFF
+            }
+        )
         setMicrophoneMode(sharedPreferences.lastMicMode)
 
         // Reset exposure level
@@ -1285,16 +1287,18 @@ open class CameraActivity : AppCompatActivity() {
      * Cycle flash mode
      */
     private fun cycleFlashMode() {
-        setFlashMode(when (cameraMode) {
-            CameraMode.PHOTO -> cameraController.flashMode.next()
-            CameraMode.VIDEO ->
-                if (cameraController.flashMode != FlashMode.OFF) {
-                    FlashMode.OFF
-                } else {
-                    FlashMode.TORCH
-                }
-            else -> FlashMode.OFF
-        })
+        setFlashMode(
+            when (cameraMode) {
+                CameraMode.PHOTO -> cameraController.flashMode.next()
+                CameraMode.VIDEO ->
+                    if (cameraController.flashMode != FlashMode.OFF) {
+                        FlashMode.OFF
+                    } else {
+                        FlashMode.TORCH
+                    }
+                else -> FlashMode.OFF
+            }
+        )
     }
 
     /**
