@@ -27,6 +27,7 @@ import android.os.Looper
 import android.os.Message
 import android.provider.MediaStore
 import android.util.Log
+import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
@@ -88,6 +89,7 @@ import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
 import java.io.FileNotFoundException
 import java.util.concurrent.ExecutorService
+import kotlin.math.abs
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalZeroShutterLag
@@ -181,6 +183,34 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private lateinit var cameraSoundsUtils: CameraSoundsUtils
+
+    private val gestureDetector by lazy {
+        GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(
+                e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float
+            ): Boolean {
+                if (abs(e1.x - e2.x) > 250) {
+                    if (e2.x > e1.x) {
+                        // Left to right
+                        when (cameraMode) {
+                            CameraMode.PHOTO -> changeCameraMode(CameraMode.QR)
+                            CameraMode.VIDEO -> changeCameraMode(CameraMode.PHOTO)
+                            CameraMode.QR -> changeCameraMode(CameraMode.VIDEO)
+                        }
+                    } else {
+                        // Right to left
+                        when (cameraMode) {
+                            CameraMode.PHOTO -> changeCameraMode(CameraMode.VIDEO)
+                            CameraMode.VIDEO -> changeCameraMode(CameraMode.QR)
+                            CameraMode.QR -> changeCameraMode(CameraMode.PHOTO)
+                        }
+                    }
+                    return true
+                }
+                return false
+            }
+        })
+    }
 
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
@@ -404,6 +434,9 @@ open class CameraActivity : AppCompatActivity() {
 
         // Observe manual focus
         viewFinder.setOnTouchListener { _, event ->
+            if (gestureDetector.onTouchEvent(event)) {
+                return@setOnTouchListener true
+            }
             val isSingleTouch = event.pointerCount == 1
             val isUpEvent = event.action == MotionEvent.ACTION_UP
             val notALongPress = (event.eventTime - event.downTime
