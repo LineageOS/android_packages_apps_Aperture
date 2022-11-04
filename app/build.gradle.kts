@@ -12,6 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "org.lineageos.aperture.dev"
+        namespace = "org.lineageos.aperture"
         minSdk = 26
         targetSdk = 33
         versionCode = 1
