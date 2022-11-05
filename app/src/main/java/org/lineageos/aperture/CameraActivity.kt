@@ -82,6 +82,7 @@ import org.lineageos.aperture.utils.CameraMode
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.CameraState
 import org.lineageos.aperture.utils.FlashMode
+import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.MediaType
 import org.lineageos.aperture.utils.ShortcutsUtils
@@ -122,6 +123,7 @@ open class CameraActivity : AppCompatActivity() {
     private val shutterButton by lazy { findViewById<ImageButton>(R.id.shutterButton) }
     private val timerButton by lazy { findViewById<Button>(R.id.timerButton) }
     private val videoDuration by lazy { findViewById<MaterialButton>(R.id.videoDuration) }
+    private val videoFramerateButton by lazy { findViewById<Button>(R.id.videoFramerateButton) }
     private val videoModeButton by lazy { findViewById<MaterialButton>(R.id.videoModeButton) }
     private val videoQualityButton by lazy { findViewById<Button>(R.id.videoQualityButton) }
     private val videoRecordingStateButton by lazy { findViewById<ImageButton>(R.id.videoRecordingStateButton) }
@@ -168,6 +170,7 @@ open class CameraActivity : AppCompatActivity() {
         }
 
     // Video
+    private var videoFramerate = Framerate.FPS_AUTO
     private lateinit var audioConfig: AudioConfig
     private var recording: Recording? = null
 
@@ -373,6 +376,7 @@ open class CameraActivity : AppCompatActivity() {
         // Set secondary top bar button callbacks
         aspectRatioButton.setOnClickListener { cycleAspectRatio() }
         videoQualityButton.setOnClickListener { cycleVideoQuality() }
+        videoFramerateButton.setOnClickListener { cycleVideoFramerate() }
         effectButton.setOnClickListener { cyclePhotoEffects() }
         gridButton.setOnClickListener { cycleGridMode() }
         timerButton.setOnClickListener { toggleTimerMode() }
@@ -861,6 +865,11 @@ open class CameraActivity : AppCompatActivity() {
             sharedPreferences.photoEffect = ExtensionMode.NONE
         }
 
+        // Fallback to Framerate.FPS_AUTO if necessary
+        if (!camera.supportedVideoFramerates.contains(videoFramerate)) {
+            videoFramerate = Framerate.FPS_AUTO
+        }
+
         // Initialize the use case we want and set its properties
         val cameraUseCases = when (cameraMode) {
             CameraMode.QR -> {
@@ -926,6 +935,15 @@ open class CameraActivity : AppCompatActivity() {
             // Set Camera2 CaptureRequest options
             cameraController.camera2CameraControl?.apply {
                 captureRequestOptions = CaptureRequestOptions.Builder()
+                    .apply {
+                        setFramerate(
+                            if (cameraMode == CameraMode.VIDEO) {
+                                videoFramerate
+                            } else {
+                                Framerate.FPS_AUTO
+                            }
+                        )
+                    }
                     .build()
             } ?: Log.wtf(LOG_TAG, "Camera2CameraControl not available even with camera ready?")
         }, ContextCompat.getMainExecutor(this))
@@ -953,6 +971,7 @@ open class CameraActivity : AppCompatActivity() {
         updateTimerModeIcon()
         updateAspectRatioIcon()
         updateVideoQualityIcon()
+        updateVideoFramerateIcon()
         updatePhotoEffectIcon()
         updateGridIcon()
         updateFlashModeIcon()
@@ -1060,6 +1079,7 @@ open class CameraActivity : AppCompatActivity() {
             timerButton.isEnabled = cameraState == CameraState.IDLE
             aspectRatioButton.isEnabled = cameraState == CameraState.IDLE
             videoQualityButton.isEnabled = cameraState == CameraState.IDLE
+            videoFramerateButton.isEnabled = cameraState == CameraState.IDLE
             effectButton.isEnabled = cameraState == CameraState.IDLE
             // Grid mode can be toggled at any time
             // Torch mode can be toggled at any time
@@ -1109,6 +1129,34 @@ open class CameraActivity : AppCompatActivity() {
 
         sharedPreferences.videoQuality = newVideoQuality
 
+        bindCameraUseCases()
+    }
+
+    private fun updateVideoFramerateIcon() {
+        videoFramerateButton.isVisible = cameraMode == CameraMode.VIDEO
+
+        videoFramerateButton.text = resources.getText(
+            when (videoFramerate) {
+                Framerate.FPS_AUTO -> R.string.video_framerate_auto
+                Framerate.FPS_24 -> R.string.video_framerate_24
+                Framerate.FPS_30 -> R.string.video_framerate_30
+                Framerate.FPS_60 -> R.string.video_framerate_60
+            }
+        )
+    }
+
+    private fun cycleVideoFramerate() {
+        if (!canRestartCamera()) {
+            return
+        }
+
+        val newVideoFramerate = camera.supportedVideoFramerates.next(videoFramerate)
+
+        if (newVideoFramerate == videoFramerate) {
+            return
+        }
+
+        videoFramerate = newVideoFramerate
         bindCameraUseCases()
     }
 
