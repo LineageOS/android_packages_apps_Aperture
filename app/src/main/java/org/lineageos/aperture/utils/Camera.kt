@@ -51,6 +51,13 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     var zoomRatio = 1f
 
     val supportedVideoQualities = QualitySelector.getSupportedQualities(cameraInfo).reversed()
+    val supportedVideoFramerates: List<Framerate> = mutableListOf(Framerate.FPS_AUTO).apply {
+        camera2CameraInfo.getCameraCharacteristic(
+            CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES
+        )?.let {
+            addAll(it.mapNotNull { range -> Framerate.fromRange(range) }.distinct().sorted())
+        }
+    }
     val supportsVideoRecording = supportedVideoQualities.isNotEmpty()
 
     val supportedExtensionModes = cameraManager.extensionsManager.getSupportedModes(cameraSelector)
