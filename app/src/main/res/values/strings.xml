@@ -31,6 +31,11 @@
     <string name="video_quality_fhd">1080p</string>
     <string name="video_quality_uhd">2160p</string>
 
+    <string name="video_framerate_auto">AUTO FPS</string>
+    <string name="video_framerate_24">24 FPS</string>
+    <string name="video_framerate_30">30 FPS</string>
+    <string name="video_framerate_60">60 FPS</string>
+
     <string name="effect_none">NONE</string>
     <string name="effect_bokeh">BOKEH</string>
     <string name="effect_hdr">HDR</string>
