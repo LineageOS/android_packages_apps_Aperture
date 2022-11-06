@@ -186,6 +186,11 @@ open class CameraActivity : AppCompatActivity() {
 
     private val gestureDetector by lazy {
         GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
+                viewFinderTouchEvent = e
+                return false
+            }
+
             override fun onFling(
                 e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float
             ): Boolean {
@@ -434,19 +439,7 @@ open class CameraActivity : AppCompatActivity() {
 
         // Observe manual focus
         viewFinder.setOnTouchListener { _, event ->
-            if (gestureDetector.onTouchEvent(event)) {
-                return@setOnTouchListener true
-            }
-            val isSingleTouch = event.pointerCount == 1
-            val isUpEvent = event.action == MotionEvent.ACTION_UP
-            val notALongPress = (event.eventTime - event.downTime
-                    < ViewConfiguration.getLongPressTimeout())
-            if (isSingleTouch && isUpEvent && notALongPress) {
-                // If the event is a click, invoke tap-to-focus and forward it to user's
-                // OnClickListener#onClick.
-                viewFinderTouchEvent = event
-            }
-            return@setOnTouchListener false
+            return@setOnTouchListener gestureDetector.onTouchEvent(event)
         }
         viewFinder.setOnClickListener { view ->
             // Reset exposure level to 0 EV
