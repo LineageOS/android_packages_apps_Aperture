@@ -16,9 +16,4 @@
         <item>minimize_latency</item>
         <item>zero_shutter_lag</item>
     </string-array>
-
-    <string-array name="qr_bottom_sheet_dialog_types" translatable="false">
-        <item>@string/qr_type_bytes</item>
-        <item>@string/qr_type_text</item>
-    </string-array>
 </resources>

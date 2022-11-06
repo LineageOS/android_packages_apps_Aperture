@@ -122,7 +122,7 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
                     } else {
                         bottomSheetDialogData.setOnClickListener {}
                         bottomSheetDialogTitle.text =
-                            activity.resources.getText(R.string.qr_type_text)
+                            activity.resources.getText(R.string.qr_text)
                         bottomSheetDialogIcon.setImageDrawable(
                             AppCompatResources.getDrawable(activity, R.drawable.ic_qr_type_text)
                         )
