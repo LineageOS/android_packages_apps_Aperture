@@ -22,7 +22,7 @@ android {
     }
 
     buildTypes {
-        named("release") {
+        getByName("release") {
             // Enables code shrinking, obfuscation, and optimization.
             isMinifyEnabled = true
 
