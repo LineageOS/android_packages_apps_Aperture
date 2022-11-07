@@ -9,7 +9,6 @@ import android.hardware.camera2.CameraCharacteristics
 import android.util.SizeF
 import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.core.CameraInfo
-import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
 import org.lineageos.aperture.getSupportedModes
 import org.lineageos.aperture.physicalCameraIds
@@ -51,8 +50,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     }
     var zoomRatio = 1f
 
-    val supportedVideoQualities: MutableList<Quality> =
-        QualitySelector.getSupportedQualities(cameraInfo)
+    val supportedVideoQualities = QualitySelector.getSupportedQualities(cameraInfo).reversed()
     val supportsVideoRecording = supportedVideoQualities.isNotEmpty()
 
     val supportedExtensionModes = cameraManager.extensionsManager.getSupportedModes(cameraSelector)

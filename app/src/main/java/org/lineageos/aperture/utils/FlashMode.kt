@@ -5,6 +5,8 @@
 
 package org.lineageos.aperture.utils
 
+import org.lineageos.aperture.next
+
 enum class FlashMode {
     /**
      * Flash will not be fired.
@@ -35,8 +37,5 @@ enum class FlashMode {
     /**
      * Get the next mode.
      */
-    fun next(): FlashMode {
-        val allModes = values()
-        return allModes.getOrElse(allModes.indexOf(this) + 1) { allModes.first() }
-    }
+    fun next() = values().next(this)
 }
