@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "421980e7_b6718a03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-11-07T08:42:37Z",
+      "side": 1,
+      "message": "\tMain AndroidManifest.xml at AndroidManifest.xml manifest:package attribute is not declared\n",
+      "revId": "9c860a6b7d6caa76646696bf0d6fc495be7e3a7d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
