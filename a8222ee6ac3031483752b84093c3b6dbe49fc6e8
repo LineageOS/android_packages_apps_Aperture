@@ -34,6 +34,24 @@
       "parentUuid": "653f79be_e88eded3",
       "revId": "a8222ee6ac3031483752b84093c3b6dbe49fc6e8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f54aedb0_e383e479",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-11-07T09:55:35Z",
+      "side": 1,
+      "message": "Then check the source in Gallery and enable edit mode based on that",
+      "parentUuid": "4dc84011_2521a6ee",
+      "revId": "a8222ee6ac3031483752b84093c3b6dbe49fc6e8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
