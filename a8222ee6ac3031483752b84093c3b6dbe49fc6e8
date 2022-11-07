@@ -52,6 +52,24 @@
       "parentUuid": "4dc84011_2521a6ee",
       "revId": "a8222ee6ac3031483752b84093c3b6dbe49fc6e8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e7b2a46e_a82d4c8f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 18796
+      },
+      "writtenOn": "2022-11-07T11:42:58Z",
+      "side": 1,
+      "message": "I do not wish to touch snapdragon gallery, if anyone else willing then do it then please do.",
+      "parentUuid": "f54aedb0_e383e479",
+      "revId": "a8222ee6ac3031483752b84093c3b6dbe49fc6e8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
