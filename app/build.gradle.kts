@@ -72,6 +72,13 @@ dependencies {
     // If you want to additionally use the CameraX Extensions library
     implementation("androidx.camera:camera-extensions:${cameraxVersion}")
 
+    // Media3
+    val media3Version = "1.0.0-beta02"
+    // For media playback using ExoPlayer
+    implementation("androidx.media3:media3-exoplayer:$media3Version")
+    // For building media playback UIs
+    implementation("androidx.media3:media3-ui:$media3Version")
+
     // ZXing
     implementation("com.google.zxing:core:3.5.0")
 
@@ -133,8 +140,10 @@ tasks.register("generateBp") {
     val isAvailableInAosp = { group: String, artifactId: String ->
         when {
             group.startsWith("androidx") -> {
-                // We provide our own androidx.camera & lifecycle-common
-                !group.startsWith("androidx.camera") && artifactId != "lifecycle-common"
+                // We provide our own androidx.{camera,media3} & lifecycle-common
+                !group.startsWith("androidx.camera") &&
+                        !group.startsWith("androidx.media3") &&
+                        artifactId != "lifecycle-common"
             }
             group.startsWith("org.jetbrains") -> true
             group == "com.google.auto.value" -> true
