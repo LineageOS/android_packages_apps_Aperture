@@ -610,7 +610,9 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        return when (keyCode) {
+        return if (capturePreviewLayout.isVisible) {
+            super.onKeyDown(keyCode, event)
+        } else when (keyCode) {
             KeyEvent.KEYCODE_FOCUS -> {
                 if (event?.repeatCount == 1) {
                     viewFinderTouchEvent = null
@@ -631,7 +633,9 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        return when (keyCode) {
+        return if (capturePreviewLayout.isVisible) {
+            super.onKeyUp(keyCode, event)
+        } else when (keyCode) {
             KeyEvent.KEYCODE_CAMERA,
             KeyEvent.KEYCODE_VOLUME_UP,
             KeyEvent.KEYCODE_VOLUME_DOWN -> {
