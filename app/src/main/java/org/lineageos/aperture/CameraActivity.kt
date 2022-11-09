@@ -93,6 +93,7 @@ import kotlin.math.abs
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalZeroShutterLag
 @androidx.camera.view.video.ExperimentalVideo
+@androidx.media3.common.util.UnstableApi
 open class CameraActivity : AppCompatActivity() {
     // Views
     private val aspectRatioButton by lazy { findViewById<Button>(R.id.aspectRatioButton) }
