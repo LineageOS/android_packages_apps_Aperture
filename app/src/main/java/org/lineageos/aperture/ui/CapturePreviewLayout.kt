@@ -10,25 +10,30 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.VideoView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
 import org.lineageos.aperture.R
 import org.lineageos.aperture.utils.MediaType
 
 /**
  * Image/video preview fragment
  */
+@androidx.media3.common.util.UnstableApi
 class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(
     context, attrs
 ) {
     private lateinit var uri: Uri
     private lateinit var mediaType: MediaType
 
+    private var exoPlayer: ExoPlayer? = null
+
     private val cancelButton by lazy { findViewById<ImageButton>(R.id.cancelButton) }
     private val confirmButton by lazy { findViewById<ImageButton>(R.id.confirmButton) }
     private val imageView by lazy { findViewById<ImageView>(R.id.imageView) }
-    private val videoView by lazy { findViewById<VideoView>(R.id.videoView) }
+    private val videoView by lazy { findViewById<PlayerView>(R.id.videoView) }
 
     /**
      * URI is null == canceled
@@ -40,9 +45,11 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
         super.onLayout(changed, left, top, right, bottom)
 
         cancelButton.setOnClickListener {
+            stopPreview()
             onChoiceCallback(null)
         }
         confirmButton.setOnClickListener {
+            stopPreview()
             onChoiceCallback(uri)
         }
     }
@@ -51,18 +58,39 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
         this.uri = uri
         this.mediaType = mediaType
 
-        videoView.stopPlayback()
-
         imageView.isVisible = mediaType == MediaType.PHOTO
         videoView.isVisible = mediaType == MediaType.VIDEO
 
+        startPreview()
+    }
+
+    private fun startPreview() {
         when (mediaType) {
             MediaType.PHOTO -> {
                 imageView.setImageURI(uri)
             }
             MediaType.VIDEO -> {
-                videoView.setVideoURI(uri)
-                videoView.start()
+                exoPlayer = ExoPlayer.Builder(context)
+                    .build()
+                    .also {
+                        videoView.player = it
+
+                        it.setMediaItem(MediaItem.fromUri(uri))
+
+                        it.playWhenReady = true
+                        it.seekTo(0)
+                        it.prepare()
+                    }
+            }
+        }
+    }
+
+    private fun stopPreview() {
+        when (mediaType) {
+            MediaType.PHOTO -> {}
+            MediaType.VIDEO -> {
+                exoPlayer?.release()
+                exoPlayer = null
             }
         }
     }
