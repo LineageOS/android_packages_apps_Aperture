@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4089b8cd_482ff364",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-11-10T13:09:51Z",
+      "side": 1,
+      "message": "This makes a 0.3x lens show up for me in pixel 6",
+      "revId": "c52a08331bce214f216bb2d07bda75905a333593",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
