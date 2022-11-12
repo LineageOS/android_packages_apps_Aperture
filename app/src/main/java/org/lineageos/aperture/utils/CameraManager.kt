@@ -5,7 +5,7 @@
 
 package org.lineageos.aperture.utils
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.LifecycleCameraController
@@ -17,24 +17,24 @@ import java.util.concurrent.Executors
  * Class managing an app camera session
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
-class CameraManager(activity: AppCompatActivity) {
+class CameraManager(context: Context) {
     private val cameraProvider: ProcessCameraProvider = ProcessCameraProvider.getInstance(
-        activity
+        context
     ).get()
     val extensionsManager: ExtensionsManager = ExtensionsManager.getInstanceAsync(
-        activity, cameraProvider
+        context, cameraProvider
     ).get()
-    val cameraController = LifecycleCameraController(activity)
+    val cameraController = LifecycleCameraController(context)
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
     private val enableAuxCameras by lazy {
-        activity.resources.getBoolean(R.bool.config_enableAuxCameras)
+        context.resources.getBoolean(R.bool.config_enableAuxCameras)
     }
     private val ignoredAuxCameraIds by lazy {
-        activity.resources.getStringArray(R.array.config_ignoredAuxCameraIds)
+        context.resources.getStringArray(R.array.config_ignoredAuxCameraIds)
     }
     private val ignoreLogicalAuxCameras by lazy {
-        activity.resources.getBoolean(R.bool.config_ignoreLogicalAuxCameras)
+        context.resources.getBoolean(R.bool.config_ignoreLogicalAuxCameras)
     }
 
     private val cameras: Map<String, Camera>
