@@ -34,6 +34,24 @@
       "parentUuid": "5e6ce0e4_303dae18",
       "revId": "aee6b623a45b9a2380a315e5ddc93bb2985ae2f6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36cc967e_4d093e39",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-11-13T19:13:24Z",
+      "side": 1,
+      "message": "Unnecessary, EXIF contains everything needed",
+      "parentUuid": "edec2b01_1241947b",
+      "revId": "aee6b623a45b9a2380a315e5ddc93bb2985ae2f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
