@@ -293,6 +293,16 @@ internal var SharedPreferences.shutterSound: Boolean
         putBoolean(SHUTTER_SOUND_KEY, value)
     }
 
+// Photo timestamp
+private const val PHOTO_TIMESTAMP_KEY = "photo_timestamp"
+private const val PHOTO_TIMESTAMP_DEFAULT = false
+
+internal var SharedPreferences.photoTimestamp: Boolean
+    get() = getBoolean(PHOTO_TIMESTAMP_KEY, PHOTO_TIMESTAMP_DEFAULT)
+    set(value) = edit {
+        putBoolean(PHOTO_TIMESTAMP_KEY, value)
+    }
+
 // Leveler
 private const val LEVELER_KEY = "leveler"
 private const val LEVELER_DEFAULT = false

@@ -45,6 +45,13 @@
             app:title="@string/photo_capture_mode_title"
             app:useSimpleSummaryProvider="true" />
 
+        <SwitchPreference
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="photo_timestamp"
+            app:summary="@string/photo_timestamp_summary"
+            app:title="@string/photo_timestamp_title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -11,7 +11,11 @@ import android.annotation.SuppressLint
 import android.app.KeyguardManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.ImageDecoder
+import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.ColorDrawable
@@ -31,7 +35,6 @@ import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewConfiguration
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.HorizontalScrollView
@@ -88,6 +91,7 @@ import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
 import java.io.FileNotFoundException
+import java.io.OutputStream
 import java.util.concurrent.ExecutorService
 import kotlin.math.abs
 
@@ -737,6 +741,17 @@ open class CameraActivity : AppCompatActivity() {
                     if (!singleCaptureMode) {
                         sharedPreferences.lastSavedUri = output.savedUri
                         tookSomething = true
+                        if (sharedPreferences.photoTimestamp) {
+                            val bitmap = putPhotoTimestamp(output.savedUri)
+                            val fOut: OutputStream? = contentResolver.openOutputStream(output.savedUri!!)
+                            bitmap.compress(
+                                Bitmap.CompressFormat.JPEG,
+                                100,
+                                fOut
+                            )
+                            fOut?.flush()
+                            fOut?.close()
+                        }
                     } else {
                         output.savedUri?.let {
                             openCapturePreview(it, MediaType.PHOTO)
@@ -745,6 +760,27 @@ open class CameraActivity : AppCompatActivity() {
                 }
             }
         )
+    }
+
+    private fun putPhotoTimestamp(savedUri: Uri?): Bitmap {
+        var bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val source = ImageDecoder.createSource(this.contentResolver, savedUri!!)
+            ImageDecoder.decodeBitmap(source)
+        } else {
+            @Suppress("DEPRECATION")
+            MediaStore.Images.Media.getBitmap(
+                this.contentResolver,
+                savedUri
+            )
+        }
+        bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+        val canvas = Canvas(bitmap)
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
+        paint.textAlign = Paint.Align.CENTER
+        paint.color = Color.WHITE
+        paint.textSize = 20f
+        canvas.drawText("Hello Dhina", 200f, 200f, paint)
+        return bitmap
     }
 
     private fun captureVideo() {
