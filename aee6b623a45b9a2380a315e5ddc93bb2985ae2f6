@@ -52,6 +52,24 @@
       "parentUuid": "edec2b01_1241947b",
       "revId": "aee6b623a45b9a2380a315e5ddc93bb2985ae2f6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4949aca_73f6ec37",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 24334
+      },
+      "writtenOn": "2022-11-14T07:01:27Z",
+      "side": 1,
+      "message": "Still some people prefer having timestamp on the image. \nAnyways look back when it\u0027s needed. Now gonna abandon the change [Not complete but mere solution]",
+      "parentUuid": "36cc967e_4d093e39",
+      "revId": "aee6b623a45b9a2380a315e5ddc93bb2985ae2f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
