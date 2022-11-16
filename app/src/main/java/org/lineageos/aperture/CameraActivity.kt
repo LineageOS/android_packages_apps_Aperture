@@ -33,6 +33,9 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.WindowManager
+import android.view.animation.AlphaAnimation
+import android.view.animation.AnimationSet
+import android.view.animation.TranslateAnimation
 import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
@@ -388,9 +391,14 @@ open class CameraActivity : AppCompatActivity() {
         micButton.setOnClickListener { toggleMicrophoneMode() }
         settingsButton.setOnClickListener { openSettings() }
 
+        secondaryTopBarLayout.slideDown()
         // Set secondary bottom bar button callbacks
         proButton.setOnClickListener {
-            secondaryTopBarLayout.isVisible = !secondaryTopBarLayout.isVisible
+            if (secondaryTopBarLayout.isVisible) {
+                secondaryTopBarLayout.slideDown()
+            } else {
+                secondaryTopBarLayout.slideUp()
+            }
         }
         flashButton.setOnClickListener { cycleFlashMode() }
 
@@ -456,7 +464,7 @@ open class CameraActivity : AppCompatActivity() {
             handler.removeMessages(MSG_HIDE_EXPOSURE_SLIDER)
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_EXPOSURE_SLIDER), 2000)
 
-            secondaryTopBarLayout.isVisible = false
+            secondaryTopBarLayout.slideDown()
         }
 
         // Observe preview stream state
@@ -992,7 +1000,7 @@ open class CameraActivity : AppCompatActivity() {
         sharedPreferences.lastCameraMode = cameraMode
 
         // Hide secondary top bar
-        secondaryTopBarLayout.isVisible = false
+        secondaryTopBarLayout.slideDown()
 
         bindCameraUseCases()
     }
@@ -1600,6 +1608,38 @@ open class CameraActivity : AppCompatActivity() {
             shutterButton.isEnabled = true
             runnable()
         }
+    }
+
+    private fun View.slideUp() {
+        if (visibility == View.VISIBLE) {
+            return
+        }
+
+        this.visibility = View.VISIBLE
+        val animationSet = AnimationSet(true)
+        val translateAnimation = TranslateAnimation(0f, 0f, this.height.toFloat(), 0f)
+        translateAnimation.duration = 250
+        animationSet.addAnimation(translateAnimation)
+        val alphaAnimation = AlphaAnimation(0.0f, 1.0f)
+        alphaAnimation.duration = 250
+        animationSet.addAnimation(alphaAnimation)
+        this.startAnimation(animationSet)
+    }
+
+    private fun View.slideDown() {
+        if (visibility == View.INVISIBLE) {
+            return
+        }
+
+        this.visibility = View.INVISIBLE
+        val animationSet = AnimationSet(true)
+        val translateAnimation = TranslateAnimation(0f, 0f, 0f, this.height.toFloat())
+        translateAnimation.duration = 200
+        animationSet.addAnimation(translateAnimation)
+        val alphaAnimation = AlphaAnimation(1.0f, 0.0f)
+        alphaAnimation.duration = 200
+        animationSet.addAnimation(alphaAnimation)
+        this.startAnimation(animationSet)
     }
 
     fun preventClicks(@Suppress("UNUSED_PARAMETER") view: View) {}
