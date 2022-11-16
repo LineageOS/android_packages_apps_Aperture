@@ -409,7 +409,7 @@ open class CameraActivity : AppCompatActivity() {
 
         // Set secondary bottom bar button callbacks
         proButton.setOnClickListener {
-            secondaryTopBarLayout.isVisible = !secondaryTopBarLayout.isVisible
+            secondaryTopBarLayout.slide()
         }
         flashButton.setOnClickListener { cycleFlashMode() }
 
@@ -478,7 +478,7 @@ open class CameraActivity : AppCompatActivity() {
             handler.removeMessages(MSG_HIDE_EXPOSURE_SLIDER)
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_EXPOSURE_SLIDER), 2000)
 
-            secondaryTopBarLayout.isVisible = false
+            secondaryTopBarLayout.slideDown()
         }
 
         // Observe preview stream state
@@ -1059,7 +1059,7 @@ open class CameraActivity : AppCompatActivity() {
         sharedPreferences.lastCameraMode = cameraMode
 
         // Hide secondary top bar
-        secondaryTopBarLayout.isVisible = false
+        secondaryTopBarLayout.slideDown()
 
         bindCameraUseCases()
     }
