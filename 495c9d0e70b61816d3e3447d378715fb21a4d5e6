@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "525e299c_5253afb9",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-11-16T08:59:02Z",
+      "side": 1,
+      "message": "we usually put all our kotlin extensions under another package ( ext? )\nViewExt or similar would be the file name",
+      "revId": "495c9d0e70b61816d3e3447d378715fb21a4d5e6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
