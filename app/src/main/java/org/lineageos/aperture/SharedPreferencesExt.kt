@@ -16,6 +16,7 @@ import org.lineageos.aperture.utils.CameraFacing
 import org.lineageos.aperture.utils.CameraMode
 import org.lineageos.aperture.utils.FlashMode
 import org.lineageos.aperture.utils.GridMode
+import org.lineageos.aperture.utils.StabilizationMode
 
 @SuppressLint("ApplySharedPref")
 inline fun SharedPreferences.edit(
@@ -313,4 +314,31 @@ internal var SharedPreferences.lastSavedUri: Uri?
     }
     set(value) = edit {
         putString(LAST_SAVED_URI_KEY, value.toString())
+    }
+
+// Image stabilization
+private const val IMAGE_STABILIZATION_KEY = "image_stabilization"
+internal val SharedPreferences.imageStabilizationMode: StabilizationMode
+    get() = if (getBoolean(IMAGE_STABILIZATION_KEY, false)) {
+        StabilizationMode.OPTICAL
+    } else {
+        StabilizationMode.OFF
+    }
+
+// Video stabilization
+private const val VIDEO_STABILIZATION_KEY = "video_stabilization"
+private const val VIDEO_STABILIZATION_OIS_KEY = "video_stabilization_ois"
+private const val VIDEO_STABILIZATION_PREVIEW_KEY = "video_stabilization_preview"
+internal val SharedPreferences.videoStabilizationMode: StabilizationMode
+    get() {
+        val videoStabilization = getBoolean(VIDEO_STABILIZATION_KEY, false)
+        val videoStabilizationOis = getBoolean(VIDEO_STABILIZATION_OIS_KEY, false)
+        val videoStabilizationPreview = getBoolean(VIDEO_STABILIZATION_PREVIEW_KEY, false)
+
+        return when {
+            !videoStabilization -> StabilizationMode.OFF
+            videoStabilizationPreview -> StabilizationMode.HYBRID
+            videoStabilizationOis -> StabilizationMode.OPTICAL
+            else -> StabilizationMode.DIGITAL
+        }
     }
