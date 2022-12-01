@@ -45,6 +45,40 @@
             app:title="@string/photo_capture_mode_title"
             app:useSimpleSummaryProvider="true" />
 
+        <SwitchPreference
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="image_stabilization"
+            app:summary="@string/image_stabilization_summary"
+            app:title="@string/image_stabilization_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/video_header">
+
+        <SwitchPreference
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="video_stabilization"
+            app:summary="@string/video_stabilization_summary"
+            app:title="@string/video_stabilization_title" />
+
+        <SwitchPreference
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="video_stabilization_ois"
+            app:summary="@string/video_stabilization_ois_summary"
+            app:title="@string/video_stabilization_ois_title" />
+
+        <SwitchPreference
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="video_stabilization_preview"
+            app:summary="@string/video_stabilization_preview_summary"
+            app:title="@string/video_stabilization_preview_title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

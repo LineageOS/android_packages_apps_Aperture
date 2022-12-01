@@ -74,6 +74,7 @@
     <!-- Preference Titles -->
     <string name="general_header">General</string>
     <string name="photos_header">Photos</string>
+    <string name="video_header">Video</string>
     <string name="advanced_header">Advanced</string>
 
     <!-- General Preferences -->
@@ -90,6 +91,16 @@
     <string name="photo_capture_mode_maximize_quality">Maximize quality</string>
     <string name="photo_capture_mode_minimize_latency">Minimize latency</string>
     <string name="photo_capture_mode_zsl">Zero shutter lag (experimental)</string>
+    <string name="image_stabilization_title">Enable image stabilization when available</string>
+    <string name="image_stabilization_summary">If the hardware supports it, enable optical image stabilization</string>
+
+    <!-- Video Preferences -->
+    <string name="video_stabilization_title">Enable video stabilization when available</string>
+    <string name="video_stabilization_summary">When available, enable electronic image stabilization (EIS)</string>
+    <string name="video_stabilization_ois_title">Use OIS instead of EIS when available</string>
+    <string name="video_stabilization_ois_summary">If the hardware supports it, use optical image stabilization (OIS) instead of electronic image stabilization (EIS)</string>
+    <string name="video_stabilization_preview_title">Enable stabilization on preview when available</string>
+    <string name="video_stabilization_preview_summary">If available, apply image stabilization also to the preview and, if the hardware supports it, automatically enable optical image stabilization (OIS) together with electronic image stabilization (EIS) if the device deems that appropriate. Only some devices launched with Android 13 or newer supports this mode</string>
 
     <!-- Advanced Preferences -->
     <string name="leveler_title">Leveler</string>
