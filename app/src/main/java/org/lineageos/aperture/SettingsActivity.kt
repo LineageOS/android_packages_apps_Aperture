@@ -58,6 +58,15 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         private val saveLocation by lazy { findPreference<SwitchPreference>("save_location") }
         private val shutterSound by lazy { findPreference<SwitchPreference>("shutter_sound") }
+        private val videoStabilization by lazy {
+            findPreference<SwitchPreference>("video_stabilization")!!
+        }
+        private val videoStabilizationPreview by lazy {
+            findPreference<SwitchPreference>("video_stabilization_preview")!!
+        }
+        private val videoStabilizationOis by lazy {
+            findPreference<SwitchPreference>("video_stabilization_ois")!!
+        }
 
         private val requestLocationPermissions = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -69,6 +78,34 @@ class SettingsActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+        private val videoStabilizationPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { preference, newValue ->
+                val videoStabilizationEnabled =
+                    if (preference == videoStabilization) {
+                        newValue as Boolean
+                    } else {
+                        videoStabilization.isChecked
+                    }
+                val videoStabilizationPreviewEnabled =
+                    if (preference == videoStabilizationPreview) {
+                        newValue as Boolean
+                    } else {
+                        videoStabilizationPreview.isChecked
+                    }
+
+                videoStabilizationPreview.isChecked =
+                    videoStabilizationPreview.isChecked && videoStabilizationEnabled
+                videoStabilizationPreview.isEnabled = videoStabilizationEnabled
+
+                val videoStabilizationOisCanBeEnabled =
+                    videoStabilizationEnabled && !videoStabilizationPreviewEnabled
+                videoStabilizationOis.isChecked =
+                    videoStabilizationOis.isChecked && videoStabilizationOisCanBeEnabled
+                videoStabilizationOis.isEnabled = videoStabilizationOisCanBeEnabled
+
+                true
+            }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
@@ -94,6 +131,18 @@ class SettingsActivity : AppCompatActivity() {
                     }
             }
             shutterSound?.isVisible = !CameraSoundsUtils.mustPlaySounds
+
+            // Video stabilization
+            videoStabilization.onPreferenceChangeListener =
+                videoStabilizationPreferenceChangeListener
+            videoStabilizationPreview.onPreferenceChangeListener =
+                videoStabilizationPreferenceChangeListener
+            videoStabilizationOis.onPreferenceChangeListener =
+                videoStabilizationPreferenceChangeListener
+
+            videoStabilizationPreview.isEnabled = videoStabilization.isChecked
+            videoStabilizationOis.isEnabled =
+                videoStabilization.isChecked && !videoStabilizationPreview.isChecked
         }
 
         @SuppressLint("UnsafeOptInUsageError")
