@@ -86,6 +86,7 @@ import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.MediaType
 import org.lineageos.aperture.utils.ShortcutsUtils
+import org.lineageos.aperture.utils.StabilizationMode
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
 import java.io.FileNotFoundException
@@ -942,6 +943,16 @@ open class CameraActivity : AppCompatActivity() {
                             } else {
                                 Framerate.FPS_AUTO
                             }
+                        )
+                        setStabilizationMode(
+                            (StabilizationMode::getClosestMode)(
+                                when (cameraMode) {
+                                    CameraMode.PHOTO -> sharedPreferences.imageStabilizationMode
+                                    CameraMode.VIDEO -> sharedPreferences.videoStabilizationMode
+                                    CameraMode.QR -> StabilizationMode.OFF
+                                },
+                                camera, cameraMode
+                            )
                         )
                     }
                     .build()
