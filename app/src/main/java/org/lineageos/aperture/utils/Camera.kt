@@ -6,6 +6,8 @@
 package org.lineageos.aperture.utils
 
 import android.hardware.camera2.CameraCharacteristics
+import android.hardware.camera2.CameraMetadata
+import android.os.Build
 import android.util.SizeF
 import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.core.CameraInfo
@@ -61,6 +63,38 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val supportsVideoRecording = supportedVideoQualities.isNotEmpty()
 
     val supportedExtensionModes = cameraManager.extensionsManager.getSupportedModes(cameraSelector)
+
+    val supportedStabilizationModes = mutableListOf(StabilizationMode.OFF).apply {
+        val availableVideoStabilizationModes = camera2CameraInfo.getCameraCharacteristic(
+            CameraCharacteristics.CONTROL_AVAILABLE_VIDEO_STABILIZATION_MODES
+        ) ?: IntArray(0)
+        val availableOpticalStabilization = camera2CameraInfo.getCameraCharacteristic(
+            CameraCharacteristics.LENS_INFO_AVAILABLE_OPTICAL_STABILIZATION
+        ) ?: IntArray(0)
+
+        if (
+            availableVideoStabilizationModes.contains(
+                CameraMetadata.CONTROL_VIDEO_STABILIZATION_MODE_ON
+            )
+        ) {
+            add(StabilizationMode.DIGITAL)
+        }
+        if (
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            availableVideoStabilizationModes.contains(
+                CameraMetadata.CONTROL_VIDEO_STABILIZATION_MODE_PREVIEW_STABILIZATION
+            )
+        ) {
+            add(StabilizationMode.HYBRID)
+        }
+        if (
+            availableOpticalStabilization.contains(
+                CameraMetadata.LENS_OPTICAL_STABILIZATION_MODE_ON
+            )
+        ) {
+            add(StabilizationMode.OPTICAL)
+        }
+    }.toList()
 
     override fun equals(other: Any?): Boolean {
         val camera = this::class.safeCast(other) ?: return false
