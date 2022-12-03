@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2507f463_cb477f55",
+        "filename": "app/src/main/res/values/strings.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 13028
+      },
+      "writtenOn": "2022-12-03T10:08:26Z",
+      "side": 1,
+      "message": "we had that come up in the past for translations, that people mostly don\u0027t know what certain abbreviations mean. Maybe do as with video_stabilization_ois_summary, where you did write them fully?",
+      "range": {
+        "startLine": 101,
+        "startChar": 163,
+        "endLine": 101,
+        "endChar": 184
+      },
+      "revId": "66b09e9ca18ca8a20f0e5f6ae4fe859a1f9320ce",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
