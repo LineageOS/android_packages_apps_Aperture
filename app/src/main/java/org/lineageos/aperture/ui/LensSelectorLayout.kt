@@ -41,17 +41,17 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
 
         buttonToCamera.clear()
 
-        for (camera in availableCameras.sortedBy { it.zoomRatio }) {
+        for (camera in availableCameras.sortedBy { it.intrinsicZoomRatio }) {
             val button = inflateButton().apply {
                 setOnClickListener {
                     buttonToCamera[it]?.let(onCameraChangeCallback)
                 }
-                text = formatZoomRatio(camera.zoomRatio)
+                text = formatZoomRatio(camera.intrinsicZoomRatio)
             }
 
             addView(button)
             buttonToCamera[button] = camera
-            buttonToZoomRatio[button] = camera.zoomRatio
+            buttonToZoomRatio[button] = camera.intrinsicZoomRatio
         }
 
         updateButtonsAttributes()
