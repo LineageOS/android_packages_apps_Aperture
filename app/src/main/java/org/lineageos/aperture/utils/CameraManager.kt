@@ -6,6 +6,7 @@
 package org.lineageos.aperture.utils
 
 import android.content.Context
+import android.hardware.camera2.CameraManager as Camera2CameraManager
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.LifecycleCameraController
@@ -20,6 +21,9 @@ import java.util.concurrent.Executors
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 class CameraManager(context: Context) {
+    val camera2CameraManager: Camera2CameraManager =
+        context.getSystemService(Camera2CameraManager::class.java)
+
     private val cameraProvider = ProcessCameraProvider.getInstance(context).get()
     val extensionsManager = ExtensionsManager.getInstanceAsync(context, cameraProvider).get()!!
     val cameraController = LifecycleCameraController(context)
@@ -174,11 +178,17 @@ class CameraManager(context: Context) {
         val auxCameras = facingCameras
             .drop(1)
             .filter { !ignoreLogicalAuxCameras || !it.isLogical }
-        // Setup zoom ratio for aux cameras
-        mainCamera.mm35FocalLengths?.getOrNull(0)?.let { mainCameraMm35FocalLength ->
+
+        // Setup zoom ratio for aux cameras if main cam is a physical camera device
+        if (mainCamera.sensors.size == 1) {
+            val mainSensor = mainCamera.sensors[0]
+
             for (camera in auxCameras) {
-                camera.mm35FocalLengths?.getOrNull(0)?.let {
-                    camera.zoomRatio = it / mainCameraMm35FocalLength
+                // Setup zoom ratio only for physical camera devices
+                if (camera.sensors.size == 1) {
+                    val auxSensor = camera.sensors[0]
+                    camera.zoomRatio = auxSensor.mm35AvailableFocalLengths[0] /
+                            mainSensor.mm35AvailableFocalLengths[0]
                 }
             }
         }
