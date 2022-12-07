@@ -72,7 +72,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
         CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS
     ) ?: FloatArray(0)
 
-    var zoomRatio = 1f
+    var intrinsicZoomRatio = 1f
 
     val supportedVideoQualities = QualitySelector.getSupportedQualities(cameraInfo).reversed()
     val supportedVideoFramerates: List<Framerate> = mutableListOf(Framerate.FPS_AUTO).apply {

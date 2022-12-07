@@ -187,7 +187,7 @@ class CameraManager(context: Context) {
                 // Setup zoom ratio only for physical camera devices
                 if (camera.sensors.size == 1) {
                     val auxSensor = camera.sensors[0]
-                    camera.zoomRatio = auxSensor.mm35AvailableFocalLengths[0] /
+                    camera.intrinsicZoomRatio = auxSensor.mm35AvailableFocalLengths[0] /
                             mainSensor.mm35AvailableFocalLengths[0]
                 }
             }
