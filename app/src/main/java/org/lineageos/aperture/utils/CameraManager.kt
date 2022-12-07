@@ -6,6 +6,8 @@
 package org.lineageos.aperture.utils
 
 import android.content.Context
+import android.icu.text.DecimalFormat
+import android.icu.text.DecimalFormatSymbols
 import android.hardware.camera2.CameraManager as Camera2CameraManager
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -13,6 +15,8 @@ import androidx.camera.view.LifecycleCameraController
 import org.lineageos.aperture.R
 import org.lineageos.aperture.getBoolean
 import org.lineageos.aperture.getStringArray
+import java.math.RoundingMode
+import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -181,18 +185,26 @@ class CameraManager(context: Context) {
 
         // Setup zoom ratio for aux cameras if main cam is a physical camera device
         if (mainCamera.sensors.size == 1) {
-            val mainSensor = mainCamera.sensors[0]
+            val mainSensorViewAngleDegrees = mainCamera.sensors[0].viewAngleDegrees.toFloat()
 
             for (camera in auxCameras) {
                 // Setup zoom ratio only for physical camera devices
                 if (camera.sensors.size == 1) {
                     val auxSensor = camera.sensors[0]
-                    camera.intrinsicZoomRatio = auxSensor.mm35AvailableFocalLengths[0] /
-                            mainSensor.mm35AvailableFocalLengths[0]
+                    camera.intrinsicZoomRatio = roundOffZoomRatio(
+                        mainSensorViewAngleDegrees / auxSensor.viewAngleDegrees
+                    )
                 }
             }
         }
 
         return listOf(mainCamera) + auxCameras
+    }
+
+    private fun roundOffZoomRatio(number: Float): Float {
+        val symbols = DecimalFormatSymbols(Locale.US)
+        return DecimalFormat("#.#", symbols).apply {
+            roundingMode = RoundingMode.CEILING.ordinal
+        }.format(number).toFloat()
     }
 }

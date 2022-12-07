@@ -7,6 +7,9 @@ package org.lineageos.aperture.utils
 
 import android.util.Size
 import android.util.SizeF
+import androidx.annotation.IntRange
+import org.lineageos.aperture.reversed
+import kotlin.math.atan
 
 /**
  * An interface representing a sensor.
@@ -46,14 +49,69 @@ interface Sensor {
      */
     val size: SizeF
 
-    val mm35AvailableFocalLengths: List<Float>
-        get() = size.let { sensorSize ->
-            availableFocalLengths.map { getMm35FocalLength(it, sensorSize) }
+    /**
+     * Gets the angle of view of a camera.
+     */
+    val viewAngleDegrees: Int
+        get() = focalLengthToViewAngleDegrees(
+            availableFocalLengths.first(),
+            horizontalLength
+        )
+
+    /**
+     * Gets the length of the horizontal side of the sensor.
+     *
+     * The horizontal side is the width of the sensor size after rotated by the sensor
+     * orientation.
+     */
+    private val horizontalLength: Float
+        get() {
+            var sensorSize = size
+            var activeArraySize = activeArraySize
+            var pixelArraySize = pixelArraySize
+
+            if (is90or270(orientation)) {
+                sensorSize = sensorSize.reversed()
+                activeArraySize = activeArraySize.reversed()
+                pixelArraySize = pixelArraySize.reversed()
+            }
+
+            return sensorSize.width * activeArraySize.width / pixelArraySize.width
         }
 
     companion object {
-        fun getMm35FocalLength(focalLength: Float, sensorSize: SizeF): Float {
-            return (36.0f / sensorSize.width) * focalLength
+        /**
+         * Calculates view angle by focal length and sensor length.
+         *
+         * The returned view angle is inexact and might not be hundred percent accurate comparing
+         * to the output image.
+         *
+         * The returned view angle should between 0 and 360.
+         */
+        @IntRange(from = 0, to = 360)
+        private fun focalLengthToViewAngleDegrees(focalLength: Float, sensorLength: Float): Int {
+            assert(focalLength > 0) { "Focal length should be positive." }
+            assert(sensorLength > 0) { "Sensor length should be positive." }
+
+            val viewAngleDegrees = Math.toDegrees(
+                2 * atan((sensorLength / (2 * focalLength)).toDouble())
+            ).toInt()
+
+            assert(viewAngleDegrees in 0..360) {
+                "The provided focal length and sensor length" +
+                        "result in an invalid view angle degrees."
+            }
+
+            return viewAngleDegrees
         }
+
+        private fun is90or270(rotationDegrees: Int) =
+            when (rotationDegrees) {
+                0 -> false
+                90 -> true
+                180 -> false
+                270 -> true
+                else -> throw IllegalArgumentException("Invalid rotation degrees: $rotationDegrees")
+            }
     }
 }
