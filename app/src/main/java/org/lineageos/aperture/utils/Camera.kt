@@ -5,6 +5,7 @@
 
 package org.lineageos.aperture.utils
 
+import android.content.Context
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraMetadata
 import android.os.Build
@@ -22,7 +23,9 @@ import kotlin.reflect.safeCast
  * Class representing a device camera
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
-class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
+class Camera(context: Context, cameraInfo: CameraInfo, cameraManager: CameraManager) {
+    val framerateUtils = FramerateUtils(context)
+
     val cameraSelector = cameraInfo.cameraSelector
 
     val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
@@ -80,6 +83,10 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
             CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES
         )?.let {
             addAll(it.mapNotNull { range -> Framerate.fromRange(range) }.distinct().sorted())
+        }.also {
+            framerateUtils.additionalFramerates[cameraId]?.let {
+                addAll(it)
+            }
         }
     }
     val supportsVideoRecording = supportedVideoQualities.isNotEmpty()
