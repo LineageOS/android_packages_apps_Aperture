@@ -28,4 +28,28 @@
     <string-array name="config_backwardCompatibleCameraIds">
         <!-- No camera is unignored by default. -->
     </string-array>
+
+    <!-- An array of arrays with additional supported framerates that aren't advertised in
+         CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES but still work.
+         Example:
+             <array name="config_additionalCameraFramerateRanges" translatable="false">
+                <item>@array/config_additionalCameraFramerateRanges_0</item>
+             </array>
+
+             <array name="config_additionalCameraFramerateRanges_0" translatable="false">
+                <item>0</item>
+                <item>60-60</item>
+                <item>120-120</item>
+             </array>
+    -->
+    <array name="config_additionalCameraFramerateRanges" translatable="false">
+        <!--
+            <array>
+                <item>cameraId</item>
+                <item>range[0]</item>
+                <item>range[1]</item>
+                <item>...</item>
+            <array>
+        -->
+    </array>
 </resources>

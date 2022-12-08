@@ -24,7 +24,7 @@ import java.util.concurrent.Executors
  * Class managing an app camera session
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
-class CameraManager(context: Context) {
+class CameraManager(private val context: Context) {
     val camera2CameraManager: Camera2CameraManager =
         context.getSystemService(Camera2CameraManager::class.java)
 
@@ -45,7 +45,7 @@ class CameraManager(context: Context) {
 
     private val cameras: Map<String, Camera>
         get() = cameraProvider.availableCameraInfos.associate {
-            val camera = Camera(it, this)
+            val camera = Camera(context, it, this)
             camera.cameraId to camera
         }
 
