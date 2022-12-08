@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f258454c_5cc688d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-08T13:01:31Z",
+      "side": 1,
+      "message": "too long",
+      "range": {
+        "startLine": 7,
+        "startChar": 79,
+        "endLine": 7,
+        "endChar": 80
+      },
+      "revId": "e7ab7caf121d0a8c254307b4f3c22c4c1e117bbf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
