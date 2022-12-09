@@ -78,14 +78,15 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     private val supportedVideoFramerates = mutableListOf(Framerate.FPS_AUTO).apply {
         camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES
-        )?.mapNotNull {
-                range -> Framerate.fromRange(range)
+        )?.mapNotNull { range ->
+            Framerate.fromRange(range)
         }?.let {
             addAll(it)
         }
     }.distinct().sorted().toList()
     val supportedVideoQualities = QualitySelector.getSupportedQualities(cameraInfo).associateWith {
-        supportedVideoFramerates
+        supportedVideoFramerates +
+                (cameraManager.additionalVideoConfigurations[cameraId]?.get(it) ?: listOf())
     }.toSortedMap { a, b ->
         listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.UHD).let {
             it.indexOf(a) - it.indexOf(b)
