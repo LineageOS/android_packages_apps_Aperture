@@ -45,12 +45,7 @@ class CameraManager(context: Context) {
 
                     for (i in it.indices step 3) {
                         val cameraId = it[i]
-                        val framerate = when (it[i + 2]) {
-                            "24" -> Framerate.FPS_24
-                            "30" -> Framerate.FPS_30
-                            "60" -> Framerate.FPS_60
-                            else -> continue
-                        }
+                        val framerate = Framerate.fromValue(it[i + 2].toInt()) ?: continue
 
                         it[i + 1].split("|").mapNotNull {
                             when (it) {
