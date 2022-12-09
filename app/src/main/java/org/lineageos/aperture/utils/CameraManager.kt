@@ -11,6 +11,7 @@ import android.icu.text.DecimalFormatSymbols
 import android.hardware.camera2.CameraManager as Camera2CameraManager
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.video.Quality
 import androidx.camera.view.LifecycleCameraController
 import org.lineageos.aperture.R
 import org.lineageos.aperture.getBoolean
@@ -33,6 +34,49 @@ class CameraManager(context: Context) {
     val cameraController = LifecycleCameraController(context)
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
+    private val additionalVideoConfigurations by lazy {
+        mutableMapOf<String, MutableMap<Quality, MutableList<Framerate>>>().apply {
+            context.resources.getStringArray(context, R.array.config_additionalVideoConfigurations)
+                .let {
+                    if (it.size % 3 != 0) {
+                        // Invalid configuration
+                        return@apply
+                    }
+
+                    for (i in it.indices step 3) {
+                        val cameraId = it[i]
+                        val framerate = when (it[i + 2]) {
+                            "24" -> Framerate.FPS_24
+                            "30" -> Framerate.FPS_30
+                            "60" -> Framerate.FPS_60
+                            else -> continue
+                        }
+
+                        it[i + 1].split("|").mapNotNull {
+                            when (it) {
+                                "sd" -> Quality.SD
+                                "hd" -> Quality.HD
+                                "fhd" -> Quality.FHD
+                                "uhd" -> Quality.UHD
+                                else -> null
+                            }
+                        }.distinct().forEach {
+                            if (!this.containsKey(cameraId)) {
+                                this[cameraId] = mutableMapOf()
+                            }
+                            if (!this[cameraId]!!.containsKey(it)) {
+                                this[cameraId]!![it] = mutableListOf()
+                            }
+                            this[cameraId]!![it]!!.add(framerate)
+                        }
+                    }
+                }
+        }.map { a ->
+            a.key to a.value.map { b ->
+                b.key to b.value.toList()
+            }.toMap()
+        }.toMap()
+    }
     private val enableAuxCameras by lazy {
         context.resources.getBoolean(context, R.bool.config_enableAuxCameras)
     }
@@ -42,6 +86,9 @@ class CameraManager(context: Context) {
     private val ignoreLogicalAuxCameras by lazy {
         context.resources.getBoolean(context, R.bool.config_ignoreLogicalAuxCameras)
     }
+
+    fun getAdditionalVideoFramerates(cameraId: String, quality: Quality) =
+        additionalVideoConfigurations[cameraId]?.get(quality) ?: listOf()
 
     private val cameras: Map<String, Camera>
         get() = cameraProvider.availableCameraInfos.associate {
