@@ -85,7 +85,8 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
         }
     }.distinct().sorted().toList()
     val supportedVideoQualities = QualitySelector.getSupportedQualities(cameraInfo).associateWith {
-        supportedVideoFramerates
+        supportedVideoFramerates +
+                (cameraManager.additionalVideoConfigurations[cameraId]?.get(it) ?: listOf())
     }.toSortedMap { a, b ->
         listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.UHD).let {
             it.indexOf(a) - it.indexOf(b)
