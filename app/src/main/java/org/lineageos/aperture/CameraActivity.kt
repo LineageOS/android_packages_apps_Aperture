@@ -1150,14 +1150,10 @@ open class CameraActivity : AppCompatActivity() {
     private fun updateVideoFramerateIcon() {
         videoFramerateButton.isVisible = cameraMode == CameraMode.VIDEO
 
-        videoFramerateButton.text = resources.getText(
-            when (videoFramerate) {
-                Framerate.FPS_AUTO -> R.string.video_framerate_auto
-                Framerate.FPS_24 -> R.string.video_framerate_24
-                Framerate.FPS_30 -> R.string.video_framerate_30
-                Framerate.FPS_60 -> R.string.video_framerate_60
-            }
-        )
+        videoFramerateButton.text = when (videoFramerate) {
+            Framerate.FPS_AUTO -> resources.getString(R.string.video_framerate_auto)
+            else -> resources.getString(R.string.video_framerate_value, videoFramerate.value)
+        }
     }
 
     private fun cycleVideoFramerate() {

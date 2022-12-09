@@ -32,9 +32,7 @@
     <string name="video_quality_uhd" translatable="false">2160p</string>
 
     <string name="video_framerate_auto">AUTO FPS</string>
-    <string name="video_framerate_24">24 FPS</string>
-    <string name="video_framerate_30">30 FPS</string>
-    <string name="video_framerate_60">60 FPS</string>
+    <string name="video_framerate_value">%1$d FPS</string>
 
     <string name="effect_none">NONE</string>
     <string name="effect_bokeh" translatable="false">BOKEH</string>
