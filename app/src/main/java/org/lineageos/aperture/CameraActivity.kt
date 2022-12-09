@@ -171,6 +171,12 @@ open class CameraActivity : AppCompatActivity() {
         }
 
     // Video
+    private val supportedVideoQualities: List<Quality>
+        get() = camera.supportedVideoQualities.keys.toList()
+    private val supportedVideoFramerates: List<Framerate>
+        get() = camera.supportedVideoQualities.getOrDefault(
+            sharedPreferences.videoQuality, listOf(Framerate.FPS_AUTO)
+        )
     private var videoFramerate = Framerate.FPS_AUTO
     private lateinit var audioConfig: AudioConfig
     private var recording: Recording? = null
@@ -863,11 +869,6 @@ open class CameraActivity : AppCompatActivity() {
             sharedPreferences.photoEffect = ExtensionMode.NONE
         }
 
-        // Fallback to Framerate.FPS_AUTO if necessary
-        if (!camera.supportedVideoFramerates.contains(videoFramerate)) {
-            videoFramerate = Framerate.FPS_AUTO
-        }
-
         // Initialize the use case we want and set its properties
         val cameraUseCases = when (cameraMode) {
             CameraMode.QR -> {
@@ -882,10 +883,16 @@ open class CameraActivity : AppCompatActivity() {
             }
             CameraMode.VIDEO -> {
                 // Fallback to highest supported video quality
-                if (!camera.supportedVideoQualities.contains(sharedPreferences.videoQuality)) {
-                    sharedPreferences.videoQuality = camera.supportedVideoQualities.first()
+                if (!supportedVideoQualities.contains(sharedPreferences.videoQuality)) {
+                    sharedPreferences.videoQuality = supportedVideoQualities.first()
                 }
                 cameraController.videoCaptureTargetQuality = sharedPreferences.videoQuality
+
+                // Fallback to Framerate.FPS_AUTO if necessary
+                if (!supportedVideoFramerates.contains(videoFramerate)) {
+                    videoFramerate = Framerate.FPS_AUTO
+                }
+
                 CameraController.VIDEO_CAPTURE
             }
         }
@@ -1129,7 +1136,7 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         val currentVideoQuality = sharedPreferences.videoQuality
-        val newVideoQuality = camera.supportedVideoQualities.next(currentVideoQuality)
+        val newVideoQuality = supportedVideoQualities.next(currentVideoQuality)
 
         if (newVideoQuality == currentVideoQuality) {
             return
@@ -1158,7 +1165,7 @@ open class CameraActivity : AppCompatActivity() {
             return
         }
 
-        val newVideoFramerate = camera.supportedVideoFramerates.next(videoFramerate)
+        val newVideoFramerate = supportedVideoFramerates.next(videoFramerate)
 
         if (newVideoFramerate == videoFramerate) {
             return
