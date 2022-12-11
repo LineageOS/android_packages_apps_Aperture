@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef8f3ed3_81ce3edb",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-11T13:33:10Z",
+      "side": 1,
+      "message": "stock camera on my phone sets:\n```\n         android.control.aeTargetFpsRange (10005): int32[2]\n+          [120 120 ]\n```",
+      "revId": "82f4f16972c6c9e66aa07d868e4c96604d280bb9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
