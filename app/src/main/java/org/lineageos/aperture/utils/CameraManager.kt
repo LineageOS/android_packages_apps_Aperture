@@ -45,7 +45,9 @@ class CameraManager(context: Context) {
 
                     for (i in it.indices step 3) {
                         val cameraId = it[i]
-                        val framerate = Framerate.fromValue(it[i + 2].toInt()) ?: continue
+                        val framerates = it[i + 2].split("|").mapNotNull {
+                            Framerate.fromValue(it.toInt())
+                        }
 
                         it[i + 1].split("|").mapNotNull {
                             when (it) {
@@ -62,7 +64,7 @@ class CameraManager(context: Context) {
                             if (!this[cameraId]!!.containsKey(it)) {
                                 this[cameraId]!![it] = mutableListOf()
                             }
-                            this[cameraId]!![it]!!.add(framerate)
+                            this[cameraId]!![it]!!.addAll(framerates)
                         }
                     }
                 }
