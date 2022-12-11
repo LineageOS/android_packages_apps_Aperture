@@ -158,6 +158,24 @@
       "parentUuid": "afa26c30_65f04bc3",
       "revId": "69b1dd0a4578973e0d07e5bec83918aeb8d810cd",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6588c35_ad17cfb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-11T11:13:19Z",
+      "side": 1,
+      "message": "Try https://review.lineageos.org/c/LineageOS/android_packages_apps_Aperture/+/345733, if duplicate 30 comes from OEM.",
+      "parentUuid": "a58acdd8_7bac0205",
+      "revId": "69b1dd0a4578973e0d07e5bec83918aeb8d810cd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
