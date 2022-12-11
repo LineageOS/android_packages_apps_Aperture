@@ -75,7 +75,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     var intrinsicZoomRatio = 1f
 
-    private val supportedVideoFramerates = mutableListOf(Framerate.FPS_AUTO).apply {
+    private val supportedVideoFramerates = mutableSetOf(Framerate.FPS_AUTO).apply {
         camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES
         )?.mapNotNull { range ->
