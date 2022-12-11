@@ -15,6 +15,7 @@ import androidx.camera.video.Quality
 import org.lineageos.aperture.utils.CameraFacing
 import org.lineageos.aperture.utils.CameraMode
 import org.lineageos.aperture.utils.FlashMode
+import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.StabilizationMode
 
@@ -209,6 +210,17 @@ internal var SharedPreferences.photoEffect: Int
     }
 
 // Video prefs
+private const val VIDEO_FRAMERATE_KEY = "video_framerate"
+private const val VIDEO_FRAMERATE_DEFAULT = "fhd"
+
+internal var SharedPreferences.videoFramerate: Framerate?
+    get() = getString(VIDEO_FRAMERATE_KEY, VIDEO_FRAMERATE_DEFAULT)?.toIntOrNull()?.let {
+        Framerate.fromValue(it)
+    }
+    set(value) = edit {
+        putString(VIDEO_FRAMERATE_KEY, value?.value.toString())
+    }
+
 private const val VIDEO_QUALITY_KEY = "video_quality"
 private const val VIDEO_QUALITY_DEFAULT = "fhd"
 
