@@ -230,6 +230,24 @@
       "parentUuid": "d610a685_beeb8d25",
       "revId": "69b1dd0a4578973e0d07e5bec83918aeb8d810cd",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7af78399_be93ab9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 18796
+      },
+      "writtenOn": "2022-12-11T11:25:54Z",
+      "side": 1,
+      "message": "also shows 4k for ultrawide, even though it doesnt support",
+      "parentUuid": "7496c468_d2e69439",
+      "revId": "69b1dd0a4578973e0d07e5bec83918aeb8d810cd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
