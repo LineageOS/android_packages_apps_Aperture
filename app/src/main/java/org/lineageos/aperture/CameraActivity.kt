@@ -175,9 +175,9 @@ open class CameraActivity : AppCompatActivity() {
         get() = camera.supportedVideoQualities.keys.toList()
     private val supportedVideoFramerates: List<Framerate>
         get() = camera.supportedVideoQualities.getOrDefault(
-            sharedPreferences.videoQuality, listOf(Framerate.FPS_AUTO)
+            sharedPreferences.videoQuality, listOf()
         )
-    private var videoFramerate = Framerate.FPS_AUTO
+    private var videoFramerate: Framerate? = null
     private lateinit var audioConfig: AudioConfig
     private var recording: Recording? = null
 
@@ -888,10 +888,10 @@ open class CameraActivity : AppCompatActivity() {
                 }
                 cameraController.videoCaptureTargetQuality = sharedPreferences.videoQuality
 
-                // Fallback to Framerate.FPS_AUTO if necessary
-                if (!supportedVideoFramerates.contains(videoFramerate)) {
-                    videoFramerate = Framerate.FPS_AUTO
-                }
+                // Set proper video framerate
+                videoFramerate = (Framerate::getLowerOrHigher)(
+                    (videoFramerate ?: Framerate.FPS_30), supportedVideoFramerates
+                )
 
                 CameraController.VIDEO_CAPTURE
             }
@@ -945,7 +945,7 @@ open class CameraActivity : AppCompatActivity() {
                             if (cameraMode == CameraMode.VIDEO) {
                                 videoFramerate
                             } else {
-                                Framerate.FPS_AUTO
+                                null
                             }
                         )
                         setStabilizationMode(
@@ -1148,12 +1148,12 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun updateVideoFramerateIcon() {
+        videoFramerateButton.isEnabled = supportedVideoFramerates.size > 1
         videoFramerateButton.isVisible = cameraMode == CameraMode.VIDEO
 
-        videoFramerateButton.text = when (videoFramerate) {
-            Framerate.FPS_AUTO -> resources.getString(R.string.video_framerate_auto)
-            else -> resources.getString(R.string.video_framerate_value, videoFramerate.value)
-        }
+        videoFramerateButton.text = videoFramerate?.let {
+            resources.getString(R.string.video_framerate_value, it.value)
+        } ?: resources.getString(R.string.video_framerate_auto)
     }
 
     private fun cycleVideoFramerate() {
