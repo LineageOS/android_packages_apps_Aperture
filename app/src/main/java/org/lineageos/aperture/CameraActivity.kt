@@ -75,6 +75,7 @@ import org.lineageos.aperture.ui.HorizontalSlider
 import org.lineageos.aperture.ui.LensSelectorLayout
 import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.VerticalSlider
+import org.lineageos.aperture.utils.AppPreferences
 import org.lineageos.aperture.utils.Camera
 import org.lineageos.aperture.utils.CameraFacing
 import org.lineageos.aperture.utils.CameraManager
@@ -143,9 +144,7 @@ open class CameraActivity : AppCompatActivity() {
     private val cameraExecutor: ExecutorService
         get() = cameraManager.cameraExecutor
     private lateinit var cameraSoundsUtils: CameraSoundsUtils
-    private val sharedPreferences by lazy {
-        PreferenceManager.getDefaultSharedPreferences(this)
-    }
+    private val sharedPreferences by lazy { AppPreferences(this) }
 
     // Current camera state
     private lateinit var camera: Camera

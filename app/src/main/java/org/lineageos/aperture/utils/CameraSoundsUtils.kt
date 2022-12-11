@@ -7,12 +7,10 @@ package org.lineageos.aperture.utils
 
 import android.annotation.SuppressLint
 import android.content.res.Resources
-import android.content.SharedPreferences
 import android.media.MediaActionSound
 import android.os.Build
-import org.lineageos.aperture.shutterSound
 
-class CameraSoundsUtils(private val sharedPreferences: SharedPreferences) {
+class CameraSoundsUtils(private val sharedPreferences: AppPreferences) {
     private val mediaActionSound = MediaActionSound().apply {
         // Preload all sounds to reduce latency
         load(MediaActionSound.SHUTTER_CLICK)
