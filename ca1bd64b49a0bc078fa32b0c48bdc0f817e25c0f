@@ -52,6 +52,24 @@
       "parentUuid": "83f1bd81_0446a369",
       "revId": "ca1bd64b49a0bc078fa32b0c48bdc0f817e25c0f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e260c691_2c7bb81d",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-12-11T15:25:57Z",
+      "side": 1,
+      "message": "uh ok, i kind of expected 24 to always be there",
+      "parentUuid": "c0b21509_408a5b19",
+      "revId": "ca1bd64b49a0bc078fa32b0c48bdc0f817e25c0f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
