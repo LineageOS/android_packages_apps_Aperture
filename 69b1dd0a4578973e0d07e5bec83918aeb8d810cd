@@ -266,6 +266,24 @@
       "parentUuid": "7496c468_d2e69439",
       "revId": "69b1dd0a4578973e0d07e5bec83918aeb8d810cd",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cab77682_875d1cec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 18796
+      },
+      "writtenOn": "2022-12-11T11:27:04Z",
+      "side": 1,
+      "message": "those are without overlays. i was trying to disable those.",
+      "parentUuid": "91d1864e_7c9b6884",
+      "revId": "69b1dd0a4578973e0d07e5bec83918aeb8d810cd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
