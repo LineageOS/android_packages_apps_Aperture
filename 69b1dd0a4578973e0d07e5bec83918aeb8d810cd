@@ -122,6 +122,24 @@
       "parentUuid": "4c08abb2_1fc85a93",
       "revId": "69b1dd0a4578973e0d07e5bec83918aeb8d810cd",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6b4a439_be6dc92c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-11T11:09:26Z",
+      "side": 1,
+      "message": "```\n// Fallback to first supported framerate if necessary\nif (!supportedVideoFramerates.contains(videoFramerate)) {\n    videoFramerate \u003d supportedVideoFramerates.first()\n}\n```\n\nWould likely fix your issue.",
+      "parentUuid": "c97de467_3aaff545",
+      "revId": "69b1dd0a4578973e0d07e5bec83918aeb8d810cd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
