@@ -104,6 +104,24 @@
       "message": "Ok, I\u0027m pretty sure your phone doesn\u0027t report FPS_AUTO support, so we need to init videoFramerate to something other than FPS_AUTO.",
       "revId": "69b1dd0a4578973e0d07e5bec83918aeb8d810cd",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "afa26c30_65f04bc3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 18796
+      },
+      "writtenOn": "2022-12-11T11:06:20Z",
+      "side": 1,
+      "message": "[FPS_AUTO, FPS_24, FPS_30, FPS_30]",
+      "parentUuid": "4c08abb2_1fc85a93",
+      "revId": "69b1dd0a4578973e0d07e5bec83918aeb8d810cd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
