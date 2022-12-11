@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64b8104f_63e8e5e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-12-11T11:06:08Z",
+      "side": 1,
+      "message": "The string could be empty now, but I doubt we want to check for that, it won\u0027t add any frame rate in such cases",
+      "revId": "b559cda202290a02b5424fd5d68d2ae28c4c4923",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
