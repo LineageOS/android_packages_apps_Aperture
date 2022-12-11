@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "33d24ddb_b5fb7c1f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-11T22:30:36Z",
+      "side": 1,
+      "message": "More settings would likely benefit for that but let\u0027s say that this is just a ~ demo ~",
+      "revId": "275c5bb1bfd19e0c8ae5f7bff83921b60a5fc0bd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
