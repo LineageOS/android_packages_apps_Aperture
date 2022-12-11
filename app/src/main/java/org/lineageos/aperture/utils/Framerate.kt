@@ -8,13 +8,23 @@ package org.lineageos.aperture.utils
 import android.util.Range
 
 enum class Framerate(val value: Int) {
-    FPS_AUTO(-1),
     FPS_24(24),
     FPS_30(30),
     FPS_60(60),
     FPS_120(120);
 
-    val range = if (value == -1) null else Range(value, value)
+    val range = Range(value, value)
+
+    /**
+     * Get the closer framerate to the requested one, first finding a lower one
+     * then checking for a higher one if no one exists.
+     */
+    fun getLowerOrHigher(framerates: List<Framerate>): Framerate? {
+        val smaller = framerates.filter { it <= this }.sortedDescending()
+        val bigger = framerates.filter { it > this }.sorted()
+
+        return (smaller + bigger).firstOrNull()
+    }
 
     companion object {
         fun fromValue(value: Int) = values().firstOrNull { it.value == value }
