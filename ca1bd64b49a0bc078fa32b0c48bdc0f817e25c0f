@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "46889bff_fb5c16ef",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-12-11T15:13:28Z",
+      "side": 1,
+      "message": "why not 24?\nthat should be supported everywhere",
+      "revId": "ca1bd64b49a0bc078fa32b0c48bdc0f817e25c0f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
