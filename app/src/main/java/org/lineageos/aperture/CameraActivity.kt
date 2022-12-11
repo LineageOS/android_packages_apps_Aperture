@@ -1161,7 +1161,11 @@ open class CameraActivity : AppCompatActivity() {
             return
         }
 
-        val newVideoFramerate = supportedVideoFramerates.next(videoFramerate)
+        var newVideoFramerate = supportedVideoFramerates.next(videoFramerate)
+
+        if (supportedVideoFramerates.last() == videoFramerate) {
+            newVideoFramerate = Framerate.FPS_AUTO
+        }
 
         if (newVideoFramerate == videoFramerate) {
             return
