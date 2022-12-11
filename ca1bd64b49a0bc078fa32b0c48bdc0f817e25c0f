@@ -16,6 +16,24 @@
       "message": "why not 24?\nthat should be supported everywhere",
       "revId": "ca1bd64b49a0bc078fa32b0c48bdc0f817e25c0f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "83f1bd81_0446a369",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 893,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-11T15:14:47Z",
+      "side": 1,
+      "message": "Quite the opposite, only my 9 pro reports 24 fps support.",
+      "parentUuid": "46889bff_fb5c16ef",
+      "revId": "ca1bd64b49a0bc078fa32b0c48bdc0f817e25c0f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
