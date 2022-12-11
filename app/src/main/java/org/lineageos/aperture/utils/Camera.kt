@@ -75,15 +75,12 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     var intrinsicZoomRatio = 1f
 
-    private val supportedVideoFramerates = mutableListOf(Framerate.FPS_AUTO).apply {
+    private val supportedVideoFramerates =
         camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES
         )?.mapNotNull { range ->
             Framerate.fromRange(range)
-        }?.let {
-            addAll(it)
-        }
-    }.distinct().sorted().toList()
+        }?.distinct()?.sorted() ?: listOf()
     val supportedVideoQualities = QualitySelector.getSupportedQualities(cameraInfo).associateWith {
         supportedVideoFramerates + cameraManager.getAdditionalVideoFramerates(cameraId, it)
     }.toSortedMap { a, b ->
