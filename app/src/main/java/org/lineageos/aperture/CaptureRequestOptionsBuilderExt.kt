@@ -13,10 +13,10 @@ import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.StabilizationMode
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
-fun CaptureRequestOptions.Builder.setFramerate(framerate: Framerate) {
-    framerate.range?.let {
+fun CaptureRequestOptions.Builder.setFramerate(framerate: Framerate?) {
+    framerate?.let {
         setCaptureRequestOption(
-            CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, it
+            CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, it.range
         )
     } ?: run {
         clearCaptureRequestOption(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE)
