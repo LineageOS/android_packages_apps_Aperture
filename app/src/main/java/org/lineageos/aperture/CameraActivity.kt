@@ -147,7 +147,13 @@ open class CameraActivity : AppCompatActivity() {
     private val sharedPreferences by lazy { AppPreferences(this) }
 
     // Current camera state
-    private lateinit var camera: Camera
+    private lateinit var cameraInternal: Camera // backing property for `camera` below.
+    private var camera: Camera
+        get() = cameraInternal
+        set(value) {
+            cameraInternal = value
+            sharedPreferences.cameraId = value.cameraId
+        }
     private lateinit var cameraMode: CameraMode
     private lateinit var initialCameraFacing: CameraFacing
     private var singleCaptureMode = false

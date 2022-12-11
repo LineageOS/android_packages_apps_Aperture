@@ -30,6 +30,9 @@ class AppPreferences(val context: Context) {
     private fun getInt(key: String?, defValue: Int): Int =
         sharedPreferences.getInt(key, defValue)
 
+    // Used for camera specific prefs
+    lateinit var cameraId: String
+
     var lastCameraFacing: CameraFacing
         get() = when (getString(LAST_CAMERA_FACING_KEY, LAST_CAMERA_FACING_DEFAULT)) {
             "unknown" -> CameraFacing.UNKNOWN
@@ -184,13 +187,13 @@ class AppPreferences(val context: Context) {
         }
 
     var videoFramerate: Framerate?
-        get() = Framerate.fromValue(getInt(VIDEO_FRAMERATE_KEY, -1))
+        get() = Framerate.fromValue(getInt("${VIDEO_FRAMERATE_KEY}_$cameraId", -1))
         set(value) = edit {
-            putInt(VIDEO_FRAMERATE_KEY, value?.value ?: -1)
+            putInt("${VIDEO_FRAMERATE_KEY}_$cameraId", value?.value ?: -1)
         }
 
     var videoQuality: Quality
-        get() = when (getString(VIDEO_QUALITY_KEY, VIDEO_QUALITY_DEFAULT)) {
+        get() = when (getString("${VIDEO_QUALITY_KEY}_$cameraId", VIDEO_QUALITY_DEFAULT)) {
             "sd" -> Quality.SD
             "hd" -> Quality.HD
             "fhd" -> Quality.FHD
@@ -200,7 +203,7 @@ class AppPreferences(val context: Context) {
         }
         set(value) = edit {
             putString(
-                VIDEO_QUALITY_KEY, when (value) {
+                "${VIDEO_QUALITY_KEY}_$cameraId", when (value) {
                     Quality.SD -> "sd"
                     Quality.HD -> "hd"
                     Quality.FHD -> "fhd"
