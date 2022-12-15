@@ -83,6 +83,29 @@ class CameraManager(context: Context) {
     private val ignoreLogicalAuxCameras by lazy {
         context.resources.getBoolean(context, R.bool.config_ignoreLogicalAuxCameras)
     }
+    private val logicalZoomRatios by lazy {
+        mutableMapOf<String, MutableMap<Float, Float>>().apply {
+            context.resources.getStringArray(context, R.array.config_logicalZoomRatios).let {
+                if (it.size % 3 != 0) {
+                    // Invalid configuration
+                    return@apply
+                }
+
+                for (i in it.indices step 3) {
+                    val cameraId = it[i]
+                    val approximateZoomRatio = it[i + 1].toFloat()
+                    val exactZoomRatio = it[i + 2].toFloat()
+
+                    if (!this.containsKey(cameraId)) {
+                        this[cameraId] = mutableMapOf()
+                    }
+                    this[cameraId]!![approximateZoomRatio] = exactZoomRatio
+                }
+            }
+        }.map { a ->
+            a.key to a.value.toMap()
+        }.toMap()
+    }
 
     private val cameras: Map<String, Camera>
         get() = cameraProvider.availableCameraInfos.associate {
@@ -130,6 +153,12 @@ class CameraManager(context: Context) {
 
     fun getAdditionalVideoFramerates(cameraId: String, quality: Quality) =
         additionalVideoConfigurations[cameraId]?.get(quality) ?: listOf()
+
+    fun getLogicalZoomRatios(cameraId: String) = mutableMapOf(1.0f to 1.0f).apply {
+        logicalZoomRatios[cameraId]?.let {
+            putAll(it)
+        }
+    }.toSortedMap()
 
     fun getCameras(
         cameraMode: CameraMode, cameraFacing: CameraFacing,

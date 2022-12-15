@@ -55,4 +55,27 @@
     <string-array name="config_additionalVideoConfigurations">
         <!-- No additional configuration is added by default. -->
     </string-array>
+
+    <!-- An array of triplets made of (camera ID, approximate zoom ratio, exact zoom ratio).
+         These values will be added to the lens selector if one or more cameras uses the
+         multi-camera API to let the user select which lens to use.
+         It's highly recommended to leave config_enableAuxCameras to false, since with
+         multi-camera API you only use a single camera device for all sensors.
+         You may enable it if you need auxiliary camera devices for a set of cameras on one
+         of the device's side (e.g. logical main back camera but multiple physical camera
+         devices on front), in that case if a main device side's lens is referenced here
+         all the auxiliary camera devices of that side will be ignored.
+         You may be able to get the exact zoom ratio needed to trigger the lens switch from
+         your stock camera app and observing the zoom ratio it sets with the following command:
+         adb shell dumpsys media.camera | grep 'android.control.zoomRatio' -1
+         Example for Google Pixel 7 Pro's back camera configuration:
+             <string-array name="config_logicalZoomRatios">
+                 <item>0</item> <item>0.5</item> <item>0.55632502</item>
+                 <item>0</item> <item>2.0</item> <item>2.0</item>
+                 <item>0</item> <item>5.0</item> <item>5.0</item>
+             </string-array>
+    -->
+    <string-array name="config_logicalZoomRatios">
+        <!-- No configuration by default. -->
+    </string-array>
 </resources>
