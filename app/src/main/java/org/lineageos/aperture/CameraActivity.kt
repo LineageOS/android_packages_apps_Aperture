@@ -502,6 +502,8 @@ open class CameraActivity : AppCompatActivity() {
 
             handler.removeMessages(MSG_HIDE_ZOOM_SLIDER)
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_ZOOM_SLIDER), 2000)
+
+            lensSelectorLayout.onZoomRatioChanged(it.zoomRatio)
         }
 
         zoomLevel.onProgressChangedByUser = {
@@ -580,6 +582,9 @@ open class CameraActivity : AppCompatActivity() {
                 camera = it
                 bindCameraUseCases()
             }
+        }
+        lensSelectorLayout.onZoomRatioChangeCallback = {
+            cameraController.setZoomRatio(it)
         }
 
         // Set capture preview callback
