@@ -439,7 +439,7 @@ open class CameraActivity : AppCompatActivity() {
 
         // Observe manual focus
         viewFinder.setOnTouchListener { _, event ->
-            return@setOnTouchListener gestureDetector.onTouchEvent(event)
+            return@setOnTouchListener event.pointerCount > 1 || gestureDetector.onTouchEvent(event)
         }
         viewFinder.setOnClickListener { view ->
             // Reset exposure level to 0 EV
