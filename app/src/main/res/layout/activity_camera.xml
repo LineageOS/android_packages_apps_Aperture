@@ -121,7 +121,7 @@
                 android:drawableTop="@drawable/ic_aspect_ratio_4_3"
                 android:text="@string/aspect_ratio_4_3"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/videoQualityButton"
+                app:layout_constraintEnd_toStartOf="@+id/effectButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -133,9 +133,9 @@
                 android:drawableTop="@drawable/ic_effect_none"
                 android:text="@string/effect_none"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/timerButton"
+                app:layout_constraintEnd_toStartOf="@+id/videoQualityButton"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/micButton"
+                app:layout_constraintStart_toEndOf="@+id/aspectRatioButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -146,9 +146,9 @@
                 android:drawableTop="@drawable/ic_video_quality_hd"
                 android:text="@string/video_quality_fhd"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/videoFramerateButton"
+                app:layout_constraintEnd_toStartOf="@+id/effectButton"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/aspectRatioButton"
+                app:layout_constraintStart_toEndOf="@+id/videoFramerateButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -185,7 +185,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/gridButton"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/effectButton"
+                app:layout_constraintStart_toEndOf="@+id/micButton"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
