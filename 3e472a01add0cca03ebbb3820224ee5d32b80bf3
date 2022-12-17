@@ -16,6 +16,23 @@
       "message": "I think this makes it slightly better",
       "revId": "3e472a01add0cca03ebbb3820224ee5d32b80bf3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "68c4c55c_c66aff90",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-17T15:33:01Z",
+      "side": 1,
+      "message": "doing ACTION_CANCEL here because that calls cancel() internally, so perhaps that\u0027d discard some gesture actions.",
+      "revId": "3e472a01add0cca03ebbb3820224ee5d32b80bf3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
