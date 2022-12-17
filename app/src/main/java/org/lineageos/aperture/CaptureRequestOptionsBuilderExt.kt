@@ -24,6 +24,17 @@ fun CaptureRequestOptions.Builder.setFramerate(framerate: Framerate?) {
 }
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
+fun CaptureRequestOptions.Builder.setSceneMode(sceneMode: Int?) {
+    sceneMode?.let {
+        setCaptureRequestOption(
+            CaptureRequest.CONTROL_SCENE_MODE, it
+        )
+    } ?: run {
+        clearCaptureRequestOption(CaptureRequest.CONTROL_SCENE_MODE)
+    }
+}
+
+@androidx.camera.camera2.interop.ExperimentalCamera2Interop
 fun CaptureRequestOptions.Builder.setStabilizationMode(stabilizationMode: StabilizationMode) {
     setCaptureRequestOption(
         CaptureRequest.CONTROL_VIDEO_STABILIZATION_MODE,

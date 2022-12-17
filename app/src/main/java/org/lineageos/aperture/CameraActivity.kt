@@ -15,6 +15,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.ColorDrawable
+import android.hardware.camera2.CameraMetadata
 import android.icu.text.DecimalFormat
 import android.location.Location
 import android.location.LocationListener
@@ -118,6 +119,7 @@ open class CameraActivity : AppCompatActivity() {
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
     private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
+    private val sceneModeButton by lazy { findViewById<Button>(R.id.sceneModeButton) }
     private val secondaryBottomBarLayout by lazy { findViewById<ConstraintLayout>(R.id.secondaryBottomBarLayout) }
     private val secondaryTopBarLayout by lazy { findViewById<HorizontalScrollView>(R.id.secondaryTopBarLayout) }
     private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
@@ -384,6 +386,7 @@ open class CameraActivity : AppCompatActivity() {
         videoQualityButton.setOnClickListener { cycleVideoQuality() }
         videoFramerateButton.setOnClickListener { cycleVideoFramerate() }
         effectButton.setOnClickListener { cyclePhotoEffects() }
+        sceneModeButton.setOnClickListener { cycleSceneModes() }
         gridButton.setOnClickListener { cycleGridMode() }
         timerButton.setOnClickListener { toggleTimerMode() }
         micButton.setOnClickListener { toggleMicrophoneMode() }
@@ -947,6 +950,13 @@ open class CameraActivity : AppCompatActivity() {
                                 null
                             }
                         )
+                        setSceneMode(
+                            if (cameraMode == CameraMode.PHOTO) {
+                                sharedPreferences.sceneMode
+                            } else {
+                                null
+                            }
+                        )
                         setStabilizationMode(
                             (StabilizationMode::getClosestMode)(
                                 when (cameraMode) {
@@ -987,6 +997,7 @@ open class CameraActivity : AppCompatActivity() {
         updateVideoQualityIcon()
         updateVideoFramerateIcon()
         updatePhotoEffectIcon()
+        updateSceneModeIcon()
         updateGridIcon()
         updateFlashModeIcon()
         updateMicrophoneModeIcon()
@@ -1095,6 +1106,7 @@ open class CameraActivity : AppCompatActivity() {
             videoQualityButton.isEnabled = cameraState == CameraState.IDLE
             videoFramerateButton.isEnabled = cameraState == CameraState.IDLE
             effectButton.isEnabled = cameraState == CameraState.IDLE
+            sceneModeButton.isEnabled = cameraState == CameraState.IDLE
             // Grid mode can be toggled at any time
             // Torch mode can be toggled at any time
             flashButton.isEnabled = cameraState == CameraState.IDLE
@@ -1430,6 +1442,39 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     /**
+     * Update the scene mode icon based on the current value of sceneMode
+     */
+    private fun updateSceneModeIcon() {
+        sceneModeButton.isVisible =
+            cameraMode == CameraMode.PHOTO && camera.supportedSceneModes.isNotEmpty()
+
+        sharedPreferences.sceneMode.let {
+            sceneModeButton.text = when (it) {
+                CameraMetadata.CONTROL_SCENE_MODE_DISABLED -> "DISABLED"
+                CameraMetadata.CONTROL_SCENE_MODE_FACE_PRIORITY -> "FACE_PRIORITY"
+                CameraMetadata.CONTROL_SCENE_MODE_ACTION -> "ACTION"
+                CameraMetadata.CONTROL_SCENE_MODE_PORTRAIT -> "PORTRAIT"
+                CameraMetadata.CONTROL_SCENE_MODE_LANDSCAPE -> "LANDSCAPE"
+                CameraMetadata.CONTROL_SCENE_MODE_NIGHT -> "NIGHT"
+                CameraMetadata.CONTROL_SCENE_MODE_NIGHT_PORTRAIT -> "NIGHT_PORTRAIT"
+                CameraMetadata.CONTROL_SCENE_MODE_THEATRE -> "THEATRE"
+                CameraMetadata.CONTROL_SCENE_MODE_BEACH -> "BEACH"
+                CameraMetadata.CONTROL_SCENE_MODE_SNOW -> "SNOW"
+                CameraMetadata.CONTROL_SCENE_MODE_SUNSET -> "SUNSET"
+                CameraMetadata.CONTROL_SCENE_MODE_STEADYPHOTO -> "STEADYPHOTO"
+                CameraMetadata.CONTROL_SCENE_MODE_FIREWORKS -> "FIREWORKS"
+                CameraMetadata.CONTROL_SCENE_MODE_SPORTS -> "SPORTS"
+                CameraMetadata.CONTROL_SCENE_MODE_PARTY -> "PARTY"
+                CameraMetadata.CONTROL_SCENE_MODE_CANDLELIGHT -> "CANDLELIGHT"
+                CameraMetadata.CONTROL_SCENE_MODE_BARCODE -> "BARCODE"
+                CameraMetadata.CONTROL_SCENE_MODE_HIGH_SPEED_VIDEO -> "HIGH_SPEED_VIDEO"
+                CameraMetadata.CONTROL_SCENE_MODE_HDR -> "HDR"
+                else -> throw Exception("Unexpected scene mode: $it")
+            }
+        }
+    }
+
+    /**
      * Cycle between supported photo camera effects
      */
     private fun cyclePhotoEffects() {
@@ -1445,6 +1490,26 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         sharedPreferences.photoEffect = newExtensionMode
+
+        bindCameraUseCases()
+    }
+
+    /**
+     * Cycle between supported scene modes
+     */
+    private fun cycleSceneModes() {
+        if (!canRestartCamera()) {
+            return
+        }
+
+        val currentSceneModeMode = sharedPreferences.sceneMode
+        val newSceneModeMode = camera.supportedSceneModes.next(currentSceneModeMode)
+
+        if (newSceneModeMode == currentSceneModeMode) {
+            return
+        }
+
+        sharedPreferences.sceneMode = newSceneModeMode
 
         bindCameraUseCases()
     }

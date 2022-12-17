@@ -6,6 +6,7 @@
 package org.lineageos.aperture
 
 import android.content.SharedPreferences
+import android.hardware.camera2.CameraMetadata
 import android.net.Uri
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.ImageCapture
@@ -193,6 +194,15 @@ internal var SharedPreferences.photoEffect: Int
                 else -> PHOTO_EFFECT_DEFAULT
             }
         )
+    }
+
+private const val SCENE_MODE_KEY = "scene_mode"
+private const val SCENE_MODE_DEFAULT = CameraMetadata.CONTROL_SCENE_MODE_FACE_PRIORITY
+
+internal var SharedPreferences.sceneMode: Int
+    get() = getInt(SCENE_MODE_KEY, SCENE_MODE_DEFAULT)
+    set(value) = edit {
+        putInt(SCENE_MODE_KEY, value)
     }
 
 // Video prefs
