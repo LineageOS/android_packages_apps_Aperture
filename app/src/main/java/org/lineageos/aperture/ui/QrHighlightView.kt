@@ -8,16 +8,17 @@ package org.lineageos.aperture.ui
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Point
 import android.graphics.PointF
+import android.media.Image
 import android.util.AttributeSet
 import android.view.SurfaceView
 import android.view.TextureView
 import android.view.View
 import androidx.camera.view.PreviewView
 import androidx.core.view.children
-import com.google.zxing.LuminanceSource
-import com.google.zxing.ResultPoint
 import org.lineageos.aperture.R
+import org.lineageos.aperture.next
 import kotlin.math.roundToInt
 
 class QrHighlightView(context: Context, attributeSet: AttributeSet?) : View(context, attributeSet) {
@@ -60,18 +61,21 @@ class QrHighlightView(context: Context, attributeSet: AttributeSet?) : View(cont
 
         val pts = mutableListOf<Float>()
         for (point in points) {
-            pts.add((point.x * width) + wOffset)
-            pts.add((point.y * height) + hOffset)
+            val nextPoint = points.next(point)
+            pts.add((point.x * height) + wOffset)
+            pts.add((point.y * width) + hOffset)
+            pts.add((nextPoint.x * height) + wOffset)
+            pts.add((nextPoint.y * width) + hOffset)
         }
 
-        canvas?.drawPoints(pts.toFloatArray(), paint)
+        canvas?.drawLines(pts.toFloatArray(), paint)
     }
 
-    fun scalePoints(points: Array<ResultPoint>, image: LuminanceSource) =
+    fun scalePoints(points: Array<Point>, image: Image) =
         points.map { point ->
             PointF(
-                (image.width - point.x) / image.width, // Invert the value
-                point.y / image.height
+                point.x.toFloat() / image.width,
+                point.y.toFloat() / image.height
             )
         }.toTypedArray()
 }
