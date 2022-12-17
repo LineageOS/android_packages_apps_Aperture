@@ -30,7 +30,7 @@ android_app {
         "Aperture_androidx.camera_camera-extensions",
         "Aperture_androidx.media3_media3-exoplayer",
         "Aperture_androidx.media3_media3-ui",
-        "Aperture_com.google.zxing_core",
+        "Aperture_com.google.mlkit_barcode-scanning",
         "Aperture_io.coil-kt_coil",
         "Aperture_io.coil-kt_coil-video",
     ],
