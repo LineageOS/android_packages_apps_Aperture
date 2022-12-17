@@ -28,10 +28,9 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
-import com.google.zxing.BinaryBitmap
-import com.google.zxing.MultiFormatReader
-import com.google.zxing.Result
-import com.google.zxing.common.HybridBinarizer
+import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
+import com.google.mlkit.vision.common.InputImage
 
 class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
     private val bottomSheetDialog by lazy {
@@ -58,36 +57,34 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
         bottomSheetDialog.findViewById<LinearLayout>(R.id.actionsLayout)!!
     }
 
-    private val reader by lazy { MultiFormatReader() }
+    private val barcodeScanningClient = BarcodeScanning.getClient()
 
     private val clipboardManager by lazy { activity.getSystemService(ClipboardManager::class.java) }
     private val keyguardManager by lazy { activity.getSystemService(KeyguardManager::class.java) }
 
+    @androidx.camera.core.ExperimentalGetImage
     override fun analyze(image: ImageProxy) {
-        val source = image.planarYUVLuminanceSource
+        val inputImage = image.image ?: return image.close()
 
-        val result = runCatching {
-            reader.decodeWithState(BinaryBitmap(HybridBinarizer(source)))
-        }.getOrNull() ?: runCatching {
-            reader.decodeWithState(BinaryBitmap(HybridBinarizer(source.invert())))
-        }.getOrNull()
-
-        result?.let {
-            showQrDialog(it)
+        barcodeScanningClient.process(
+            InputImage.fromMediaImage(inputImage, image.imageInfo.rotationDegrees)
+        ).addOnSuccessListener { barcodes ->
+            barcodes.firstOrNull { it.rawValue != null }?.let {
+                showQrDialog(it)
+            }
+        }.addOnCompleteListener {
+            image.close()
         }
-
-        reader.reset()
-        image.close()
     }
 
-    private fun showQrDialog(result: Result) {
+    private fun showQrDialog(result: Barcode) {
         activity.runOnUiThread {
             if (bottomSheetDialog.isShowing) {
                 return@runOnUiThread
             }
 
             // Classify message
-            val span = SpannableString(result.text)
+            val span = SpannableString(result.rawValue)
             bottomSheetDialogData.text = span
             Thread {
                 val textClassification = bottomSheetDialogData.textClassifier.classifyText(
@@ -138,7 +135,7 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
             bottomSheetDialogCopy.setOnClickListener {
                 clipboardManager.setPrimaryClip(
                     ClipData.newPlainText(
-                        "", result.text
+                        "", result.rawValue
                     )
                 )
             }
@@ -150,7 +147,7 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
                             action = Intent.ACTION_SEND
                             type = ClipDescription.MIMETYPE_TEXT_PLAIN
                             putExtra(
-                                Intent.EXTRA_TEXT, result.text
+                                Intent.EXTRA_TEXT, result.rawValue
                             )
                         },
                         activity.getString(androidx.transition.R.string.abc_shareactionprovider_share_with)
