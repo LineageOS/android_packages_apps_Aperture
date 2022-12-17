@@ -79,8 +79,8 @@ dependencies {
     // For building media playback UIs
     implementation("androidx.media3:media3-ui:$media3Version")
 
-    // ZXing
-    implementation("com.google.zxing:core:3.5.0")
+    // ML Kit
+    implementation("com.google.mlkit:barcode-scanning:17.0.3")
 
     // Coil
     implementation("io.coil-kt:coil:2.2.2")
