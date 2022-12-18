@@ -30,6 +30,8 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
+import android.view.ScaleGestureDetector.SimpleOnScaleGestureListener
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -49,6 +51,7 @@ import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
+import androidx.camera.view.onPinchToZoom
 import androidx.camera.view.video.AudioConfig
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -194,7 +197,9 @@ open class CameraActivity : AppCompatActivity() {
             override fun onFling(
                 e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float
             ): Boolean {
-                if (abs(e1.x - e2.x) > 75 * resources.displayMetrics.density) {
+                if (!handler.hasMessages(MSG_ON_PINCH_TO_ZOOM) &&
+                    abs(e1.x - e2.x) > 75 * resources.displayMetrics.density
+                ) {
                     if (e2.x > e1.x) {
                         // Left to right
                         when (cameraMode) {
@@ -211,6 +216,18 @@ open class CameraActivity : AppCompatActivity() {
                         }
                     }
                 }
+                return true
+            }
+        })
+    }
+    private val scaleGestureDetector by lazy {
+        ScaleGestureDetector(this, object : SimpleOnScaleGestureListener() {
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
+                cameraController.onPinchToZoom(detector.scaleFactor)
+
+                handler.removeMessages(MSG_ON_PINCH_TO_ZOOM)
+                handler.sendMessageDelayed(handler.obtainMessage(MSG_ON_PINCH_TO_ZOOM), 500)
+
                 return true
             }
         })
@@ -439,6 +456,9 @@ open class CameraActivity : AppCompatActivity() {
 
         // Observe manual focus
         viewFinder.setOnTouchListener { _, event ->
+            if (scaleGestureDetector.onTouchEvent(event) && scaleGestureDetector.isInProgress) {
+                return@setOnTouchListener true
+            }
             return@setOnTouchListener gestureDetector.onTouchEvent(event)
         }
         viewFinder.setOnClickListener { view ->
@@ -1679,6 +1699,7 @@ open class CameraActivity : AppCompatActivity() {
         private const val MSG_HIDE_ZOOM_SLIDER = 0
         private const val MSG_HIDE_FOCUS_RING = 1
         private const val MSG_HIDE_EXPOSURE_SLIDER = 2
+        private const val MSG_ON_PINCH_TO_ZOOM = 3
 
         private val EXPOSURE_LEVEL_FORMATTER = DecimalFormat("+#;-#")
     }
