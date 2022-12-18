@@ -74,6 +74,7 @@ import org.lineageos.aperture.ui.GridView
 import org.lineageos.aperture.ui.HorizontalSlider
 import org.lineageos.aperture.ui.LensSelectorLayout
 import org.lineageos.aperture.ui.LevelerView
+import org.lineageos.aperture.ui.QrRectView
 import org.lineageos.aperture.ui.VerticalSlider
 import org.lineageos.aperture.utils.Camera
 import org.lineageos.aperture.utils.CameraFacing
@@ -117,6 +118,7 @@ open class CameraActivity : AppCompatActivity() {
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
     private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
+    private val qrRectView by lazy { findViewById<QrRectView>(R.id.qrRectView) }
     private val secondaryBottomBarLayout by lazy { findViewById<ConstraintLayout>(R.id.secondaryBottomBarLayout) }
     private val secondaryTopBarLayout by lazy { findViewById<HorizontalScrollView>(R.id.secondaryTopBarLayout) }
     private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
@@ -180,7 +182,7 @@ open class CameraActivity : AppCompatActivity() {
     private var recording: Recording? = null
 
     // QR
-    private val imageAnalyzer by lazy { QrImageAnalyzer(this) }
+    private val imageAnalyzer by lazy { QrImageAnalyzer(this, qrRectView) }
 
     private var viewFinderTouchEvent: MotionEvent? = null
     private val gestureDetector by lazy {
@@ -443,6 +445,8 @@ open class CameraActivity : AppCompatActivity() {
                     // Show grid
                     gridView.alpha = 1f
                     gridView.previewView = viewFinder
+
+                    qrRectView.previewView = viewFinder
                 }
                 else -> {}
             }

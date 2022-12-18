@@ -31,8 +31,11 @@ import com.google.android.material.button.MaterialButton
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import org.lineageos.aperture.ui.QrRectView
 
-class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
+class QrImageAnalyzer(
+    private val activity: Activity, private val qrRectView: QrRectView
+) : ImageAnalysis.Analyzer {
     private val bottomSheetDialog by lazy {
         BottomSheetDialog(activity).apply {
             setContentView(R.layout.qr_bottom_sheet_dialog)
@@ -63,17 +66,23 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
     private val keyguardManager by lazy { activity.getSystemService(KeyguardManager::class.java) }
 
     @androidx.camera.core.ExperimentalGetImage
-    override fun analyze(image: ImageProxy) {
-        val inputImage = image.image ?: return image.close()
+    override fun analyze(imageProxy: ImageProxy) {
+        val image = imageProxy.image ?: return imageProxy.close()
 
+        val inputImage = InputImage.fromMediaImage(image, imageProxy.imageInfo.rotationDegrees)
         barcodeScanningClient.process(
-            InputImage.fromMediaImage(inputImage, image.imageInfo.rotationDegrees)
+            inputImage
         ).addOnSuccessListener { barcodes ->
             barcodes.firstOrNull { it.rawValue != null }?.let {
                 showQrDialog(it)
+                qrRectView.points = it.cornerPoints?.let { cornerPoints ->
+                    qrRectView.scalePoints(cornerPoints, image)
+                }
+            } ?: run {
+                qrRectView.points = null
             }
         }.addOnCompleteListener {
-            image.close()
+            imageProxy.close()
         }
     }
 
