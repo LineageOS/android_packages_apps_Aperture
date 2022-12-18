@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6265772d_cc2fe4d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 3917
+      },
+      "writtenOn": "2022-12-18T10:18:01Z",
+      "side": 1,
+      "message": "This improves real-estate situation on preview a lot on walleye (pixel2) and fixes weird scroller position at the same time.",
+      "revId": "d2823863ec4c278edf440b2b0113b938f1b01a70",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
