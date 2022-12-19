@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fda509aa_d14348b5",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/LensSelectorLayout.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-12-19T18:56:07Z",
+      "side": 1,
+      "message": "It doesn\u0027t work, my loop searches for the zoom ratio in the range [current zoom ratio, next button], so a predicate function wouldn\u0027t work, it must be aware of the previous button",
+      "parentUuid": "db7d84ad_612f14e0",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 5
+      },
+      "revId": "1fd6e95691a9f866308cfae84a6a1d2993db4d9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "88f875e1_f6f3b205",
@@ -37,6 +61,24 @@
       "writtenOn": "2022-12-19T14:45:18Z",
       "side": 1,
       "message": "can you put `.let` on this line?",
+      "revId": "1fd6e95691a9f866308cfae84a6a1d2993db4d9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b67c27f3_db1f4897",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-12-19T18:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88f875e1_f6f3b205",
       "revId": "1fd6e95691a9f866308cfae84a6a1d2993db4d9e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
