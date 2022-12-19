@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db7d84ad_612f14e0",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/LensSelectorLayout.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-19T14:45:18Z",
+      "side": 1,
+      "message": "Try:\n\n```\nprivate fun updateButtonsAttributes() {\n    if (usesLogicalZoomRatio) {\n        buttonToZoomRatio.asSequence().let {\n            val firstButton \u003d it.first().key\n            val lastButton \u003d it.last().key\n            val activeButton \u003d it.firstOrNull { (button, exactZoomRatio) -\u003e\n                currentZoomRatio \u003e\u003d exactZoomRatio ||\n                        button \u003d\u003d firstButton || button \u003d\u003d lastButton\n            }\n            for ((button, _) in it) {\n                updateButtonAttributes(button, button \u003d\u003d activeButton)\n            }\n        }\n    } else {\n        for ((button, camera) in buttonToCamera) {\n            updateButtonAttributes(button, camera \u003d\u003d activeCamera)\n        }\n    }\n}\n```",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 5
+      },
+      "revId": "1fd6e95691a9f866308cfae84a6a1d2993db4d9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "88f875e1_f6f3b205",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-19T14:45:18Z",
+      "side": 1,
+      "message": "can you put `.let` on this line?",
+      "revId": "1fd6e95691a9f866308cfae84a6a1d2993db4d9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
