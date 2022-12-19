@@ -35,8 +35,11 @@ import com.google.zxing.common.HybridBinarizer
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.planarYUVLuminanceSource
 import org.lineageos.aperture.ext.px
+import org.lineageos.aperture.ui.QrHighlightView
 
-class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
+class QrImageAnalyzer(
+    private val activity: Activity, private val qrHighlightView: QrHighlightView
+) : ImageAnalysis.Analyzer {
     private val bottomSheetDialog by lazy {
         BottomSheetDialog(activity).apply {
             setContentView(R.layout.qr_bottom_sheet_dialog)
@@ -82,6 +85,11 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
 
         result?.let {
             showQrDialog(it)
+            qrHighlightView.points = qrHighlightView.scalePoints(
+                it.resultPoints, source, image.imageInfo.rotationDegrees
+            )
+        } ?: run {
+            qrHighlightView.points = null
         }
 
         reader.reset()
