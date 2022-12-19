@@ -29,11 +29,15 @@ import androidx.camera.core.ImageProxy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.zxing.BinaryBitmap
+import com.google.zxing.LuminanceSource
 import com.google.zxing.MultiFormatReader
 import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
+import org.lineageos.aperture.ui.QrHighlightView
 
-class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
+class QrImageAnalyzer(
+    private val activity: Activity, private val qrHighlightView: QrHighlightView
+) : ImageAnalysis.Analyzer {
     private val bottomSheetDialog by lazy {
         BottomSheetDialog(activity).apply {
             setContentView(R.layout.qr_bottom_sheet_dialog)
@@ -74,6 +78,9 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
 
         result?.let {
             showQrDialog(it)
+            qrHighlightView.points = qrHighlightView.scalePoints(it.resultPoints, source)
+        } ?: run {
+            qrHighlightView.points = null
         }
 
         reader.reset()
