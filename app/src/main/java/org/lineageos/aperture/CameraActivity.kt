@@ -124,6 +124,7 @@ import org.lineageos.aperture.ui.LensSelectorLayout
 import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.LocationPermissionsDialog
 import org.lineageos.aperture.ui.PreviewBlurView
+import org.lineageos.aperture.ui.QrHighlightView
 import org.lineageos.aperture.ui.VerticalSlider
 import org.lineageos.aperture.utils.AssistantIntent
 import org.lineageos.aperture.utils.BroadcastUtils
@@ -173,6 +174,7 @@ open class CameraActivity : AppCompatActivity() {
     private val previewBlurView by lazy { findViewById<PreviewBlurView>(R.id.previewBlurView) }
     private val primaryBarLayoutGroupPhoto by lazy { findViewById<Group>(R.id.primaryBarLayoutGroupPhoto) }
     private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
+    private val qrHighlightView by lazy { findViewById<QrHighlightView>(R.id.qrHighlightView) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
     private val secondaryBottomBarLayout by lazy { findViewById<ConstraintLayout>(R.id.secondaryBottomBarLayout) }
     private val secondaryTopBarLayout by lazy { findViewById<HorizontalScrollView>(R.id.secondaryTopBarLayout) }
@@ -238,7 +240,7 @@ open class CameraActivity : AppCompatActivity() {
     private var recording: Recording? = null
 
     // QR
-    private val imageAnalyzer by lazy { QrImageAnalyzer(this) }
+    private val imageAnalyzer by lazy { QrImageAnalyzer(this, qrHighlightView) }
     private val isGoogleLensAvailable by lazy { GoogleLensUtils.isGoogleLensAvailable(this) }
 
     private var viewFinderTouchEvent: MotionEvent? = null
@@ -623,6 +625,9 @@ open class CameraActivity : AppCompatActivity() {
                     // Show grid
                     gridView.alpha = 1f
                     gridView.previewView = viewFinder
+
+                    // Show QR highlight
+                    qrHighlightView.previewView = viewFinder
 
                     // Hide preview blur
                     previewBlurView.isVisible = false
