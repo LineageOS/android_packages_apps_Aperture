@@ -73,7 +73,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
         CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS
     ) ?: FloatArray(0)
 
-    var intrinsicZoomRatio = 1f
+    var intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
 
     private val supportedVideoFramerates =
         camera2CameraInfo.getCameraCharacteristic(
