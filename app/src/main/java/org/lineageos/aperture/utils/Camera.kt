@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -69,7 +69,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     val isLogical = sensors.size > 1
 
-    var intrinsicZoomRatio = 1f
+    var intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
     val logicalZoomRatios = cameraManager.getLogicalZoomRatios(cameraId)
 
     private val supportedVideoFramerates =
