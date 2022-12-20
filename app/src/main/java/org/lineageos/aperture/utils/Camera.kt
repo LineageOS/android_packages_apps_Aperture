@@ -70,7 +70,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     val isLogical = sensors.size > 1
 
-    var intrinsicZoomRatio = 1f
+    var intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
     val logicalZoomRatios = cameraManager.getLogicalZoomRatios(cameraId)
 
     private val supportedVideoFramerates =
