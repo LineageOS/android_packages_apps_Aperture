@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "679d21ac_b899e78a",
+        "filename": "app/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2022-12-21T23:25:14Z",
+      "side": 1,
+      "message": "It\u0027s far easier to just do 1.",
+      "revId": "7477b9986d93ff4ec3831505e50d763543568164",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
