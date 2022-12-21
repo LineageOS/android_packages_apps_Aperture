@@ -41,4 +41,6 @@ android_app {
     optimize: {
         proguard_flags_files: ["proguard-rules.pro"],
     },
+
+    additional_rro_package: "org.lineageos.aperture:org.lineageos.aperture.dev",
 }
