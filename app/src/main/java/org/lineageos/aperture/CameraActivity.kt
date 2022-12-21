@@ -1116,7 +1116,8 @@ open class CameraActivity : AppCompatActivity() {
             effectButton.isEnabled = cameraState == CameraState.IDLE
             // Grid mode can be toggled at any time
             // Torch mode can be toggled at any time
-            flashButton.isEnabled = cameraState == CameraState.IDLE
+            flashButton.isEnabled =
+                cameraMode != CameraMode.PHOTO || cameraState == CameraState.IDLE
             micButton.isEnabled = cameraState == CameraState.IDLE
             settingsButton.isEnabled = cameraState == CameraState.IDLE
         }
