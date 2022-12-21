@@ -131,6 +131,7 @@ open class CameraActivity : AppCompatActivity() {
     private val videoQualityButton by lazy { findViewById<Button>(R.id.videoQualityButton) }
     private val videoRecordingStateButton by lazy { findViewById<ImageButton>(R.id.videoRecordingStateButton) }
     private val viewFinder by lazy { findViewById<PreviewView>(R.id.viewFinder) }
+    private val viewFinderBlur by lazy { findViewById<ImageView>(R.id.viewFinderBlur) }
     private val viewFinderFocus by lazy { findViewById<ImageView>(R.id.viewFinderFocus) }
     private val zoomLevel by lazy { findViewById<HorizontalSlider>(R.id.zoomLevel) }
 
@@ -483,6 +484,9 @@ open class CameraActivity : AppCompatActivity() {
         viewFinder.previewStreamState.observe(this) {
             when (it) {
                 PreviewView.StreamState.STREAMING -> {
+                    // Hide blur
+                    viewFinderBlur.setImageBitmap(null)
+
                     // Show grid
                     gridView.alpha = 1f
                     gridView.previewView = viewFinder
@@ -854,10 +858,16 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun canRestartCamera() = cameraState == CameraState.IDLE && !countDownView.isVisible
 
+
+
     /**
      * Rebind cameraProvider use cases
      */
     private fun bindCameraUseCases() {
+        viewFinder.bitmap?.let {
+            viewFinderBlur.setImageBitmap(it.fastBlur(32))
+        }
+
         // Unbind previous use cases
         cameraController.unbind()
 
