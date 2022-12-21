@@ -41,4 +41,9 @@ android_app {
     optimize: {
         proguard_flags_files: ["proguard-rules.pro"],
     },
+
+    additional_rro_package_names: [
+        "com.android.camera2",
+        //"org.lineageos.aperture.dev",
+    ],
 }
