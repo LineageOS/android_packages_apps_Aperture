@@ -85,6 +85,9 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil:2.2.2")
     implementation("io.coil-kt:coil-video:2.2.2")
+
+    // RenderScript Toolkit
+    implementation(project(":renderscript-toolkit"))
 }
 
 tasks.register("generateBp") {

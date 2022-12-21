@@ -76,6 +76,7 @@ import org.lineageos.aperture.ui.GridView
 import org.lineageos.aperture.ui.HorizontalSlider
 import org.lineageos.aperture.ui.LensSelectorLayout
 import org.lineageos.aperture.ui.LevelerView
+import org.lineageos.aperture.ui.PreviewBlurView
 import org.lineageos.aperture.ui.QrHighlightView
 import org.lineageos.aperture.ui.VerticalSlider
 import org.lineageos.aperture.utils.Camera
@@ -118,6 +119,7 @@ open class CameraActivity : AppCompatActivity() {
     private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
     private val micButton by lazy { findViewById<Button>(R.id.micButton) }
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
+    private val previewBlurView by lazy { findViewById<PreviewBlurView>(R.id.previewBlurView) }
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
     private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
     private val qrHighlightView by lazy { findViewById<QrHighlightView>(R.id.qrHighlightView) }
@@ -490,6 +492,10 @@ open class CameraActivity : AppCompatActivity() {
                     gridView.previewView = viewFinder
 
                     qrHighlightView.previewView = viewFinder
+
+                    // Hide preview blur
+                    previewBlurView.isVisible = false
+                    previewBlurView.previewView = viewFinder
                 }
                 else -> {}
             }
@@ -867,6 +873,10 @@ open class CameraActivity : AppCompatActivity() {
      * Rebind cameraProvider use cases
      */
     private fun bindCameraUseCases() {
+        // Show blurred preview
+        previewBlurView.freeze()
+        previewBlurView.isVisible = true
+
         // Unbind previous use cases
         cameraController.unbind()
 

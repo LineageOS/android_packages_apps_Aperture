@@ -5,11 +5,22 @@
 
 package org.lineageos.aperture
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationSet
 import android.view.animation.TranslateAnimation
 import androidx.core.view.isVisible
+
+internal fun View.createBitmap(): Bitmap {
+    val returnedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(returnedBitmap)
+    background?.draw(canvas) ?: run { canvas.drawColor(Color.WHITE) }
+    draw(canvas)
+    return returnedBitmap
+}
 
 internal fun View.setPadding(value: Int) {
     setPadding(value, value, value, value)
