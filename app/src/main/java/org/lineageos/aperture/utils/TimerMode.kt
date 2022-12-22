@@ -7,14 +7,17 @@ package org.lineageos.aperture.utils
 
 import org.lineageos.aperture.next
 
-enum class GridMode {
-    OFF,
-    ON_3,
-    ON_4,
-    ON_GOLDENRATIO;
+enum class TimerMode(val seconds: Int) {
+    OFF(0),
+    ON_3S(3),
+    ON_10S(10);
 
     /**
      * Get the next mode.
      */
     fun next() = values().next(this)
+
+    companion object {
+        fun fromSeconds(seconds: Int) = values().firstOrNull { it.seconds == seconds }
+    }
 }
