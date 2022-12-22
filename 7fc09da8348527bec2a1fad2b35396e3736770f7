@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62c54d0f_e27edacf",
+        "filename": "app/src/main/java/org/lineageos/aperture/BitmapExt.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-22T08:36:51Z",
+      "side": 1,
+      "message": "Maybe rename to stackBlur and mention original author of the algorithm",
+      "revId": "7fc09da8348527bec2a1fad2b35396e3736770f7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
