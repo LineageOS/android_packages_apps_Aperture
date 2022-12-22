@@ -93,6 +93,7 @@ import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StabilizationMode
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
+import org.lineageos.aperture.utils.TimerMode
 import java.io.FileNotFoundException
 import java.util.concurrent.ExecutorService
 import kotlin.math.abs
@@ -1243,12 +1244,7 @@ open class CameraActivity : AppCompatActivity() {
      * Set the specified grid mode, also updating the icon
      */
     private fun cycleGridMode() {
-        sharedPreferences.lastGridMode = when (sharedPreferences.lastGridMode) {
-            GridMode.OFF -> GridMode.ON_3
-            GridMode.ON_3 -> GridMode.ON_4
-            GridMode.ON_4 -> GridMode.ON_GOLDENRATIO
-            GridMode.ON_GOLDENRATIO -> GridMode.OFF
-        }
+        sharedPreferences.lastGridMode = sharedPreferences.lastGridMode.next()
         setGridMode(sharedPreferences.lastGridMode)
     }
 
@@ -1265,18 +1261,18 @@ open class CameraActivity : AppCompatActivity() {
             timerButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
-                    3 -> R.drawable.ic_timer_3
-                    10 -> R.drawable.ic_timer_10
-                    else -> R.drawable.ic_timer_off
+                    TimerMode.OFF -> R.drawable.ic_timer_off
+                    TimerMode.ON_3S -> R.drawable.ic_timer_3
+                    TimerMode.ON_10S -> R.drawable.ic_timer_10
                 },
                 0,
                 0
             )
             timerButton.text = resources.getText(
                 when (it) {
-                    3 -> R.string.timer_3
-                    10 -> R.string.timer_10
-                    else -> R.string.timer_off
+                    TimerMode.OFF -> R.string.timer_off
+                    TimerMode.ON_3S -> R.string.timer_3
+                    TimerMode.ON_10S -> R.string.timer_10
                 }
             )
         }
@@ -1286,11 +1282,7 @@ open class CameraActivity : AppCompatActivity() {
      * Toggle timer mode
      */
     private fun toggleTimerMode() {
-        sharedPreferences.timerMode = when (sharedPreferences.timerMode) {
-            0 -> 3
-            3 -> 10
-            else -> 0
-        }
+        sharedPreferences.timerMode = sharedPreferences.timerMode.next()
         updateTimerModeIcon()
     }
 
@@ -1680,7 +1672,7 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun startTimerAndRun(runnable: () -> Unit) {
-        if (sharedPreferences.timerMode <= 0 || !canRestartCamera()) {
+        if (sharedPreferences.timerMode == TimerMode.OFF || !canRestartCamera()) {
             runnable()
             return
         }
@@ -1690,7 +1682,7 @@ open class CameraActivity : AppCompatActivity() {
         countDownView.onPreviewAreaChanged(Rect().apply {
             viewFinder.getGlobalVisibleRect(this)
         })
-        countDownView.startCountDown(sharedPreferences.timerMode) {
+        countDownView.startCountDown(sharedPreferences.timerMode.seconds) {
             shutterButton.isEnabled = true
             runnable()
         }
