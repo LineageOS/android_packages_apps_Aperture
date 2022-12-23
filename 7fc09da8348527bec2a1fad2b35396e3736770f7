@@ -16,6 +16,24 @@
       "message": "Maybe rename to stackBlur and mention original author of the algorithm",
       "revId": "7fc09da8348527bec2a1fad2b35396e3736770f7",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0ae8b3d_14623cc5",
+        "filename": "app/src/main/java/org/lineageos/aperture/BitmapExt.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-23T17:07:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c54d0f_e27edacf",
+      "revId": "7fc09da8348527bec2a1fad2b35396e3736770f7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
