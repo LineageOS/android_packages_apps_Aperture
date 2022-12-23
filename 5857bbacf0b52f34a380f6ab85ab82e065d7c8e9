@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "46ee70b3_1b869f47",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2022-12-23T18:59:58Z",
+      "side": 1,
+      "message": "Works on all Pixels that have aux cameras",
+      "revId": "5857bbacf0b52f34a380f6ab85ab82e065d7c8e9",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
