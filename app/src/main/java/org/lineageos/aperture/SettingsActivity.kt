@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
@@ -55,6 +56,10 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
+        private val enableZsl by lazy { findPreference<SwitchPreference>("enable_zsl")!! }
+        private val photoCaptureMode by lazy {
+            findPreference<ListPreference>("photo_capture_mode")!!
+        }
         private val saveLocation by lazy { findPreference<SwitchPreference>("save_location") }
         private val shutterSound by lazy { findPreference<SwitchPreference>("shutter_sound") }
         private val videoStabilization by lazy {
@@ -79,6 +84,21 @@ class SettingsActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+        private val photoCaptureModePreferenceChangeListener =
+            Preference.OnPreferenceChangeListener { preference, newValue ->
+                val currentPhotoCaptureMode = if (preference == photoCaptureMode) {
+                    newValue as String
+                } else {
+                    photoCaptureMode.value
+                }
+
+                val enableZslCanBeEnabled = currentPhotoCaptureMode == "minimize_latency"
+                enableZsl.isChecked = enableZsl.isChecked && enableZslCanBeEnabled
+                enableZsl.isEnabled = enableZslCanBeEnabled
+
+                true
+            }
 
         private val videoStabilizationPreferenceChangeListener =
             Preference.OnPreferenceChangeListener { preference, newValue ->
@@ -138,6 +158,10 @@ class SettingsActivity : AppCompatActivity() {
                     }
             }
             shutterSound?.isVisible = !CameraSoundsUtils.mustPlaySounds
+
+            // Photo capture mode
+            photoCaptureMode.onPreferenceChangeListener = photoCaptureModePreferenceChangeListener
+            enableZsl.isEnabled = photoCaptureMode.value == "minimize_latency"
 
             // Video stabilization
             videoStabilization.onPreferenceChangeListener =
