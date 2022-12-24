@@ -355,13 +355,6 @@ open class CameraActivity : AppCompatActivity() {
         // Register shortcuts
         ShortcutsUtils.registerShortcuts(this)
 
-        // Request camera permissions
-        if (!allPermissionsGranted()) {
-            ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
-            )
-        }
-
         // Initialize camera manager
         cameraManager = CameraManager(this)
 
@@ -601,6 +594,13 @@ open class CameraActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        // Request camera permissions
+        if (!allPermissionsGranted()) {
+            ActivityCompat.requestPermissions(
+                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+            )
+        }
+
         // Set bright screen
         setBrightScreen(sharedPreferences.brightScreen)
 
@@ -633,7 +633,7 @@ open class CameraActivity : AppCompatActivity() {
         requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+        if (grantResults.isNotEmpty() && requestCode == REQUEST_CODE_PERMISSIONS) {
             if (!allPermissionsGranted()) {
                 Toast.makeText(
                     this, getString(R.string.app_permissions_toast), Toast.LENGTH_SHORT
