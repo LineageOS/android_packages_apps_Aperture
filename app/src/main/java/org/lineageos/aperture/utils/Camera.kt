@@ -12,6 +12,7 @@ import android.util.Size
 import android.util.SizeF
 import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.core.CameraInfo
+import androidx.camera.core.CameraSelector
 import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
 import org.lineageos.aperture.getSupportedModes
@@ -23,6 +24,7 @@ import kotlin.reflect.safeCast
  * Class representing a device camera
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
+@androidx.camera.core.ExperimentalLensFacing
 @androidx.camera.core.ExperimentalZeroShutterLag
 class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val cameraSelector = cameraInfo.cameraSelector
@@ -30,13 +32,13 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
     val cameraId = camera2CameraInfo.cameraId
 
-    val cameraFacing =
-        when (camera2CameraInfo.getCameraCharacteristic(CameraCharacteristics.LENS_FACING)) {
-            CameraCharacteristics.LENS_FACING_FRONT -> CameraFacing.FRONT
-            CameraCharacteristics.LENS_FACING_BACK -> CameraFacing.BACK
-            CameraCharacteristics.LENS_FACING_EXTERNAL -> CameraFacing.EXTERNAL
-            else -> CameraFacing.UNKNOWN
-        }
+    val cameraFacing = when (cameraInfo.lensFacing) {
+        CameraSelector.LENS_FACING_FRONT -> CameraFacing.FRONT
+        CameraSelector.LENS_FACING_BACK -> CameraFacing.BACK
+        CameraSelector.LENS_FACING_EXTERNAL -> CameraFacing.EXTERNAL
+        CameraSelector.LENS_FACING_UNKNOWN -> CameraFacing.UNKNOWN
+        else -> throw Exception("Unknown lens facing value")
+    }
 
     val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
     val hasFlashUnit = cameraInfo.hasFlashUnit()
