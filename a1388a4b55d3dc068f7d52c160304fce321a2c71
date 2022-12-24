@@ -50,6 +50,24 @@
       "message": "I don\u0027t get how this is possible?",
       "revId": "a1388a4b55d3dc068f7d52c160304fce321a2c71",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1f6857b3_1ff0dc79",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13559
+      },
+      "writtenOn": "2022-12-24T13:16:59Z",
+      "side": 1,
+      "message": "I was atleast able to reproduce it on a13 stock samsung device",
+      "parentUuid": "c03d3166_dd826c0f",
+      "revId": "a1388a4b55d3dc068f7d52c160304fce321a2c71",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
