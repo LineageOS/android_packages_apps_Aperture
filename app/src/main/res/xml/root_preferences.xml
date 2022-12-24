@@ -55,6 +55,13 @@
         <SwitchPreference
             app:defaultValue="false"
             app:iconSpaceReserved="false"
+            app:key="enable_zsl"
+            app:summary="@string/enable_zsl_summary"
+            app:title="@string/enable_zsl_title" />
+
+        <SwitchPreference
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
             app:key="image_stabilization"
             app:summary="@string/image_stabilization_summary"
             app:title="@string/image_stabilization_title" />
