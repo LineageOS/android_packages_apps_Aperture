@@ -23,19 +23,14 @@ import kotlin.reflect.safeCast
  * Class representing a device camera
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
+@androidx.camera.core.ExperimentalLensFacing
 class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val cameraSelector = cameraInfo.cameraSelector
 
     val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
     val cameraId = camera2CameraInfo.cameraId
 
-    val cameraFacing =
-        when (camera2CameraInfo.getCameraCharacteristic(CameraCharacteristics.LENS_FACING)) {
-            CameraCharacteristics.LENS_FACING_FRONT -> CameraFacing.FRONT
-            CameraCharacteristics.LENS_FACING_BACK -> CameraFacing.BACK
-            CameraCharacteristics.LENS_FACING_EXTERNAL -> CameraFacing.EXTERNAL
-            else -> CameraFacing.UNKNOWN
-        }
+    val cameraFacing = CameraFacing.fromCameraX(cameraInfo.lensFacing)
 
     val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
     val hasFlashUnit = cameraInfo.hasFlashUnit()
