@@ -290,7 +290,7 @@ open class CameraActivity : AppCompatActivity() {
     private val requestMultiplePermissions = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
-        if (!allPermissionsGranted()) {
+        if (it.isNotEmpty() && !allPermissionsGranted()) {
             Toast.makeText(
                 this, getString(R.string.app_permissions_toast), Toast.LENGTH_SHORT
             ).show()
@@ -368,13 +368,6 @@ open class CameraActivity : AppCompatActivity() {
 
         // Register shortcuts
         ShortcutsUtils.registerShortcuts(this)
-
-        // Request camera permissions
-        if (!allPermissionsGranted() || !allLocationPermissionsGranted()) {
-            requestMultiplePermissions.launch(
-                REQUIRED_PERMISSIONS + REQUIRED_PERMISSIONS_LOCATION
-            )
-        }
 
         // Initialize camera manager
         cameraManager = CameraManager(this)
@@ -620,6 +613,13 @@ open class CameraActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+
+        // Request camera permissions
+        if (!allPermissionsGranted() || !allLocationPermissionsGranted()) {
+            requestMultiplePermissions.launch(
+                REQUIRED_PERMISSIONS + REQUIRED_PERMISSIONS_LOCATION
+            )
+        }
 
         // Set bright screen
         setBrightScreen(sharedPreferences.brightScreen)
