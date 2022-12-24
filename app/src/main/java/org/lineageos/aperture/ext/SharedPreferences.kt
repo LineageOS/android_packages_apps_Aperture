@@ -116,27 +116,21 @@ internal var SharedPreferences.lastMicMode: Boolean
 // Photos prefs
 private const val PHOTO_CAPTURE_MODE_KEY = "photo_capture_mode"
 private const val PHOTO_CAPTURE_MODE_DEFAULT = "minimize_latency"
+private const val ENABLE_ZSL_KEY = "enable_zsl"
+private const val ENABLE_ZSL_DEFAULT = false
 
-internal var SharedPreferences.photoCaptureMode: Int
+internal val SharedPreferences.photoCaptureMode: Int
     @androidx.camera.core.ExperimentalZeroShutterLag
     get() = when (getString(PHOTO_CAPTURE_MODE_KEY, PHOTO_CAPTURE_MODE_DEFAULT)) {
         "maximize_quality" -> ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY
-        "minimize_latency" -> ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY
-        "zero_shutter_lag" -> ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG
+        "minimize_latency" ->
+            if (getBoolean(ENABLE_ZSL_KEY, ENABLE_ZSL_DEFAULT)) {
+                ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG
+            } else {
+                ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY
+            }
         // Default to minimize latency
         else -> ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY
-    }
-    @androidx.camera.core.ExperimentalZeroShutterLag
-    set(value) = edit {
-        putString(
-            PHOTO_CAPTURE_MODE_KEY, when (value) {
-                ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY -> "maximize_quality"
-                ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY -> "minimize_latency"
-                ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG -> "zero_shutter_lag"
-                // Default to maximize quality
-                else -> PHOTO_CAPTURE_MODE_DEFAULT
-            }
-        )
     }
 
 private const val PHOTO_FFC_MIRROR = "photo_ffc_mirror"
