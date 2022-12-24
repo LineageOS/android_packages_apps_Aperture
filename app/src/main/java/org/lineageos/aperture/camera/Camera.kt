@@ -22,6 +22,7 @@ import kotlin.reflect.safeCast
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalLensFacing
+@androidx.camera.core.ExperimentalZeroShutterLag
 class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val cameraSelector = cameraInfo.cameraSelector
 
@@ -82,6 +83,8 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
             add(VideoStabilizationMode.ON_PREVIEW)
         }
     }.toList()
+
+    val supportsZsl = cameraInfo.isZslSupported
 
     override fun equals(other: Any?): Boolean {
         val camera = this::class.safeCast(other) ?: return false
