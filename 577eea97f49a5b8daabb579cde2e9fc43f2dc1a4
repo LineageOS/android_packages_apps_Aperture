@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f55d96e_afdef584",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13559
+      },
+      "writtenOn": "2022-12-24T13:43:08Z",
+      "side": 1,
+      "message": "seems to work fine now, including the usecase reported by luk",
+      "revId": "577eea97f49a5b8daabb579cde2e9fc43f2dc1a4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
