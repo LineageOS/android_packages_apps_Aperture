@@ -16,6 +16,24 @@
       "message": "seems to work fine now, including the usecase reported by luk",
       "revId": "577eea97f49a5b8daabb579cde2e9fc43f2dc1a4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c69062e6_483549ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2022-12-24T13:49:27Z",
+      "side": 1,
+      "message": "Still not understanding why grantResults would be empty, or why we would even want to check that. We only care if the permissions were granted or not.\nDoes Samsung\u0027s framework call onRequestPermissionsResult too early?",
+      "parentUuid": "9f55d96e_afdef584",
+      "revId": "577eea97f49a5b8daabb579cde2e9fc43f2dc1a4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
