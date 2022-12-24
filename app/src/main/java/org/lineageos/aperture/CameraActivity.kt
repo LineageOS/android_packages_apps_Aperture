@@ -115,6 +115,7 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 import java.util.concurrent.ExecutorService
 import kotlin.math.abs
+import kotlin.properties.Delegates
 import kotlin.reflect.safeCast
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
@@ -196,6 +197,9 @@ open class CameraActivity : AppCompatActivity() {
             field = value
             updateGalleryButton()
         }
+
+    // Photo
+    private var photoCaptureMode by Delegates.notNull<Int>()
 
     // Video
     private val supportedVideoQualities: List<Quality>
@@ -1084,8 +1088,20 @@ open class CameraActivity : AppCompatActivity() {
             }
         }
 
+        photoCaptureMode = sharedPreferences.photoCaptureMode.let {
+            if (it == ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG && !camera.supportsZsl) {
+                // Fallback to minimize latency
+                ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY
+            } else {
+                it
+            }
+        }
+
         // Only photo mode supports vendor extensions for now
-        val cameraSelector = if (cameraMode == CameraMode.PHOTO) {
+        val cameraSelector = if (
+            cameraMode == CameraMode.PHOTO &&
+            photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG
+        ) {
             cameraManager.extensionsManager.getExtensionEnabledCameraSelector(
                 camera.cameraSelector, sharedPreferences.photoEffect
             )
@@ -1120,7 +1136,7 @@ open class CameraActivity : AppCompatActivity() {
         cameraController.setEnabledUseCases(cameraUseCases)
 
         // Restore settings that needs a rebind
-        cameraController.imageCaptureMode = sharedPreferences.photoCaptureMode
+        cameraController.imageCaptureMode = photoCaptureMode
 
         // Bind camera controller to lifecycle
         cameraController.bindToLifecycle(this)
@@ -1580,7 +1596,9 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updatePhotoEffectIcon() {
         effectButton.isVisible =
-            cameraMode == CameraMode.PHOTO && camera.supportedExtensionModes.size > 1
+            cameraMode == CameraMode.PHOTO &&
+                    photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG &&
+                    camera.supportedExtensionModes.size > 1
 
         sharedPreferences.photoEffect.let {
             effectButton.setCompoundDrawablesWithIntrinsicBounds(
