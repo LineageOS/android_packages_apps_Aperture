@@ -53,6 +53,13 @@
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreference
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="enable_zsl"
+            app:summary="@string/enable_zsl_summary"
+            app:title="@string/enable_zsl_title" />
+
+        <SwitchPreference
             app:defaultValue="true"
             app:iconSpaceReserved="false"
             app:key="photo_ffc_mirror"
