@@ -85,6 +85,24 @@
       "message": "I think I can reproduce this (or similar?) issue when I do this:\n\n```\n1) open app\n2) press home\n3) open another app\n4) open aperture again and it insta closes\n```\n\nBut this patch makes it even worse since it\u0027ll just launch the app but it\u0027ll be broken...",
       "revId": "a1388a4b55d3dc068f7d52c160304fce321a2c71",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f7728b7_243a4a5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13559
+      },
+      "writtenOn": "2022-12-24T13:36:46Z",
+      "side": 1,
+      "message": "For me i could reproduce it simply by doing\n\n```\n1) Install app through android studio\n2) Permission dialog appears\n3) App shows toast and closes itself\n4) Permssion dialog is still shown\n```\n\nand regarding the issue you are facing i think its happening because we are checking permission in onCreate but i think moving it to onResume should fix it?",
+      "parentUuid": "92d968ed_4d81084e",
+      "revId": "a1388a4b55d3dc068f7d52c160304fce321a2c71",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
