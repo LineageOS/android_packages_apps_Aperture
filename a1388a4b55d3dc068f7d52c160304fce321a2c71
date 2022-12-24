@@ -68,6 +68,23 @@
       "parentUuid": "c03d3166_dd826c0f",
       "revId": "a1388a4b55d3dc068f7d52c160304fce321a2c71",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "92d968ed_4d81084e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-24T13:19:23Z",
+      "side": 1,
+      "message": "I think I can reproduce this (or similar?) issue when I do this:\n\n```\n1) open app\n2) press home\n3) open another app\n4) open aperture again and it insta closes\n```\n\nBut this patch makes it even worse since it\u0027ll just launch the app but it\u0027ll be broken...",
+      "revId": "a1388a4b55d3dc068f7d52c160304fce321a2c71",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
