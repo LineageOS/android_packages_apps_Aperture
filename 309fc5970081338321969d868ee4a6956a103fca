@@ -16,6 +16,24 @@
       "message": "I think this is causing an issue, but if someone could confirm this, it would be great.\nBasically, if you update a ROM that had Camera2 (AOSP) installed, and you now include Aperture, Aperture will still use the camera 2 package name. \nHowever, rro overlays are meant to be for Aperture:\n\ncheeseburger:/ # pm list packages|grep -i camera2\npackage:com.android.camera2\ncheeseburger:/ # pm list packages|grep -i aperture\npackage:org.lineageos.aperture.auto_generated_rro_vendor\n\nIf I open \u0027Camera\u0027 from the Launcher, Aperture starts but in the logs it is reported as camera2:\nActivityTaskManager: START u0 {act\u003dandroid.intent.action.MAIN cat\u003d[android.intent.category.LAUNCHER] flg\u003d0x10200000 cmp\u003dcom.android.camera2/com.android.camera.CameraLauncher bnds\u003d[282,1316][540,1700]} from uid 10304\n\n\nIs this caused by this commit?",
       "revId": "309fc5970081338321969d868ee4a6956a103fca",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d7502d6_7281a056",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 15609
+      },
+      "writtenOn": "2022-12-25T01:03:12Z",
+      "side": 1,
+      "message": "Maybe not, I synced the latest Aperture sources (Github) and RRO overlays are applied correctly even if the package is renamed com.android.camera2.\nI see this:\nhttps://review.lineageos.org/c/LineageOS/android_packages_apps_Aperture/+/346276\n\nNot sure if it was caused by my message, or if there are different issues there.",
+      "parentUuid": "9de5d38d_010b909e",
+      "revId": "309fc5970081338321969d868ee4a6956a103fca",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
