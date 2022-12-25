@@ -34,6 +34,24 @@
       "parentUuid": "9de5d38d_010b909e",
       "revId": "309fc5970081338321969d868ee4a6956a103fca",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "046c1d53_8478ada2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-25T01:09:01Z",
+      "side": 1,
+      "message": "Then remove \"org.lineageos.aperture.auto_generated_rro_vendor__\" from ./app/src/main/java/org/lineageos/aperture/utils/RROResources.kt, and you\u0027ll see that actual RROs (likely) don\u0027t work.",
+      "parentUuid": "6d7502d6_7281a056",
+      "revId": "309fc5970081338321969d868ee4a6956a103fca",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
