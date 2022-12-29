@@ -358,9 +358,9 @@ open class CameraActivity : AppCompatActivity() {
         ShortcutsUtils.registerShortcuts(this)
 
         // Request camera permissions
-        if (!allPermissionsGranted()) {
+        if (!allPermissionsGranted() || !allLocationPermissionsGranted()) {
             ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+                this, REQUIRED_PERMISSIONS + REQUIRED_PERMISSIONS_LOCATION, REQUEST_CODE_PERMISSIONS
             )
         }
 
@@ -641,6 +641,7 @@ open class CameraActivity : AppCompatActivity() {
         requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        sharedPreferences.saveLocation = allLocationPermissionsGranted()
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (!allPermissionsGranted()) {
                 Toast.makeText(
