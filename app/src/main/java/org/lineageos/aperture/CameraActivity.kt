@@ -364,6 +364,13 @@ open class CameraActivity : AppCompatActivity() {
             )
         }
 
+        // Request location permissions
+        if (!allLocationPermissionsGranted()) {
+            ActivityCompat.requestPermissions(
+                this, REQUIRED_PERMISSIONS_LOCATION, REQUEST_CODE_PERMISSIONS_LOCATION
+            )
+        }
+
         // Initialize camera manager
         cameraManager = CameraManager(this)
 
@@ -648,6 +655,8 @@ open class CameraActivity : AppCompatActivity() {
                 ).show()
                 finish()
             }
+        } else if (requestCode == REQUEST_CODE_PERMISSIONS_LOCATION) {
+            sharedPreferences.saveLocation = allLocationPermissionsGranted()
         }
     }
 
@@ -1690,6 +1699,7 @@ open class CameraActivity : AppCompatActivity() {
         private const val LOG_TAG = "Aperture"
 
         private const val REQUEST_CODE_PERMISSIONS = 10
+        private const val REQUEST_CODE_PERMISSIONS_LOCATION = 11
         private val REQUIRED_PERMISSIONS =
             mutableListOf(
                 Manifest.permission.CAMERA,
