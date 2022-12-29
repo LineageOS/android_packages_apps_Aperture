@@ -16,6 +16,24 @@
       "message": "Does it behave properly with `locationListener.register()` in onResume? It technically should be ok, but who knows...",
       "revId": "4ebad088d2482922a7ce324a17bbbc937e835808",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e1e48e88_b1437213",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2022-12-29T20:33:12Z",
+      "side": 0,
+      "message": "It does.",
+      "parentUuid": "a36cb2c4_33150085",
+      "revId": "4ebad088d2482922a7ce324a17bbbc937e835808",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
