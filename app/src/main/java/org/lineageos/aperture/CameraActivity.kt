@@ -358,9 +358,9 @@ open class CameraActivity : AppCompatActivity() {
         ShortcutsUtils.registerShortcuts(this)
 
         // Request camera permissions
-        if (!allPermissionsGranted()) {
+        if (!allPermissionsGranted() || !allLocationPermissionsGranted()) {
             ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+                this, REQUIRED_PERMISSIONS + REQUIRED_PERMISSIONS_LOCATION, REQUEST_CODE_PERMISSIONS
             )
         }
 
@@ -648,6 +648,7 @@ open class CameraActivity : AppCompatActivity() {
                 ).show()
                 finish()
             }
+            sharedPreferences.saveLocation = allLocationPermissionsGranted()
         }
     }
 
