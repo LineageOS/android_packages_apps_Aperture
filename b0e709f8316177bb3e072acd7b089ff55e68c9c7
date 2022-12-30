@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "266ecbbe_6a1e4f23",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2022-12-30T17:10:27Z",
+      "side": 1,
+      "message": "don\u0027t use wip pls, you just make your changes invisible for almost everyone.",
+      "revId": "b0e709f8316177bb3e072acd7b089ff55e68c9c7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
