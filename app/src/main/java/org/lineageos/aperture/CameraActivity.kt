@@ -134,6 +134,7 @@ open class CameraActivity : AppCompatActivity() {
     private val videoQualityButton by lazy { findViewById<Button>(R.id.videoQualityButton) }
     private val videoRecordingStateButton by lazy { findViewById<ImageButton>(R.id.videoRecordingStateButton) }
     private val viewFinder by lazy { findViewById<PreviewView>(R.id.viewFinder) }
+    private val viewFinderContainer by lazy { findViewById<ConstraintLayout>(R.id.viewFinderContainer) }
     private val viewFinderFocus by lazy { findViewById<ImageView>(R.id.viewFinderFocus) }
     private val zoomLevel by lazy { findViewById<HorizontalSlider>(R.id.zoomLevel) }
 
@@ -1032,6 +1033,12 @@ open class CameraActivity : AppCompatActivity() {
         lensSelectorLayout.setCamera(
             camera, cameraManager.getCameras(cameraMode, camera.cameraFacing)
         )
+
+        // Set aspect ratio for view finder
+        val ratio = if (sharedPreferences.aspectRatio == AspectRatio.RATIO_16_9) 9f / 16f
+        else 3f / 4f
+        (viewFinderContainer.layoutParams as ConstraintLayout.LayoutParams).dimensionRatio =
+            ratio.toString()
     }
 
     /**
