@@ -53,19 +53,6 @@
             </intent-filter>
         </activity>
 
-        <activity-alias
-            android:name=".CameraLauncher"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:targetActivity=".CameraActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-
         <activity
             android:name=".CaptureActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
