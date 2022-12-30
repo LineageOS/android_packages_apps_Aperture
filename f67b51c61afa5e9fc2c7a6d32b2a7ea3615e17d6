@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3467ca9_7c4ae48c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2022-12-30T11:16:59Z",
+      "side": 1,
+      "message": "oh, i think I get now why that doesn\u0027t happen for me, Asus launcher doesn\u0027t keep app running while showing the preview unlike aosp, it\u0027s possible that _fixes_ it",
+      "revId": "f67b51c61afa5e9fc2c7a6d32b2a7ea3615e17d6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
