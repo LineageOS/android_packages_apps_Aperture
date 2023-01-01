@@ -16,6 +16,23 @@
       "message": "16:9 is pretty awful here - https://imgur.com/a/YY6Lm5q",
       "revId": "80ccdb4c2ee96fff98139584d28aa4b706ecef35",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e633b37_4bcb5298",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-01T11:58:17Z",
+      "side": 1,
+      "message": "\u003e Currently the zoom slider can end up under other UI elements.\nWhat UI elements? Any screenshot?\n",
+      "revId": "80ccdb4c2ee96fff98139584d28aa4b706ecef35",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
