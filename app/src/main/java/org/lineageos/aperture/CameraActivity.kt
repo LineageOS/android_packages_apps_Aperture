@@ -358,7 +358,7 @@ open class CameraActivity : AppCompatActivity() {
         ShortcutsUtils.registerShortcuts(this)
 
         // Request camera permissions
-        if (!allPermissionsGranted() || !allLocationPermissionsGranted()) {
+        if (!(allPermissionsGranted() && allLocationPermissionsGranted())) {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS + REQUIRED_PERMISSIONS_LOCATION, REQUEST_CODE_PERMISSIONS
             )
