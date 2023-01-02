@@ -270,7 +270,7 @@ open class CameraActivity : AppCompatActivity() {
             // Reset cached location
             location = null
 
-            if (allLocationPermissionsGranted() && sharedPreferences.saveLocation) {
+            if (allLocationPermissionsGranted() && sharedPreferences.saveLocation == true) {
                 // Request location updates
                 locationManager.allProviders.forEach {
                     locationManager.requestLocationUpdates(it, 1000, 1f, this)
@@ -290,13 +290,15 @@ open class CameraActivity : AppCompatActivity() {
     private val requestMultiplePermissions = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
-        if (it.isNotEmpty() && !allPermissionsGranted()) {
-            Toast.makeText(
-                this, getString(R.string.app_permissions_toast), Toast.LENGTH_SHORT
-            ).show()
-            finish()
+        if (it.isNotEmpty()) {
+            if (!allPermissionsGranted()) {
+                Toast.makeText(
+                    this, getString(R.string.app_permissions_toast), Toast.LENGTH_SHORT
+                ).show()
+                finish()
+            }
+            sharedPreferences.saveLocation = allLocationPermissionsGranted()
         }
-        sharedPreferences.saveLocation = allLocationPermissionsGranted()
     }
 
     enum class ShutterAnimation(val resourceId: Int) {
@@ -615,7 +617,7 @@ open class CameraActivity : AppCompatActivity() {
         super.onResume()
 
         // Request camera permissions
-        if (!allPermissionsGranted() || !allLocationPermissionsGranted()) {
+        if (!allPermissionsGranted() || sharedPreferences.saveLocation == null) {
             requestMultiplePermissions.launch(
                 REQUIRED_PERMISSIONS + REQUIRED_PERMISSIONS_LOCATION
             )
