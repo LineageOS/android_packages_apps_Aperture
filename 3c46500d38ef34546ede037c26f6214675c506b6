@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1d7f051_cf0019a8",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/PermissionsUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-02T23:20:45Z",
+      "side": 1,
+      "message": "move to prev line?",
+      "revId": "3c46500d38ef34546ede037c26f6214675c506b6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
