@@ -270,7 +270,7 @@ open class CameraActivity : AppCompatActivity() {
             // Reset cached location
             location = null
 
-            if (allLocationPermissionsGranted() && sharedPreferences.saveLocation) {
+            if (allLocationPermissionsGranted() && sharedPreferences.saveLocation == true) {
                 // Request location updates
                 locationManager.allProviders.forEach {
                     locationManager.requestLocationUpdates(it, 1000, 1f, this)
@@ -370,7 +370,7 @@ open class CameraActivity : AppCompatActivity() {
         ShortcutsUtils.registerShortcuts(this)
 
         // Request camera permissions
-        if (!allPermissionsGranted() || !allLocationPermissionsGranted()) {
+        if (!allPermissionsGranted() || sharedPreferences.saveLocation == null) {
             requestMultiplePermissions.launch(
                 REQUIRED_PERMISSIONS + REQUIRED_PERMISSIONS_LOCATION
             )

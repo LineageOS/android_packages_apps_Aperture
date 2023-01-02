@@ -20,6 +20,23 @@ import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.StabilizationMode
 import org.lineageos.aperture.utils.TimerMode
 
+// Helpers
+internal fun SharedPreferences.getBoolean(key: String): Boolean? {
+    return if (contains(key)) {
+        getBoolean(key, false)
+    } else {
+        null
+    }
+}
+
+internal fun SharedPreferences.Editor.putBoolean(key: String, value: Boolean?) {
+    if (value == null) {
+        remove(key)
+    } else {
+        putBoolean(key, value)
+    }
+}
+
 // Generic prefs
 private const val LAST_CAMERA_FACING_KEY = "last_camera_facing"
 private const val LAST_CAMERA_FACING_DEFAULT = "back"
@@ -273,9 +290,8 @@ internal var SharedPreferences.brightScreen: Boolean
 
 // Save location
 private const val SAVE_LOCATION = "save_location"
-private const val SAVE_LOCATION_DEFAULT = false
-internal var SharedPreferences.saveLocation: Boolean
-    get() = getBoolean(SAVE_LOCATION, SAVE_LOCATION_DEFAULT)
+internal var SharedPreferences.saveLocation: Boolean?
+    get() = getBoolean(SAVE_LOCATION)
     set(value) = edit {
         putBoolean(SAVE_LOCATION, value)
     }
