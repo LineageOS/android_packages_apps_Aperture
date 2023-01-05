@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2336fc9_b72a0e00",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13559
+      },
+      "writtenOn": "2023-01-05T08:30:34Z",
+      "side": 1,
+      "message": "Fixes aux cam zoom detection on s22u\n\nbefore : https://i.imgur.com/wCe0WMz.jpg\nafter  : https://i.imgur.com/1guSi0z.jpg",
+      "revId": "ddefef5e1822c3c0bc01330a2fbb42c78c167814",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
