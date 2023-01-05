@@ -383,6 +383,11 @@ open class CameraActivity : AppCompatActivity() {
         cameraMode = overrideInitialCameraMode() ?: sharedPreferences.lastCameraMode
         initialCameraFacing = sharedPreferences.lastCameraFacing
 
+        // Initialize location setting
+        if (sharedPreferences.saveLocation == null && permissionsUtils.locationPermissionsGranted()) {
+            sharedPreferences.saveLocation = true
+        }
+
         // Handle intent
         intent.action?.let {
             intentActions[it]?.invoke()
@@ -619,7 +624,9 @@ open class CameraActivity : AppCompatActivity() {
         super.onResume()
 
         // Request camera permissions
-        if (!permissionsUtils.mainPermissionsGranted() || sharedPreferences.saveLocation == null) {
+        if (!permissionsUtils.mainPermissionsGranted() ||
+                (sharedPreferences.saveLocation != false &&
+                !permissionsUtils.locationPermissionsGranted())) {
             requestMultiplePermissions.launch(PermissionsUtils.allPermissions)
         }
 
