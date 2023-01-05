@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c6c8b30_0d9d1140",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-05T16:31:23Z",
+      "side": 1,
+      "message": "You can\u0027t turn off save location when location perm is granted with this change.",
+      "revId": "79c2825c06a4059d513d6d831cf42775da5773d0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
