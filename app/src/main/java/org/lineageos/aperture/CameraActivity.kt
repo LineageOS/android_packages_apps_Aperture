@@ -621,6 +621,9 @@ open class CameraActivity : AppCompatActivity() {
         // Request camera permissions
         if (!permissionsUtils.mainPermissionsGranted() || sharedPreferences.saveLocation == null) {
             requestMultiplePermissions.launch(PermissionsUtils.allPermissions)
+        } else {
+            if (sharedPreferences.saveLocation == null)
+                sharedPreferences.saveLocation = permissionsUtils.locationPermissionsGranted()
         }
 
         // Set bright screen
