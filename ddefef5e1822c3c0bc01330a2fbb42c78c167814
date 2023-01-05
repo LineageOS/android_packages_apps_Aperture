@@ -53,6 +53,23 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "de58e6dc_1c995290",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13559
+      },
+      "writtenOn": "2023-01-05T13:59:00Z",
+      "side": 1,
+      "message": "Will just wait for `1.3.0-alpha03` to come",
+      "revId": "ddefef5e1822c3c0bc01330a2fbb42c78c167814",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4dc0cdcf_782eb5f7",
@@ -78,6 +95,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0fb12c7d_0b72cdf3",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 13559
+      },
+      "writtenOn": "2023-01-05T13:59:00Z",
+      "side": 1,
+      "message": "Misread the doc, I thought it would provide the list of main sensor from logical camera id.",
+      "parentUuid": "4dc0cdcf_782eb5f7",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 245,
+        "endChar": 87
+      },
+      "revId": "ddefef5e1822c3c0bc01330a2fbb42c78c167814",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "595a3aa8_fe7601bd",
         "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
         "patchSetId": 1
@@ -89,6 +130,30 @@
       "writtenOn": "2023-01-05T11:36:29Z",
       "side": 1,
       "message": "????",
+      "range": {
+        "startLine": 260,
+        "startChar": 16,
+        "endLine": 260,
+        "endChar": 48
+      },
+      "revId": "ddefef5e1822c3c0bc01330a2fbb42c78c167814",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f60ae1b6_071cfd6b",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 13559
+      },
+      "writtenOn": "2023-01-05T13:59:00Z",
+      "side": 1,
+      "message": "So, maincamera here in my case is logical camera which includes (1 uw, 1 normal and 2 tele sensors) getting `0` from `maincamera` was returning the same uw wide sensor so the zoom ratio was coming equal to the default one hence 2 `1x` in ui\n\nwhole mess arised from misreading `LENS_FACING` doc initially, it worked as `mainCameraId` became `1` because of `LENS_FACING_BACK` equals to `1` and that is the placement of normal(1x) camera in `mainCamera.sensors` array",
+      "parentUuid": "595a3aa8_fe7601bd",
       "range": {
         "startLine": 260,
         "startChar": 16,
