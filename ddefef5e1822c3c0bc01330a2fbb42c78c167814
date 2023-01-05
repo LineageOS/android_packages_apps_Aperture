@@ -33,6 +33,24 @@
       "message": "just for note, https://review.lineageos.org/c/LineageOS/android_packages_apps_Aperture/+/346323 fixes the issue but till its moved to stable I think this can do",
       "revId": "ddefef5e1822c3c0bc01330a2fbb42c78c167814",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00c4d88d_3c2a066f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-05T08:32:37Z",
+      "side": 1,
+      "message": "We are waiting for `1.3.0-alpha03` which should come out somewhat soon (TM)",
+      "parentUuid": "b03149fc_438be481",
+      "revId": "ddefef5e1822c3c0bc01330a2fbb42c78c167814",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
