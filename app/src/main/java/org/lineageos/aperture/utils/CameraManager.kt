@@ -6,9 +6,9 @@
 package org.lineageos.aperture.utils
 
 import android.content.Context
+import android.hardware.camera2.CameraCharacteristics
 import android.icu.text.DecimalFormat
 import android.icu.text.DecimalFormatSymbols
-import android.hardware.camera2.CameraManager as Camera2CameraManager
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.Quality
@@ -20,6 +20,7 @@ import java.math.RoundingMode
 import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import android.hardware.camera2.CameraManager as Camera2CameraManager
 
 /**
  * Class managing an app camera session
@@ -239,6 +240,10 @@ class CameraManager(context: Context) {
 
         val mainCamera = facingCameras.first()
 
+        val cameraCharacteristics =
+            camera2CameraManager.getCameraCharacteristics(mainCamera.cameraId)
+        val mainCameraId = cameraCharacteristics.get(CameraCharacteristics.LENS_FACING)
+
         if (!enableAuxCameras) {
             // Return only the main camera
             return listOf(mainCamera)
@@ -250,17 +255,20 @@ class CameraManager(context: Context) {
             .filter { !ignoreLogicalAuxCameras || !it.isLogical }
 
         // Setup zoom ratio for aux cameras if main cam is a physical camera device
-        if (mainCamera.sensors.size == 1) {
-            val mainSensorViewAngleDegrees = mainCamera.sensors[0].viewAngleDegrees.toFloat()
+        val mainSensorViewAngleDegrees =
+            if (mainCamera.sensors.size > 1 && mainCameraId != null) {
+                mainCamera.sensors[mainCameraId].viewAngleDegrees.toFloat()
+            } else {
+                mainCamera.sensors[0].viewAngleDegrees.toFloat()
+            }
 
-            for (camera in auxCameras) {
-                // Setup zoom ratio only for physical camera devices
-                if (camera.sensors.size == 1) {
-                    val auxSensor = camera.sensors[0]
-                    camera.intrinsicZoomRatio = roundOffZoomRatio(
-                        mainSensorViewAngleDegrees / auxSensor.viewAngleDegrees
-                    )
-                }
+        for (camera in auxCameras) {
+            // Setup zoom ratio only for physical camera devices
+            if (camera.sensors.size == 1) {
+                val auxSensor = camera.sensors[0]
+                camera.intrinsicZoomRatio = roundOffZoomRatio(
+                    mainSensorViewAngleDegrees / auxSensor.viewAngleDegrees
+                )
             }
         }
 
