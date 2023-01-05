@@ -299,8 +299,8 @@ open class CameraActivity : AppCompatActivity() {
                 ).show()
                 finish()
             }
-            sharedPreferences.saveLocation = permissionsUtils.locationPermissionsGranted()
         }
+        sharedPreferences.saveLocation = permissionsUtils.locationPermissionsGranted()
     }
 
     enum class ShutterAnimation(val resourceId: Int) {
