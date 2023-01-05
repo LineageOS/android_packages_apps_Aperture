@@ -16,6 +16,52 @@
       "message": "Happy with this for now.",
       "revId": "54e3cb3f0c0e73e81a6dce0d37f1575466e09349",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a24a400c_b92471e8",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-05T23:03:33Z",
+      "side": 1,
+      "message": "Use only one if",
+      "range": {
+        "startLine": 387,
+        "startChar": 8,
+        "endLine": 388,
+        "endChar": 62
+      },
+      "revId": "54e3cb3f0c0e73e81a6dce0d37f1575466e09349",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fcec00ee_af2d4eb9",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-05T23:03:33Z",
+      "side": 1,
+      "message": "private fun shouldAskForLocationPermissions() \u003d\n        sharedPreferences.saveLocation !\u003d false \u0026\u0026\n            !permissionsUtils.locationPermissionsGranted()",
+      "range": {
+        "startLine": 647,
+        "startChar": 0,
+        "endLine": 651,
+        "endChar": 5
+      },
+      "revId": "54e3cb3f0c0e73e81a6dce0d37f1575466e09349",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
