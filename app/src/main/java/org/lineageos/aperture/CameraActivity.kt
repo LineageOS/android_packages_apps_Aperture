@@ -619,7 +619,7 @@ open class CameraActivity : AppCompatActivity() {
         super.onResume()
 
         // Request camera permissions
-        if (!permissionsUtils.mainPermissionsGranted() || sharedPreferences.saveLocation == null) {
+        if (!permissionsUtils.mainPermissionsGranted() || shouldAskForLocationPermissions()) {
             requestMultiplePermissions.launch(PermissionsUtils.allPermissions)
         }
 
@@ -637,6 +637,12 @@ open class CameraActivity : AppCompatActivity() {
 
         // Re-bind the use cases
         bindCameraUseCases()
+    }
+
+    private fun shouldAskForLocationPermissions(): Boolean {
+        if (sharedPreferences.saveLocation == false)
+            return false
+        return !permissionsUtils.locationPermissionsGranted()
     }
 
     override fun onPause() {
