@@ -51,6 +51,52 @@
       "parentUuid": "b03149fc_438be481",
       "revId": "ddefef5e1822c3c0bc01330a2fbb42c78c167814",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4dc0cdcf_782eb5f7",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-05T11:36:29Z",
+      "side": 1,
+      "message": "https://developer.android.com/reference/android/hardware/camera2/CameraCharacteristics#LENS_FACING\n???",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 245,
+        "endChar": 87
+      },
+      "revId": "ddefef5e1822c3c0bc01330a2fbb42c78c167814",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "595a3aa8_fe7601bd",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraManager.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-05T11:36:29Z",
+      "side": 1,
+      "message": "????",
+      "range": {
+        "startLine": 260,
+        "startChar": 16,
+        "endLine": 260,
+        "endChar": 48
+      },
+      "revId": "ddefef5e1822c3c0bc01330a2fbb42c78c167814",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
