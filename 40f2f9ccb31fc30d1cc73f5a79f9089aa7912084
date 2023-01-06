@@ -168,6 +168,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e20fe06f_6021838d",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-06T11:22:39Z",
+      "side": 1,
+      "message": "It might include other apps photos if they use the same filename format but eh, I guess that\u0027s not a big problem",
+      "parentUuid": "d1aa05f6_e43cbf08",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "40f2f9ccb31fc30d1cc73f5a79f9089aa7912084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "871c67b3_9800a869",
