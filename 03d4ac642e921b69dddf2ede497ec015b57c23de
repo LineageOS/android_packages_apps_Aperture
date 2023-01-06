@@ -46,6 +46,30 @@
       },
       "revId": "03d4ac642e921b69dddf2ede497ec015b57c23de",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d17a593d_cf6301b8",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-06T10:19:16Z",
+      "side": 1,
+      "message": "Application ID and package name might not be the same thing, it should also be tested on .dev package",
+      "parentUuid": "f8a68c6b_58cbb995",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 54
+      },
+      "revId": "03d4ac642e921b69dddf2ede497ec015b57c23de",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
