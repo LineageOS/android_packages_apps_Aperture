@@ -41,6 +41,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a13fc249_6f57664b",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2023-01-06T00:12:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a24a400c_b92471e8",
+      "range": {
+        "startLine": 387,
+        "startChar": 8,
+        "endLine": 388,
+        "endChar": 62
+      },
+      "revId": "54e3cb3f0c0e73e81a6dce0d37f1575466e09349",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "fcec00ee_af2d4eb9",
@@ -54,6 +78,30 @@
       "writtenOn": "2023-01-05T23:03:33Z",
       "side": 1,
       "message": "private fun shouldAskForLocationPermissions() \u003d\n        sharedPreferences.saveLocation !\u003d false \u0026\u0026\n            !permissionsUtils.locationPermissionsGranted()",
+      "range": {
+        "startLine": 647,
+        "startChar": 0,
+        "endLine": 651,
+        "endChar": 5
+      },
+      "revId": "54e3cb3f0c0e73e81a6dce0d37f1575466e09349",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64b61440_f8417fc6",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2023-01-06T00:12:21Z",
+      "side": 1,
+      "message": "Removed the function entirely now that it\u0027s just two checks.",
+      "parentUuid": "fcec00ee_af2d4eb9",
       "range": {
         "startLine": 647,
         "startChar": 0,
