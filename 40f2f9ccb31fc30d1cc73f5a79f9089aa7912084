@@ -98,6 +98,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a11041c7_6ec60197",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-06T10:51:50Z",
+      "side": 1,
+      "message": "Maybe just stick to the old method on Android \u003c Q?",
+      "parentUuid": "43a91014_929aadb2",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "40f2f9ccb31fc30d1cc73f5a79f9089aa7912084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "871c67b3_9800a869",
         "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
         "patchSetId": 5
