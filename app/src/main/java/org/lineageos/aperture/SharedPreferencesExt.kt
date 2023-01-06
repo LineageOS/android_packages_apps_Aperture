@@ -316,18 +316,6 @@ internal var SharedPreferences.leveler: Boolean
         putBoolean(LEVELER_KEY, value)
     }
 
-// Last saved URI
-private const val LAST_SAVED_URI_KEY = "saved_uri"
-
-internal var SharedPreferences.lastSavedUri: Uri?
-    get() {
-        val raw = getString(LAST_SAVED_URI_KEY, null) ?: return null
-        return Uri.parse(raw)
-    }
-    set(value) = edit {
-        putString(LAST_SAVED_URI_KEY, value.toString())
-    }
-
 // Image stabilization
 private const val IMAGE_STABILIZATION_KEY = "image_stabilization"
 internal val SharedPreferences.imageStabilizationMode: StabilizationMode
