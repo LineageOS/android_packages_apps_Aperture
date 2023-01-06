@@ -39,6 +39,24 @@
       "message": "can\u0027t we query for a single entry?\nthis may get increasingly slow if we take a lot of pictures in app",
       "revId": "40f2f9ccb31fc30d1cc73f5a79f9089aa7912084",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc776c11_26d3f024",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-06T10:10:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "871c67b3_9800a869",
+      "revId": "40f2f9ccb31fc30d1cc73f5a79f9089aa7912084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
