@@ -87,6 +87,7 @@ import org.lineageos.aperture.utils.CameraState
 import org.lineageos.aperture.utils.FlashMode
 import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.GridMode
+import org.lineageos.aperture.utils.MediaStoreUtils
 import org.lineageos.aperture.utils.MediaType
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StabilizationMode
@@ -785,7 +786,6 @@ open class CameraActivity : AppCompatActivity() {
                     cameraState = CameraState.IDLE
                     shutterButton.isEnabled = true
                     if (!singleCaptureMode) {
-                        sharedPreferences.lastSavedUri = output.savedUri
                         tookSomething = true
                     } else {
                         output.savedUri?.let {
@@ -864,7 +864,6 @@ open class CameraActivity : AppCompatActivity() {
                         if (it.error != VideoRecordEvent.Finalize.ERROR_NO_VALID_DATA) {
                             Log.d(LOG_TAG, "Video capture succeeded: ${it.outputResults.outputUri}")
                             if (!singleCaptureMode) {
-                                sharedPreferences.lastSavedUri = it.outputResults.outputUri
                                 tookSomething = true
                             } else {
                                 openCapturePreview(it.outputResults.outputUri, MediaType.VIDEO)
@@ -1514,8 +1513,9 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun updateGalleryButton() {
+        val uri = MediaStoreUtils.getLastMediaFile(this)
+
         runOnUiThread {
-            val uri = sharedPreferences.lastSavedUri
             val keyguardLocked = keyguardManager.isKeyguardLocked
             if (uri != null && (!keyguardLocked || tookSomething)) {
                 galleryButton.load(uri) {
@@ -1570,54 +1570,54 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
-        sharedPreferences.lastSavedUri.let { uri ->
-            // If the Uri is null, attempt to launch non secure-gallery
-            if (uri == null) {
-                dismissKeyguardAndRun {
-                    val intent = Intent().apply {
-                        action = Intent.ACTION_VIEW
-                        type = "image/*"
-                    }
-                    runCatching {
-                        startActivity(intent)
-                        return@dismissKeyguardAndRun
-                    }
+        val uri = MediaStoreUtils.getLastMediaFile(this)
+
+        // If the Uri is null, attempt to launch non secure-gallery
+        if (uri == null) {
+            dismissKeyguardAndRun {
+                val intent = Intent().apply {
+                    action = Intent.ACTION_VIEW
+                    type = "image/*"
                 }
+                runCatching {
+                    startActivity(intent)
+                    return@dismissKeyguardAndRun
+                }
+            }
+            return
+        }
+
+        // This ensure we took at least one photo/video in the secure use-case
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+            tookSomething && keyguardManager.isKeyguardLocked
+        ) {
+            val intent = Intent().apply {
+                action = MediaStore.ACTION_REVIEW_SECURE
+                data = uri
+                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            }
+            runCatching {
+                startActivity(intent)
                 return
             }
+        }
 
-            // This ensure we took at least one photo/video in the secure use-case
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-                tookSomething && keyguardManager.isKeyguardLocked
-            ) {
+        // Try to open the Uri in the non secure gallery
+        dismissKeyguardAndRun {
+            mutableListOf<String>().apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    add(MediaStore.ACTION_REVIEW)
+                }
+                add(Intent.ACTION_VIEW)
+            }.forEach {
                 val intent = Intent().apply {
-                    action = MediaStore.ACTION_REVIEW_SECURE
+                    action = it
                     data = uri
                     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                 }
                 runCatching {
                     startActivity(intent)
-                    return
-                }
-            }
-
-            // Try to open the Uri in the non secure gallery
-            dismissKeyguardAndRun {
-                mutableListOf<String>().apply {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        add(MediaStore.ACTION_REVIEW)
-                    }
-                    add(Intent.ACTION_VIEW)
-                }.forEach {
-                    val intent = Intent().apply {
-                        action = it
-                        data = uri
-                        flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    }
-                    runCatching {
-                        startActivity(intent)
-                        return@dismissKeyguardAndRun
-                    }
+                    return@dismissKeyguardAndRun
                 }
             }
         }

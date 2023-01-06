@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 object StorageUtils {
-    private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+    const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     private val STORAGE_DESTINATION = "${Environment.DIRECTORY_DCIM}/Camera"
 
     /**
