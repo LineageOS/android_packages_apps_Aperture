@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6ccb8f41_db02d6ea",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-06T09:51:35Z",
+      "side": 1,
+      "message": "Field requires API level 29 (current min is 26): android.provider.MediaStore.MediaColumns#OWNER_PACKAGE_NAME",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "40f2f9ccb31fc30d1cc73f5a79f9089aa7912084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
