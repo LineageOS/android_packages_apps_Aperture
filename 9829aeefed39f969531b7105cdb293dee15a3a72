@@ -46,6 +46,30 @@
       },
       "revId": "9829aeefed39f969531b7105cdb293dee15a3a72",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d4ab230_ac2a6a45",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-06T10:35:04Z",
+      "side": 1,
+      "message": "sad",
+      "parentUuid": "b35ac7b4_a40bafbe",
+      "range": {
+        "startLine": 16,
+        "startChar": 49,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "9829aeefed39f969531b7105cdb293dee15a3a72",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
