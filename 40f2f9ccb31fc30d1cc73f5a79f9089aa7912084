@@ -240,6 +240,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f09b8013_1b5d257c",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-06T11:32:14Z",
+      "side": 1,
+      "message": "We don\u0027t even use DCIM on pre-Q...",
+      "parentUuid": "35b059a3_1975a282",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "40f2f9ccb31fc30d1cc73f5a79f9089aa7912084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "871c67b3_9800a869",
