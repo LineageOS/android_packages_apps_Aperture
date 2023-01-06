@@ -265,6 +265,21 @@ open class CameraActivity : AppCompatActivity() {
             } ?: location
         }
 
+        @Suppress("OVERRIDE_DEPRECATION")
+        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+            // Required for Build.VERSION.SDK_INT < Build.VERSION_CODES.R
+        }
+
+        @Suppress("OVERRIDE_DEPRECATION")
+        override fun onProviderEnabled(provider: String) {
+            // Required for Build.VERSION.SDK_INT < Build.VERSION_CODES.R
+        }
+
+        @Suppress("OVERRIDE_DEPRECATION")
+        override fun onProviderDisabled(provider: String) {
+            // Required for Build.VERSION.SDK_INT < Build.VERSION_CODES.R
+        }
+
         @SuppressLint("MissingPermission")
         fun register() {
             // Reset cached location
