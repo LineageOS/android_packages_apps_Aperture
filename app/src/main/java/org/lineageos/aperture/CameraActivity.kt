@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.os.PowerManager
 import android.provider.MediaStore
 import android.util.Log
 import android.view.GestureDetector
@@ -139,6 +140,7 @@ open class CameraActivity : AppCompatActivity() {
     // System services
     private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
     private val locationManager by lazy { getSystemService(LocationManager::class.java) }
+    private val powerManager by lazy { getSystemService(PowerManager::class.java) }
 
     // Core camera utils
     private lateinit var cameraManager: CameraManager
@@ -642,6 +644,11 @@ open class CameraActivity : AppCompatActivity() {
     override fun onPause() {
         // Remove location and location updates
         locationListener.unregister()
+
+        // Stop the current recording session
+        if (!powerManager.isInteractive) {
+            recording?.stop()
+        }
 
         super.onPause()
     }
