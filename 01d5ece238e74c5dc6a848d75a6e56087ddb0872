@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d3d03252_caf8e100",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-01-06T10:16:10Z",
+      "side": 1,
+      "message": "if you\u0027re using the context each time fetch the content resolver making it a class is kind of useless, either an object or make the resolver and package name lazy?",
+      "revId": "01d5ece238e74c5dc6a848d75a6e56087ddb0872",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
