@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b7cf8aa5_4776acbc",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-06T10:26:13Z",
+      "side": 1,
+      "message": "You should be able to get rid of the unit block (unless I\u0027m missing something) and use\n \u003d context.contentResolver.query(...)?.use { ... }",
+      "range": {
+        "startLine": 16,
+        "startChar": 49,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "9829aeefed39f969531b7105cdb293dee15a3a72",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
