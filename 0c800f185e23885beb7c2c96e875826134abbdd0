@@ -22,6 +22,30 @@
       },
       "revId": "0c800f185e23885beb7c2c96e875826134abbdd0",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2404de00_75417636",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 10
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2023-01-06T13:35:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a09c997a_b7de7d5e",
+      "range": {
+        "startLine": 387,
+        "startChar": 0,
+        "endLine": 387,
+        "endChar": 102
+      },
+      "revId": "0c800f185e23885beb7c2c96e875826134abbdd0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
