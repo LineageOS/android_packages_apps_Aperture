@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "0bcb07f7_a63b8503",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-01-06T10:39:09Z",
+      "side": 1,
+      "message": "Maybe there\u0027s a way to get the \"path\" of the file, and filter based on \"aperture\"? \nno idea...",
+      "parentUuid": "bd2f2859_fd84b28e",
+      "range": {
+        "startLine": 31,
+        "startChar": 12,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "40f2f9ccb31fc30d1cc73f5a79f9089aa7912084",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "871c67b3_9800a869",
         "filename": "app/src/main/java/org/lineageos/aperture/utils/MediaStoreUtils.kt",
         "patchSetId": 5
