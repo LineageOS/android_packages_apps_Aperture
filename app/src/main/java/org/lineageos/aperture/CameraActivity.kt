@@ -9,6 +9,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.KeyguardManager
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
@@ -386,6 +387,9 @@ open class CameraActivity : AppCompatActivity() {
             && keyguardManager.isKeyguardLocked
         ) {
             setShowWhenLocked(true)
+
+            @SuppressLint("SourceLockedOrientationActivity")
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
 
         // Register shortcuts
