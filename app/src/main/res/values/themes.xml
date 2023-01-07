@@ -99,4 +99,10 @@
         <item name="android:textSize">36sp</item>
         <item name="android:drawablePadding">10dp</item>
     </style>
+
+    <!-- Location permissions dialog style -->
+    <style name="Theme.Aperture.Camera.LocationPermissionsDialog">
+        <item name="android:textStyle">normal</item>
+        <item name="android:typeface">normal</item>
+    </style>
 </resources>
