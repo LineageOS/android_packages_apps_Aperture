@@ -71,6 +71,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "da303114_fc07d512",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-07T13:37:20Z",
+      "side": 1,
+      "message": "Also keep in mind that mainPermissionsRequestLauncher will also open the location dialog if saveLocation \u003d\u003d null (aka we never asked the user for location permissions)",
+      "parentUuid": "5320d35b_205494a2",
+      "revId": "e66df6f1e5b0f6e3ee0050c096fa8f1e2ce78e81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad5235b5_545116c9",
