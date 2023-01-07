@@ -104,6 +104,24 @@
       "message": "Pedantic: Change GPS to location?",
       "revId": "e66df6f1e5b0f6e3ee0050c096fa8f1e2ce78e81",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b36ebad_ddd37b63",
+        "filename": "app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-07T13:38:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad5235b5_545116c9",
+      "revId": "e66df6f1e5b0f6e3ee0050c096fa8f1e2ce78e81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
