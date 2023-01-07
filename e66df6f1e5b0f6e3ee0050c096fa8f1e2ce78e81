@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f42cff50_1680f316",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-07T13:35:06Z",
+      "side": 1,
+      "message": "On the first launch:\n- The user has to grant main permissions to launch the app\n- After they\u0027re granted, the user will be prompted with this dialog: if they say yes permission request for location will start\n\nOn subsequent launches:\n- We only make sure we have the main permissions\n- If we detect that the user has revoked location permissions the app disables location tagging and it won\u0027t prompt the user again with the dialog\n\nSeems ok?",
+      "revId": "e66df6f1e5b0f6e3ee0050c096fa8f1e2ce78e81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f336007_f93eb78c",
