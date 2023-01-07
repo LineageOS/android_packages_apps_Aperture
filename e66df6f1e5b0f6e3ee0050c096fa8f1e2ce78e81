@@ -35,6 +35,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5320d35b_205494a2",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-07T13:36:17Z",
+      "side": 1,
+      "message": "On first launch it will ask for both (location ones after the user granted the main ones)",
+      "parentUuid": "5f336007_f93eb78c",
+      "revId": "e66df6f1e5b0f6e3ee0050c096fa8f1e2ce78e81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad5235b5_545116c9",
