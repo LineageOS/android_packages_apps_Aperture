@@ -70,6 +70,7 @@ import coil.size.Scale
 import com.google.android.material.button.MaterialButton
 import org.lineageos.aperture.ui.CapturePreviewLayout
 import org.lineageos.aperture.ui.CountDownView
+import org.lineageos.aperture.ui.LocationPermissionsDialog
 import org.lineageos.aperture.ui.GridView
 import org.lineageos.aperture.ui.HorizontalSlider
 import org.lineageos.aperture.ui.LensSelectorLayout
@@ -304,7 +305,7 @@ open class CameraActivity : AppCompatActivity() {
         }
     }
 
-    private val requestMultiplePermissions = registerForActivityResult(
+    private val mainPermissionsRequestLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) {
         if (it.isNotEmpty()) {
@@ -314,7 +315,28 @@ open class CameraActivity : AppCompatActivity() {
                 ).show()
                 finish()
             }
-            sharedPreferences.saveLocation = permissionsUtils.locationPermissionsGranted()
+
+            // This is a good time to ask the user for location permissions
+            if (sharedPreferences.saveLocation == null) {
+                locationPermissionsDialog.show()
+            }
+        }
+    }
+    private val locationPermissionsRequestLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) {
+        sharedPreferences.saveLocation = permissionsUtils.locationPermissionsGranted()
+    }
+
+    private val locationPermissionsDialog by lazy {
+        LocationPermissionsDialog(this).also {
+            it.onResultCallback = { result ->
+                if (result) {
+                    locationPermissionsRequestLauncher.launch(PermissionsUtils.locationPermissions)
+                } else {
+                    sharedPreferences.saveLocation = false
+                }
+            }
         }
     }
 
@@ -628,14 +650,21 @@ open class CameraActivity : AppCompatActivity() {
 
         // Bind viewfinder and preview blur view
         previewBlurView.previewView = viewFinder
+
+        // Request camera permissions
+        if (!permissionsUtils.mainPermissionsGranted()) {
+            mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
+        } else if (sharedPreferences.saveLocation == null) {
+            locationPermissionsDialog.show()
+        }
     }
 
     override fun onResume() {
         super.onResume()
 
-        // Request camera permissions
-        if (!permissionsUtils.mainPermissionsGranted() || sharedPreferences.saveLocation == null) {
-            requestMultiplePermissions.launch(PermissionsUtils.allPermissions)
+        // Re-request camera permissions in case the user revoked them on app runtime
+        if (!permissionsUtils.mainPermissionsGranted()) {
+            mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
         }
 
         // Set bright screen
