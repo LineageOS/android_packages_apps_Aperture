@@ -111,4 +111,10 @@
     <string name="shortcut_selfie">Take a selfie</string>
     <string name="shortcut_video">Take a video</string>
     <string name="shortcut_qr">Scan a barcode</string>
+
+    <!-- Location permissions dialog -->
+    <string name="location_permission_dialog_title">Add photo locations</string>
+    <string name="location_permission_dialog_description">Map your memories by including location data with each capture.</string>
+    <string name="location_permission_dialog_later">Later</string>
+    <string name="location_permission_dialog_turn_on">Turn on</string>
 </resources>
