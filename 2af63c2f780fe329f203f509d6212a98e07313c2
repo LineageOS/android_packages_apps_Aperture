@@ -16,6 +16,24 @@
       "message": "https://katb.in/xonoxamonid",
       "revId": "2af63c2f780fe329f203f509d6212a98e07313c2",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f57bc5f4_aaec88d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 13559
+      },
+      "writtenOn": "2023-01-07T06:45:24Z",
+      "side": 1,
+      "message": "just to add i can reproduce this crash on android 8 but was fine on android 12",
+      "parentUuid": "ef7190ea_f29cf0a8",
+      "revId": "2af63c2f780fe329f203f509d6212a98e07313c2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
