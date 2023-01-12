@@ -16,6 +16,23 @@
       "message": "Probabaly needs testing on landscape devices but works here",
       "revId": "2f6e5b2363daf87da7cc216b1d99de7016c3b188",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbee41e5_82cdb3a1",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-12T17:35:52Z",
+      "side": 1,
+      "message": "does it make sense for screenRotation to be lazy initialized?",
+      "revId": "2f6e5b2363daf87da7cc216b1d99de7016c3b188",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
