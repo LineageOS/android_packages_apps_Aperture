@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -29,6 +29,7 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.MotionEvent
+import android.view.OrientationEventListener
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.WindowManager
@@ -58,9 +59,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat.getInsetsController
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.children
 import androidx.core.view.doOnLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import coil.decode.VideoFrameDecoder
 import coil.load
@@ -88,6 +91,7 @@ import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.MediaType
 import org.lineageos.aperture.utils.PermissionsUtils
+import org.lineageos.aperture.utils.Rotation
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StabilizationMode
 import org.lineageos.aperture.utils.StorageUtils
@@ -96,6 +100,7 @@ import org.lineageos.aperture.utils.TimerMode
 import java.io.FileNotFoundException
 import java.util.concurrent.ExecutorService
 import kotlin.math.abs
+import kotlin.reflect.safeCast
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalZeroShutterLag
@@ -316,6 +321,23 @@ open class CameraActivity : AppCompatActivity() {
                 finish()
             }
             sharedPreferences.saveLocation = permissionsUtils.locationPermissionsGranted()
+        }
+    }
+
+    private val screenRotation = MutableLiveData<Rotation>()
+    private val orientationEventListener by lazy {
+        object : OrientationEventListener(this) {
+            override fun onOrientationChanged(orientation: Int) {
+                if (orientation == ORIENTATION_UNKNOWN) {
+                    return
+                }
+
+                val rotation = Rotation.fromDegreesInAperture(orientation)
+
+                if (screenRotation.value != rotation) {
+                    screenRotation.value = rotation
+                }
+            }
         }
     }
 
@@ -635,6 +657,12 @@ open class CameraActivity : AppCompatActivity() {
 
         // Bind viewfinder and preview blur view
         previewBlurView.previewView = viewFinder
+
+        // Prepare buttons for rotation
+        rotateButtons(Rotation.ROTATION_0, true)
+
+        // Observe screen rotation
+        screenRotation.observe(this) { rotateButtons(it) }
     }
 
     override fun onResume() {
@@ -657,6 +685,9 @@ open class CameraActivity : AppCompatActivity() {
         // Register location updates
         locationListener.register()
 
+        // Enable orientation listener
+        orientationEventListener.enable()
+
         // Re-bind the use cases
         bindCameraUseCases()
     }
@@ -664,6 +695,9 @@ open class CameraActivity : AppCompatActivity() {
     override fun onPause() {
         // Remove location and location updates
         locationListener.unregister()
+
+        // Disable orientation listener
+        orientationEventListener.disable()
 
         super.onPause()
     }
@@ -1695,6 +1729,46 @@ open class CameraActivity : AppCompatActivity() {
         countDownView.startCountDown(sharedPreferences.timerMode.seconds) {
             shutterButton.isEnabled = true
             runnable()
+        }
+    }
+
+    private fun rotateButtons(screenRotation: Rotation, init: Boolean = false) {
+        val compensationValue = screenRotation.compensationValue.toFloat()
+
+        val rotate: (view: View) -> Unit = {
+            if (init) {
+                it.rotation = compensationValue
+            } else {
+                it.smoothRotate(compensationValue)
+            }
+        }
+
+        // Rotate countdown
+        rotate(countDownView.remainingSecondsView)
+
+        // Rotate primary bar buttons
+        rotate(galleryButtonCardView)
+        rotate(shutterButton)
+        rotate(flipCameraButton)
+
+        // Rotate secondary bar buttons
+        rotate(proButton)
+        lensSelectorLayout.screenRotation = screenRotation
+        rotate(flashButton)
+
+        // Rotate sliders
+        exposureLevel.screenRotation = screenRotation
+        zoomLevel.screenRotation = screenRotation
+
+        // Rotate secondary top bar buttons
+        ConstraintLayout::class.safeCast(
+            secondaryTopBarLayout.getChildAt(0)
+        )?.let { layout ->
+            for (child in layout.children) {
+                Button::class.safeCast(child)?.let {
+                    rotate(it)
+                }
+            }
         }
     }
 

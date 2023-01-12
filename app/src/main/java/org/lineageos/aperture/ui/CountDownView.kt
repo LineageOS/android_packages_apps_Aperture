@@ -25,7 +25,7 @@ import org.lineageos.aperture.R
 class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
     context, attrs
 ) {
-    private val remainingSecondsView by lazy {
+    val remainingSecondsView by lazy {
         findViewById<TextView>(R.id.remainingSeconds)
     }
     private var remainingSeconds = 0
