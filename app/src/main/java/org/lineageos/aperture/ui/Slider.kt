@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -17,6 +17,7 @@ import android.util.AttributeSet
 import android.view.View
 import org.lineageos.aperture.R
 import org.lineageos.aperture.px
+import org.lineageos.aperture.utils.Rotation
 
 abstract class Slider @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -45,6 +46,12 @@ abstract class Slider @JvmOverloads constructor(
     var textFormatter: (value: Float) -> String = {
         "%.01f".format(it)
     }
+
+    var screenRotation = Rotation.ROTATION_0
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     var steps = 0
 
@@ -84,8 +91,13 @@ abstract class Slider @JvmOverloads constructor(
     abstract fun thumb(): Triple<Float, Float, Float>
 
     private fun drawThumb(canvas: Canvas) {
-        // Draw circle
         val thumb = thumb()
+
+        // Rotate canvas
+        canvas.save()
+        canvas.rotate(screenRotation.compensationValue.toFloat(), thumb.first, thumb.second)
+
+        // Draw circle
         canvas.drawCircle(thumb.first, thumb.second, thumb.third, thumbPaint)
 
         // Draw text
@@ -99,5 +111,8 @@ abstract class Slider @JvmOverloads constructor(
             thumb.second + (textBounds.height() / 2),
             thumbTextPaint
         )
+
+        // Restore original rotation
+        canvas.restore()
     }
 }
