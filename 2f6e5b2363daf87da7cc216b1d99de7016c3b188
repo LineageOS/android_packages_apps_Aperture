@@ -33,6 +33,46 @@
       "message": "does it make sense for screenRotation to be lazy initialized?",
       "revId": "2f6e5b2363daf87da7cc216b1d99de7016c3b188",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "01dd5997_ba1d9ab0",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-12T17:37:27Z",
+      "side": 1,
+      "message": "won\u0027t it fit on line above?",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 42
+      },
+      "revId": "2f6e5b2363daf87da7cc216b1d99de7016c3b188",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97083258_1162e7bd",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-12T17:37:27Z",
+      "side": 1,
+      "message": "`Button::class.safeCast(child)?.smoothRotate(rotation)`?",
+      "revId": "2f6e5b2363daf87da7cc216b1d99de7016c3b188",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
