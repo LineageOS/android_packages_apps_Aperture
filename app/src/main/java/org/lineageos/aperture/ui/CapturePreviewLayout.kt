@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -16,7 +16,9 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import org.lineageos.aperture.R
+import org.lineageos.aperture.smoothRotate
 import org.lineageos.aperture.utils.MediaType
+import org.lineageos.aperture.utils.Rotation
 
 /**
  * Image/video preview fragment
@@ -40,6 +42,12 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
      * URI is not null == confirmed
      */
     internal var onChoiceCallback: (uri: Uri?) -> Unit = {}
+
+    internal var screenRotation = Rotation.ROTATION_0
+        set(value) {
+            field = value
+            updateViewsRotation()
+        }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
@@ -93,5 +101,12 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
                 exoPlayer = null
             }
         }
+    }
+
+    private fun updateViewsRotation() {
+        val compensationValue = screenRotation.compensationValue.toFloat()
+
+        cancelButton.smoothRotate(compensationValue)
+        confirmButton.smoothRotate(compensationValue)
     }
 }
