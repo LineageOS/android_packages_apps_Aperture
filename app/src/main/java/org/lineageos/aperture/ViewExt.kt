@@ -1,15 +1,17 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.lineageos.aperture
 
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationSet
 import android.view.animation.TranslateAnimation
 import androidx.core.view.isVisible
+import org.lineageos.aperture.utils.Rotation
 
 internal fun View.setPadding(value: Int) {
     setPadding(value, value, value, value)
@@ -56,4 +58,11 @@ internal fun View.slideDown() {
             duration = 200
         })
     })
+}
+
+internal fun View.smoothRotate(rotation: Float) {
+    animate().cancel()
+    animate()
+        .rotationBy(Rotation.getDifference(this.rotation, rotation))
+        .interpolator = AccelerateDecelerateInterpolator()
 }

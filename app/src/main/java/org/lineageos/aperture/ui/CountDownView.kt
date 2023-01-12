@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2014 The Android Open Source Project
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -18,6 +18,8 @@ import androidx.annotation.IntRange
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import org.lineageos.aperture.R
+import org.lineageos.aperture.smoothRotate
+import org.lineageos.aperture.utils.Rotation
 
 /**
  * This class manages the looks of the countdown.
@@ -46,6 +48,12 @@ class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
      */
     private val isCountingDown: Boolean
         get() = remainingSeconds > 0
+
+    internal var screenRotation = Rotation.ROTATION_0
+        set(value) {
+            field = value
+            updateViewsRotation()
+        }
 
     /**
      * Responds to preview area change by centering the countdown UI in the new
@@ -115,6 +123,12 @@ class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
             return true
         }
         return false
+    }
+
+    private fun updateViewsRotation() {
+        val compensationValue = screenRotation.compensationValue.toFloat()
+
+        remainingSecondsView.smoothRotate(compensationValue)
     }
 
     companion object {
