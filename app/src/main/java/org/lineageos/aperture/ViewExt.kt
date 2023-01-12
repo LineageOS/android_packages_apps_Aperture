@@ -6,6 +6,7 @@
 package org.lineageos.aperture
 
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationSet
 import android.view.animation.TranslateAnimation
@@ -56,4 +57,8 @@ internal fun View.slideDown() {
             duration = 200
         })
     })
+}
+
+internal fun View.smoothRotate(rotation: Float) {
+    animate().rotation(rotation).interpolator = AccelerateDecelerateInterpolator()
 }
