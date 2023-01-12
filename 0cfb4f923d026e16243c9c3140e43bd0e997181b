@@ -22,6 +22,30 @@
       },
       "revId": "0cfb4f923d026e16243c9c3140e43bd0e997181b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "57a79eca_381cf85f",
+        "filename": "app/src/main/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 2195
+      },
+      "writtenOn": "2023-01-12T10:41:44Z",
+      "side": 1,
+      "message": "How about \"Add photo and video locations\"",
+      "parentUuid": "720bfd69_1436e6b9",
+      "range": {
+        "startLine": 116,
+        "startChar": 56,
+        "endLine": 116,
+        "endChar": 61
+      },
+      "revId": "0cfb4f923d026e16243c9c3140e43bd0e997181b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
