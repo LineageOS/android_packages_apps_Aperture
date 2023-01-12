@@ -35,6 +35,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8bfa9469_6298d018",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-12T17:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbee41e5_82cdb3a1",
+      "revId": "2f6e5b2363daf87da7cc216b1d99de7016c3b188",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "01dd5997_ba1d9ab0",
@@ -58,6 +76,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a1f3fd03_3ad2c4bf",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-12T17:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01dd5997_ba1d9ab0",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 332,
+        "endChar": 42
+      },
+      "revId": "2f6e5b2363daf87da7cc216b1d99de7016c3b188",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97083258_1162e7bd",
@@ -71,6 +113,24 @@
       "writtenOn": "2023-01-12T17:37:27Z",
       "side": 1,
       "message": "`Button::class.safeCast(child)?.smoothRotate(rotation)`?",
+      "revId": "2f6e5b2363daf87da7cc216b1d99de7016c3b188",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62b14e05_d7f92e4d",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-12T17:42:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97083258_1162e7bd",
       "revId": "2f6e5b2363daf87da7cc216b1d99de7016c3b188",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
