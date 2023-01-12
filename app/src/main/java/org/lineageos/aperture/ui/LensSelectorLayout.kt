@@ -16,7 +16,9 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.setMargins
 import org.lineageos.aperture.R
 import org.lineageos.aperture.px
+import org.lineageos.aperture.smoothRotate
 import org.lineageos.aperture.utils.Camera
+import org.lineageos.aperture.utils.Rotation
 import java.util.Locale
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
@@ -37,6 +39,12 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
 
     var onCameraChangeCallback: (camera: Camera) -> Unit = {}
     var onZoomRatioChangeCallback: (zoomRatio: Float) -> Unit = {}
+
+    var screenRotation = Rotation.ROTATION_0
+        set(value) {
+            field = value
+            updateButtonsRotation()
+        }
 
     fun setCamera(activeCamera: Camera, availableCameras: Collection<Camera>) {
         this.activeCamera = activeCamera
@@ -132,6 +140,15 @@ class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutC
             "${formattedZoomRatio}×"
         } else {
             formattedZoomRatio
+        }
+        button.rotation = screenRotation.compensationValue.toFloat()
+    }
+
+    private fun updateButtonsRotation() {
+        val rotation = screenRotation.compensationValue.toFloat()
+
+        for (button in buttonToApproximateZoomRatio.keys) {
+            button.smoothRotate(rotation)
         }
     }
 

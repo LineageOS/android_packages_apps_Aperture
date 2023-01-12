@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -29,6 +29,7 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.MotionEvent
+import android.view.OrientationEventListener
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.WindowManager
@@ -58,9 +59,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat.getInsetsController
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.children
 import androidx.core.view.doOnLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import coil.decode.VideoFrameDecoder
 import coil.load
@@ -88,6 +91,7 @@ import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.MediaType
 import org.lineageos.aperture.utils.PermissionsUtils
+import org.lineageos.aperture.utils.Rotation
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StabilizationMode
 import org.lineageos.aperture.utils.StorageUtils
@@ -96,6 +100,7 @@ import org.lineageos.aperture.utils.TimerMode
 import java.io.FileNotFoundException
 import java.util.concurrent.ExecutorService
 import kotlin.math.abs
+import kotlin.reflect.safeCast
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalZeroShutterLag
@@ -316,6 +321,19 @@ open class CameraActivity : AppCompatActivity() {
                 finish()
             }
             sharedPreferences.saveLocation = permissionsUtils.locationPermissionsGranted()
+        }
+    }
+
+    private val screenRotation = MutableLiveData<Rotation>()
+    private val orientationEventListener by lazy {
+        object : OrientationEventListener(this) {
+            override fun onOrientationChanged(orientation: Int) {
+                val rotation = Rotation.fromDegreesInAperture(orientation) ?: Rotation.ROTATION_0
+
+                if (screenRotation.value != rotation) {
+                    screenRotation.value = rotation
+                }
+            }
         }
     }
 
@@ -635,6 +653,30 @@ open class CameraActivity : AppCompatActivity() {
 
         // Bind viewfinder and preview blur view
         previewBlurView.previewView = viewFinder
+
+        // Observe screen rotation
+        screenRotation.observe(this) {
+            val rotation = it.compensationValue.toFloat()
+
+            // Rotate primary bar buttons
+            galleryButton.smoothRotate(rotation)
+            shutterButton.smoothRotate(rotation)
+            flipCameraButton.smoothRotate(rotation)
+
+            // Rotate secondary bar buttons
+            proButton.smoothRotate(rotation)
+            lensSelectorLayout.screenRotation = it
+            flashButton.smoothRotate(rotation)
+
+            // Rotate secondary top bar buttons
+            ConstraintLayout::class.safeCast(
+                secondaryTopBarLayout.getChildAt(0)
+            )?.let { layout ->
+                for (child in layout.children) {
+                    Button::class.safeCast(child)?.smoothRotate(rotation)
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -657,6 +699,9 @@ open class CameraActivity : AppCompatActivity() {
         // Register location updates
         locationListener.register()
 
+        // Enable orientation listener
+        orientationEventListener.enable()
+
         // Re-bind the use cases
         bindCameraUseCases()
     }
@@ -664,6 +709,9 @@ open class CameraActivity : AppCompatActivity() {
     override fun onPause() {
         // Remove location and location updates
         locationListener.unregister()
+
+        // Disable orientation listener
+        orientationEventListener.disable()
 
         super.onPause()
     }
