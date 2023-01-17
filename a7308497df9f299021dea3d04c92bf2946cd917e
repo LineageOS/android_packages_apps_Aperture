@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b10c6db_83c5f304",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/Rotation.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-01-17T19:30:22Z",
+      "side": 1,
+      "message": "Just making sure, this modulo operator preserves the sign.\nI think that\u0027s expected, but I\u0027ve been bitten before expecting it to normalize the negative value to the corrispettive positive one.",
+      "revId": "a7308497df9f299021dea3d04c92bf2946cd917e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
