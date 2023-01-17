@@ -112,6 +112,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba4454d5_31b60d3a",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/AssistantUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-01-17T17:43:45Z",
+      "side": 1,
+      "message": "It\u0027s fine to keep them\nack",
+      "parentUuid": "095771ea_8de9b92e",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 86
+      },
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "321c92ad_371d5abf",
@@ -195,6 +219,30 @@
       "side": 1,
       "message": "Forwardported from Snap. I think there were race issues and the logic more complex.\n\nWill set it to 0 if that\u0027s better?",
       "parentUuid": "1b3a3981_ca4e1792",
+      "range": {
+        "startLine": 55,
+        "startChar": 63,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "34d0b52d_9b7a7044",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/AssistantUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-01-17T17:43:45Z",
+      "side": 1,
+      "message": "Yes, so if by mistake we try to read the value without checking if it has been set first we default to no timeout",
+      "parentUuid": "8cb9717d_5d2c66e4",
       "range": {
         "startLine": 55,
         "startChar": 63,
