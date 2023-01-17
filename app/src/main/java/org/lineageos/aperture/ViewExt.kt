@@ -61,8 +61,9 @@ internal fun View.slideDown() {
 }
 
 internal fun View.smoothRotate(rotation: Float) {
-    animate().cancel()
-    animate()
-        .rotationBy(Rotation.getDifference(this.rotation, rotation))
-        .interpolator = AccelerateDecelerateInterpolator()
+    with(animate()) {
+        cancel()
+        rotationBy(Rotation.getDifference(this@smoothRotate.rotation, rotation))
+            .interpolator = AccelerateDecelerateInterpolator()
+    }
 }

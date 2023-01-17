@@ -5,8 +5,6 @@
 
 package org.lineageos.aperture.utils
 
-import kotlin.math.abs
-
 /**
  * Rotation utils.
  *
@@ -50,13 +48,20 @@ enum class Rotation(val offset: Int) {
         }
 
         /**
+         * Returns an angle in the range [-360°, 360°] in the same quadrant.
+         */
+        fun normalizeAngle(angle: Float) = angle % 360
+
+        /**
          * Get the fastest angle in degrees to apply to the current rotation to reach this rotation.
          */
         fun getDifference(currentRotation: Float, targetRotation: Float): Float {
-            val diff = (targetRotation + (360 * (currentRotation / 360).toInt())) - currentRotation
+            val diff = normalizeAngle(targetRotation) - normalizeAngle(currentRotation)
 
-            return if (abs(diff) > 180) {
+            return if (diff > 180) {
                 diff - 360
+            } else if (diff < -180) {
+                diff + 360
             } else {
                 diff
             }
