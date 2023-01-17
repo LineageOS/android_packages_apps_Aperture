@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "041edfad_b239f05a",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 19282
+      },
+      "writtenOn": "2023-01-17T17:26:45Z",
+      "side": 1,
+      "message": "Yes, it should be \u0026\u0026, thanks!",
+      "parentUuid": "f34adefd_cc1f1553",
+      "range": {
+        "startLine": 469,
+        "startChar": 0,
+        "endLine": 469,
+        "endChar": 100
+      },
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b92126e8_c630b40a",
         "filename": "app/src/main/java/org/lineageos/aperture/utils/AssistantUtils.kt",
         "patchSetId": 1
@@ -54,6 +78,30 @@
       "writtenOn": "2023-01-17T16:16:49Z",
       "side": 1,
       "message": "This intent isn\u0027t defined anywhere in MediaStore, I don\u0027t think anyone uses it?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 86
+      },
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "095771ea_8de9b92e",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/AssistantUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 19282
+      },
+      "writtenOn": "2023-01-17T17:26:45Z",
+      "side": 1,
+      "message": "They aren\u0027t but stackoverflow has it mentioned and apps out in the wild make use of it, so thought maybe it makes sense to include them as well.\n\nWill remove it if wanted :)",
+      "parentUuid": "b92126e8_c630b40a",
       "range": {
         "startLine": 11,
         "startChar": 0,
@@ -123,6 +171,30 @@
       "writtenOn": "2023-01-17T16:16:49Z",
       "side": 1,
       "message": "any reason for this default?",
+      "range": {
+        "startLine": 55,
+        "startChar": 63,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8cb9717d_5d2c66e4",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/AssistantUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 19282
+      },
+      "writtenOn": "2023-01-17T17:26:45Z",
+      "side": 1,
+      "message": "Forwardported from Snap. I think there were race issues and the logic more complex.\n\nWill set it to 0 if that\u0027s better?",
+      "parentUuid": "1b3a3981_ca4e1792",
       "range": {
         "startLine": 55,
         "startChar": 63,
