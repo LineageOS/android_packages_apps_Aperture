@@ -81,6 +81,7 @@ import org.lineageos.aperture.ui.LensSelectorLayout
 import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.PreviewBlurView
 import org.lineageos.aperture.ui.VerticalSlider
+import org.lineageos.aperture.utils.AssistantIntent
 import org.lineageos.aperture.utils.Camera
 import org.lineageos.aperture.utils.CameraFacing
 import org.lineageos.aperture.utils.CameraManager
@@ -418,6 +419,10 @@ open class CameraActivity : AppCompatActivity() {
             cameraMode = CameraMode.QR
         },
     )
+    private val assistantIntent
+        get() = AssistantIntent.fromIntent(intent)
+    private val launchedViaVoiceIntent
+        get() = isVoiceInteractionRoot && intent.hasCategory(Intent.CATEGORY_VOICE)
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -452,6 +457,15 @@ open class CameraActivity : AppCompatActivity() {
         // Handle intent
         intent.action?.let {
             intentActions[it]?.invoke()
+        }
+
+        // Handle assistant intent
+        assistantIntent?.useFrontCamera?.let {
+            initialCameraFacing = if (it) {
+                CameraFacing.FRONT
+            } else {
+                CameraFacing.BACK
+            }
         }
 
         if (cameraManager.internalCamerasSupportingVideoRecoding.isEmpty()) {
@@ -567,6 +581,13 @@ open class CameraActivity : AppCompatActivity() {
 
                     // Hide preview blur
                     previewBlurView.isVisible = false
+
+                    // Issue capture if requested via assistant
+                    if ((launchedViaVoiceIntent || assistantIntent?.cameraOpenOnly != null)
+                        && assistantIntent?.cameraOpenOnly != true
+                    ) {
+                        shutterButton.performClick()
+                    }
                 }
                 else -> {}
             }
@@ -1742,7 +1763,11 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun startTimerAndRun(runnable: () -> Unit) {
-        if (sharedPreferences.timerMode == TimerMode.OFF || !canRestartCamera()) {
+        // Allow forcing timer if requested by the assistant
+        val timerModeSeconds =
+            assistantIntent?.timerDurationSeconds ?: sharedPreferences.timerMode.seconds
+
+        if (timerModeSeconds <= 0 || !canRestartCamera()) {
             runnable()
             return
         }
@@ -1752,7 +1777,7 @@ open class CameraActivity : AppCompatActivity() {
         countDownView.onPreviewAreaChanged(Rect().apply {
             viewFinder.getGlobalVisibleRect(this)
         })
-        countDownView.startCountDown(sharedPreferences.timerMode.seconds) {
+        countDownView.startCountDown(timerModeSeconds) {
             shutterButton.isEnabled = true
             runnable()
         }
