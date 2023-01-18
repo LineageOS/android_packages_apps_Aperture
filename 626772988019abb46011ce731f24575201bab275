@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ce7c9eb5_4d041037",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-01-18T15:37:52Z",
+      "side": 1,
+      "message": "So it\u0027s a single capture intent? If yes we should set singleCaptureMode to true",
+      "parentUuid": "05a4f73b_94d5fcfa",
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "f34adefd_cc1f1553",
         "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
         "patchSetId": 1
