@@ -36,6 +36,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59716309_426e9296",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-01-18T15:39:24Z",
+      "side": 1,
+      "message": "Probably, but it\u0027s not written anywhere what to do .\nI\u0027d safely go ahead with that change and if we figure out the rest we can always add.",
+      "parentUuid": "ce7c9eb5_4d041037",
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f34adefd_cc1f1553",
