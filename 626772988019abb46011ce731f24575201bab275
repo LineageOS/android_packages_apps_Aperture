@@ -65,6 +65,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a59dc0ef_4568926f",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 19282
+      },
+      "writtenOn": "2023-01-18T15:06:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "041edfad_b239f05a",
+      "range": {
+        "startLine": 469,
+        "startChar": 0,
+        "endLine": 469,
+        "endChar": 100
+      },
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b92126e8_c630b40a",
@@ -159,6 +183,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9db91bc7_1768092e",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/AssistantUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 19282
+      },
+      "writtenOn": "2023-01-18T15:06:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "321c92ad_371d5abf",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 86
+      },
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d4207a3f_eca58bdd",
@@ -172,6 +220,30 @@
       "writtenOn": "2023-01-17T16:16:49Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 98
+      },
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3679be3_2d88fe1d",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/AssistantUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 19282
+      },
+      "writtenOn": "2023-01-18T15:06:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d4207a3f_eca58bdd",
       "range": {
         "startLine": 17,
         "startChar": 0,
@@ -243,6 +315,30 @@
       "side": 1,
       "message": "Yes, so if by mistake we try to read the value without checking if it has been set first we default to no timeout",
       "parentUuid": "8cb9717d_5d2c66e4",
+      "range": {
+        "startLine": 55,
+        "startChar": 63,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "626772988019abb46011ce731f24575201bab275",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2a28f4ac_6b117e8d",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/AssistantUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 19282
+      },
+      "writtenOn": "2023-01-18T15:06:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34d0b52d_9b7a7044",
       "range": {
         "startLine": 55,
         "startChar": 63,
