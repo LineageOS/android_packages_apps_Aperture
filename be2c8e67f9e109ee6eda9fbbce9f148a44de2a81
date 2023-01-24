@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0605c0d5_3ed34ad6",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-01-24T21:54:36Z",
+      "side": 1,
+      "message": "There\u0027s no point in assigning this to a val anymore",
+      "revId": "be2c8e67f9e109ee6eda9fbbce9f148a44de2a81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7a5ae4e2_a6c02103",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-01-24T21:54:36Z",
+      "side": 1,
+      "message": "Should be: `secureMediaUris.isNotEmpty() \u0026\u0026 keyguardManager.isKeyguardLocked`\n\nSecureCameraActivity *does* end up being used when the device is unlocked sometimes, such as when returning from launching the gallery when no photos have been taken. So `isSecureCamera` isn\u0027t what we want here.\n\nBased on the clearing of `secureMediaUris` in other places, the keyguard check might not be needed here, either, but it doesn\u0027t hurt.",
+      "revId": "be2c8e67f9e109ee6eda9fbbce9f148a44de2a81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "016c34c3_207fd60c",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1899,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-01-24T21:54:36Z",
+      "side": 1,
+      "message": "Move these up maybe, more relevant than the extras",
+      "revId": "be2c8e67f9e109ee6eda9fbbce9f148a44de2a81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
