@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e71db71a_a745cd55",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-01-24T22:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0605c0d5_3ed34ad6",
+      "revId": "be2c8e67f9e109ee6eda9fbbce9f148a44de2a81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7a5ae4e2_a6c02103",
@@ -35,6 +53,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c963a4ed_c7468748",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-01-24T22:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a5ae4e2_a6c02103",
+      "revId": "be2c8e67f9e109ee6eda9fbbce9f148a44de2a81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "016c34c3_207fd60c",
@@ -48,6 +84,24 @@
       "writtenOn": "2023-01-24T21:54:36Z",
       "side": 1,
       "message": "Move these up maybe, more relevant than the extras",
+      "revId": "be2c8e67f9e109ee6eda9fbbce9f148a44de2a81",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1525c679_7f10f8de",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 1899,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-01-24T22:08:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "016c34c3_207fd60c",
       "revId": "be2c8e67f9e109ee6eda9fbbce9f148a44de2a81",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
