@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ff9c6d5_11dd6f81",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-01-24T22:13:50Z",
+      "side": 1,
+      "message": "Thanks in advance for review.\n\nApart from that, if this is wanted for merge, I also have some questions:\n1. Should the list of tracked photos be cleared in more circumstances?\n2. Should we monitor for deleted photos and remove them from tracked items? What happens if we don\u0027t? All the gallery apps I use require the phone to be unlocked to delete photos, anyway...",
+      "revId": "9e2b9ae4f4494758d813d5848f84f677b21acb9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
