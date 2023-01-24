@@ -7,7 +7,10 @@ package org.lineageos.aperture
 
 import android.animation.ValueAnimator
 import android.app.KeyguardManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
+import android.content.ClipData
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -231,6 +234,9 @@ open class CameraActivity : AppCompatActivity() {
             field = value
             updateGalleryButton()
         }
+    private val isSecureCamera: Boolean
+        get() = this is SecureCameraActivity
+    private val secureMediaUris = mutableListOf<Uri>()
 
     private var zoomGestureMutex = Mutex()
 
@@ -550,6 +556,8 @@ open class CameraActivity : AppCompatActivity() {
     @Suppress("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        enforceSecureCameraState()
 
         hideStatusBars()
 
@@ -1141,6 +1149,8 @@ open class CameraActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        enforceSecureCameraState()
+
         // Set bright screen
         setBrightScreen(sharedPreferences.brightScreen)
 
@@ -1387,6 +1397,7 @@ open class CameraActivity : AppCompatActivity() {
                     shutterButton.isEnabled = true
                     if (!singleCaptureMode) {
                         sharedPreferences.lastSavedUri = output.savedUri
+                        maybeRememberSecureMediaUri(output.savedUri)
                         tookSomething = true
                         output.savedUri?.let {
                             BroadcastUtils.broadcastNewPicture(this@CameraActivity, it)
@@ -1466,6 +1477,7 @@ open class CameraActivity : AppCompatActivity() {
                             Log.d(LOG_TAG, "Video capture succeeded: ${it.outputResults.outputUri}")
                             if (!singleCaptureMode) {
                                 sharedPreferences.lastSavedUri = it.outputResults.outputUri
+                                maybeRememberSecureMediaUri(it.outputResults.outputUri)
                                 tookSomething = true
                                 BroadcastUtils.broadcastNewVideo(this, it.outputResults.outputUri)
                             } else {
@@ -2174,6 +2186,20 @@ open class CameraActivity : AppCompatActivity() {
         levelerView.isVisible = enabled
     }
 
+    /**
+     * If keyguard is not locked, remove any URIs that were stored while in the secure camera state.
+     * Otherwise, remove any URIs that no longer exist.
+     */
+    private fun updateSecureMediaUris(keyguardLocked: Boolean) {
+        if (!keyguardLocked) {
+            secureMediaUris.clear()
+        } else {
+            secureMediaUris.removeIf {
+                !MediaStoreUtils.fileExists(this, it)
+            }
+        }
+    }
+
     private fun updateGalleryButton() {
         runOnUiThread {
             galleryButtonIconImageView.setImageResource(R.drawable.ic_image)
@@ -2181,11 +2207,12 @@ open class CameraActivity : AppCompatActivity() {
 
             galleryButtonPreviewImageView.isVisible = false
 
-            val uri = sharedPreferences.lastSavedUri?.takeIf {
-                MediaStoreUtils.fileExists(this, it)
-            }
             val keyguardLocked = keyguardManager.isKeyguardLocked
-            if (uri != null && (!keyguardLocked || tookSomething)) {
+            updateSecureMediaUris(keyguardLocked)
+            val uri = secureMediaUris.lastOrNull() ?: sharedPreferences.lastSavedUri?.takeIf {
+                !keyguardLocked && MediaStoreUtils.fileExists(this, it)
+            }
+            if (uri != null) {
                 galleryButtonPreviewImageView.load(uri) {
                     decoderFactory(VideoFrameDecoder.Factory())
                     crossfade(true)
@@ -2241,6 +2268,42 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
+        // secureMediaUris will be cleared if keyguard is unlocked or none of the items were found.
+        updateSecureMediaUris(keyguardManager.isKeyguardLocked)
+
+        // This ensure we took at least one photo/video in the secure use-case
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && secureMediaUris.isNotEmpty()) {
+            val intent = Intent().apply {
+                val secureMediaUrisByMostRecent = secureMediaUris.reversed()
+                action = MediaStore.ACTION_REVIEW_SECURE
+                data = secureMediaUrisByMostRecent[0]
+                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                if (USE_CLIP_DATA_FOR_SECURE_REVIEW) {
+                    if (secureMediaUris.size > 1) {
+                        val newClipData = ClipData.newUri(contentResolver, null,
+                            secureMediaUrisByMostRecent[1]
+                        )
+                        for (nextUri in secureMediaUrisByMostRecent.stream().skip(2)) {
+                            newClipData.addItem(contentResolver, ClipData.Item(nextUri))
+                        }
+                        clipData = newClipData
+                    }
+                }
+                if (USE_DE_FACTO_EXTRAS_FOR_REVIEW) {
+                    val secureIds = secureMediaUrisByMostRecent.stream().mapToLong {
+                        ContentUris.parseId(it)
+                    }.toArray()
+                    putExtra(EXTRA_SECURE_MODE, true)
+                    putExtra(EXTRA_SECURE_IDS, secureIds)
+                    putReturnToCameraPendingIntent()
+                }
+            }
+            runCatching {
+                startActivity(intent)
+                return
+            }
+        }
+
         sharedPreferences.lastSavedUri.let { uri ->
             // If the Uri is null, attempt to launch non secure-gallery
             if (uri == null) {
@@ -2257,21 +2320,6 @@ open class CameraActivity : AppCompatActivity() {
                 return
             }
 
-            // This ensure we took at least one photo/video in the secure use-case
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-                tookSomething && keyguardManager.isKeyguardLocked
-            ) {
-                val intent = Intent().apply {
-                    action = MediaStore.ACTION_REVIEW_SECURE
-                    data = uri
-                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                }
-                runCatching {
-                    startActivity(intent)
-                    return
-                }
-            }
-
             // Try to open the Uri in the non secure gallery
             dismissKeyguardAndRun {
                 mutableListOf<String>().apply {
@@ -2284,6 +2332,9 @@ open class CameraActivity : AppCompatActivity() {
                         action = it
                         data = uri
                         flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        if (USE_DE_FACTO_EXTRAS_FOR_REVIEW && it == MediaStore.ACTION_REVIEW) {
+                            putReturnToCameraPendingIntent()
+                        }
                     }
                     runCatching {
                         startActivity(intent)
@@ -2292,6 +2343,48 @@ open class CameraActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    /**
+     * If the device is unlocked, forget any Uris that would be sent to a gallery app.
+     * If the device is locked and secured and this is not the Secure Camera, throw an exception.
+     */
+    private fun enforceSecureCameraState() {
+        if (!keyguardManager.isKeyguardLocked) {
+            secureMediaUris.clear()
+        } else if (keyguardManager.isKeyguardSecure && !isSecureCamera) {
+            throw SecurityException("Tried to use non-secure CameraActivity while locked!")
+        }
+    }
+
+    /**
+     * Keep track of media items captured while in a secure lockscreen state so that they
+     * can be passed to the gallery for viewing without unlocking the device. However, if the
+     * keyguard is no longer locked, clear any existing URIs, and do not add this one.
+     */
+    private fun maybeRememberSecureMediaUri(item: Uri?) {
+        if (!keyguardManager.isKeyguardLocked) {
+            secureMediaUris.clear()
+        } else if (isSecureCamera && item != null) {
+            secureMediaUris.add(item)
+        }
+    }
+
+    /** Provide a PendingIntent for a gallery app to return to the camera */
+    private fun Intent.putReturnToCameraPendingIntent() {
+        val isSecure = isSecureCamera
+        val intentToReturn = Intent(
+            applicationContext,
+            if (isSecure) SecureCameraActivity::class.java else CameraActivity::class.java
+        )
+        val pendingIntent = PendingIntent.getActivity(
+            applicationContext,
+            0,
+            intentToReturn,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+        val camIntentKey = if (isSecure) EXTRA_INTENT_CAM_SECURE else EXTRA_INTENT_CAM
+        putExtra(camIntentKey, pendingIntent)
     }
 
     private fun openCapturePreview(uri: Uri, mediaType: MediaType) {
@@ -2529,6 +2622,19 @@ open class CameraActivity : AppCompatActivity() {
         // app expects a photo to be returned inline, rather than providing an output URI.)
         // https://developer.android.com/guide/components/activities/parcelables-and-bundles#sdbp
         private const val SINGLE_CAPTURE_INLINE_MAX_SIDE_LEN_PIXELS = 256
+
+        // The documentation for android.provider.action.REVIEW_SECURE indicates that ClipData
+        // is used for secondary media items; however, it doesn't appear that anything in the
+        // real world actually does this, so let's not do it either, for now.
+        private const val USE_CLIP_DATA_FOR_SECURE_REVIEW = true
+
+        // De facto extras to specify media items for secure review and to specify
+        // a PendingIntent to return to the camera.
+        private const val USE_DE_FACTO_EXTRAS_FOR_REVIEW = true
+        private const val EXTRA_SECURE_MODE = "com.google.android.apps.photos.api.secure_mode"
+        private const val EXTRA_SECURE_IDS = "com.google.android.apps.photos.api.secure_mode_ids"
+        private const val EXTRA_INTENT_CAM = "CAMERA_RELAUNCH_INTENT_EXTRA"
+        private const val EXTRA_INTENT_CAM_SECURE = "CAMERA_RELAUNCH_SECURE_INTENT_EXTRA"
 
         private val EXPOSURE_LEVEL_FORMATTER = DecimalFormat("+#;-#")
     }
