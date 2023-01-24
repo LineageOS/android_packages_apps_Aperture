@@ -8,6 +8,8 @@ package org.lineageos.aperture
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.KeyguardManager
+import android.content.ClipData
+import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Color
@@ -181,6 +183,9 @@ open class CameraActivity : AppCompatActivity() {
             field = value
             updateGalleryButton()
         }
+    private val isSecureCamera: Boolean
+        get() = this is SecureCameraActivity
+    private val secureCapturedUris = mutableListOf<Uri>()
 
     // Video
     private val supportedVideoQualities: List<Quality>
@@ -852,7 +857,11 @@ open class CameraActivity : AppCompatActivity() {
                     cameraState = CameraState.IDLE
                     shutterButton.isEnabled = true
                     if (!singleCaptureMode) {
-                        sharedPreferences.lastSavedUri = output.savedUri
+                        val uri = output.savedUri
+                        sharedPreferences.lastSavedUri = uri
+                        if (isSecureCamera && uri != null) {
+                            secureCapturedUris.add(uri)
+                        }
                         tookSomething = true
                     } else {
                         output.savedUri?.let {
@@ -932,6 +941,9 @@ open class CameraActivity : AppCompatActivity() {
                             Log.d(LOG_TAG, "Video capture succeeded: ${it.outputResults.outputUri}")
                             if (!singleCaptureMode) {
                                 sharedPreferences.lastSavedUri = it.outputResults.outputUri
+                                if (isSecureCamera) {
+                                    secureCapturedUris.add(it.outputResults.outputUri)
+                                }
                                 tookSomething = true
                             } else {
                                 openCapturePreview(it.outputResults.outputUri, MediaType.VIDEO)
@@ -1574,9 +1586,13 @@ open class CameraActivity : AppCompatActivity() {
 
     private fun updateGalleryButton() {
         runOnUiThread {
-            val uri = sharedPreferences.lastSavedUri
+            val uri = if (isSecureCamera) {
+                secureCapturedUris.lastOrNull()
+            } else {
+                sharedPreferences.lastSavedUri
+            }
             val keyguardLocked = keyguardManager.isKeyguardLocked
-            if (uri != null && (!keyguardLocked || tookSomething)) {
+            if (uri != null) {
                 galleryButton.load(uri) {
                     decoderFactory(VideoFrameDecoder.Factory())
                     crossfade(true)
@@ -1647,12 +1663,31 @@ open class CameraActivity : AppCompatActivity() {
 
             // This ensure we took at least one photo/video in the secure use-case
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-                tookSomething && keyguardManager.isKeyguardLocked
+                isSecureCamera && secureCapturedUris.isNotEmpty()
             ) {
                 val intent = Intent().apply {
+                    val capturedUrisByMostRecent = secureCapturedUris.reversed()
                     action = MediaStore.ACTION_REVIEW_SECURE
-                    data = uri
+                    data = capturedUrisByMostRecent[0]
                     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    if (USE_CLIP_DATA_FOR_SECURE_REVIEW) {
+                        if (secureCapturedUris.size > 1) {
+                            val newClipData = ClipData.newUri(contentResolver, null,
+                                capturedUrisByMostRecent[1]
+                            )
+                            for (nextUri in capturedUrisByMostRecent.stream().skip(2)) {
+                                newClipData.addItem(contentResolver, ClipData.Item(nextUri))
+                            }
+                            clipData = newClipData
+                        }
+                    }
+                    if (USE_DE_FACTO_EXTRAS_FOR_SECURE_REVIEW) {
+                        val secureIds = capturedUrisByMostRecent.stream().mapToLong {
+                            ContentUris.parseId(it)
+                        }.toArray()
+                        putExtra(EXTRA_SECURE_MODE, true)
+                        putExtra(EXTRA_SECURE_IDS, secureIds)
+                    }
                 }
                 runCatching {
                     startActivity(intent)
@@ -1800,6 +1835,15 @@ open class CameraActivity : AppCompatActivity() {
         private const val MSG_HIDE_FOCUS_RING = 1
         private const val MSG_HIDE_EXPOSURE_SLIDER = 2
         private const val MSG_ON_PINCH_TO_ZOOM = 3
+
+        // De facto extras to specify media items for secure review. Does not adhere to
+        // the REVIEW_SECURE documentation, which indicates ClipData is used for secondary
+        // media items, but does anything actually support that?
+        private const val EXTRA_SECURE_MODE = "com.google.android.apps.photos.api.secure_mode"
+        private const val EXTRA_SECURE_IDS = "com.google.android.apps.photos.api.secure_mode_ids"
+
+        private const val USE_CLIP_DATA_FOR_SECURE_REVIEW = false
+        private const val USE_DE_FACTO_EXTRAS_FOR_SECURE_REVIEW = true
 
         private val EXPOSURE_LEVEL_FORMATTER = DecimalFormat("+#;-#")
     }
