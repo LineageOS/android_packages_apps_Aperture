@@ -18,6 +18,9 @@
     <uses-permission
         android:name="android.permission.CAMERA"
         tools:ignore="PermissionImpliesUnsupportedChromeOsHardware" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -127,6 +130,7 @@
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
             android:excludeFromRecents="true"
             android:exported="true"
+            android:launchMode="singleTask"
             android:taskAffinity=".SecureCameraActivity"
             android:theme="@style/Theme.Aperture.Camera"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">

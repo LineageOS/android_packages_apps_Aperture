@@ -36,6 +36,7 @@ class PermissionsUtils(private val context: Context) {
             Manifest.permission.RECORD_AUDIO,
         ).apply {
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+                add(Manifest.permission.READ_EXTERNAL_STORAGE)
                 add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             }
         }.toTypedArray()

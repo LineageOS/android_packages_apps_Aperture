@@ -5,10 +5,19 @@
 
 package org.lineageos.aperture.camera
 
+import android.app.Application
+import android.net.Uri
 import androidx.camera.video.Quality
 import androidx.camera.video.Recording
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.stateIn
+import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.CameraState
 import org.lineageos.aperture.models.FlashMode
@@ -17,12 +26,13 @@ import org.lineageos.aperture.models.GridMode
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.models.TimerMode
 import org.lineageos.aperture.models.VideoDynamicRange
+import org.lineageos.aperture.repository.MediaRepository
 
 /**
  * [ViewModel] representing a camera session. This data is used to receive
  * live data regarding the setting currently enabled.
  */
-class CameraViewModel : ViewModel() {
+class CameraViewModel(application: Application) : AndroidViewModel(application) {
     // Base
 
     /**
@@ -49,6 +59,17 @@ class CameraViewModel : ViewModel() {
      * Current screen rotation.
      */
     val screenRotation = MutableLiveData<Rotation>()
+
+    /**
+     * Captured media [Uri]s
+     */
+    val capturedMedia = MediaRepository.capturedMedia(context).flowOn(
+        Dispatchers.IO
+    ).stateIn(
+        viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = listOf(),
+    )
 
     // General
 
