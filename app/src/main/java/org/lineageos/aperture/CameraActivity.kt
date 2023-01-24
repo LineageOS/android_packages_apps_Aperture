@@ -8,6 +8,7 @@ package org.lineageos.aperture
 import android.animation.ValueAnimator
 import android.app.KeyguardManager
 import android.content.BroadcastReceiver
+import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -82,16 +83,21 @@ import androidx.core.view.children
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import coil.decode.VideoFrameDecoder
 import coil.load
 import coil.request.ErrorResult
 import coil.request.ImageRequest
-import coil.request.SuccessResult
 import coil.size.Scale
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.withContext
 import org.lineageos.aperture.camera.CameraManager
 import org.lineageos.aperture.camera.CameraViewModel
 import org.lineageos.aperture.ext.*
@@ -133,6 +139,7 @@ import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.ExifUtils
 import org.lineageos.aperture.utils.GoogleLensUtils
 import org.lineageos.aperture.utils.MediaStoreUtils
+import org.lineageos.aperture.utils.PermissionsGatedCallback
 import org.lineageos.aperture.utils.PermissionsUtils
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StorageUtils
@@ -226,11 +233,15 @@ open class CameraActivity : AppCompatActivity() {
 
     private lateinit var initialCameraFacing: CameraFacing
 
-    private var tookSomething: Boolean = false
-        set(value) {
-            field = value
-            updateGalleryButton()
-        }
+    /**
+     * The currently shown URI.
+     */
+    private var galleryButtonUri: Uri? = null
+
+    /**
+     * Medias captured from secure activity will be stored here
+     */
+    private val secureMediaUris = mutableListOf<Uri>()
 
     private var zoomGestureMutex = Mutex()
 
@@ -362,39 +373,23 @@ open class CameraActivity : AppCompatActivity() {
         }
     }
 
-    private val mainPermissionsRequestOnStartLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) {
-        if (it.isNotEmpty()) {
-            if (!permissionsUtils.mainPermissionsGranted()) {
-                Toast.makeText(
-                    this, getString(R.string.app_permissions_toast), Toast.LENGTH_SHORT
-                ).show()
-                finish()
-                return@registerForActivityResult
+    private val permissionsGatedCallbackOnStart = PermissionsGatedCallback(this) {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                model.capturedMedia.collectLatest {
+                    updateGalleryButton(it.firstOrNull(), false)
+                }
             }
+        }
 
-            // This is a good time to ask the user for location permissions
-            if (sharedPreferences.saveLocation == null) {
-                locationPermissionsDialog.show()
-            }
+        // This is a good time to ask the user for location permissions
+        if (sharedPreferences.saveLocation == null) {
+            locationPermissionsDialog.show()
         }
     }
 
-    private val mainPermissionsRequestLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) {
-        if (it.isNotEmpty()) {
-            if (!permissionsUtils.mainPermissionsGranted()) {
-                Toast.makeText(
-                    this, getString(R.string.app_permissions_toast), Toast.LENGTH_SHORT
-                ).show()
-                finish()
-                return@registerForActivityResult
-            }
-
-            bindCameraUseCases()
-        }
+    private val permissionsGatedCallback = PermissionsGatedCallback(this) {
+        bindCameraUseCases()
     }
 
     private val locationPermissionsRequestLauncher = registerForActivityResult(
@@ -1131,11 +1126,7 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         // Request camera permissions
-        if (!permissionsUtils.mainPermissionsGranted()) {
-            mainPermissionsRequestOnStartLauncher.launch(PermissionsUtils.mainPermissions)
-        } else if (sharedPreferences.saveLocation == null) {
-            locationPermissionsDialog.show()
-        }
+        permissionsGatedCallbackOnStart.runAfterPermissionsCheck()
     }
 
     override fun onResume() {
@@ -1146,9 +1137,6 @@ open class CameraActivity : AppCompatActivity() {
 
         // Set leveler
         setLeveler(sharedPreferences.leveler)
-
-        // Reset tookSomething state
-        tookSomething = false
 
         // Register location updates
         locationListener.register()
@@ -1164,13 +1152,8 @@ open class CameraActivity : AppCompatActivity() {
         // Start observing battery status
         registerReceiver(batteryBroadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
 
-        // Re-request camera permissions in case the user revoked them on app runtime
-        if (!permissionsUtils.mainPermissionsGranted()) {
-            mainPermissionsRequestLauncher.launch(PermissionsUtils.mainPermissions)
-        } else {
-            // If we already have the permission, re-bind the use cases
-            bindCameraUseCases()
-        }
+        // Check again for permissions and re-bind the use cases
+        permissionsGatedCallback.runAfterPermissionsCheck()
     }
 
     override fun onPause() {
@@ -1386,8 +1369,7 @@ open class CameraActivity : AppCompatActivity() {
                     cameraState = CameraState.IDLE
                     shutterButton.isEnabled = true
                     if (!singleCaptureMode) {
-                        sharedPreferences.lastSavedUri = output.savedUri
-                        tookSomething = true
+                        onCapturedMedia(output.savedUri)
                         output.savedUri?.let {
                             BroadcastUtils.broadcastNewPicture(this@CameraActivity, it)
                         }
@@ -1465,8 +1447,7 @@ open class CameraActivity : AppCompatActivity() {
                         if (it.error != VideoRecordEvent.Finalize.ERROR_NO_VALID_DATA) {
                             Log.d(LOG_TAG, "Video capture succeeded: ${it.outputResults.outputUri}")
                             if (!singleCaptureMode) {
-                                sharedPreferences.lastSavedUri = it.outputResults.outputUri
-                                tookSomething = true
+                                onCapturedMedia(it.outputResults.outputUri)
                                 BroadcastUtils.broadcastNewVideo(this, it.outputResults.outputUri)
                             } else {
                                 openCapturePreview(it.outputResults.outputUri, MediaType.VIDEO)
@@ -2174,18 +2155,29 @@ open class CameraActivity : AppCompatActivity() {
         levelerView.isVisible = enabled
     }
 
-    private fun updateGalleryButton() {
+    private fun updateGalleryButton(uri: Uri?, fromCapture: Boolean) {
         runOnUiThread {
-            galleryButtonIconImageView.setImageResource(R.drawable.ic_image)
-            galleryButtonIconImageView.isVisible = true
-
-            galleryButtonPreviewImageView.isVisible = false
-
-            val uri = sharedPreferences.lastSavedUri?.takeIf {
-                MediaStoreUtils.fileExists(this, it)
-            }
             val keyguardLocked = keyguardManager.isKeyguardLocked
-            if (uri != null && (!keyguardLocked || tookSomething)) {
+
+            galleryButtonIconImageView.setImageResource(
+                when (keyguardLocked) {
+                    true -> R.drawable.ic_lock
+                    false -> R.drawable.ic_image
+                }
+            )
+
+            if (keyguardLocked != fromCapture) {
+                return@runOnUiThread
+            }
+
+            galleryButtonUri = uri
+
+            // When keyguard is unlocked, we want media from MediaStore, else we only trust the
+            // ones coming from the capture
+            uri?.also {
+                galleryButtonPreviewImageView.isVisible = true
+                galleryButtonIconImageView.isVisible = false
+
                 galleryButtonPreviewImageView.load(uri) {
                     decoderFactory(VideoFrameDecoder.Factory())
                     crossfade(true)
@@ -2194,13 +2186,6 @@ open class CameraActivity : AppCompatActivity() {
                     error(R.drawable.ic_image)
                     fallback(R.drawable.ic_image)
                     listener(object : ImageRequest.Listener {
-                        override fun onSuccess(request: ImageRequest, result: SuccessResult) {
-                            super.onSuccess(request, result)
-
-                            galleryButtonPreviewImageView.isVisible = true
-                            galleryButtonIconImageView.isVisible = false
-                        }
-
                         override fun onError(request: ImageRequest, result: ErrorResult) {
                             super.onError(request, result)
 
@@ -2217,8 +2202,9 @@ open class CameraActivity : AppCompatActivity() {
                         }
                     })
                 }
-            } else if (keyguardLocked) {
-                galleryButtonIconImageView.setImageResource(R.drawable.ic_lock)
+            } ?: run {
+                galleryButtonIconImageView.isVisible = true
+                galleryButtonPreviewImageView.isVisible = false
             }
         }
     }
@@ -2241,53 +2227,64 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun openGallery() {
-        sharedPreferences.lastSavedUri.let { uri ->
-            // If the Uri is null, attempt to launch non secure-gallery
-            if (uri == null) {
+        lifecycleScope.launch {
+            // secureMediaUris will be cleared if keyguard is unlocked
+            // or none of the items were found.
+            withContext(Dispatchers.IO) {
+                updateSecureMediaUris(keyguardManager.isKeyguardLocked)
+            }
+
+            if (keyguardManager.isKeyguardLocked) {
+                // In this state the only thing we can do is launch a secure review intent
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+                    && secureMediaUris.isNotEmpty()) {
+                    val intent = Intent(
+                        MediaStore.ACTION_REVIEW_SECURE, secureMediaUris.first()
+                    ).apply {
+                        flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        if (secureMediaUris.size > 1) {
+                            clipData = ClipData.newUri(
+                                contentResolver, null, secureMediaUris[1]
+                            ).apply {
+                                for (i in 2 until secureMediaUris.size) {
+                                    addItem(contentResolver, ClipData.Item(secureMediaUris[i]))
+                                }
+                            }
+                        }
+                    }
+                    runCatching {
+                        startActivity(intent)
+                        return@launch
+                    }
+                }
+            }
+
+            galleryButtonUri?.also { uri ->
+                // Try to open the Uri in the non secure gallery
                 dismissKeyguardAndRun {
-                    val intent = Intent().apply {
-                        action = Intent.ACTION_VIEW
+                    mutableListOf<String>().apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            add(MediaStore.ACTION_REVIEW)
+                        }
+                        add(Intent.ACTION_VIEW)
+                    }.forEach {
+                        val intent = Intent(it, uri).apply {
+                            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                        }
+                        runCatching {
+                            startActivity(intent)
+                            return@dismissKeyguardAndRun
+                        }
+                    }
+                }
+            } ?: run {
+                // If the Uri is null, attempt to launch non secure-gallery
+                dismissKeyguardAndRun {
+                    val intent = Intent(Intent.ACTION_VIEW).apply {
                         type = "image/*"
                     }
                     runCatching {
                         startActivity(intent)
-                        return@dismissKeyguardAndRun
-                    }
-                }
-                return
-            }
-
-            // This ensure we took at least one photo/video in the secure use-case
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
-                tookSomething && keyguardManager.isKeyguardLocked
-            ) {
-                val intent = Intent().apply {
-                    action = MediaStore.ACTION_REVIEW_SECURE
-                    data = uri
-                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                }
-                runCatching {
-                    startActivity(intent)
-                    return
-                }
-            }
-
-            // Try to open the Uri in the non secure gallery
-            dismissKeyguardAndRun {
-                mutableListOf<String>().apply {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        add(MediaStore.ACTION_REVIEW)
-                    }
-                    add(Intent.ACTION_VIEW)
-                }.forEach {
-                    val intent = Intent().apply {
-                        action = it
-                        data = uri
-                        flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    }
-                    runCatching {
-                        startActivity(intent)
-                        return@dismissKeyguardAndRun
                     }
                 }
             }
@@ -2510,6 +2507,36 @@ open class CameraActivity : AppCompatActivity() {
                 zoomGestureMutex.unlock()
             })
         }.start()
+    }
+
+    /**
+     * Method called when a new media have been successfully captured and saved.
+     * Keep track of media items captured while in a secure lockscreen state so that they
+     * can be passed to the gallery for viewing without unlocking the device. However, if the
+     * keyguard is no longer locked, clear any existing URIs, and do not add this one.
+     */
+    private fun onCapturedMedia(item: Uri?) {
+        updateGalleryButton(item, true)
+
+        if (!keyguardManager.isKeyguardLocked) {
+            secureMediaUris.clear()
+        } else {
+            item?.let {
+                secureMediaUris.add(it)
+            }
+        }
+    }
+
+    /**
+     * If keyguard is not locked, remove any URIs that were stored while in the secure camera state.
+     * Otherwise, remove any URIs that no longer exist.
+     */
+    private fun updateSecureMediaUris(keyguardLocked: Boolean) {
+        if (!keyguardLocked) {
+            secureMediaUris.clear()
+        } else {
+            secureMediaUris.removeIf { !MediaStoreUtils.fileExists(this, it) }
+        }
     }
 
     companion object {
