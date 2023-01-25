@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -232,7 +232,6 @@
         android:id="@+id/secondaryBottomBarLayout"
         android:layout_width="0dp"
         android:layout_height="72dp"
-        android:background="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/primaryBarLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
