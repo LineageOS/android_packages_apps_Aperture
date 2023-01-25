@@ -11,8 +11,6 @@
 
     <!-- Main activity theme. -->
     <style name="Theme.Aperture.Camera" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="android:textStyle">bold</item>
-        <item name="android:typeface">monospace</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@color/black</item>
         <item name="android:windowBackground">@color/black</item>
@@ -68,6 +66,8 @@
         <item name="android:layout_width">108dp</item>
         <item name="android:layout_height">72dp</item>
         <item name="android:paddingHorizontal">0dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">monospace</item>
     </style>
 
     <!-- Secondary bottom bar icons theme -->
@@ -80,6 +80,8 @@
     <style name="Theme.Aperture.Camera.CameraModeSelectorButton" parent="@style/Widget.Material3.Button.TonalButton">
         <item name="android:backgroundTint">@color/camera_mode_selector_icon</item>
         <item name="android:textColor">@color/camera_mode_selector_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">monospace</item>
     </style>
 
     <!-- Camera mode bar icons highlight theme -->
@@ -101,11 +103,5 @@
     <style name="Theme.Aperture.Camera.ToolbarExpanded" parent="Theme.Aperture.Camera.ToolbarCollapsed">
         <item name="android:textSize">36sp</item>
         <item name="android:drawablePadding">10dp</item>
-    </style>
-
-    <!-- Location permissions dialog style -->
-    <style name="Theme.Aperture.Camera.LocationPermissionsDialog">
-        <item name="android:textStyle">normal</item>
-        <item name="android:typeface">normal</item>
     </style>
 </resources>
