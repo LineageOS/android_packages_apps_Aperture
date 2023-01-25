@@ -51,6 +51,9 @@ android {
 }
 
 dependencies {
+    // Align versions of all Kotlin components
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -158,7 +161,10 @@ tasks.register("generateBp") {
     File("${project.projectDir.absolutePath}/Android.bp").let { file ->
         // Read dependencies
         val dependencies = "${spaces(8)}// DO NOT EDIT THIS SECTION MANUALLY\n".plus(
-            configuration.allDependencies.joinToString("\n") {
+            configuration.allDependencies.filter {
+                // kotlin-bom does not need to be added to dependencies
+                it.group != "org.jetbrains.kotlin" && it.name != "kotlin-bom"
+            }.joinToString("\n") {
                 if (isAvailableInAosp(it.group!!, it.name)) {
                     "${spaces(8)}\"${moduleNameAosp("${it.group}:${it.name}")}\","
                 } else {
