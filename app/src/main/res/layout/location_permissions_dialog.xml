@@ -8,8 +8,7 @@
     android:layout_width="320dp"
     android:layout_height="wrap_content"
     android:background="@drawable/location_permissions_dialog_background"
-    android:backgroundTint="@color/gray_70"
-    android:theme="@style/Theme.Aperture.Camera.LocationPermissionsDialog">
+    android:backgroundTint="@color/gray_70">
 
     <ImageView
         android:id="@+id/locationPermissionsDialogImage"
