@@ -22,8 +22,10 @@ import org.lineageos.aperture.utils.Rotation
 import java.util.Locale
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
-class LensSelectorLayout(context: Context, attrs: AttributeSet?) : LinearLayoutCompat(
-    context, attrs
+class LensSelectorLayout @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : LinearLayoutCompat(
+    context, attrs, defStyleAttr
 ) {
     private val layoutInflater by lazy { LayoutInflater.from(context) }
 
