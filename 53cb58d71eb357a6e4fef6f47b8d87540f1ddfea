@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "9fa23d33_52b0d3ae",
+        "filename": "app/libs/Android.bp",
+        "patchSetId": 14
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-25T22:16:01Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the output of script, but I can fix it separately.",
+      "parentUuid": "a2630f50_e542cd0f",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 24
+      },
+      "revId": "53cb58d71eb357a6e4fef6f47b8d87540f1ddfea",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "10b57fef_de4a4ca5",
         "filename": "app/libs/Android.bp",
         "patchSetId": 14
