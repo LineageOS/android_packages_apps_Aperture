@@ -5,12 +5,12 @@
 -->
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.Aperture" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Theme.Aperture" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="dialogCornerRadius">28dp</item>
     </style>
 
     <!-- Main activity theme. -->
-    <style name="Theme.Aperture.Camera">
+    <style name="Theme.Aperture.Camera" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:textStyle">bold</item>
         <item name="android:typeface">monospace</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
