@@ -27,6 +27,22 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
 
         <item name="android:navigationBarColor">@android:color/transparent</item>
+
+        <item name="alertDialogTheme">@style/Theme.Aperture.Settings.AlertDialog</item>
+        <item name="materialAlertDialogTheme">@style/Theme.Aperture.Settings.AlertDialog</item>
+    </style>
+
+    <!-- Settings alert dialog theme. -->
+    <style name="Theme.Aperture.Settings.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/Theme.Aperture.Settings.AlertDialogStyle</item>
+        <item name="dialogCornerRadius">28dp</item>
+        <item name="android:background">@drawable/dialog_preference_background</item>
+    </style>
+
+    <!-- Settings alert dialog style. -->
+    <style name="Theme.Aperture.Settings.AlertDialogStyle" parent="MaterialAlertDialog.Material3">
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.MediumComponent</item>
+        <item name="shapeAppearanceOverlay">@null</item>
     </style>
 
     <!-- Settings switch theme. -->
