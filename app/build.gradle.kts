@@ -260,7 +260,7 @@ tasks.register("generateBp") {
                         dep == "org.jetbrains.kotlin:kotlin-stdlib-common" -> false
                         else -> true
                     }
-                }.toMutableList()
+                }.distinct().toMutableList()
 
                 if (addNoDeps) {
                     // Add -nodeps dependency for android_library/java_library_static
