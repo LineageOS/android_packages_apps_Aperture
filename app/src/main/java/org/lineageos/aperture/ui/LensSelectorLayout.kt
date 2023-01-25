@@ -27,7 +27,7 @@ class LensSelectorLayout @JvmOverloads constructor(
 ) : LinearLayoutCompat(
     context, attrs, defStyleAttr
 ) {
-    private val layoutInflater by lazy { LayoutInflater.from(context) }
+    private val layoutInflater by lazy { context.getSystemService(LayoutInflater::class.java) }
 
     private lateinit var activeCamera: Camera
 
@@ -95,9 +95,8 @@ class LensSelectorLayout @JvmOverloads constructor(
         updateButtonsAttributes()
     }
 
-    @SuppressLint("InflateParams")
     private fun inflateButton(): Button {
-        val button = layoutInflater.inflate(R.layout.lens_selector_button, null) as Button
+        val button = layoutInflater.inflate(R.layout.lens_selector_button, this, false) as Button
         return button.apply {
             layoutParams = LayoutParams(32.px, 32.px).apply {
                 setMargins(5)
