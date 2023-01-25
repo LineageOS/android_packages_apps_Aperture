@@ -78,15 +78,10 @@
 
     <!-- Camera mode bar icons theme -->
     <style name="Theme.Aperture.Camera.CameraModeSelectorButton" parent="@style/Widget.Material3.Button.TonalButton">
-        <item name="android:backgroundTint">@color/camera_mode_selector_icon</item>
+        <item name="android:backgroundTint">@android:color/transparent</item>
         <item name="android:textColor">@color/camera_mode_selector_text</item>
         <item name="android:textStyle">bold</item>
         <item name="android:typeface">monospace</item>
-    </style>
-
-    <!-- Camera mode bar icons highlight theme -->
-    <style name="Theme.Aperture.Camera.CameraModeSelectorButtonHighlight" parent="@style/Theme.Aperture.Camera.CameraModeSelectorButton">
-        <item name="android:backgroundTint">@color/camera_mode_selector_icon_highlight</item>
     </style>
 
     <!-- Video duration button theme -->
