@@ -350,9 +350,9 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cameraModeHighlight"
-            style="@style/Theme.Aperture.Camera.CameraModeSelectorButtonHighlight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorSecondaryContainer"
             android:contentDescription="@string/camera_mode_highlight_description"
             android:enabled="false"
             android:padding="0dp"
