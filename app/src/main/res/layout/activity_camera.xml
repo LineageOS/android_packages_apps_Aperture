@@ -348,11 +348,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/cameraModeHighlight"
-            style="@style/Theme.Aperture.Camera.CameraModeSelectorButtonHighlight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="?attr/colorSecondaryContainer"
             android:contentDescription="@string/camera_mode_highlight_description"
             android:enabled="false"
             android:padding="0dp"
@@ -363,7 +363,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/photoModeButton"
             style="@style/Theme.Aperture.Camera.CameraModeSelectorButton"
             android:layout_width="wrap_content"
@@ -379,7 +379,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/videoModeButton"
             style="@style/Theme.Aperture.Camera.CameraModeSelectorButton"
             android:layout_width="wrap_content"
@@ -394,7 +394,7 @@
             app:layout_constraintStart_toEndOf="@+id/photoModeButton"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/qrModeButton"
             style="@style/Theme.Aperture.Camera.CameraModeSelectorButton"
             android:layout_width="wrap_content"
@@ -409,11 +409,11 @@
             app:layout_constraintStart_toEndOf="@+id/videoModeButton"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/videoDuration"
-            style="@style/Theme.Aperture.Camera.VideoDurationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/rec_red"
             android:contentDescription="@string/video_mode_button_description"
             android:enabled="false"
             android:padding="0dp"
