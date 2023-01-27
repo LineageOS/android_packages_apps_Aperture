@@ -1,11 +1,14 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.lineageos.aperture
 
 import android.graphics.Bitmap
+import androidx.core.graphics.scale
+import org.lineageos.aperture.utils.ExifUtils.Transform
+import kotlin.math.min
 
 /**
  * Stack Blur v1.0 from
@@ -258,4 +261,38 @@ internal fun Bitmap.stackBlur(radius: Int): Bitmap {
     bitmap.setPixels(pix, 0, width, 0, 0, width, height)
 
     return bitmap
+}
+
+internal fun Bitmap.transform(transform: Transform): Bitmap {
+    if (transform == Transform.DEFAULT) {
+        // nothing more to do
+        return this
+    }
+    return Bitmap.createBitmap(this, 0, 0, width, height, transform.toMatrix(), true)
+}
+
+internal fun Bitmap.scale(maxSideLen: Int): Bitmap {
+    val aspectRatio = width.toFloat() / height
+    val newWidth: Int
+    val newHeight: Int
+    if (aspectRatio > 1) {
+        newWidth = min(width, maxSideLen)
+        newHeight = if (newWidth == width) {
+            height
+        } else {
+            (newWidth.toFloat() / aspectRatio).toInt()
+        }
+    } else {
+        newHeight = min(height, maxSideLen)
+        newWidth = if (newHeight == height) {
+            width
+        } else {
+            (newHeight * aspectRatio).toInt()
+        }
+    }
+    return if (width == newWidth) {
+        this
+    } else {
+        scale(newWidth, newHeight)
+    }
 }
