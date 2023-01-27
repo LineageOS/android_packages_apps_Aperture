@@ -10,6 +10,7 @@ import android.annotation.SuppressLint
 import android.app.KeyguardManager
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
@@ -98,7 +99,10 @@ import org.lineageos.aperture.utils.StabilizationMode
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
 import org.lineageos.aperture.utils.TimerMode
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
+import java.io.InputStream
 import java.util.concurrent.ExecutorService
 import kotlin.math.abs
 import kotlin.reflect.safeCast
@@ -669,10 +673,10 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         // Set capture preview callback
-        capturePreviewLayout.onChoiceCallback = { uri ->
-            uri?.let {
-                sendIntentResultAndExit(it)
-            } ?: run {
+        capturePreviewLayout.onChoiceCallback = { uri, photoInputStream ->
+            if (photoInputStream != null || uri != null) {
+                sendIntentResultAndExit(uri, photoInputStream)
+            } else {
                 capturePreviewLayout.isVisible = false
             }
         }
@@ -820,12 +824,17 @@ open class CameraActivity : AppCompatActivity() {
         cameraState = CameraState.TAKING_PHOTO
         shutterButton.isEnabled = false
 
+        val photoOutputStream = if (singleCaptureMode) {
+            ByteArrayOutputStream(INITIAL_PHOTO_BUFFER_SIZE_BYTES)
+        } else null
+
         // Create output options object which contains file + metadata
         val outputOptions = StorageUtils.getPhotoMediaStoreOutputOptions(
             contentResolver,
             ImageCapture.Metadata().apply {
                 location = this@CameraActivity.location
-            }
+            },
+            photoOutputStream
         )
 
         // Set up image capture listener, which is triggered after photo has
@@ -857,6 +866,12 @@ open class CameraActivity : AppCompatActivity() {
                     } else {
                         output.savedUri?.let {
                             openCapturePreview(it, MediaType.PHOTO)
+                        } ?: run {
+                            photoOutputStream?.use {
+                                val bytes = photoOutputStream.toByteArray()
+                                val photoInputStream = ByteArrayInputStream(bytes)
+                                openCapturePreview(photoInputStream)
+                            }
                         }
                     }
                 }
@@ -1684,7 +1699,14 @@ open class CameraActivity : AppCompatActivity() {
 
     private fun openCapturePreview(uri: Uri, mediaType: MediaType) {
         runOnUiThread {
-            capturePreviewLayout.updateUri(uri, mediaType)
+            capturePreviewLayout.updateSource(uri, mediaType)
+            capturePreviewLayout.isVisible = true
+        }
+    }
+
+    private fun openCapturePreview(photoInputStream: InputStream) {
+        runOnUiThread {
+            capturePreviewLayout.updateSource(photoInputStream)
             capturePreviewLayout.isVisible = true
         }
     }
@@ -1693,7 +1715,10 @@ open class CameraActivity : AppCompatActivity() {
      * When the user took a photo or a video and confirmed it, its URI gets sent back to the
      * app that sent the intent and closes the camera.
      */
-    private fun sendIntentResultAndExit(uri: Uri) {
+    private fun sendIntentResultAndExit(uri: Uri? = null, photoInputStream: InputStream? = null) {
+        if ((photoInputStream == null) == (uri == null)) {
+            throw IllegalStateException("uri or photoInputStream (but not both) must be specified")
+        }
         // The user confirmed the choice
         var outputUri: Uri? = null
         if (intent.extras?.containsKey(MediaStore.EXTRA_OUTPUT) == true) {
@@ -1707,9 +1732,13 @@ open class CameraActivity : AppCompatActivity() {
 
         outputUri?.let {
             try {
-                contentResolver.openInputStream(uri).use { inputStream ->
-                    contentResolver.openOutputStream(it).use { outputStream ->
-                        inputStream!!.copyTo(outputStream!!)
+                contentResolver.openOutputStream(it).use { outputStream ->
+                    if (uri != null) {
+                        contentResolver.openInputStream(uri).use { inputStream ->
+                            inputStream!!.copyTo(outputStream!!)
+                        }
+                    } else {
+                        photoInputStream!!.copyTo(outputStream!!)
                     }
                 }
 
@@ -1719,10 +1748,17 @@ open class CameraActivity : AppCompatActivity() {
                 setResult(RESULT_CANCELED)
             }
         } ?: setResult(RESULT_OK, Intent().apply {
-            data = uri
-            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-            putExtra(MediaStore.EXTRA_OUTPUT, uri)
+            if (uri != null) {
+                data = uri
+                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                putExtra(MediaStore.EXTRA_OUTPUT, uri)
+            } else {
+                // Return the photo as a Bitmap - same as Camera2, but full-sized.
+                putExtra("data", BitmapFactory.decodeStream(photoInputStream))
+            }
         })
+
+        photoInputStream?.close()
 
         finish()
     }
@@ -1800,6 +1836,8 @@ open class CameraActivity : AppCompatActivity() {
         private const val MSG_HIDE_FOCUS_RING = 1
         private const val MSG_HIDE_EXPOSURE_SLIDER = 2
         private const val MSG_ON_PINCH_TO_ZOOM = 3
+
+        private const val INITIAL_PHOTO_BUFFER_SIZE_BYTES = 8 * 1024 * 1024 // 8 MiB
 
         private val EXPOSURE_LEVEL_FORMATTER = DecimalFormat("+#;-#")
     }
