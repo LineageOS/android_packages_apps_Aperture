@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "79730ae0_58ebb125",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1757,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-01-27T19:31:22Z",
+      "side": 1,
+      "message": "Are there many apps that don\u0027t provide a Uri to output to? Camera2 handles this by scaling the image down and putting it in an extra like this, but I didn\u0027t scale it down here...\n\nI haven\u0027t been able to test this part since I\u0027m not sure which apps do this.",
+      "revId": "83fe5344a8b22c446f72cbf7a84e95633d856cdd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
