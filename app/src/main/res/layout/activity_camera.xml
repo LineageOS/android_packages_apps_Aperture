@@ -114,6 +114,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#99000000"
+        android:backgroundTint="?attr/colorSurface"
         android:fillViewport="true"
         android:scrollbars="none"
         android:visibility="gone"
@@ -253,7 +254,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_pro_button" />
+            app:srcCompat="@drawable/ic_pro_button"
+            app:tint="?attr/colorOnSurface" />
 
         <org.lineageos.aperture.ui.LensSelectorLayout
             android:id="@+id/lensSelectorLayout"
@@ -273,7 +275,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_flash_off" />
+            app:srcCompat="@drawable/ic_flash_off"
+            app:tint="?attr/colorOnSurface" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

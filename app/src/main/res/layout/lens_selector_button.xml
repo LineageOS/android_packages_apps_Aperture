@@ -12,6 +12,6 @@
     android:backgroundTint="@color/lens_selector_button_background"
     android:paddingHorizontal="0dp"
     android:textAlignment="center"
-    android:textColor="@color/white"
+    android:textColor="@color/lens_selector_button_text"
     android:textSize="10dp"
     tools:ignore="SpUsage" />

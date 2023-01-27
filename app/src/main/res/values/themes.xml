@@ -12,8 +12,6 @@
     <!-- Main activity theme. -->
     <style name="Theme.Aperture.Camera" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@color/black</item>
-        <item name="android:windowBackground">@color/black</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="O_MR1">
             shortEdges
         </item>
@@ -80,6 +78,7 @@
     <style name="Theme.Aperture.Camera.SecondaryBottomBarButton" parent="Theme.Aperture.Camera.SecondaryBarButton">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>
+        <item name="android:color">?attr/colorOnSurface</item>
     </style>
 
     <!-- Camera mode bar icons theme -->
