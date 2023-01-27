@@ -6,6 +6,7 @@
 package org.lineageos.aperture
 
 import android.graphics.Bitmap
+import kotlin.math.min
 
 /**
  * Stack Blur v1.0 from
@@ -258,4 +259,36 @@ internal fun Bitmap.stackBlur(radius: Int): Bitmap {
     bitmap.setPixels(pix, 0, width, 0, 0, width, height)
 
     return bitmap
+}
+
+internal fun Bitmap.scaleAndRotate(maxSideLen: Int, rotationDegrees: Int): Bitmap {
+    val aspectRatio = width.toFloat() / height
+    val newWidth: Int
+    val newHeight: Int
+    if (aspectRatio > 1) {
+        newWidth = min(width, maxSideLen)
+        newHeight = if (newWidth == width) {
+            height
+        } else {
+            (newWidth.toFloat() / aspectRatio).toInt()
+        }
+    } else {
+        newHeight = min(height, maxSideLen)
+        newWidth = if (newHeight == height) {
+            width
+        } else {
+            (newHeight * aspectRatio).toInt()
+        }
+    }
+    if (width == newWidth && rotationDegrees == 0) {
+        // nothing to do
+        return this
+    }
+    val matrix = android.graphics.Matrix()
+    matrix.postRotate(
+        rotationDegrees.toFloat(),
+        newWidth.toFloat() / 2,
+        newHeight.toFloat() / 2
+    )
+    return Bitmap.createBitmap(this, 0, 0, newWidth, newHeight, matrix, true)
 }
