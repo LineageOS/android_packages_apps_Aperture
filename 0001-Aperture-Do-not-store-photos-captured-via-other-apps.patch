@@ -1,0 +1,474 @@
+From 17737d560ce1105df8cedee56c824cc20fad11df Mon Sep 17 00:00:00 2001
+From: Tommy Webb <tommy@calyxinstitute.org>
+Date: Fri, 27 Jan 2023 13:33:42 -0500
+Subject: [PATCH] Aperture: Do not store photos captured via other apps
+
+When another app uses an Intent to capture a photo, keep it in memory
+rather than saving it to disk.
+
+Note: Videos are intentionally not affected by this change. This
+matches stock behavior.
+
+Co-authored-by: LuK1337 <priv.luk@gmail.com>
+Change-Id: I19469728d419490a8ba9268e4407e7c4babfd577
+---
+ app/build.gradle.kts                          |  1 +
+ .../java/org/lineageos/aperture/BitmapExt.kt  | 37 ++++++++
+ .../org/lineageos/aperture/CameraActivity.kt  | 86 ++++++++++++++++---
+ .../aperture/ui/CapturePreviewLayout.kt       | 44 ++++++++--
+ .../org/lineageos/aperture/utils/ExifUtils.kt | 57 ++++++++++++
+ .../lineageos/aperture/utils/StorageUtils.kt  | 13 ++-
+ 6 files changed, 213 insertions(+), 25 deletions(-)
+ create mode 100644 app/src/main/java/org/lineageos/aperture/utils/ExifUtils.kt
+
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+index af3204a..288d71f 100644
+--- a/app/build.gradle.kts
++++ b/app/build.gradle.kts
+@@ -57,6 +57,7 @@ dependencies {
+     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+     implementation("androidx.preference:preference:1.2.0")
+     implementation("com.google.android.material:material:1.8.0-beta01")
++    implementation("androidx.exifinterface:exifinterface:1.3.3")
+ 
+     // CameraX core library using the camera2 implementation
+     val cameraxVersion = "1.2.0"
+diff --git a/app/src/main/java/org/lineageos/aperture/BitmapExt.kt b/app/src/main/java/org/lineageos/aperture/BitmapExt.kt
+index 79f5612..bb2d599 100644
+--- a/app/src/main/java/org/lineageos/aperture/BitmapExt.kt
++++ b/app/src/main/java/org/lineageos/aperture/BitmapExt.kt
+@@ -6,6 +6,9 @@
+ package org.lineageos.aperture
+ 
+ import android.graphics.Bitmap
++import androidx.core.graphics.scale
++import org.lineageos.aperture.utils.ExifUtils.Transform
++import kotlin.math.min
+ 
+ /**
+  * Stack Blur v1.0 from
+@@ -259,3 +262,37 @@ internal fun Bitmap.stackBlur(radius: Int): Bitmap {
+ 
+     return bitmap
+ }
++
++internal fun Bitmap.transform(transform: Transform): Bitmap {
++    if (transform == Transform.DEFAULT) {
++        // nothing more to do
++        return this
++    }
++    return Bitmap.createBitmap(this, 0, 0, width, height, transform.toMatrix(), true)
++}
++
++internal fun Bitmap.scale(maxSideLen: Int): Bitmap {
++    val aspectRatio = width.toFloat() / height
++    val newWidth: Int
++    val newHeight: Int
++    if (aspectRatio > 1) {
++        newWidth = min(width, maxSideLen)
++        newHeight = if (newWidth == width) {
++            height
++        } else {
++            (newWidth.toFloat() / aspectRatio).toInt()
++        }
++    } else {
++        newHeight = min(height, maxSideLen)
++        newWidth = if (newHeight == height) {
++            width
++        } else {
++            (newHeight * aspectRatio).toInt()
++        }
++    }
++    return if (width == newWidth) {
++        this
++    } else {
++        scale(newWidth, newHeight)
++    }
++}
+diff --git a/app/src/main/java/org/lineageos/aperture/CameraActivity.kt b/app/src/main/java/org/lineageos/aperture/CameraActivity.kt
+index 653d92e..067b73f 100644
+--- a/app/src/main/java/org/lineageos/aperture/CameraActivity.kt
++++ b/app/src/main/java/org/lineageos/aperture/CameraActivity.kt
+@@ -10,6 +10,7 @@ import android.annotation.SuppressLint
+ import android.app.KeyguardManager
+ import android.content.Intent
+ import android.content.pm.ActivityInfo
++import android.graphics.BitmapFactory
+ import android.graphics.Color
+ import android.graphics.Rect
+ import android.graphics.drawable.AnimatedVectorDrawable
+@@ -87,6 +88,7 @@ import org.lineageos.aperture.utils.CameraManager
+ import org.lineageos.aperture.utils.CameraMode
+ import org.lineageos.aperture.utils.CameraSoundsUtils
+ import org.lineageos.aperture.utils.CameraState
++import org.lineageos.aperture.utils.ExifUtils
+ import org.lineageos.aperture.utils.FlashMode
+ import org.lineageos.aperture.utils.Framerate
+ import org.lineageos.aperture.utils.GridMode
+@@ -98,7 +100,10 @@ import org.lineageos.aperture.utils.StabilizationMode
+ import org.lineageos.aperture.utils.StorageUtils
+ import org.lineageos.aperture.utils.TimeUtils
+ import org.lineageos.aperture.utils.TimerMode
++import java.io.ByteArrayInputStream
++import java.io.ByteArrayOutputStream
+ import java.io.FileNotFoundException
++import java.io.InputStream
+ import java.util.concurrent.ExecutorService
+ import kotlin.math.abs
+ import kotlin.reflect.safeCast
+@@ -669,11 +674,13 @@ open class CameraActivity : AppCompatActivity() {
+         }
+ 
+         // Set capture preview callback
+-        capturePreviewLayout.onChoiceCallback = { uri ->
+-            uri?.let {
+-                sendIntentResultAndExit(it)
+-            } ?: run {
+-                capturePreviewLayout.isVisible = false
++        capturePreviewLayout.onChoiceCallback = { input ->
++            when (input) {
++                is InputStream,
++                is Uri -> sendIntentResultAndExit(input)
++                else -> {
++                    capturePreviewLayout.isVisible = false
++                }
+             }
+         }
+ 
+@@ -820,12 +827,19 @@ open class CameraActivity : AppCompatActivity() {
+         cameraState = CameraState.TAKING_PHOTO
+         shutterButton.isEnabled = false
+ 
++        val photoOutputStream = if (singleCaptureMode) {
++            ByteArrayOutputStream(SINGLE_CAPTURE_PHOTO_BUFFER_INITIAL_SIZE_BYTES)
++        } else {
++            null
++        }
++
+         // Create output options object which contains file + metadata
+         val outputOptions = StorageUtils.getPhotoMediaStoreOutputOptions(
+             contentResolver,
+             ImageCapture.Metadata().apply {
+                 location = this@CameraActivity.location
+-            }
++            },
++            photoOutputStream
+         )
+ 
+         // Set up image capture listener, which is triggered after photo has
+@@ -858,6 +872,11 @@ open class CameraActivity : AppCompatActivity() {
+                         output.savedUri?.let {
+                             openCapturePreview(it, MediaType.PHOTO)
+                         }
++                        photoOutputStream?.use {
++                            openCapturePreview(
++                                ByteArrayInputStream(photoOutputStream.toByteArray())
++                            )
++                        }
+                     }
+                 }
+             }
+@@ -1684,7 +1703,14 @@ open class CameraActivity : AppCompatActivity() {
+ 
+     private fun openCapturePreview(uri: Uri, mediaType: MediaType) {
+         runOnUiThread {
+-            capturePreviewLayout.updateUri(uri, mediaType)
++            capturePreviewLayout.updateSource(uri, mediaType)
++            capturePreviewLayout.isVisible = true
++        }
++    }
++
++    private fun openCapturePreview(photoInputStream: InputStream) {
++        runOnUiThread {
++            capturePreviewLayout.updateSource(photoInputStream)
+             capturePreviewLayout.isVisible = true
+         }
+     }
+@@ -1693,7 +1719,7 @@ open class CameraActivity : AppCompatActivity() {
+      * When the user took a photo or a video and confirmed it, its URI gets sent back to the
+      * app that sent the intent and closes the camera.
+      */
+-    private fun sendIntentResultAndExit(uri: Uri) {
++    private fun sendIntentResultAndExit(input: Any) {
+         // The user confirmed the choice
+         var outputUri: Uri? = null
+         if (intent.extras?.containsKey(MediaStore.EXTRA_OUTPUT) == true) {
+@@ -1707,9 +1733,15 @@ open class CameraActivity : AppCompatActivity() {
+ 
+         outputUri?.let {
+             try {
+-                contentResolver.openInputStream(uri).use { inputStream ->
+-                    contentResolver.openOutputStream(it).use { outputStream ->
+-                        inputStream!!.copyTo(outputStream!!)
++                contentResolver.openOutputStream(it).use { outputStream ->
++                    when (input) {
++                        is InputStream -> input.use {
++                            input.copyTo(outputStream!!)
++                        }
++                        is Uri -> contentResolver.openInputStream(input).use { inputStream ->
++                            inputStream!!.copyTo(outputStream!!)
++                        }
++                        else -> throw IllegalStateException("Input is not Uri or InputStream")
+                     }
+                 }
+ 
+@@ -1719,9 +1751,25 @@ open class CameraActivity : AppCompatActivity() {
+                 setResult(RESULT_CANCELED)
+             }
+         } ?: setResult(RESULT_OK, Intent().apply {
+-            data = uri
+-            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+-            putExtra(MediaStore.EXTRA_OUTPUT, uri)
++            when (input) {
++                is InputStream -> {
++                    // No output URI provided, so return the photo inline as a downscaled Bitmap.
++                    action = "inline-data"
++                    val transform = ExifUtils.getTransform(input)
++                    val bitmap = input.use { BitmapFactory.decodeStream(input) }
++                    val scaledAndRotatedBitmap = bitmap.scale(
++                        SINGLE_CAPTURE_INLINE_MAX_SIDE_LEN_PIXELS
++                    ).transform(transform)
++                    putExtra("data", scaledAndRotatedBitmap)
++                }
++                is Uri -> {
++                    // We saved the media (video), so return the URI that we saved.
++                    data = input
++                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
++                    putExtra(MediaStore.EXTRA_OUTPUT, input)
++                }
++                else -> throw IllegalStateException("Input is not Uri or InputStream")
++            }
+         })
+ 
+         finish()
+@@ -1801,6 +1849,16 @@ open class CameraActivity : AppCompatActivity() {
+         private const val MSG_HIDE_EXPOSURE_SLIDER = 2
+         private const val MSG_ON_PINCH_TO_ZOOM = 3
+ 
++        private const val SINGLE_CAPTURE_PHOTO_BUFFER_INITIAL_SIZE_BYTES = 8 * 1024 * 1024 // 8 MiB
++
++        // We need to return something small enough so as not to overwhelm Binder. 1MB is the
++        // per-process limit across all transactions. Camera2 sets a max pixel count of 51200.
++        // We set a max side length of 256, for a max pixel count of 65536. Even at 4 bytes per
++        // pixel, this is only 256K, well within the limits. (Note: It's not clear if any modern
++        // app expects a photo to be returned inline, rather than providing an output URI.)
++        // https://developer.android.com/guide/components/activities/parcelables-and-bundles#sdbp
++        private const val SINGLE_CAPTURE_INLINE_MAX_SIDE_LEN_PIXELS = 256
++
+         private val EXPOSURE_LEVEL_FORMATTER = DecimalFormat("+#;-#")
+     }
+ }
+diff --git a/app/src/main/java/org/lineageos/aperture/ui/CapturePreviewLayout.kt b/app/src/main/java/org/lineageos/aperture/ui/CapturePreviewLayout.kt
+index d43c4e7..2c8903c 100644
+--- a/app/src/main/java/org/lineageos/aperture/ui/CapturePreviewLayout.kt
++++ b/app/src/main/java/org/lineageos/aperture/ui/CapturePreviewLayout.kt
+@@ -6,6 +6,7 @@
+ package org.lineageos.aperture.ui
+ 
+ import android.content.Context
++import android.graphics.BitmapFactory
+ import android.net.Uri
+ import android.util.AttributeSet
+ import android.widget.ImageButton
+@@ -17,8 +18,10 @@ import androidx.media3.exoplayer.ExoPlayer
+ import androidx.media3.ui.PlayerView
+ import org.lineageos.aperture.R
+ import org.lineageos.aperture.smoothRotate
++import org.lineageos.aperture.utils.ExifUtils
+ import org.lineageos.aperture.utils.MediaType
+ import org.lineageos.aperture.utils.Rotation
++import java.io.InputStream
+ 
+ /**
+  * Image/video preview fragment
+@@ -27,7 +30,8 @@ import org.lineageos.aperture.utils.Rotation
+ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(
+     context, attrs
+ ) {
+-    private lateinit var uri: Uri
++    private var uri: Uri? = null
++    private var photoInputStream: InputStream? = null
+     private lateinit var mediaType: MediaType
+ 
+     private var exoPlayer: ExoPlayer? = null
+@@ -38,10 +42,10 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
+     private val videoView by lazy { findViewById<PlayerView>(R.id.videoView) }
+ 
+     /**
+-     * URI is null == canceled
+-     * URI is not null == confirmed
++     * input is null == canceled
++     * input is not null == confirmed
+      */
+-    internal var onChoiceCallback: (uri: Uri?) -> Unit = {}
++    internal var onChoiceCallback: (input: Any?) -> Unit = {}
+ 
+     internal var screenRotation = Rotation.ROTATION_0
+         set(value) {
+@@ -58,12 +62,13 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
+         }
+         confirmButton.setOnClickListener {
+             stopPreview()
+-            onChoiceCallback(uri)
++            onChoiceCallback(uri ?: photoInputStream)
+         }
+     }
+ 
+-    internal fun updateUri(uri: Uri, mediaType: MediaType) {
++    internal fun updateSource(uri: Uri, mediaType: MediaType) {
+         this.uri = uri
++        this.photoInputStream = null
+         this.mediaType = mediaType
+ 
+         imageView.isVisible = mediaType == MediaType.PHOTO
+@@ -72,10 +77,33 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
+         startPreview()
+     }
+ 
++    internal fun updateSource(photoInputStream: InputStream) {
++        this.uri = null
++        this.photoInputStream = photoInputStream
++        this.mediaType = MediaType.PHOTO
++
++        imageView.isVisible = true
++        videoView.isVisible = false
++
++        startPreview()
++    }
++
+     private fun startPreview() {
+         when (mediaType) {
+             MediaType.PHOTO -> {
+-                imageView.setImageURI(uri)
++                if (uri != null) {
++                    imageView.rotation = 0f
++                    imageView.setImageURI(uri)
++                } else {
++                    val inputStream = photoInputStream!!
++                    val transform = ExifUtils.getTransform(inputStream)
++                    inputStream.mark(Int.MAX_VALUE)
++                    val bitmap = BitmapFactory.decodeStream(inputStream)
++                    inputStream.reset()
++                    imageView.rotation =
++                        transform.rotation.offset.toFloat() - screenRotation.offset
++                    imageView.setImageBitmap(bitmap)
++                }
+             }
+             MediaType.VIDEO -> {
+                 exoPlayer = ExoPlayer.Builder(context)
+@@ -83,7 +111,7 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
+                     .also {
+                         videoView.player = it
+ 
+-                        it.setMediaItem(MediaItem.fromUri(uri))
++                        it.setMediaItem(MediaItem.fromUri(uri!!))
+ 
+                         it.playWhenReady = true
+                         it.seekTo(0)
+diff --git a/app/src/main/java/org/lineageos/aperture/utils/ExifUtils.kt b/app/src/main/java/org/lineageos/aperture/utils/ExifUtils.kt
+new file mode 100644
+index 0000000..995d661
+--- /dev/null
++++ b/app/src/main/java/org/lineageos/aperture/utils/ExifUtils.kt
+@@ -0,0 +1,57 @@
++/*
++ * SPDX-FileCopyrightText: 2022 The LineageOS Project
++ * SPDX-License-Identifier: Apache-2.0
++ */
++
++package org.lineageos.aperture.utils
++
++import android.graphics.Matrix
++import androidx.exifinterface.media.ExifInterface
++import java.io.InputStream
++
++class ExifUtils {
++    data class Transform(val rotation: Rotation, val mirror: Boolean) {
++        fun toMatrix(): Matrix {
++            return Matrix().apply {
++                if (mirror) {
++                    postScale(-1f, 1f)
++                }
++                postRotate(rotation.offset.toFloat())
++            }
++        }
++
++        companion object {
++            val DEFAULT = Transform(Rotation.ROTATION_0, false)
++        }
++    }
++
++    companion object {
++        private val orientationMap = mapOf(
++            ExifInterface.ORIENTATION_UNDEFINED to Transform.DEFAULT,
++            ExifInterface.ORIENTATION_NORMAL to Transform.DEFAULT,
++            ExifInterface.ORIENTATION_ROTATE_90 to Transform(Rotation.ROTATION_90, false),
++            ExifInterface.ORIENTATION_ROTATE_180 to Transform(Rotation.ROTATION_180, false),
++            ExifInterface.ORIENTATION_ROTATE_270 to Transform(Rotation.ROTATION_270, false),
++            ExifInterface.ORIENTATION_FLIP_HORIZONTAL to Transform(Rotation.ROTATION_0, true),
++            ExifInterface.ORIENTATION_FLIP_VERTICAL to Transform(Rotation.ROTATION_180, true),
++            ExifInterface.ORIENTATION_TRANSPOSE to Transform(Rotation.ROTATION_270, true),
++            ExifInterface.ORIENTATION_TRANSVERSE to Transform(Rotation.ROTATION_90, true),
++        )
++
++        private fun getOrientation(inputStream: InputStream): Int {
++            inputStream.mark(Int.MAX_VALUE)
++            val orientation =
++                ExifInterface(inputStream).getAttributeInt(ExifInterface.TAG_ORIENTATION, 0)
++            inputStream.reset()
++            return orientation
++        }
++
++        private fun orientationToTransform(exifOrientation: Int): Transform {
++            return orientationMap.getOrDefault(exifOrientation, Transform.DEFAULT)
++        }
++
++        fun getTransform(inputStream: InputStream): Transform {
++            return orientationToTransform(getOrientation(inputStream))
++        }
++    }
++}
+diff --git a/app/src/main/java/org/lineageos/aperture/utils/StorageUtils.kt b/app/src/main/java/org/lineageos/aperture/utils/StorageUtils.kt
+index 7636b2b..7053818 100644
+--- a/app/src/main/java/org/lineageos/aperture/utils/StorageUtils.kt
++++ b/app/src/main/java/org/lineageos/aperture/utils/StorageUtils.kt
+@@ -13,6 +13,8 @@ import android.os.Environment
+ import android.provider.MediaStore
+ import androidx.camera.core.ImageCapture
+ import androidx.camera.video.MediaStoreOutputOptions
++import java.io.ByteArrayOutputStream
++import java.io.OutputStream
+ import java.text.SimpleDateFormat
+ import java.util.Locale
+ 
+@@ -25,7 +27,8 @@ object StorageUtils {
+      */
+     fun getPhotoMediaStoreOutputOptions(
+         contentResolver: ContentResolver,
+-        metadata: ImageCapture.Metadata
++        metadata: ImageCapture.Metadata,
++        outputStream: OutputStream? = null
+     ): ImageCapture.OutputFileOptions {
+         val contentValues = ContentValues().apply {
+             put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
+@@ -35,11 +38,15 @@ object StorageUtils {
+             }
+         }
+ 
+-        return ImageCapture.OutputFileOptions
+-            .Builder(
++        val outputFileOptions = if (outputStream != null) {
++            ImageCapture.OutputFileOptions.Builder(outputStream)
++        } else {
++            ImageCapture.OutputFileOptions.Builder(
+                 contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                 contentValues
+             )
++        }
++        return outputFileOptions
+             .setMetadata(metadata)
+             .build()
+     }
+-- 
+2.39.1
+
