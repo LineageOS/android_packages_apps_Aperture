@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,6 +13,8 @@ import android.os.Environment
 import android.provider.MediaStore
 import androidx.camera.core.ImageCapture
 import androidx.camera.video.MediaStoreOutputOptions
+import java.io.ByteArrayOutputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -25,7 +27,8 @@ object StorageUtils {
      */
     fun getPhotoMediaStoreOutputOptions(
         contentResolver: ContentResolver,
-        metadata: ImageCapture.Metadata
+        metadata: ImageCapture.Metadata,
+        outputStream: OutputStream? = null
     ): ImageCapture.OutputFileOptions {
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
@@ -35,11 +38,15 @@ object StorageUtils {
             }
         }
 
-        return ImageCapture.OutputFileOptions
-            .Builder(
+        val outputFileOptions = if (outputStream != null) {
+            ImageCapture.OutputFileOptions.Builder(outputStream)
+        } else {
+            ImageCapture.OutputFileOptions.Builder(
                 contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 contentValues
             )
+        }
+        return outputFileOptions
             .setMetadata(metadata)
             .build()
     }

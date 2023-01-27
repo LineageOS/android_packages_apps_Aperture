@@ -10,6 +10,7 @@ import android.annotation.SuppressLint
 import android.app.KeyguardManager
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
@@ -89,6 +90,7 @@ import org.lineageos.aperture.utils.CameraManager
 import org.lineageos.aperture.utils.CameraMode
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.CameraState
+import org.lineageos.aperture.utils.ExifUtils
 import org.lineageos.aperture.utils.FlashMode
 import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.GoogleLensUtils
@@ -101,7 +103,10 @@ import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
 import org.lineageos.aperture.utils.TimerMode
 import org.lineageos.aperture.utils.VideoStabilizationMode
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
+import java.io.InputStream
 import java.util.concurrent.ExecutorService
 import kotlin.math.abs
 import kotlin.reflect.safeCast
@@ -699,11 +704,14 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         // Set capture preview callback
-        capturePreviewLayout.onChoiceCallback = { uri ->
-            uri?.let {
-                sendIntentResultAndExit(it)
-            } ?: run {
-                capturePreviewLayout.isVisible = false
+        capturePreviewLayout.onChoiceCallback = { input ->
+            when (input) {
+                null -> {
+                    capturePreviewLayout.isVisible = false
+                }
+                is InputStream,
+                is Uri -> sendIntentResultAndExit(input)
+                else -> throw Exception("Invalid input")
             }
         }
 
@@ -850,12 +858,19 @@ open class CameraActivity : AppCompatActivity() {
         cameraState = CameraState.TAKING_PHOTO
         shutterButton.isEnabled = false
 
+        val photoOutputStream = if (singleCaptureMode) {
+            ByteArrayOutputStream(SINGLE_CAPTURE_PHOTO_BUFFER_INITIAL_SIZE_BYTES)
+        } else {
+            null
+        }
+
         // Create output options object which contains file + metadata
         val outputOptions = StorageUtils.getPhotoMediaStoreOutputOptions(
             contentResolver,
             ImageCapture.Metadata().apply {
                 location = this@CameraActivity.location
-            }
+            },
+            photoOutputStream
         )
 
         // Set up image capture listener, which is triggered after photo has
@@ -887,6 +902,11 @@ open class CameraActivity : AppCompatActivity() {
                     } else {
                         output.savedUri?.let {
                             openCapturePreview(it, MediaType.PHOTO)
+                        }
+                        photoOutputStream?.use {
+                            openCapturePreview(
+                                ByteArrayInputStream(photoOutputStream.toByteArray())
+                            )
                         }
                     }
                 }
@@ -1716,7 +1736,14 @@ open class CameraActivity : AppCompatActivity() {
 
     private fun openCapturePreview(uri: Uri, mediaType: MediaType) {
         runOnUiThread {
-            capturePreviewLayout.updateUri(uri, mediaType)
+            capturePreviewLayout.updateSource(uri, mediaType)
+            capturePreviewLayout.isVisible = true
+        }
+    }
+
+    private fun openCapturePreview(photoInputStream: InputStream) {
+        runOnUiThread {
+            capturePreviewLayout.updateSource(photoInputStream)
             capturePreviewLayout.isVisible = true
         }
     }
@@ -1725,7 +1752,7 @@ open class CameraActivity : AppCompatActivity() {
      * When the user took a photo or a video and confirmed it, its URI gets sent back to the
      * app that sent the intent and closes the camera.
      */
-    private fun sendIntentResultAndExit(uri: Uri) {
+    private fun sendIntentResultAndExit(input: Any) {
         // The user confirmed the choice
         var outputUri: Uri? = null
         if (intent.extras?.containsKey(MediaStore.EXTRA_OUTPUT) == true) {
@@ -1739,9 +1766,15 @@ open class CameraActivity : AppCompatActivity() {
 
         outputUri?.let {
             try {
-                contentResolver.openInputStream(uri).use { inputStream ->
-                    contentResolver.openOutputStream(it).use { outputStream ->
-                        inputStream!!.copyTo(outputStream!!)
+                contentResolver.openOutputStream(it).use { outputStream ->
+                    when (input) {
+                        is InputStream -> input.use {
+                            input.copyTo(outputStream!!)
+                        }
+                        is Uri -> contentResolver.openInputStream(input).use { inputStream ->
+                            inputStream!!.copyTo(outputStream!!)
+                        }
+                        else -> throw IllegalStateException("Input is not Uri or InputStream")
                     }
                 }
 
@@ -1751,9 +1784,25 @@ open class CameraActivity : AppCompatActivity() {
                 setResult(RESULT_CANCELED)
             }
         } ?: setResult(RESULT_OK, Intent().apply {
-            data = uri
-            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-            putExtra(MediaStore.EXTRA_OUTPUT, uri)
+            when (input) {
+                is InputStream -> {
+                    // No output URI provided, so return the photo inline as a downscaled Bitmap.
+                    action = "inline-data"
+                    val transform = ExifUtils.getTransform(input)
+                    val bitmap = input.use { BitmapFactory.decodeStream(input) }
+                    val scaledAndRotatedBitmap = bitmap.scale(
+                        SINGLE_CAPTURE_INLINE_MAX_SIDE_LEN_PIXELS
+                    ).transform(transform)
+                    putExtra("data", scaledAndRotatedBitmap)
+                }
+                is Uri -> {
+                    // We saved the media (video), so return the URI that we saved.
+                    data = input
+                    flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    putExtra(MediaStore.EXTRA_OUTPUT, input)
+                }
+                else -> throw IllegalStateException("Input is not Uri or InputStream")
+            }
         })
 
         finish()
@@ -1836,6 +1885,16 @@ open class CameraActivity : AppCompatActivity() {
         private const val MSG_HIDE_FOCUS_RING = 1
         private const val MSG_HIDE_EXPOSURE_SLIDER = 2
         private const val MSG_ON_PINCH_TO_ZOOM = 3
+
+        private const val SINGLE_CAPTURE_PHOTO_BUFFER_INITIAL_SIZE_BYTES = 8 * 1024 * 1024 // 8 MiB
+
+        // We need to return something small enough so as not to overwhelm Binder. 1MB is the
+        // per-process limit across all transactions. Camera2 sets a max pixel count of 51200.
+        // We set a max side length of 256, for a max pixel count of 65536. Even at 4 bytes per
+        // pixel, this is only 256K, well within the limits. (Note: It's not clear if any modern
+        // app expects a photo to be returned inline, rather than providing an output URI.)
+        // https://developer.android.com/guide/components/activities/parcelables-and-bundles#sdbp
+        private const val SINGLE_CAPTURE_INLINE_MAX_SIDE_LEN_PIXELS = 256
 
         private val EXPOSURE_LEVEL_FORMATTER = DecimalFormat("+#;-#")
     }

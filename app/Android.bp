@@ -19,6 +19,7 @@ android_app {
         "androidx.core_core-ktx",
         "androidx.appcompat_appcompat",
         "androidx-constraintlayout_constraintlayout",
+        "androidx.exifinterface_exifinterface",
         "androidx.lifecycle_lifecycle-viewmodel-ktx",
         "androidx.preference_preference",
         "Aperture_com.google.android.material_material",
