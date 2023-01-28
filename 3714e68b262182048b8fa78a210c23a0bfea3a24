@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "986e9e97_caa578ed",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-28T23:04:06Z",
+      "side": 1,
+      "message": "https://developer.android.com/guide/components/activities/parcelables-and-bundles#sdbp",
+      "parentUuid": "a5176ee5_cc4ca434",
+      "revId": "3714e68b262182048b8fa78a210c23a0bfea3a24",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "23464776_a34b3a5a",
         "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
         "patchSetId": 6
