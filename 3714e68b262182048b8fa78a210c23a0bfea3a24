@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5176ee5_cc4ca434",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1753,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-01-28T22:56:49Z",
+      "side": 1,
+      "message": "afaik there\u0027s an hard limit on the size you can put in extra data, that\u0027s likely why cam2 handled it differently",
+      "revId": "3714e68b262182048b8fa78a210c23a0bfea3a24",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "23464776_a34b3a5a",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1754,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-01-28T22:56:49Z",
+      "side": 1,
+      "message": "close directly here?",
+      "revId": "3714e68b262182048b8fa78a210c23a0bfea3a24",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
