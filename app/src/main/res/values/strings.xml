@@ -67,6 +67,7 @@
     <string name="camcorder_unsupported_toast">No camera supports video recording.</string>
 
     <!-- QR dialog -->
+    <string name="qr_dpp">Wi-Fi Easy Connect™ (DPP)</string>
     <string name="qr_copy_description">Copy to clipboard</string>
     <string name="qr_icon_description">Icon</string>
     <string name="qr_share_description">Share</string>
