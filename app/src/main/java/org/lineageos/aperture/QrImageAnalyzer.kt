@@ -42,7 +42,9 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
         bottomSheetDialog.findViewById<TextView>(R.id.title)!!
     }
     private val bottomSheetDialogData by lazy {
-        bottomSheetDialog.findViewById<TextView>(R.id.data)!!
+        bottomSheetDialog.findViewById<TextView>(R.id.data)!!.apply {
+            setTextClassifier(QrTextClassifier(context, textClassifier))
+        }
     }
     private val bottomSheetDialogIcon by lazy {
         bottomSheetDialog.findViewById<ImageView>(R.id.icon)!!
