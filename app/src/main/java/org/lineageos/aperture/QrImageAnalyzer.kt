@@ -31,6 +31,7 @@ import com.google.zxing.BinaryBitmap
 import com.google.zxing.MultiFormatReader
 import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
+import org.lineageos.aperture.utils.QrTextClassifier
 
 class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
     private val bottomSheetDialog by lazy {
@@ -42,7 +43,9 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
         bottomSheetDialog.findViewById<TextView>(R.id.title)!!
     }
     private val bottomSheetDialogData by lazy {
-        bottomSheetDialog.findViewById<TextView>(R.id.data)!!
+        bottomSheetDialog.findViewById<TextView>(R.id.data)!!.apply {
+            setTextClassifier(QrTextClassifier(context, textClassifier))
+        }
     }
     private val bottomSheetDialogIcon by lazy {
         bottomSheetDialog.findViewById<ImageView>(R.id.icon)!!
