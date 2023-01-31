@@ -12,11 +12,13 @@ import android.content.Intent
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.net.wifi.WifiManager
+import android.net.wifi.WifiNetworkSuggestion
 import android.os.Build
 import android.os.LocaleList
 import android.provider.Settings
 import android.view.textclassifier.TextClassification
 import android.view.textclassifier.TextClassifier
+import androidx.annotation.RequiresApi
 import org.lineageos.aperture.R
 
 class QrTextClassifier(
@@ -55,6 +57,33 @@ class QrTextClassifier(
                 )
                 .build()
         }
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && isValidWifiUri(text.toString()) -> {
+            val networkSuggestion = processWifiNetworkQr(text.toString())!!
+            val ssid = networkSuggestion.ssid!!
+
+            TextClassification.Builder()
+                .setText(ssid)
+                .setEntityType(TextClassifier.TYPE_OTHER, 1.0f)
+                .addAction(
+                    RemoteAction(
+                        Icon.createWithResource(context, R.drawable.ic_network_wifi),
+                        context.getString(R.string.qr_wifi_title),
+                        ssid,
+                        PendingIntent.getActivity(
+                            context,
+                            0,
+                            Intent(Settings.ACTION_WIFI_ADD_NETWORKS).apply {
+                                putExtra(
+                                    Settings.EXTRA_WIFI_NETWORK_LIST,
+                                    arrayListOf(networkSuggestion)
+                                )
+                            },
+                            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                        )
+                    )
+                )
+                .build()
+        }
         else -> parent.classifyText(text, startIndex, endIndex, defaultLocales)
     }
 
@@ -63,5 +92,47 @@ class QrTextClassifier(
             text.startsWith("DPP:") &&
                     text.split(";").firstOrNull { it.startsWith("K:") } != null &&
                     runCatching { Uri.parse(text) }.getOrNull() != null
+
+        private const val WIFI_PREFIX = "WIFI:"
+
+        @RequiresApi(Build.VERSION_CODES.Q)
+        private fun isValidWifiUri(text: String) = processWifiNetworkQr(text) != null
+
+        @RequiresApi(Build.VERSION_CODES.Q)
+        private fun processWifiNetworkQr(text: String): WifiNetworkSuggestion? {
+            if (!text.startsWith(WIFI_PREFIX)) {
+                return null
+            }
+
+            val data = text.substring(WIFI_PREFIX.length).split(";").mapNotNull {
+                runCatching {
+                    with(it.split(":", limit = 2)) {
+                        this[0] to this[1]
+                    }
+                }.getOrNull()
+            }.toMap()
+
+            val ssid = data["S"] ?: return null
+            val isHiddenSsid = data["H"] == "true"
+            val password = data["P"]
+            val encryptionType = data["T"]
+
+            // WEP is deprecated
+            if (encryptionType == "WEP") {
+                return null
+            }
+
+            return WifiNetworkSuggestion.Builder()
+                .setSsid(ssid)
+                .setIsHiddenSsid(isHiddenSsid)
+                .apply {
+                    password?.let {
+                        // Wi-Fi QR codes uses "WPA" for WPA/WPA2/WPA3 networks,
+                        // let's pray for the best
+                        setWpa2Passphrase(it)
+                    }
+                }
+                .build()
+        }
     }
 }
