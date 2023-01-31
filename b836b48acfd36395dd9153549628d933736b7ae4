@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "510bbc49_b8972add",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-01-31T09:00:04Z",
+      "side": 1,
+      "message": "I don\u0027t have any real device to check it with, but it seems to be good.",
+      "revId": "b836b48acfd36395dd9153549628d933736b7ae4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
