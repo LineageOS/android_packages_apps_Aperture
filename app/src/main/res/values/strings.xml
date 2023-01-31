@@ -70,6 +70,7 @@
     <string name="qr_copy_description">Copy to clipboard</string>
     <string name="qr_icon_description">Icon</string>
     <string name="qr_share_description">Share</string>
+    <string name="qr_wifi_title">Connect to this Wi-Fi network</string>
     <string name="qr_dpp_title" translatable="false">Wi-Fi Easy Connect™ (DPP)</string>
     <string name="qr_dpp_description">Configure this device</string>
     <string name="qr_text">Text</string>

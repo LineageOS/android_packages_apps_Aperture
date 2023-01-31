@@ -55,6 +55,33 @@ class QrTextClassifier(
                 )
                 .build()
         }
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && isValidWifiUri(text.toString()) -> {
+            val wifiNetwork = WifiNetwork.fromQr(text.toString())!!
+            val networkSuggestion = wifiNetwork.toNetworkSuggestion()!!
+
+            TextClassification.Builder()
+                .setText(wifiNetwork.ssid)
+                .setEntityType(TextClassifier.TYPE_OTHER, 1.0f)
+                .addAction(
+                    RemoteAction(
+                        Icon.createWithResource(context, R.drawable.ic_network_wifi),
+                        context.getString(R.string.qr_wifi_title),
+                        wifiNetwork.ssid,
+                        PendingIntent.getActivity(
+                            context,
+                            0,
+                            Intent(Settings.ACTION_WIFI_ADD_NETWORKS).apply {
+                                putExtra(
+                                    Settings.EXTRA_WIFI_NETWORK_LIST,
+                                    arrayListOf(networkSuggestion)
+                                )
+                            },
+                            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                        )
+                    )
+                )
+                .build()
+        }
         else -> parent.classifyText(text, startIndex, endIndex, defaultLocales)
     }
 
@@ -63,5 +90,9 @@ class QrTextClassifier(
             text.startsWith("DPP:") &&
                     text.split(";").firstOrNull { it.startsWith("K:") } != null &&
                     runCatching { Uri.parse(text) }.getOrNull() != null
+
+        private fun isValidWifiUri(text: String) =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+                    WifiNetwork.fromQr(text)?.toNetworkSuggestion() != null
     }
 }
