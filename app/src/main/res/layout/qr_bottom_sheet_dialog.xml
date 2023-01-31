@@ -30,6 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:layout_marginTop="12dp"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="@color/gray_60"
         app:cardCornerRadius="12dp"
         app:cardElevation="0dp"
