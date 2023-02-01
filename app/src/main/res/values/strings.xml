@@ -84,7 +84,7 @@
 
     <!-- General Preferences -->
     <string name="bright_screen_title">Bright screen</string>
-    <string name="bright_screen_summary">Locks brightness to 100%</string>
+    <string name="bright_screen_summary" formatted="false">Locks brightness to 100%</string>
     <string name="save_location_title">Save location data</string>
     <string name="save_location_summary">Include GPS location in metadata</string>
     <string name="save_location_toast">Location permissions not granted by the user.</string>
