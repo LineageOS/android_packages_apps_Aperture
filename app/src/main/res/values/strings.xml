@@ -19,7 +19,6 @@
     <string name="photo_mode_button_description">Switch to photo mode</string>
     <string name="pro_button_description">Pro settings</string>
     <string name="qr_mode_button_description">Switch to QR scanner mode</string>
-    <string name="settings_back_button_description">Go back to camera mode</string>
     <string name="shutter_button_description">Shutter</string>
     <string name="video_mode_button_description">Switch to video mode</string>
     <string name="video_recording_state_button_description">Pause/resume video recording</string>

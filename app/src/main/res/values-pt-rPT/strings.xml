@@ -15,7 +15,6 @@
     <string name="photo_mode_button_description">Mudar para o modo fotografia</string>
     <string name="pro_button_description">Definições avançadas</string>
     <string name="qr_mode_button_description">Mudar para o modo digitalizador QR</string>
-    <string name="settings_back_button_description">Voltar ao modo câmara</string>
     <string name="shutter_button_description">Obturador</string>
     <string name="video_mode_button_description">Mudar para o modo vídeo</string>
     <string name="video_recording_state_button_description">Pausar/Continuar gravação</string>

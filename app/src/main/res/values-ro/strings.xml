@@ -16,7 +16,6 @@
     <string name="photo_mode_button_description">Comutare la modul fotografie</string>
     <string name="pro_button_description">Setări Pro</string>
     <string name="qr_mode_button_description">Comutare la modul de scanare QR</string>
-    <string name="settings_back_button_description">Înapoi la modul cameră</string>
     <string name="shutter_button_description">Obturator</string>
     <string name="video_mode_button_description">Comutare la modul video</string>
     <string name="video_recording_state_button_description">Întrerupere/reluare înregistrare video</string>

@@ -16,7 +16,6 @@
     <string name="photo_mode_button_description">Preklopi na način fotografiranja</string>
     <string name="pro_button_description">Pro nastavitve</string>
     <string name="qr_mode_button_description">Preklopi na način QR bralnika</string>
-    <string name="settings_back_button_description">Pojdi nazaj na način fotoaparata</string>
     <string name="shutter_button_description">Sprožilec</string>
     <string name="video_mode_button_description">Preklopi na način videoposnetka</string>
     <string name="video_recording_state_button_description">Premor/nadaljevanje snemanja videoposnetka</string>

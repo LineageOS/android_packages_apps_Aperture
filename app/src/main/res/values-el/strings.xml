@@ -16,7 +16,6 @@
     <string name="photo_mode_button_description">Εναλλαγή σε λειτουργία φωτογραφίας</string>
     <string name="pro_button_description">Προηγμένες ρυθμίσεις</string>
     <string name="qr_mode_button_description">Εναλλαγή σε λειτουργία σάρωσης QR</string>
-    <string name="settings_back_button_description">Μετάβαση πίσω στη λειτουργία κάμερας</string>
     <string name="shutter_button_description">Κλείστρο</string>
     <string name="video_mode_button_description">Εναλλαγή σε λειτουργία βίντεο</string>
     <string name="video_recording_state_button_description">Παύση/συνέχιση της εγγραφής βίντεο</string>

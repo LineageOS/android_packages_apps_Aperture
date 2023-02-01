@@ -16,7 +16,6 @@
     <string name="photo_mode_button_description">Váltás fotómódra</string>
     <string name="pro_button_description">Pro-beállítások</string>
     <string name="qr_mode_button_description">Váltás QR-kódolvasó módra</string>
-    <string name="settings_back_button_description">Visszatérés kameramódba</string>
     <string name="shutter_button_description">Exponálógomb</string>
     <string name="video_mode_button_description">Váltás videómódra</string>
     <string name="video_recording_state_button_description">Videófelvétel megállítása/folytatása</string>

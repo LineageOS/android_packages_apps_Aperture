@@ -16,7 +16,6 @@
     <string name="photo_mode_button_description">Fotoğraf moduna geç</string>
     <string name="pro_button_description">Pro ayarları</string>
     <string name="qr_mode_button_description">Kare kod okuyucusuna geç</string>
-    <string name="settings_back_button_description">Kamera moduna dön</string>
     <string name="shutter_button_description">Deklanşör</string>
     <string name="video_mode_button_description">Video moduna geç</string>
     <string name="video_recording_state_button_description">Video kaydını duraklat/devam ettir</string>

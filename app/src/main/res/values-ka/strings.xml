@@ -16,7 +16,6 @@
     <string name="photo_mode_button_description">ფოტოს რეჟიმზე გადართვა</string>
     <string name="pro_button_description">გამოცდილთათვის</string>
     <string name="qr_mode_button_description">QR-წამკითხველის რეჟიმზე გადართვა</string>
-    <string name="settings_back_button_description">დაბრუნება კამერის რეჟიმზე</string>
     <string name="shutter_button_description">ჩამკეტი</string>
     <string name="video_mode_button_description">ვიდეოს რეჟიმზე გადართვა</string>
     <string name="video_recording_state_button_description">ვიდეოს ჩაწერის შეჩერება/განგრძობა</string>

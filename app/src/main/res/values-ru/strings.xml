@@ -16,7 +16,6 @@
     <string name="photo_mode_button_description">Переключить в режим фото</string>
     <string name="pro_button_description">Профессиональные настройки</string>
     <string name="qr_mode_button_description">Переключить в режим QR-сканера</string>
-    <string name="settings_back_button_description">Вернуться в режим камеры</string>
     <string name="shutter_button_description">Затвор</string>
     <string name="video_mode_button_description">Переключить в режим видео</string>
     <string name="video_recording_state_button_description">Пауза/возобновление видеозаписи</string>

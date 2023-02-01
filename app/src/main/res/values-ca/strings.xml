@@ -16,7 +16,6 @@
     <string name="photo_mode_button_description">Canvia al mode foto</string>
     <string name="pro_button_description">Configuració pro</string>
     <string name="qr_mode_button_description">Canvia al mode d\'escàner QR</string>
-    <string name="settings_back_button_description">Torna al mode de càmera</string>
     <string name="shutter_button_description">Obturador</string>
     <string name="video_mode_button_description">Canvia al mode vídeo</string>
     <string name="video_recording_state_button_description">Pausa/reprèn la gravació de vídeo</string>

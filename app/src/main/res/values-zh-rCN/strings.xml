@@ -16,7 +16,6 @@
     <string name="photo_mode_button_description">切换到拍照模式</string>
     <string name="pro_button_description">专业设置</string>
     <string name="qr_mode_button_description">切换到二维码扫描模式</string>
-    <string name="settings_back_button_description">返回相机模式</string>
     <string name="shutter_button_description">快门</string>
     <string name="video_mode_button_description">切换到视频模式</string>
     <string name="video_recording_state_button_description">暂停/继续视频录制</string>

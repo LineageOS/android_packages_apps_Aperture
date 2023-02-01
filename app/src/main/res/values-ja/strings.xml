@@ -16,7 +16,6 @@
     <string name="photo_mode_button_description">写真モードに切り替える</string>
     <string name="pro_button_description">プロ設定</string>
     <string name="qr_mode_button_description">QR スキャナモードに切り替える</string>
-    <string name="settings_back_button_description">カメラモードに戻る</string>
     <string name="shutter_button_description">シャッター</string>
     <string name="video_mode_button_description">ビデオモードに切り替える</string>
     <string name="video_recording_state_button_description">録画を一時停止/再開</string>
