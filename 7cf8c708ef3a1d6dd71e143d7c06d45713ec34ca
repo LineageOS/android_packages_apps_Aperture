@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4fa1902b_ed059b9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-02-01T16:42:45Z",
+      "side": 1,
+      "message": "Not sure if I should nuke it from translated strings, or let next crowdin update deal with that.",
+      "revId": "7cf8c708ef3a1d6dd71e143d7c06d45713ec34ca",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
