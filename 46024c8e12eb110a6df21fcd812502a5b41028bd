@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "618b61b5_5ec35b46",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/AssistantUtils.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2023-02-03T10:14:50Z",
+      "side": 1,
+      "message": "How about collapsing those two into one? (untested)\n```\nfun getCameraFacing(extras: Bundle?): CameraFacing? {\n    val useFrontCamera \u003d extras?.let {\n        if (it.containsKey(EXTRA_USE_FRONT_CAMERA)) {\n            it.getBoolean(EXTRA_USE_FRONT_CAMERA)\n        } else {\n            null\n        }\n    }\n    return useFrontCamera?.let {\n        if (it) CameraFacing.FRONT else CameraFacing.BACK\n    }\n}\n```\n\nwhich would then be used as\n```\ninitialCameraFacing \u003d AssistantUtils.getCameraFacing(intent.extras) ?: sharedPreferences.lastCameraFacing\n```\n\nLikewise for the methods below.",
+      "revId": "46024c8e12eb110a6df21fcd812502a5b41028bd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
