@@ -19,7 +19,6 @@ import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sin
-import kotlin.runCatching
 
 class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context, attributeSet) {
     private var currentOrientation = ORIENTATION_UNKNOWN

@@ -6,8 +6,8 @@
 package org.lineageos.aperture.utils
 
 import android.annotation.SuppressLint
-import android.content.res.Resources
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.media.MediaActionSound
 import android.os.Build
 import org.lineageos.aperture.shutterSound
