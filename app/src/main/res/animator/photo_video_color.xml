@@ -7,6 +7,6 @@
     <objectAnimator
         android:duration="300"
         android:propertyName="fillColor"
-        android:valueFrom="@color/gray_60"
+        android:valueFrom="?attr/colorSecondaryContainer"
         android:valueTo="@android:color/white" />
 </set>
