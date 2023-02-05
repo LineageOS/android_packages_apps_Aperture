@@ -6,7 +6,6 @@
 package org.lineageos.aperture.utils
 
 import android.content.Context
-import android.hardware.camera2.CameraManager as Camera2CameraManager
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.Quality
@@ -16,6 +15,7 @@ import org.lineageos.aperture.getBoolean
 import org.lineageos.aperture.getStringArray
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import android.hardware.camera2.CameraManager as Camera2CameraManager
 
 /**
  * Class managing an app camera session

@@ -7,8 +7,8 @@
     android:drawable="@drawable/ic_shutter_base">
     <target
         android:name="capture"
-        android:animation="@animator/photo_capture"/>
+        android:animation="@animator/photo_capture" />
     <target
         android:name="record"
-        android:animation="@animator/photo_capture"/>
+        android:animation="@animator/photo_capture" />
 </animated-vector>

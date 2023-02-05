@@ -3,7 +3,7 @@
      SPDX-FileCopyrightText: 2023 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Settings activity theme. -->
     <style name="Theme.Aperture.Settings" parent="Theme.Aperture.Settings.Base">
         <item name="android:windowLightStatusBar">false</item>

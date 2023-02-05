@@ -7,8 +7,8 @@
     android:drawable="@drawable/ic_shutter_base">
     <target
         android:name="capture"
-        android:animation="@animator/photo_video_scale"/>
+        android:animation="@animator/photo_video_scale" />
     <target
         android:name="capture_src"
-        android:animation="@animator/photo_video_color"/>
+        android:animation="@animator/photo_video_color" />
 </animated-vector>
