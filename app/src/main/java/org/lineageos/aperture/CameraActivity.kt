@@ -225,6 +225,13 @@ open class CameraActivity : AppCompatActivity() {
                             CameraMode.QR -> changeCameraMode(CameraMode.PHOTO)
                         }
                     }
+                } else if (!handler.hasMessages(MSG_ON_PINCH_TO_ZOOM) &&
+                    abs(e1.y - e2.y) > 75 * resources.displayMetrics.density &&
+                    e2.y > e1.y &&
+                    cameraMode != CameraMode.QR
+                ) {
+                    // Up to down
+                    flipCamera()
                 }
                 return true
             }
