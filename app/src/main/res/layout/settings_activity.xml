@@ -8,36 +8,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context=".SettingsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar_layout"
+            style="?attr/collapsingToolbarLayoutLargeStyle"
             android:layout_width="match_parent"
             android:layout_height="179dp"
-            app:collapsedTitleGravity="start"
             app:collapsedTitleTextAppearance="@style/Theme.Aperture.Camera.ToolbarCollapsed"
             app:expandedTitleMarginBottom="31dp"
             app:expandedTitleMarginStart="24dp"
-            app:expandedTitleMarginTop="0dp"
             app:expandedTitleTextAppearance="@style/Theme.Aperture.Camera.ToolbarExpanded"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:scrimAnimationDuration="50"
-            app:titleCollapseMode="scale"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:titleCollapseMode="fade"
             app:toolbarId="@id/toolbar">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
-                android:transitionName="shared_element_view"
-                app:layout_collapseMode="pin">
-
-            </androidx.appcompat.widget.Toolbar>
+                android:elevation="0dp"
+                app:layout_collapseMode="pin" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
