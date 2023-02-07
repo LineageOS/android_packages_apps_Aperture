@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f468247_94698fc0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 30793
+      },
+      "writtenOn": "2023-02-07T16:02:44Z",
+      "side": 1,
+      "message": "I know it\u0027s only a POC, but I\u0027d say that a simple toggle button for 18 different modes is a bit tedious. Maybe an overlay with a grid of options (like in other camera apps) would be better. Example from the Motorola camera: https://imgur.com/a/3KRR6On",
+      "revId": "cd44044d7cadf8caf19cd4a4132f6c867ba65efb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
