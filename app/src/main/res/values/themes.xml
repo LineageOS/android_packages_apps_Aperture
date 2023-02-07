@@ -23,17 +23,14 @@
     </style>
 
     <!-- Settings activity theme. -->
-    <style name="Theme.Aperture.Settings.Base" parent="Theme.Aperture">
+    <style name="Theme.Aperture.Settings" parent="Theme.Aperture">
         <item name="android:switchStyle">@style/Theme.Aperture.Settings.Switch</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="alertDialogTheme">@style/Theme.Aperture.Settings.AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/Theme.Aperture.Settings.AlertDialog</item>
-    </style>
-
-    <style name="Theme.Aperture.Settings" parent="Theme.Aperture.Settings.Base">
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <!-- Settings alert dialog theme. -->
