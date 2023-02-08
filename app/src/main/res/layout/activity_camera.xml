@@ -319,6 +319,19 @@
         </androidx.cardview.widget.CardView>
 
         <ImageButton
+            android:id="@+id/googleLensButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@null"
+            android:contentDescription="@string/flip_camera_button_description"
+            android:scaleType="center"
+            android:src="@drawable/ic_google_lens"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/shutterButton"
+            app:layout_constraintStart_toEndOf="@+id/galleryButtonCardView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
             android:id="@+id/flipCameraButton"
             android:layout_width="60dp"
             android:layout_height="60dp"

@@ -37,6 +37,9 @@ android_app {
     optional_uses_libs: [
         "androidx.camera.extensions.impl"
     ],
+    required: [
+        "ApertureLensLauncher",
+    ],
 
     optimize: {
         proguard_flags_files: ["proguard-rules.pro"],
