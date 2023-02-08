@@ -15,6 +15,7 @@
     <string name="flash_button_description">Flash mode</string>
     <string name="flip_camera_button_description">Flip camera</string>
     <string name="gallery_button_description">Gallery</string>
+    <string name="google_lens_button_description">Open Google Lens</string>
     <string name="image_view_description">Image preview</string>
     <string name="photo_mode_button_description">Switch to photo mode</string>
     <string name="pro_button_description">Pro settings</string>
