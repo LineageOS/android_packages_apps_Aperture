@@ -55,6 +55,7 @@ import androidx.camera.view.onPinchToZoom
 import androidx.camera.view.video.AudioConfig
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat.getInsetsController
 import androidx.core.view.WindowInsetsCompat
@@ -90,6 +91,7 @@ import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.CameraState
 import org.lineageos.aperture.utils.FlashMode
 import org.lineageos.aperture.utils.Framerate
+import org.lineageos.aperture.utils.GoogleLensUtils
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.MediaType
 import org.lineageos.aperture.utils.PermissionsUtils
@@ -120,6 +122,7 @@ open class CameraActivity : AppCompatActivity() {
     private val flipCameraButton by lazy { findViewById<ImageButton>(R.id.flipCameraButton) }
     private val galleryButton by lazy { findViewById<ImageView>(R.id.galleryButton) }
     private val galleryButtonCardView by lazy { findViewById<CardView>(R.id.galleryButtonCardView) }
+    private val googleLensButton by lazy { findViewById<ImageButton>(R.id.googleLensButton) }
     private val gridButton by lazy { findViewById<Button>(R.id.gridButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
     private val lensSelectorLayout by lazy { findViewById<LensSelectorLayout>(R.id.lensSelectorLayout) }
@@ -127,7 +130,7 @@ open class CameraActivity : AppCompatActivity() {
     private val micButton by lazy { findViewById<Button>(R.id.micButton) }
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
     private val previewBlurView by lazy { findViewById<PreviewBlurView>(R.id.previewBlurView) }
-    private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
+    private val primaryBarLayoutGroupPhoto by lazy { findViewById<Group>(R.id.primaryBarLayoutGroupPhoto) }
     private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
     private val secondaryBottomBarLayout by lazy { findViewById<ConstraintLayout>(R.id.secondaryBottomBarLayout) }
@@ -195,6 +198,7 @@ open class CameraActivity : AppCompatActivity() {
 
     // QR
     private val imageAnalyzer by lazy { QrImageAnalyzer(this) }
+    private val isGoogleLensAvailable by lazy { GoogleLensUtils.isGoogleLensAvailable(this) }
 
     private var viewFinderTouchEvent: MotionEvent? = null
     private val gestureDetector by lazy {
@@ -635,6 +639,11 @@ open class CameraActivity : AppCompatActivity() {
         videoModeButton.setOnClickListener { changeCameraMode(CameraMode.VIDEO) }
 
         flipCameraButton.setOnClickListener { flipCamera() }
+        googleLensButton.setOnClickListener {
+            dismissKeyguardAndRun {
+                GoogleLensUtils.launchGoogleLens(this)
+            }
+        }
 
         videoRecordingStateButton.setOnClickListener {
             when (cameraState) {
@@ -1050,17 +1059,20 @@ open class CameraActivity : AppCompatActivity() {
             CameraMode.QR -> {
                 timerButton.isVisible = false
                 secondaryBottomBarLayout.isVisible = false
-                primaryBarLayout.isVisible = false
+                primaryBarLayoutGroupPhoto.isVisible = false
+                googleLensButton.isVisible = isGoogleLensAvailable
             }
             CameraMode.PHOTO -> {
                 timerButton.isVisible = true
                 secondaryBottomBarLayout.isVisible = true
-                primaryBarLayout.isVisible = true
+                primaryBarLayoutGroupPhoto.isVisible = true
+                googleLensButton.isVisible = false
             }
             CameraMode.VIDEO -> {
                 timerButton.isVisible = true
                 secondaryBottomBarLayout.isVisible = true
-                primaryBarLayout.isVisible = true
+                primaryBarLayoutGroupPhoto.isVisible = true
+                googleLensButton.isVisible = false
             }
         }
 
