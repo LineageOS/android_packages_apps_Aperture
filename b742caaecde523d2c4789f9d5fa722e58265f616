@@ -16,6 +16,24 @@
       "message": "Doesn\u0027t seem like that common of a gesture...",
       "revId": "b742caaecde523d2c4789f9d5fa722e58265f616",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dda42fb4_7bca8822",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 30793
+      },
+      "writtenOn": "2023-02-08T09:01:59Z",
+      "side": 1,
+      "message": "That is true, but I really liked that feature...",
+      "parentUuid": "5ca159bd_2b008871",
+      "revId": "b742caaecde523d2c4789f9d5fa722e58265f616",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
