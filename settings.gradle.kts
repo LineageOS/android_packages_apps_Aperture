@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Aperture"
 include(":app")
+include(":lens_launcher")

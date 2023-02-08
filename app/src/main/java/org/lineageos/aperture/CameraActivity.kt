@@ -90,6 +90,7 @@ import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.CameraState
 import org.lineageos.aperture.utils.FlashMode
 import org.lineageos.aperture.utils.Framerate
+import org.lineageos.aperture.utils.GoogleLensUtils
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.MediaType
 import org.lineageos.aperture.utils.PermissionsUtils
@@ -120,6 +121,7 @@ open class CameraActivity : AppCompatActivity() {
     private val flipCameraButton by lazy { findViewById<ImageButton>(R.id.flipCameraButton) }
     private val galleryButton by lazy { findViewById<ImageView>(R.id.galleryButton) }
     private val galleryButtonCardView by lazy { findViewById<CardView>(R.id.galleryButtonCardView) }
+    private val googleLensButton by lazy { findViewById<ImageButton>(R.id.googleLensButton) }
     private val gridButton by lazy { findViewById<Button>(R.id.gridButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
     private val lensSelectorLayout by lazy { findViewById<LensSelectorLayout>(R.id.lensSelectorLayout) }
@@ -633,6 +635,9 @@ open class CameraActivity : AppCompatActivity() {
         qrModeButton.setOnClickListener { changeCameraMode(CameraMode.QR) }
         photoModeButton.setOnClickListener { changeCameraMode(CameraMode.PHOTO) }
         videoModeButton.setOnClickListener { changeCameraMode(CameraMode.VIDEO) }
+
+        googleLensButton.isVisible = GoogleLensUtils.isGoogleLensAvailable(this)
+        googleLensButton.setOnClickListener { GoogleLensUtils.launchGoogleLens(this) }
 
         flipCameraButton.setOnClickListener { flipCamera() }
 
