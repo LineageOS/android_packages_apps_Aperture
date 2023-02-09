@@ -91,12 +91,9 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     val supportedExtensionModes = cameraManager.extensionsManager.getSupportedModes(cameraSelector)
 
-    val supportedStabilizationModes = mutableListOf(StabilizationMode.OFF).apply {
+    val supportedVideoStabilizationModes = mutableListOf(VideoStabilizationMode.OFF).apply {
         val availableVideoStabilizationModes = camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.CONTROL_AVAILABLE_VIDEO_STABILIZATION_MODES
-        ) ?: IntArray(0)
-        val availableOpticalStabilization = camera2CameraInfo.getCameraCharacteristic(
-            CameraCharacteristics.LENS_INFO_AVAILABLE_OPTICAL_STABILIZATION
         ) ?: IntArray(0)
 
         if (
@@ -104,7 +101,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
                 CameraMetadata.CONTROL_VIDEO_STABILIZATION_MODE_ON
             )
         ) {
-            add(StabilizationMode.DIGITAL)
+            add(VideoStabilizationMode.ON)
         }
         if (
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
@@ -112,14 +109,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
                 CameraMetadata.CONTROL_VIDEO_STABILIZATION_MODE_PREVIEW_STABILIZATION
             )
         ) {
-            add(StabilizationMode.HYBRID)
-        }
-        if (
-            availableOpticalStabilization.contains(
-                CameraMetadata.LENS_OPTICAL_STABILIZATION_MODE_ON
-            )
-        ) {
-            add(StabilizationMode.OPTICAL)
+            add(VideoStabilizationMode.ON_PREVIEW)
         }
     }.toList()
 

@@ -97,10 +97,10 @@ import org.lineageos.aperture.utils.MediaType
 import org.lineageos.aperture.utils.PermissionsUtils
 import org.lineageos.aperture.utils.Rotation
 import org.lineageos.aperture.utils.ShortcutsUtils
-import org.lineageos.aperture.utils.StabilizationMode
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
 import org.lineageos.aperture.utils.TimerMode
+import org.lineageos.aperture.utils.VideoStabilizationMode
 import java.io.FileNotFoundException
 import java.util.concurrent.ExecutorService
 import kotlin.math.abs
@@ -1099,15 +1099,14 @@ open class CameraActivity : AppCompatActivity() {
                                 null
                             }
                         )
-                        setStabilizationMode(
-                            (StabilizationMode::getClosestMode)(
-                                when (cameraMode) {
-                                    CameraMode.PHOTO -> sharedPreferences.imageStabilizationMode
-                                    CameraMode.VIDEO -> sharedPreferences.videoStabilizationMode
-                                    CameraMode.QR -> StabilizationMode.OFF
-                                },
-                                camera, cameraMode
-                            )
+                        setVideoStabilizationMode(
+                            if (cameraMode == CameraMode.VIDEO &&
+                                sharedPreferences.videoStabilization
+                            ) {
+                                VideoStabilizationMode.getMode(camera)
+                            } else {
+                                VideoStabilizationMode.OFF
+                            }
                         )
                     }
                     .build()
