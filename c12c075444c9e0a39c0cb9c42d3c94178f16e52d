@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "95266f9b_b3a1ba99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-10T06:39:25Z",
+      "side": 1,
+      "message": "`TAG_ORIENTATION` isn\u0027t degrees, it\u0027s more than that and needs to be handled in a more complex way, unfortunately.",
+      "parentUuid": "50090ef2_fa7d83d1",
+      "revId": "c12c075444c9e0a39c0cb9c42d3c94178f16e52d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ab72f1fd_908d120b",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-02-10T00:11:36Z",
       "side": 1,
       "message": "Camera2 rotates the image, which makes sense, since we\u0027re returning a Bitmap, so the calling app won\u0027t be able to consult the orientation. But I\u0027m not sure if this works.",
+      "revId": "c12c075444c9e0a39c0cb9c42d3c94178f16e52d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "68ea5161_66ae9e39",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1783,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-10T06:39:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab72f1fd_908d120b",
       "revId": "c12c075444c9e0a39c0cb9c42d3c94178f16e52d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
