@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7e73e099_7001bd30",
+        "filename": "app/build.gradle.kts",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-02-10T15:02:46Z",
+      "side": 0,
+      "message": "camera-core already includes exifinterface, you sure you need to still include it here?",
+      "revId": "5003810f79e6c32542241a16c2f80356ffd572d4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
