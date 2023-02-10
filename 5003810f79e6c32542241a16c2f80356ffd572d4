@@ -16,6 +16,40 @@
       "message": "camera-core already includes exifinterface, you sure you need to still include it here?",
       "revId": "5003810f79e6c32542241a16c2f80356ffd572d4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4a78f77_8f89fe89",
+        "filename": "app/src/main/java/org/lineageos/aperture/BitmapExt.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-02-10T16:45:03Z",
+      "side": 0,
+      "message": "2022-2023",
+      "revId": "5003810f79e6c32542241a16c2f80356ffd572d4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21d84150_9a03d4dd",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/StorageUtils.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-02-10T16:45:03Z",
+      "side": 0,
+      "message": "2022-2023",
+      "revId": "5003810f79e6c32542241a16c2f80356ffd572d4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
