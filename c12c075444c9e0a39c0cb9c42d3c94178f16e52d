@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab72f1fd_908d120b",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 1783,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-10T00:11:36Z",
+      "side": 1,
+      "message": "Camera2 rotates the image, which makes sense, since we\u0027re returning a Bitmap, so the calling app won\u0027t be able to consult the orientation. But I\u0027m not sure if this works.",
+      "revId": "c12c075444c9e0a39c0cb9c42d3c94178f16e52d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "accef002_85b510ef",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/CapturePreviewLayout.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-10T00:11:36Z",
+      "side": 1,
+      "message": "Photo rotation was wrong without this... Is there a better way? Not sure.",
+      "revId": "c12c075444c9e0a39c0cb9c42d3c94178f16e52d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
