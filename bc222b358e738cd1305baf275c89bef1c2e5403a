@@ -39,6 +39,30 @@
       },
       "revId": "bc222b358e738cd1305baf275c89bef1c2e5403a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bb87ebde_5532c8a9",
+        "filename": "lens_launcher/src/main/java/com/google/android/apps/googlecamera/fishfood/MainActivity.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-02-10T12:41:20Z",
+      "side": 1,
+      "message": "Because googlequicksearchbox needs to know if app that tried to start google lens is whitelisted.",
+      "parentUuid": "fd72a3c4_9d927166",
+      "range": {
+        "startLine": 17,
+        "startChar": 8,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "bc222b358e738cd1305baf275c89bef1c2e5403a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
