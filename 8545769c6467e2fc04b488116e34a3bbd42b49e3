@@ -16,6 +16,29 @@
       "message": "Works for me. Code style/structure imperfections aside, I\u0027d love to get this merged soon, so that users who are coerced into taking sensitive photos from the browser, e.g. for identity verification services (hello Airbnb / Superhog), don\u0027t unexpectedly have the photos saved to their gallery and remain there or synchronized to cloud services, etc.",
       "revId": "8545769c6467e2fc04b488116e34a3bbd42b49e3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea193daa_00ace42b",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/ExifUtils.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2023-02-10T15:53:34Z",
+      "side": 1,
+      "message": "2023?",
+      "range": {
+        "startLine": 2,
+        "startChar": 27,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "8545769c6467e2fc04b488116e34a3bbd42b49e3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
