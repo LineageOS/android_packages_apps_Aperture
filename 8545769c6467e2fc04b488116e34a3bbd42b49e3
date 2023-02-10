@@ -39,6 +39,30 @@
       },
       "revId": "8545769c6467e2fc04b488116e34a3bbd42b49e3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22c7c811_57761a65",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/ExifUtils.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-10T16:48:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea193daa_00ace42b",
+      "range": {
+        "startLine": 2,
+        "startChar": 27,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "8545769c6467e2fc04b488116e34a3bbd42b49e3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }

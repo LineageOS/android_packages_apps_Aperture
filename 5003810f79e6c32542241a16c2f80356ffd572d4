@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b754b720_77b71c90",
+        "filename": "app/build.gradle.kts",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-10T16:48:16Z",
+      "side": 0,
+      "message": "Seems to be needed",
+      "parentUuid": "7e73e099_7001bd30",
+      "revId": "5003810f79e6c32542241a16c2f80356ffd572d4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f4a78f77_8f89fe89",
@@ -35,6 +53,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2655ed0c_d16fbe08",
+        "filename": "app/src/main/java/org/lineageos/aperture/BitmapExt.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-10T16:48:16Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f4a78f77_8f89fe89",
+      "revId": "5003810f79e6c32542241a16c2f80356ffd572d4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "21d84150_9a03d4dd",
@@ -48,6 +84,24 @@
       "writtenOn": "2023-02-10T16:45:03Z",
       "side": 0,
       "message": "2022-2023",
+      "revId": "5003810f79e6c32542241a16c2f80356ffd572d4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d33e4a7_dfec1c54",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/StorageUtils.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-10T16:48:16Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "21d84150_9a03d4dd",
       "revId": "5003810f79e6c32542241a16c2f80356ffd572d4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
