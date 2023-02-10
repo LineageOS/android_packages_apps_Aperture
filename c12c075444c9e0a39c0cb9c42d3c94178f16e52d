@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "50090ef2_fa7d83d1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-10T00:29:35Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem to scale or rotate properly",
+      "revId": "c12c075444c9e0a39c0cb9c42d3c94178f16e52d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "ab72f1fd_908d120b",
         "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
         "patchSetId": 7
