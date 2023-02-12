@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a996860f_008feeaa",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-02-12T13:40:16Z",
+      "side": 1,
+      "message": "Do this:\n            when (input) {\n                is null -\u003e {\n                    capturePreviewLayout.isVisible \u003d false\n                }\n                is InputStream,\n                is Uri -\u003e sendIntentResultAndExit(input)\n                else -\u003e throw Exception(\"Invalid input\")\n            }",
+      "range": {
+        "startLine": 699,
+        "startChar": 12,
+        "endLine": 705,
+        "endChar": 13
+      },
+      "revId": "437b992b57742bc76c3d1b1d4ffced9438749864",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc9d114c_c958d819",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/CapturePreviewLayout.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-02-12T13:40:16Z",
+      "side": 1,
+      "message": "Assert that both uri and photoInputStream aren\u0027t not-null before doing anything",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 30
+      },
+      "revId": "437b992b57742bc76c3d1b1d4ffced9438749864",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
