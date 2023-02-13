@@ -8,7 +8,9 @@ package org.lineageos.aperture
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.KeyguardManager
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.graphics.Rect
@@ -161,6 +163,11 @@ open class CameraActivity : AppCompatActivity() {
     private val sharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
+    private val sharedPreferencesCamera: SharedPreferences
+        get() = getSharedPreferences(
+            "${packageName}_preferences_cam_${camera.cameraId}",
+            Context.MODE_PRIVATE
+        )
     private val permissionsUtils by lazy { PermissionsUtils(this) }
 
     // Current camera state
@@ -191,7 +198,7 @@ open class CameraActivity : AppCompatActivity() {
         get() = camera.supportedVideoQualities.keys.toList()
     private val supportedVideoFramerates: List<Framerate>
         get() = camera.supportedVideoQualities.getOrDefault(
-            sharedPreferences.videoQuality, listOf()
+            sharedPreferencesCamera.videoQuality, listOf()
         )
     private lateinit var audioConfig: AudioConfig
     private var recording: Recording? = null
@@ -1031,14 +1038,15 @@ open class CameraActivity : AppCompatActivity() {
             }
             CameraMode.VIDEO -> {
                 // Fallback to highest supported video quality
-                if (!supportedVideoQualities.contains(sharedPreferences.videoQuality)) {
-                    sharedPreferences.videoQuality = supportedVideoQualities.first()
+                if (!supportedVideoQualities.contains(sharedPreferencesCamera.videoQuality)) {
+                    sharedPreferencesCamera.videoQuality = supportedVideoQualities.first()
                 }
-                cameraController.videoCaptureTargetQuality = sharedPreferences.videoQuality
+                cameraController.videoCaptureTargetQuality = sharedPreferencesCamera.videoQuality
 
                 // Set proper video framerate
-                sharedPreferences.videoFramerate = (Framerate::getLowerOrHigher)(
-                    sharedPreferences.videoFramerate ?: Framerate.FPS_30, supportedVideoFramerates
+                sharedPreferencesCamera.videoFramerate = (Framerate::getLowerOrHigher)(
+                    sharedPreferencesCamera.videoFramerate ?: Framerate.FPS_30,
+                    supportedVideoFramerates
                 )
 
                 CameraController.VIDEO_CAPTURE
@@ -1094,7 +1102,7 @@ open class CameraActivity : AppCompatActivity() {
                     .apply {
                         setFramerate(
                             if (cameraMode == CameraMode.VIDEO) {
-                                sharedPreferences.videoFramerate
+                                sharedPreferencesCamera.videoFramerate
                             } else {
                                 null
                             }
@@ -1287,14 +1295,14 @@ open class CameraActivity : AppCompatActivity() {
             return
         }
 
-        val currentVideoQuality = sharedPreferences.videoQuality
+        val currentVideoQuality = sharedPreferencesCamera.videoQuality
         val newVideoQuality = supportedVideoQualities.next(currentVideoQuality)
 
         if (newVideoQuality == currentVideoQuality) {
             return
         }
 
-        sharedPreferences.videoQuality = newVideoQuality
+        sharedPreferencesCamera.videoQuality = newVideoQuality
 
         bindCameraUseCases()
     }
@@ -1303,7 +1311,7 @@ open class CameraActivity : AppCompatActivity() {
         videoFramerateButton.isEnabled = supportedVideoFramerates.size > 1
         videoFramerateButton.isVisible = cameraMode == CameraMode.VIDEO
 
-        videoFramerateButton.text = sharedPreferences.videoFramerate?.let {
+        videoFramerateButton.text = sharedPreferencesCamera.videoFramerate?.let {
             resources.getString(R.string.video_framerate_value, it.value)
         } ?: resources.getString(R.string.video_framerate_auto)
     }
@@ -1313,14 +1321,14 @@ open class CameraActivity : AppCompatActivity() {
             return
         }
 
-        val currentVideoFramerate = sharedPreferences.videoFramerate
+        val currentVideoFramerate = sharedPreferencesCamera.videoFramerate
         val newVideoFramerate = supportedVideoFramerates.next(currentVideoFramerate)
 
         if (newVideoFramerate == currentVideoFramerate) {
             return
         }
 
-        sharedPreferences.videoFramerate = newVideoFramerate
+        sharedPreferencesCamera.videoFramerate = newVideoFramerate
         bindCameraUseCases()
     }
 
@@ -1424,7 +1432,7 @@ open class CameraActivity : AppCompatActivity() {
     private fun updateVideoQualityIcon() {
         videoQualityButton.isVisible = cameraMode == CameraMode.VIDEO
 
-        sharedPreferences.videoQuality.let {
+        sharedPreferencesCamera.videoQuality.let {
             videoQualityButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
