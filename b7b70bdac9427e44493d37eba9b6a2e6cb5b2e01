@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb7e4e8a_bd43689b",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/CapturePreviewLayout.kt",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-15T16:50:37Z",
+      "side": 1,
+      "message": "Oops, sorry, this isn\u0027t right at all",
+      "revId": "b7b70bdac9427e44493d37eba9b6a2e6cb5b2e01",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
