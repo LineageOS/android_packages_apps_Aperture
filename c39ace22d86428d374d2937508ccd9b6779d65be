@@ -39,6 +39,30 @@
       },
       "revId": "c39ace22d86428d374d2937508ccd9b6779d65be",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8d4ed0bb_330dd0f2",
+        "filename": "app/src/main/res/values/themes.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-02-15T12:29:16Z",
+      "side": 1,
+      "message": "Yes, together with app:layout_constraintDimensionRatio\u003d\"1:1\"",
+      "parentUuid": "be9c4de7_13209361",
+      "range": {
+        "startLine": 69,
+        "startChar": 42,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "c39ace22d86428d374d2937508ccd9b6779d65be",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
