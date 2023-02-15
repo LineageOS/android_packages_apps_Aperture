@@ -16,6 +16,29 @@
       "message": "Seems to work",
       "revId": "c39ace22d86428d374d2937508ccd9b6779d65be",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be9c4de7_13209361",
+        "filename": "app/src/main/res/values/themes.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-02-15T12:28:42Z",
+      "side": 1,
+      "message": "0dp ensures it matches height?",
+      "range": {
+        "startLine": 69,
+        "startChar": 42,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "c39ace22d86428d374d2937508ccd9b6779d65be",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
