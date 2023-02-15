@@ -93,6 +93,30 @@
       },
       "revId": "437b992b57742bc76c3d1b1d4ffced9438749864",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c348f497_db08f820",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/CapturePreviewLayout.kt",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-02-15T17:12:02Z",
+      "side": 1,
+      "message": "Yep",
+      "parentUuid": "3a97968b_aa39923f",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 30
+      },
+      "revId": "437b992b57742bc76c3d1b1d4ffced9438749864",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
