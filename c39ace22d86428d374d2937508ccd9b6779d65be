@@ -63,6 +63,30 @@
       },
       "revId": "c39ace22d86428d374d2937508ccd9b6779d65be",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cf1e4b6_cd4d0713",
+        "filename": "app/src/main/res/values/themes.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-02-15T12:35:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8d4ed0bb_330dd0f2",
+      "range": {
+        "startLine": 69,
+        "startChar": 42,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "c39ace22d86428d374d2937508ccd9b6779d65be",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
