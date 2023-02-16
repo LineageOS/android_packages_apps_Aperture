@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7eae4af5_1ba03ec6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-16T14:07:24Z",
+      "side": 1,
+      "message": "imo:\n1. Seems okay to clear when we do, but open to other thoughts.\n2. Can the gallery even delete a photo without unlocking anymore, anyway? Serious question. Maybe it works on stock or elsewhere, I haven\u0027t tested there.",
+      "parentUuid": "3ff9c6d5_11dd6f81",
+      "revId": "9e2b9ae4f4494758d813d5848f84f677b21acb9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a015475b_02f73920",
         "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
         "patchSetId": 4
@@ -31,6 +49,24 @@
       "writtenOn": "2023-01-25T04:54:53Z",
       "side": 1,
       "message": "I think I want this to be true after all. That way, if the built-in Gallery or other gallery apps are enhanced to support REVIEW_SECURE (I am tentatively planning to work on this), they don\u0027t need to use Google Camera\u0027s intent structure to work with Aperture. I don\u0027t want to encourage littering the text `com.google.android.apps.photos` across gallery apps unnecessarily. It\u0027s bad enough to need it here. GCam does not support other galleries than Google Photos, so I would rather not require its conventions for gallery apps that it won\u0027t even support as it is.\n\nAt the same time, we could still provide the items in a way supported by Google Photos and Gallery, too, by keeping USE_DE_FACTO_EXTRAS_FOR_REVIEW set to true as well. Or we could turn that off or take it out. But as of now, I\u0027m not aware of anything else that supports secure review, unfortunately. Hopefully that will change soon.",
+      "revId": "9e2b9ae4f4494758d813d5848f84f677b21acb9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36610c02_726198a9",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 1893,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-16T14:07:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a015475b_02f73920",
       "revId": "9e2b9ae4f4494758d813d5848f84f677b21acb9e",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }

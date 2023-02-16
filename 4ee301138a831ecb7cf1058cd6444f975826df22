@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a924c54_dd75883d",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1823,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2023-02-16T14:07:24Z",
+      "side": 1,
+      "message": "nit: extra newline",
+      "revId": "4ee301138a831ecb7cf1058cd6444f975826df22",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
