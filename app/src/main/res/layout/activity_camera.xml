@@ -137,8 +137,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/effectButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/effectButton"
@@ -150,8 +149,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/videoQualityButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/aspectRatioButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Video mode specific settings -->
             <Button
@@ -164,8 +162,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/videoFramerateButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/effectButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/videoFramerateButton"
@@ -177,8 +174,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/micButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/videoQualityButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/micButton"
@@ -190,8 +186,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/timerButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/videoFramerateButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Common settings -->
             <Button
@@ -204,8 +199,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/gridButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/micButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/gridButton"
@@ -217,8 +211,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/settingsButton"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/timerButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/settingsButton"
@@ -230,8 +223,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/gridButton"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </HorizontalScrollView>
