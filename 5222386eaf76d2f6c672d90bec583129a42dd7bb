@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "7351ab10_6dc3f1f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 28134
+      },
+      "writtenOn": "2023-02-18T01:41:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3101c5f_a4f64eab",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 61
+      },
+      "revId": "5222386eaf76d2f6c672d90bec583129a42dd7bb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "bcd0343b_c7b1d2e4",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -37,6 +61,24 @@
       "writtenOn": "2023-02-18T01:21:04Z",
       "side": 1,
       "message": "Also, with this change, multiline button alignment is meh in portrait mode...\n\nhttps://f.kremowka.xyz/get/22b5e415-ac48-4a26-969a-2b828b97f558",
+      "revId": "5222386eaf76d2f6c672d90bec583129a42dd7bb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c1516e0_7fd535a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28134
+      },
+      "writtenOn": "2023-02-18T01:41:05Z",
+      "side": 1,
+      "message": "This is a quick proposal to fix this issue. I will try to implement a slightly different solution later to maintain horizontal alignment. Is it better to prioritize horizontal alignment and try to resolve the issue of vertical alignment of the buttons later?",
+      "parentUuid": "bcd0343b_c7b1d2e4",
       "revId": "5222386eaf76d2f6c672d90bec583129a42dd7bb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
