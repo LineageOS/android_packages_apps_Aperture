@@ -22,6 +22,23 @@
       },
       "revId": "5222386eaf76d2f6c672d90bec583129a42dd7bb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcd0343b_c7b1d2e4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-02-18T01:21:04Z",
+      "side": 1,
+      "message": "Also, with this change, multiline button alignment is meh in portrait mode...\n\nhttps://f.kremowka.xyz/get/22b5e415-ac48-4a26-969a-2b828b97f558",
+      "revId": "5222386eaf76d2f6c672d90bec583129a42dd7bb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
