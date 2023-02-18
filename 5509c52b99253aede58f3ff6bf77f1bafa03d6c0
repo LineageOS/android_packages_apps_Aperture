@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bae45ed9_e538253b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-02-18T01:16:29Z",
+      "side": 1,
+      "message": "commit msg has to start with `Aperture: ` and be max 72ch long.",
+      "revId": "5509c52b99253aede58f3ff6bf77f1bafa03d6c0",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
