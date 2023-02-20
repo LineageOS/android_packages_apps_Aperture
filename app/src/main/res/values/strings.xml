@@ -104,6 +104,9 @@
     <string name="video_stabilization_title">Enable video stabilization</string>
     <string name="video_stabilization_summary">When available, enable video stabilization to reduce camera vibrations during recording</string>
 
+    <!-- Debug preferences -->
+    <string name="debug_title">Debug</string>
+
     <!-- Shortcuts -->
     <string name="shortcut_selfie">Take a selfie</string>
     <string name="shortcut_video">Take a video</string>
@@ -114,4 +117,15 @@
     <string name="location_permission_dialog_description">Map your memories by including location metadata with each capture.</string>
     <string name="location_permission_dialog_later">Later</string>
     <string name="location_permission_dialog_turn_on">Turn on</string>
+
+    <!-- Debug activity -->
+    <string name="title_activity_debug">Debug</string>
+    <string name="debug_camera_facing_title">Camera facing</string>
+    <string name="debug_exposure_compensation_range_title">Exposure compensation range</string>
+    <string name="debug_has_flash_unit_title">Has flash unit</string>
+    <string name="debug_is_logical_title">Is logical</string>
+    <string name="debug_intrinsic_zoom_ratio_title">Intrinsic zoom ratio</string>
+    <string name="debug_supported_video_qualities_title">Supported video qualities</string>
+    <string name="debug_supported_extension_modes_title">Supported extension modes</string>
+    <string name="debug_supported_video_stabilization_modes_title">Supported video stabilization modes</string>
 </resources>

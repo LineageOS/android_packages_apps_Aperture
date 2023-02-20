@@ -3,7 +3,8 @@
      SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
@@ -66,5 +67,14 @@
             app:title="@string/video_stabilization_title" />
 
     </PreferenceCategory>
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:title="@string/debug_title">
+
+        <intent
+            android:targetClass="org.lineageos.aperture.DebugActivity"
+            android:targetPackage="org.lineageos.aperture.dev" />
+    </Preference>
 
 </PreferenceScreen>

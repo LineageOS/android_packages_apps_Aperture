@@ -141,6 +141,14 @@
             android:label="@string/title_activity_settings"
             android:theme="@style/Theme.Aperture.Settings" />
 
+        <activity
+            android:name=".DebugActivity"
+            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
+            android:exported="false"
+            android:label="@string/title_activity_debug"
+            android:theme="@style/Theme.Aperture.Settings">
+        </activity>
+
     </application>
 
 </manifest>
