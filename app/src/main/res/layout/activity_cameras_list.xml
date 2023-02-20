@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CamerasListActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            style="?attr/collapsingToolbarLayoutLargeStyle"
+            android:layout_width="match_parent"
+            android:layout_height="179dp"
+            app:collapsedTitleTextAppearance="@style/Theme.Aperture.Camera.ToolbarCollapsed"
+            app:expandedTitleMarginBottom="31dp"
+            app:expandedTitleMarginStart="24dp"
+            app:expandedTitleTextAppearance="@style/Theme.Aperture.Camera.ToolbarExpanded"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:titleCollapseMode="fade"
+            app:toolbarId="@id/toolbar">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:elevation="0dp"
+                app:layout_collapseMode="pin" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/camerasTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabContentStart="24dp"
+            app:tabMode="scrollable" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <org.lineageos.aperture.ui.ListItem
+                android:id="@+id/cameraFacingListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:headlineText="@string/camera_facing_title" />
+
+            <org.lineageos.aperture.ui.ListItem
+                android:id="@+id/exposureCompensationRangeListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:headlineText="@string/exposure_compensation_range_title" />
+
+            <org.lineageos.aperture.ui.ListItem
+                android:id="@+id/hasFlashUnitListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:headlineText="@string/has_flash_unit_title" />
+
+            <org.lineageos.aperture.ui.ListItem
+                android:id="@+id/isLogicalListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:headlineText="@string/is_logical_title" />
+
+            <org.lineageos.aperture.ui.ListItem
+                android:id="@+id/intrinsicZoomRatioListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:headlineText="@string/intrinsic_zoom_ratio_title" />
+
+            <org.lineageos.aperture.ui.ListItem
+                android:id="@+id/supportedVideoQualitiesListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:headlineText="@string/supported_video_qualities_title" />
+
+            <org.lineageos.aperture.ui.ListItem
+                android:id="@+id/supportedExtensionModesListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:headlineText="@string/supported_extension_modes_title" />
+
+            <org.lineageos.aperture.ui.ListItem
+                android:id="@+id/supportedVideoStabilizationModesListItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:headlineText="@string/supported_video_stabilization_modes_title" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

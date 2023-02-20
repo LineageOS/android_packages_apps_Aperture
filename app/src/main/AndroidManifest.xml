@@ -141,6 +141,14 @@
             android:label="@string/title_activity_settings"
             android:theme="@style/Theme.Aperture.Settings" />
 
+        <activity
+            android:name=".CamerasListActivity"
+            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
+            android:exported="false"
+            android:label="@string/cameras_list_title"
+            android:theme="@style/Theme.Aperture.Settings">
+        </activity>
+
     </application>
 
 </manifest>

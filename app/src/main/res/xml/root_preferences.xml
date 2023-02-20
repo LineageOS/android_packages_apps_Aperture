@@ -3,7 +3,8 @@
      SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
@@ -64,6 +65,21 @@
             app:key="video_stabilization"
             app:summary="@string/video_stabilization_summary"
             app:title="@string/video_stabilization_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/advanced_header">
+
+        <Preference
+            app:iconSpaceReserved="false"
+            app:title="@string/cameras_list_title">
+
+            <intent
+                android:targetClass="org.lineageos.aperture.CamerasListActivity"
+                android:targetPackage="org.lineageos.aperture.dev" />
+        </Preference>
 
     </PreferenceCategory>
 

@@ -103,7 +103,7 @@ class CameraManager(context: Context) {
         }.toMap()
     }
 
-    private val cameras: Map<String, Camera>
+    public val cameras: Map<String, Camera>
         get() = cameraProvider.availableCameraInfos.associate {
             val camera = Camera(it, this)
             camera.cameraId to camera

@@ -82,6 +82,7 @@
     <string name="general_header">General</string>
     <string name="photos_header">Photos</string>
     <string name="video_header">Video</string>
+    <string name="advanced_header">Advanced</string>
 
     <!-- General Preferences -->
     <string name="bright_screen_title">Bright screen</string>
@@ -104,6 +105,9 @@
     <string name="video_stabilization_title">Enable video stabilization</string>
     <string name="video_stabilization_summary">When available, enable video stabilization to reduce camera vibrations during recording</string>
 
+    <!-- Advanced preferences -->
+    <string name="cameras_list_title">Cameras list</string>
+
     <!-- Shortcuts -->
     <string name="shortcut_selfie">Take a selfie</string>
     <string name="shortcut_video">Take a video</string>
@@ -114,4 +118,14 @@
     <string name="location_permission_dialog_description">Map your memories by including location metadata with each capture.</string>
     <string name="location_permission_dialog_later">Later</string>
     <string name="location_permission_dialog_turn_on">Turn on</string>
+
+    <!-- Cameras list activity -->
+    <string name="camera_facing_title">Camera facing</string>
+    <string name="exposure_compensation_range_title">Exposure compensation range</string>
+    <string name="has_flash_unit_title">Has flash unit</string>
+    <string name="is_logical_title">Is logical</string>
+    <string name="intrinsic_zoom_ratio_title">Intrinsic zoom ratio</string>
+    <string name="supported_video_qualities_title">Supported video qualities</string>
+    <string name="supported_extension_modes_title">Supported extension modes</string>
+    <string name="supported_video_stabilization_modes_title">Supported video stabilization modes</string>
 </resources>
