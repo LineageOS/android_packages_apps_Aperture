@@ -8,7 +8,9 @@ package org.lineageos.aperture.utils
 import android.net.wifi.WifiNetworkSuggestion
 import android.os.Build
 import androidx.annotation.RequiresApi
-import java.util.regex.Pattern
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.Result
+import com.google.zxing.client.result.WifiResultParser
 
 data class WifiNetwork(
     val ssid: String,
@@ -50,32 +52,18 @@ data class WifiNetwork(
 
     companion object {
         fun fromQr(text: String): WifiNetwork? {
-            val prefix = "WIFI:"
+            val result = WifiResultParser().parse(
+                Result(text, null, null, BarcodeFormat.QR_CODE)
+            ) ?: return null
 
-            if (!text.uppercase().startsWith(prefix)) {
-                return null
-            }
-
-            val regex = Regex("(?<!\\\\)" + Pattern.quote(";"))
-            val data = text.substring(prefix.length).split(regex).mapNotNull {
-                runCatching {
-                    with(it.split(":", limit = 2)) {
-                        this[0] to this[1]
-                    }
-                }.getOrNull()
-            }.toMap()
-
-            val ssid = data["S"]?.replace("\\", "") ?: return null
-            val isSsidHidden = data["H"] == "true"
-            val password = data["P"]?.replace("\\", "")
-            val encryptionType = when (data["T"]) {
+            val encryptionType = when (result.networkEncryption) {
                 "WEP" -> EncryptionType.WEP
                 "WPA" -> EncryptionType.WPA
                 "SAE" -> EncryptionType.SAE
                 else -> EncryptionType.NONE
             }
 
-            return WifiNetwork(ssid, isSsidHidden, password, encryptionType)
+            return WifiNetwork(result.ssid, result.isHidden, result.password, encryptionType)
         }
     }
 }
