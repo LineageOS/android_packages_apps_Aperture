@@ -1,4 +1,22 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8004908c_3988f726",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 21290
+      },
+      "writtenOn": "2023-03-06T23:28:42Z",
+      "side": 1,
+      "message": "this broke opening aperture settings\nhttps://paste.myself5.de/najukilite.sql",
+      "revId": "6d39d8a48b73a06938dc80c983640b8d5c594d0c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ],
   "submitRequirementResults": []
 }
