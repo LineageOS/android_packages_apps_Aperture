@@ -69,6 +69,42 @@
       "message": "I don\u0027t where to ask,\nbut got an error when trying to use Graphene os CAMERA from play store.\nor pretty much any camera including this default AOSP camera app doesn\u0027t work or doesn\u0027t save photos. clearing data or cache doesn\u0027t work. Gcams available in market are not working / not saving photos.\noffice apps that need camera to scan are also not saving the photos.\nDevice: Nokia 6.1 plus. \nerror that I got is in this link: https://paste.myself5.de/epetubodof.yaml",
       "revId": "6d39d8a48b73a06938dc80c983640b8d5c594d0c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0529f70e_557a7d9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-03-11T15:30:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d91d39a_f3246644",
+      "revId": "6d39d8a48b73a06938dc80c983640b8d5c594d0c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28d2ec2a_0fb81c02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-03-11T15:30:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e8ef198f_6b0048b8",
+      "revId": "6d39d8a48b73a06938dc80c983640b8d5c594d0c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": []
