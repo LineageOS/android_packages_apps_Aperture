@@ -85,6 +85,7 @@ import org.lineageos.aperture.ui.LocationPermissionsDialog
 import org.lineageos.aperture.ui.PreviewBlurView
 import org.lineageos.aperture.ui.VerticalSlider
 import org.lineageos.aperture.utils.AssistantIntent
+import org.lineageos.aperture.utils.BroadcastUtils
 import org.lineageos.aperture.utils.Camera
 import org.lineageos.aperture.utils.CameraFacing
 import org.lineageos.aperture.utils.CameraManager
@@ -168,6 +169,7 @@ open class CameraActivity : AppCompatActivity() {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
     private val permissionsUtils by lazy { PermissionsUtils(this) }
+    private val broadcastUtils by lazy { BroadcastUtils(this) }
 
     // Current camera state
     private lateinit var camera: Camera
@@ -869,7 +871,9 @@ open class CameraActivity : AppCompatActivity() {
         val outputOptions = StorageUtils.getPhotoMediaStoreOutputOptions(
             contentResolver,
             ImageCapture.Metadata().apply {
-                location = this@CameraActivity.location
+                if (!singleCaptureMode) {
+                    location = this@CameraActivity.location
+                }
             },
             photoOutputStream
         )
@@ -900,6 +904,9 @@ open class CameraActivity : AppCompatActivity() {
                     if (!singleCaptureMode) {
                         sharedPreferences.lastSavedUri = output.savedUri
                         tookSomething = true
+                        output.savedUri?.let {
+                            broadcastUtils.broadcastNewPicture(it)
+                        }
                     } else {
                         output.savedUri?.let {
                             openCapturePreview(it, MediaType.PHOTO)
@@ -928,7 +935,10 @@ open class CameraActivity : AppCompatActivity() {
         cameraState = CameraState.PRE_RECORDING_VIDEO
 
         // Create output options object which contains file + metadata
-        val outputOptions = StorageUtils.getVideoMediaStoreOutputOptions(contentResolver, location)
+        val outputOptions = StorageUtils.getVideoMediaStoreOutputOptions(
+            contentResolver,
+            location.takeUnless { singleCaptureMode }
+        )
 
         // Play shutter sound
         val delayTime = if (cameraSoundsUtils.playStartVideoRecording()) 500L else 0L
@@ -984,6 +994,7 @@ open class CameraActivity : AppCompatActivity() {
                             if (!singleCaptureMode) {
                                 sharedPreferences.lastSavedUri = it.outputResults.outputUri
                                 tookSomething = true
+                                broadcastUtils.broadcastNewVideo(it.outputResults.outputUri)
                             } else {
                                 openCapturePreview(it.outputResults.outputUri, MediaType.VIDEO)
                             }
