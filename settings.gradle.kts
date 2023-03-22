@@ -8,7 +8,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        maven("https://raw.githubusercontent.com/luk1337/camerax_selfie/fd12bdef9ad2e6d0545379e8da7a411001e0f5bd/.m2")
+        maven("https://raw.githubusercontent.com/luk1337/camerax_selfie/6d3f406f659b173100594951ab72faba12078118/.m2")
         google()
         mavenCentral()
     }
