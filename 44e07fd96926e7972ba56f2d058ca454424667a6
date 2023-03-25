@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8738da33_e995e8c1",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-03-25T09:44:53Z",
+      "side": 1,
+      "message": "val audioEnabled \u003d audioConfig.audioEnabled \u0026\u0026 recording?.muted !\u003d false\n\nAlso not sure how audioEnabled \u003d\u003d muted",
+      "range": {
+        "startLine": 1543,
+        "startChar": 8,
+        "endLine": 1546,
+        "endChar": 9
+      },
+      "revId": "44e07fd96926e7972ba56f2d058ca454424667a6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
