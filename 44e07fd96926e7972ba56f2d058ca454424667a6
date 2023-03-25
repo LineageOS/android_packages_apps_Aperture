@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ac2d442_3cfc41e9",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-03-25T10:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8738da33_e995e8c1",
+      "range": {
+        "startLine": 1543,
+        "startChar": 8,
+        "endLine": 1546,
+        "endChar": 9
+      },
+      "revId": "44e07fd96926e7972ba56f2d058ca454424667a6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d6a77796_cdd79424",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-03-25T09:47:40Z",
       "side": 1,
       "message": "Try to:\n- Start a video\n- Toggle mic\n- Stop the video\n- Start another one\n\nDoes it retain the value chosen during the previous recoding? I think we should instance AudioConfig when we start the video",
+      "range": {
+        "startLine": 1572,
+        "startChar": 12,
+        "endLine": 1572,
+        "endChar": 60
+      },
+      "revId": "44e07fd96926e7972ba56f2d058ca454424667a6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fde8ff44_5f8799ee",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-03-25T10:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6a77796_cdd79424",
       "range": {
         "startLine": 1572,
         "startChar": 12,
