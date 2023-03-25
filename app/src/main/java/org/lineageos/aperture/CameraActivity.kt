@@ -49,6 +49,7 @@ import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoRecordEvent
+import androidx.camera.video.muted
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
@@ -1281,7 +1282,8 @@ open class CameraActivity : AppCompatActivity() {
             // Torch mode can be toggled at any time
             flashButton.isEnabled =
                 cameraMode != CameraMode.PHOTO || cameraState == CameraState.IDLE
-            micButton.isEnabled = cameraState == CameraState.IDLE
+            micButton.isEnabled = cameraState == CameraState.IDLE ||
+                    (cameraState == CameraState.RECORDING_VIDEO && audioConfig.audioEnabled)
             settingsButton.isEnabled = cameraState == CameraState.IDLE
         }
     }
@@ -1538,15 +1540,18 @@ open class CameraActivity : AppCompatActivity() {
     private fun updateMicrophoneModeIcon() {
         micButton.isVisible = cameraMode == CameraMode.VIDEO
 
-        audioConfig.audioEnabled.let {
-            micButton.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                if (it) R.drawable.ic_mic_on else R.drawable.ic_mic_off,
-                0,
-                0
-            )
-            micButton.text = resources.getText(if (it) R.string.mic_on else R.string.mic_off)
+        var audioEnabled = audioConfig.audioEnabled
+        recording?.let {
+            audioEnabled = audioEnabled.and(it.muted)
         }
+
+        micButton.setCompoundDrawablesWithIntrinsicBounds(
+            0,
+            if (audioEnabled) R.drawable.ic_mic_on else R.drawable.ic_mic_off,
+            0,
+            0
+        )
+        micButton.text = resources.getText(if (audioEnabled) R.string.mic_on else R.string.mic_off)
     }
 
     /**
@@ -1561,7 +1566,11 @@ open class CameraActivity : AppCompatActivity() {
      */
     @SuppressLint("MissingPermission")
     private fun setMicrophoneMode(microphoneMode: Boolean) {
-        audioConfig = AudioConfig.create(microphoneMode)
+        recording?.let {
+            it.muted = !microphoneMode
+        } ?: run {
+            audioConfig = AudioConfig.create(microphoneMode)
+        }
         updateMicrophoneModeIcon()
 
         sharedPreferences.lastMicMode = microphoneMode
