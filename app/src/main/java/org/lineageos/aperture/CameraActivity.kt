@@ -66,6 +66,7 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import coil.decode.VideoFrameDecoder
@@ -1638,7 +1639,9 @@ open class CameraActivity : AppCompatActivity() {
 
     private fun updateGalleryButton() {
         runOnUiThread {
-            val uri = sharedPreferences.lastSavedUri
+            val uri = sharedPreferences.lastSavedUri?.takeIf {
+                DocumentFile.fromSingleUri(this, it)?.exists() == true
+            }
             val keyguardLocked = keyguardManager.isKeyguardLocked
             if (uri != null && (!keyguardLocked || tookSomething)) {
                 galleryButton.load(uri) {
