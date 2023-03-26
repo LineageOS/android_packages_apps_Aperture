@@ -97,6 +97,7 @@ import org.lineageos.aperture.utils.FlashMode
 import org.lineageos.aperture.utils.Framerate
 import org.lineageos.aperture.utils.GoogleLensUtils
 import org.lineageos.aperture.utils.GridMode
+import org.lineageos.aperture.utils.MediaStoreUtils
 import org.lineageos.aperture.utils.MediaType
 import org.lineageos.aperture.utils.PermissionsUtils
 import org.lineageos.aperture.utils.Rotation
@@ -1638,7 +1639,9 @@ open class CameraActivity : AppCompatActivity() {
 
     private fun updateGalleryButton() {
         runOnUiThread {
-            val uri = sharedPreferences.lastSavedUri
+            val uri = sharedPreferences.lastSavedUri?.takeIf {
+                MediaStoreUtils.fileExists(this, it)
+            }
             val keyguardLocked = keyguardManager.isKeyguardLocked
             if (uri != null && (!keyguardLocked || tookSomething)) {
                 galleryButton.load(uri) {
