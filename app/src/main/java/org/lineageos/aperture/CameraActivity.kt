@@ -1778,7 +1778,7 @@ open class CameraActivity : AppCompatActivity() {
 
         outputUri?.let {
             try {
-                contentResolver.openOutputStream(it).use { outputStream ->
+                contentResolver.openOutputStream(it, "wt").use { outputStream ->
                     when (input) {
                         is InputStream -> input.use {
                             input.copyTo(outputStream!!)
