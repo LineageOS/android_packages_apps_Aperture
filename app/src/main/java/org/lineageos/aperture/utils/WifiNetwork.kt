@@ -25,6 +25,12 @@ data class WifiNetwork(
         SAE;
     }
 
+    init {
+        assert((encryptionType == EncryptionType.NONE) == (password == null)) {
+            "Invalid encryption type/password combination"
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.Q)
     fun toNetworkSuggestion(): WifiNetworkSuggestion? = when (encryptionType) {
         EncryptionType.WEP -> null
@@ -63,7 +69,9 @@ data class WifiNetwork(
                 else -> EncryptionType.NONE
             }
 
-            return WifiNetwork(result.ssid, result.isHidden, result.password, encryptionType)
+            return runCatching {
+                WifiNetwork(result.ssid, result.isHidden, result.password, encryptionType)
+            }.getOrNull()
         }
     }
 }
