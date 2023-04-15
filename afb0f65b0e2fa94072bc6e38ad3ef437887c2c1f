@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f8ebe774_5b05c236",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 15346
+      },
+      "writtenOn": "2023-04-15T16:29:35Z",
+      "side": 1,
+      "message": "Another edge case would be qr code pairing with android studio adb",
+      "revId": "afb0f65b0e2fa94072bc6e38ad3ef437887c2c1f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12faefd6_e406d772",
