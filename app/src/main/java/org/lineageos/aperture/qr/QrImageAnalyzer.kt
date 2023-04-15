@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture
+package org.lineageos.aperture.qr
 
 import android.app.Activity
 import android.app.KeyguardManager
@@ -32,7 +32,9 @@ import com.google.zxing.BinaryBitmap
 import com.google.zxing.MultiFormatReader
 import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
-import org.lineageos.aperture.utils.QrTextClassifier
+import org.lineageos.aperture.R
+import org.lineageos.aperture.ext.planarYUVLuminanceSource
+import org.lineageos.aperture.ext.px
 
 class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
     private val bottomSheetDialog by lazy {

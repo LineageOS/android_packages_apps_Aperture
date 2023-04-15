@@ -16,7 +16,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import org.lineageos.aperture.R
-import org.lineageos.aperture.px
+import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.utils.Rotation
 
 abstract class Slider @JvmOverloads constructor(

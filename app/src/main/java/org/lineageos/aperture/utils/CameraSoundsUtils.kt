@@ -10,7 +10,7 @@ import android.content.SharedPreferences
 import android.content.res.Resources
 import android.media.MediaActionSound
 import android.os.Build
-import org.lineageos.aperture.shutterSound
+import org.lineageos.aperture.ext.shutterSound
 
 class CameraSoundsUtils(private val sharedPreferences: SharedPreferences) {
     private val mediaActionSound = MediaActionSound().apply {

@@ -11,7 +11,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.util.Range
 import android.view.MotionEvent
-import org.lineageos.aperture.mapToRange
+import org.lineageos.aperture.ext.mapToRange
 
 class HorizontalSlider @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
