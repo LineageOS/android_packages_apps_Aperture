@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.utils
+package org.lineageos.aperture.camera
 
-import org.lineageos.aperture.next
+import org.lineageos.aperture.ext.next
 
 enum class FlashMode {
     /**

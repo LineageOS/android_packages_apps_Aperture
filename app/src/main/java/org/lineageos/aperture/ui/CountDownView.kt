@@ -18,7 +18,7 @@ import androidx.annotation.IntRange
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import org.lineageos.aperture.R
-import org.lineageos.aperture.smoothRotate
+import org.lineageos.aperture.ext.smoothRotate
 import org.lineageos.aperture.utils.Rotation
 
 /**

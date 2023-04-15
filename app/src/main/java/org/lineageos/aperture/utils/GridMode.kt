@@ -5,7 +5,7 @@
 
 package org.lineageos.aperture.utils
 
-import org.lineageos.aperture.next
+import org.lineageos.aperture.ext.next
 
 enum class GridMode {
     OFF,

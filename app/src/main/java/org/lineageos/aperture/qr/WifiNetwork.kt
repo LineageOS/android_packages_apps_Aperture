@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.utils
+package org.lineageos.aperture.qr
 
 import android.net.wifi.WifiNetworkSuggestion
 import android.os.Build
