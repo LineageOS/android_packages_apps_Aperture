@@ -108,6 +108,7 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
                     ) {
                         with(textClassification.actions[0]) {
                             bottomSheetDialogCardView.setOnClickListener { actionIntent.send() }
+                            bottomSheetDialogData.movementMethod = null
                             bottomSheetDialogTitle.text = this.title
                             this.icon.loadDrawableAsync(activity, {
                                 bottomSheetDialogIcon.setImageDrawable(it)
