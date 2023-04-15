@@ -8,8 +8,6 @@ package org.lineageos.aperture.utils
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraMetadata
 import android.os.Build
-import android.util.Size
-import android.util.SizeF
 import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
@@ -17,7 +15,6 @@ import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
 import org.lineageos.aperture.getSupportedModes
 import org.lineageos.aperture.physicalCameraIds
-import org.lineageos.aperture.toSize
 import kotlin.reflect.safeCast
 
 /**
@@ -42,34 +39,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
     val hasFlashUnit = cameraInfo.hasFlashUnit()
 
-    /**
-     * A list of sensors this camera is made of.
-     * If it contains a single sensor, this means this is a physical camera device,
-     * else it's a logical camera device.
-     * This list may be empty if information parsing failed (this can happen with
-     * external cameras).
-     */
-    val sensors = mutableListOf<Sensor>().apply {
-        val physicalCameraIds = camera2CameraInfo.physicalCameraIds
-
-        if (physicalCameraIds.isNotEmpty()) {
-            for (physicalCameraId in physicalCameraIds) {
-                runCatching {
-                    val camera2CameraCharacteristics =
-                        cameraManager.camera2CameraManager.getCameraCharacteristics(
-                            physicalCameraId
-                        )
-                    this@apply.add(Camera2Sensor(camera2CameraCharacteristics))
-                }
-            }
-        } else {
-            runCatching { CameraXSensor(camera2CameraInfo) }.getOrNull()?.let {
-                add(it)
-            }
-        }
-    }.toList()
-
-    val isLogical = sensors.size > 1
+    val isLogical = camera2CameraInfo.physicalCameraIds.size > 1
 
     val intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
     val logicalZoomRatios = cameraManager.getLogicalZoomRatios(cameraId)
@@ -131,51 +101,5 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
             CameraMode.VIDEO -> supportsVideoRecording
             else -> true
         }
-    }
-
-    private class Camera2Sensor(private val cameraCharacteristics: CameraCharacteristics) : Sensor {
-        override val activeArraySize: Size
-            get() = cameraCharacteristics.get(
-                CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE
-            )!!.toSize()
-        override val availableFocalLengths: List<Float>
-            get() = cameraCharacteristics.get(
-                CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS
-            )!!.toList()
-        override val orientation: Int
-            get() = cameraCharacteristics.get(
-                CameraCharacteristics.SENSOR_ORIENTATION
-            )!!
-        override val pixelArraySize: Size
-            get() = cameraCharacteristics.get(
-                CameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE
-            )!!
-        override val size: SizeF
-            get() = cameraCharacteristics.get(
-                CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE
-            )!!
-    }
-
-    private class CameraXSensor(private val camera2CameraInfo: Camera2CameraInfo) : Sensor {
-        override val activeArraySize: Size
-            get() = camera2CameraInfo.getCameraCharacteristic(
-                CameraCharacteristics.SENSOR_INFO_ACTIVE_ARRAY_SIZE
-            )!!.toSize()
-        override val availableFocalLengths: List<Float>
-            get() = camera2CameraInfo.getCameraCharacteristic(
-                CameraCharacteristics.LENS_INFO_AVAILABLE_FOCAL_LENGTHS
-            )!!.toList()
-        override val orientation: Int
-            get() = camera2CameraInfo.getCameraCharacteristic(
-                CameraCharacteristics.SENSOR_ORIENTATION
-            )!!
-        override val pixelArraySize: Size
-            get() = camera2CameraInfo.getCameraCharacteristic(
-                CameraCharacteristics.SENSOR_INFO_PIXEL_ARRAY_SIZE
-            )!!
-        override val size: SizeF
-            get() = camera2CameraInfo.getCameraCharacteristic(
-                CameraCharacteristics.SENSOR_INFO_PHYSICAL_SIZE
-            )!!
     }
 }

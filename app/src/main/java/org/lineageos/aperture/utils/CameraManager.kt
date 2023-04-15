@@ -15,16 +15,12 @@ import org.lineageos.aperture.getBoolean
 import org.lineageos.aperture.getStringArray
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import android.hardware.camera2.CameraManager as Camera2CameraManager
 
 /**
  * Class managing an app camera session
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 class CameraManager(context: Context) {
-    val camera2CameraManager: Camera2CameraManager =
-        context.getSystemService(Camera2CameraManager::class.java)
-
     private val cameraProvider = ProcessCameraProvider.getInstance(context).get()
     val extensionsManager = ExtensionsManager.getInstanceAsync(context, cameraProvider).get()!!
     val cameraController = LifecycleCameraController(context)
