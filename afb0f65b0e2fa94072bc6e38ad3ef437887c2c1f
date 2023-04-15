@@ -36,6 +36,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5859dfa9_7d341449",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-04-15T16:40:07Z",
+      "side": 1,
+      "message": "You can detect if WifiParsedResult::type() is ADB and then suggest user to open com.android.settings.development.WirelessDebuggingFragment somehow?",
+      "parentUuid": "832ffd3e_38bb3b8b",
+      "revId": "afb0f65b0e2fa94072bc6e38ad3ef437887c2c1f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "12faefd6_e406d772",
