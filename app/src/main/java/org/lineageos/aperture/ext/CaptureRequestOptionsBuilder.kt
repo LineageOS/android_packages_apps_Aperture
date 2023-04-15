@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture
+package org.lineageos.aperture.ext
 
 import android.hardware.camera2.CameraMetadata
 import android.hardware.camera2.CaptureRequest
 import android.os.Build
 import androidx.camera.camera2.interop.CaptureRequestOptions
-import org.lineageos.aperture.utils.Framerate
-import org.lineageos.aperture.utils.VideoStabilizationMode
+import org.lineageos.aperture.camera.Framerate
+import org.lineageos.aperture.camera.VideoStabilizationMode
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 fun CaptureRequestOptions.Builder.setFramerate(framerate: Framerate?) {

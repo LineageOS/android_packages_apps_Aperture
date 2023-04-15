@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.utils
+package org.lineageos.aperture.camera
 
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraMetadata
@@ -13,8 +13,8 @@ import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
-import org.lineageos.aperture.getSupportedModes
-import org.lineageos.aperture.physicalCameraIds
+import org.lineageos.aperture.ext.getSupportedModes
+import org.lineageos.aperture.ext.physicalCameraIds
 import kotlin.reflect.safeCast
 
 /**

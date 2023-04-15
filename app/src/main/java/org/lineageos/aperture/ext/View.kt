@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture
+package org.lineageos.aperture.ext
 
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture
+package org.lineageos.aperture.ext
 
 import android.content.SharedPreferences
 import android.net.Uri
@@ -12,10 +12,10 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.core.content.edit
-import org.lineageos.aperture.utils.CameraFacing
-import org.lineageos.aperture.utils.CameraMode
-import org.lineageos.aperture.utils.FlashMode
-import org.lineageos.aperture.utils.Framerate
+import org.lineageos.aperture.camera.CameraFacing
+import org.lineageos.aperture.camera.CameraMode
+import org.lineageos.aperture.camera.FlashMode
+import org.lineageos.aperture.camera.Framerate
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.TimerMode
 
