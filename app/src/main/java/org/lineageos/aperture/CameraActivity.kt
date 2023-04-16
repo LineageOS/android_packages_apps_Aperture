@@ -1313,7 +1313,8 @@ open class CameraActivity : AppCompatActivity() {
             timerButton.isEnabled = cameraState == CameraState.IDLE
             aspectRatioButton.isEnabled = cameraState == CameraState.IDLE
             videoQualityButton.isEnabled = cameraState == CameraState.IDLE
-            videoFramerateButton.isEnabled = cameraState == CameraState.IDLE
+            videoFramerateButton.isEnabled =
+                cameraState == CameraState.IDLE && supportedVideoFramerates.size > 1
             effectButton.isEnabled = cameraState == CameraState.IDLE
             // Grid mode can be toggled at any time
             // Torch mode can be toggled at any time
@@ -1368,7 +1369,6 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun updateVideoFramerateIcon() {
-        videoFramerateButton.isEnabled = supportedVideoFramerates.size > 1
         videoFramerateButton.isVisible = cameraMode == CameraMode.VIDEO
 
         videoFramerateButton.text = sharedPreferences.videoFramerate?.let {
