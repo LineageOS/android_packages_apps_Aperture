@@ -17,7 +17,6 @@ import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.ColorDrawable
 import android.icu.text.DecimalFormat
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
@@ -59,6 +58,9 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
+import androidx.core.location.LocationListenerCompat
+import androidx.core.location.LocationManagerCompat
+import androidx.core.location.LocationRequestCompat
 import androidx.core.view.WindowCompat.getInsetsController
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -280,7 +282,7 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private var location: Location? = null
-    private val locationListener = object : LocationListener {
+    private val locationListener = object : LocationListenerCompat {
         override fun onLocationChanged(location: Location) {
             val cameraActivity = this@CameraActivity
             cameraActivity.location = cameraActivity.location?.let {
@@ -290,21 +292,6 @@ open class CameraActivity : AppCompatActivity() {
                     cameraActivity.location
                 }
             } ?: location
-        }
-
-        @Suppress("OVERRIDE_DEPRECATION")
-        override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-            // Required for Build.VERSION.SDK_INT < Build.VERSION_CODES.R
-        }
-
-        @Suppress("OVERRIDE_DEPRECATION")
-        override fun onProviderEnabled(provider: String) {
-            // Required for Build.VERSION.SDK_INT < Build.VERSION_CODES.R
-        }
-
-        @Suppress("OVERRIDE_DEPRECATION")
-        override fun onProviderDisabled(provider: String) {
-            // Required for Build.VERSION.SDK_INT < Build.VERSION_CODES.R
         }
 
         @SuppressLint("MissingPermission")
@@ -317,7 +304,16 @@ open class CameraActivity : AppCompatActivity() {
             ) {
                 // Request location updates
                 locationManager.allProviders.forEach {
-                    locationManager.requestLocationUpdates(it, 1000, 1f, this)
+                    LocationManagerCompat.requestLocationUpdates(
+                        locationManager,
+                        it,
+                        LocationRequestCompat.Builder(1000).apply {
+                            setMinUpdateDistanceMeters(1f)
+                            setQuality(LocationRequestCompat.QUALITY_BALANCED_POWER_ACCURACY)
+                        }.build(),
+                        this,
+                        Looper.getMainLooper()
+                    )
                 }
             }
         }
