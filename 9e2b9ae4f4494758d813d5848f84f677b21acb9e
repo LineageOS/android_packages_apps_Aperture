@@ -38,6 +38,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "90275dc1_5eb30f3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32619
+      },
+      "writtenOn": "2023-04-19T11:16:58Z",
+      "side": 1,
+      "message": "1. Invalid URIs (deleted from Secure Review) should be removed from tracked photos\n2. Yes, it\u0027s allowed to delete photos inside clipData\u0027s range (Behavior observed in Google Photos Secure Review)",
+      "parentUuid": "7eae4af5_1ba03ec6",
+      "revId": "9e2b9ae4f4494758d813d5848f84f677b21acb9e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "a015475b_02f73920",
         "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
         "patchSetId": 4
