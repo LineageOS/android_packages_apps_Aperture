@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Fotocjamare</string>
+    <string name="video_camera_label">Videocjamare</string>
+    <string name="camera_mode_highlight_description">Evidenziazion modalitât fotocjamare</string>
+    <string name="cancel_button_description">Anule</string>
+    <string name="confirm_button_description">Conferme</string>
+    <string name="flash_button_description">Modalitât dal lamp</string>
+    <string name="flip_camera_button_description">Ribalte fotocjamare</string>
+    <string name="gallery_button_description">Galarie</string>
+    <string name="google_lens_button_description">Vierç Google Lens</string>
+    <string name="image_view_description">Anteprime de imagjin</string>
+    <string name="photo_mode_button_description">Passe ae modalitât foto</string>
+    <string name="pro_button_description">Impostazions Pro</string>
+    <string name="qr_mode_button_description">Passe ae modalitât scansion QR</string>
+    <string name="shutter_button_description">Oturadôr</string>
+    <string name="video_mode_button_description">Passe ae modalitât video</string>
+    <string name="video_recording_state_button_description">Pause/ripie regjistrazion video</string>
+    <string name="timer_off">TEMPORIZADÔR DISATIVÂT</string>
+    <string name="timer_3">TEMPORIZADÔR 3s</string>
+    <string name="timer_10">TEMPORIZADÔR 10s</string>
+    <string name="video_framerate_auto">FPS AUTO</string>
+    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="effect_none">NISSUN</string>
+    <string name="effect_night">GNOT</string>
+    <string name="effect_face_retouch">RITOCJADE DE MUSE</string>
+    <string name="effect_auto">AUTO</string>
+    <string name="grid_off">GRIDELE OFF</string>
+    <string name="grid_on_3">GRIDELE 3x3</string>
+    <string name="grid_on_4">GRIDELE 4x4</string>
+    <string name="grid_on_goldenratio">GRIDELE φ</string>
+    <string name="mic_off">MICROFON OFF</string>
+    <string name="mic_on">MICROFON ON</string>
+    <string name="settings">IMPOSTAZIONS</string>
+    <string name="selector_photo">FOTO</string>
+    <string name="select_video">VIDEO</string>
+    <string name="select_scan">SCANSION</string>
+    <string name="app_permissions_toast">L\'utent nol concêt i permès.</string>
+    <string name="camcorder_unsupported_toast">Nissune fotocjamare e supuarte la regjistrazion video.</string>
+    <string name="qr_copy_description">Copie intes notis</string>
+    <string name="qr_icon_description">Icone</string>
+    <string name="qr_share_description">Condivît</string>
+    <string name="qr_wifi_title">Coleghiti a cheste rêt Wi-Fi</string>
+    <string name="qr_dpp_description">Configure chest dispositîf</string>
+    <string name="qr_text">Test</string>
+    <string name="title_activity_settings">Impostazions</string>
+    <string name="general_header">Gjenerâls</string>
+    <string name="photos_header">Fotos</string>
+    <string name="video_header">Video</string>
+    <string name="bright_screen_title">Schermi lusorôs</string>
+    <string name="bright_screen_summary" formatted="false">Al bloche la luminositât al 100%</string>
+    <string name="save_location_title">Salve i dâts de posizion</string>
+    <string name="save_location_summary">Inclût la posizion GPS tai metadâts</string>
+    <string name="save_location_toast">L\'utent nol concêt l\'acès ae posizion.</string>
+    <string name="shutter_sound_title">Sun oturadôr</string>
+    <string name="shutter_sound_summary">Riprodûs un sun ae acuisizion</string>
+    <string name="leveler_title">Nivel</string>
+    <string name="leveler_summary">Indicadôr che al mostre l\'orientament dal dispositîf</string>
+    <string name="photo_capture_mode_title">Modalitât di acuisizion</string>
+    <string name="photo_capture_mode_maximize_quality">Massimize cualitât</string>
+    <string name="photo_capture_mode_minimize_latency">Minimize ritart di rispueste</string>
+    <string name="photo_capture_mode_zsl">Ritart zero dal oturadôr (sperimentâl)</string>
+    <string name="video_stabilization_title">Abilite la stabilizazion dai videos</string>
+    <string name="video_stabilization_summary">Se disponibil, abilite la stabilizazion dai videos par diminuî lis vibrazions de fotocjamare dulinvie la regjistrazion</string>
+    <string name="shortcut_selfie">Fâs un selfie</string>
+    <string name="shortcut_video">Regjistre un video</string>
+    <string name="shortcut_qr">Scansione un codiç a sbaris</string>
+    <string name="location_permission_dialog_title">Zonte la posizion des fotos e dai videos</string>
+    <string name="location_permission_dialog_description">Mape i tiei ricuarts includint il metadât de posizion in ogni acuisizion.</string>
+    <string name="location_permission_dialog_later">Plui indenant</string>
+    <string name="location_permission_dialog_turn_on">Ative</string>
+</resources>
