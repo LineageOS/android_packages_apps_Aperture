@@ -64,6 +64,8 @@
     <string name="photo_capture_mode_maximize_quality">Maximize quality</string>
     <string name="photo_capture_mode_minimize_latency">Minimize latency</string>
     <string name="photo_capture_mode_zsl">Zero shutter lag (experimental)</string>
+    <string name="video_stabilization_title">Enable video stabilization</string>
+    <string name="video_stabilization_summary">When available, enable video stabilization to reduce camera vibrations during recording</string>
     <string name="shortcut_selfie">Take a selfie</string>
     <string name="shortcut_video">Take a video</string>
     <string name="shortcut_qr">Scan a barcode</string>
