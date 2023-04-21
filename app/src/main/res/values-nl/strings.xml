@@ -15,13 +15,13 @@
     <string name="google_lens_button_description">Open Google Lens</string>
     <string name="image_view_description">Voorbeeld afbeelding</string>
     <string name="photo_mode_button_description">Overschakelen naar foto-modus</string>
-    <string name="pro_button_description">Pro instellingen</string>
+    <string name="pro_button_description">Pro-instellingen</string>
     <string name="qr_mode_button_description">Overschakelen naar QR-scanner modus</string>
     <string name="shutter_button_description">Sluiter</string>
     <string name="video_mode_button_description">Overschakelen naar videomodus</string>
     <string name="video_recording_state_button_description">Video-opname onderbreken/hervatten</string>
     <string name="timer_off">TIMER UIT</string>
-    <string name="timer_3">TIJDER 3 sec</string>
+    <string name="timer_3">TIMER 3s</string>
     <string name="timer_10">TIMER 10s</string>
     <string name="video_framerate_auto">AUTOMATISCH FPS</string>
     <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
@@ -50,7 +50,7 @@
     <string name="video_header">Video</string>
     <string name="bright_screen_title">Helder scherm</string>
     <string name="bright_screen_summary" formatted="false">Vergrendelt helderheid op 100%</string>
-    <string name="save_location_title">Locatie gegevens opslaan</string>
+    <string name="save_location_title">Locatiegegevens opslaan</string>
     <string name="save_location_summary">GPS locatie opnemen in metadata</string>
     <string name="save_location_toast">Locatiemachtigingen niet verleend door de gebruiker.</string>
     <string name="shutter_sound_title">Sluiter geluid</string>

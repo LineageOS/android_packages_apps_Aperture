@@ -64,6 +64,8 @@
     <string name="photo_capture_mode_maximize_quality">Optimiser la qualité</string>
     <string name="photo_capture_mode_minimize_latency">Optimiser la latence</string>
     <string name="photo_capture_mode_zsl">Aucun retard de l\'obturateur (expérimental)</string>
+    <string name="video_stabilization_title">Activer la stabilisation vidéo</string>
+    <string name="video_stabilization_summary">Si disponible, activer la stabilisation vidéo pour réduire les vibrations de la caméra pendant l\'enregistrement</string>
     <string name="shortcut_selfie">Prendre un selfie</string>
     <string name="shortcut_video">Prendre une vidéo</string>
     <string name="shortcut_qr">Scanner un code-barre</string>
