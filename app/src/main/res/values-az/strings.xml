@@ -64,6 +64,8 @@
     <string name="photo_capture_mode_maximize_quality">Maksimum keyfiyyət</string>
     <string name="photo_capture_mode_minimize_latency">Minimum gecikmə</string>
     <string name="photo_capture_mode_zsl">Sıfır sürgü gecikməsi (təcrübi)</string>
+    <string name="video_stabilization_title">Video sabitləməni fəallaşdır</string>
+    <string name="video_stabilization_summary">Mövcuddursa, çəkiliş əsnasında kamera titrəmələrini azaltmaq üçün video sabitləməni fəallaşdır</string>
     <string name="shortcut_selfie">Selfi çək</string>
     <string name="shortcut_video">Video çək</string>
     <string name="shortcut_qr">Barkod skan et</string>
