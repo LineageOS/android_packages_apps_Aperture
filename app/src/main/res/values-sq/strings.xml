@@ -64,6 +64,8 @@
     <string name="photo_capture_mode_maximize_quality">Maksimizo kualitetin</string>
     <string name="photo_capture_mode_minimize_latency">Minimizo vonesën</string>
     <string name="photo_capture_mode_zsl">Shkrepje pa vonesë (eksperimentale)</string>
+    <string name="video_stabilization_title">Aktivizo stabilizimin e videos</string>
+    <string name="video_stabilization_summary">Kur disponohet, aktivizoni stabilizimin e videos për të reduktuar dridhjet e kamerës gjatë regjistrimit</string>
     <string name="shortcut_selfie">Bën një selfie</string>
     <string name="shortcut_video">Kap një video</string>
     <string name="shortcut_qr">Skano një Barcode</string>
