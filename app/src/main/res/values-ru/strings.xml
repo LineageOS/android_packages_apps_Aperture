@@ -64,6 +64,8 @@
     <string name="photo_capture_mode_maximize_quality">Максимальное качество</string>
     <string name="photo_capture_mode_minimize_latency">Минимальная задержка</string>
     <string name="photo_capture_mode_zsl">Нулевая задержка затвора (экспериментально)</string>
+    <string name="photo_ffc_mirror_title">Зеркалировать фронтальную камеру</string>
+    <string name="photo_ffc_mirror_summary">Сохранять фото с фронтальной камеры в том виде, в котором они отображаются при предварительном просмотре</string>
     <string name="video_stabilization_title">Включить стабилизацию видео</string>
     <string name="video_stabilization_summary">Включить стабилизацию видео для уменьшения вибрации камеры во время записи (если доступно)</string>
     <string name="shortcut_selfie">Сделать селфи</string>

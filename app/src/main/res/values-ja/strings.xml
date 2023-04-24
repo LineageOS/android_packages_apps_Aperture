@@ -52,6 +52,8 @@
     <string name="photos_header">写真</string>
     <string name="video_header">ビデオ</string>
     <string name="bright_screen_summary" formatted="false">明るさを100%に固定</string>
+    <string name="photo_ffc_mirror_title">フロントカメラを反転</string>
+    <string name="photo_ffc_mirror_summary">フロントカメラの写真をプレビュー表示と同じ向きで保存します</string>
     <string name="video_stabilization_title">動画の安定化を有効にする</string>
     <string name="video_stabilization_summary">利用可能な場合、録画中にカメラの手ぶれを減らすためにビデオの安定化を有効化します</string>
     <string name="location_permission_dialog_title">写真とビデオの場所を追加</string>

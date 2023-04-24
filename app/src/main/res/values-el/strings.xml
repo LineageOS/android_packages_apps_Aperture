@@ -64,6 +64,8 @@
     <string name="photo_capture_mode_maximize_quality">Μεγιστοποίηση ποιότητας</string>
     <string name="photo_capture_mode_minimize_latency">Ελαχιστοποίηση καθυστέρησης</string>
     <string name="photo_capture_mode_zsl">Μηδενική καθυστέρηση κλείστρου (πειραματικό)</string>
+    <string name="photo_ffc_mirror_title">Καθρεπτισμός εμπρόσθιας κάμερας</string>
+    <string name="photo_ffc_mirror_summary">Αποθηκεύστε τις φωτογραφίες της μπροστινής κάμερας όπως εμφανίζονται στην προεπισκόπηση</string>
     <string name="video_stabilization_title">Ενεργοποίηση σταθεροποίησης βίντεο</string>
     <string name="video_stabilization_summary">Αν είναι διαθέσιμη, ενεργοποιήστε τη σταθεροποίηση βίντεο για να μειώσετε τους κραδασμούς της κάμερας κατά την εγγραφή</string>
     <string name="shortcut_selfie">Λήψη σέλφι</string>

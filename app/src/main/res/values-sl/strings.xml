@@ -64,6 +64,8 @@
     <string name="photo_capture_mode_maximize_quality">Maksimiraj kakovost</string>
     <string name="photo_capture_mode_minimize_latency">Minimiziraj zakasnitev</string>
     <string name="photo_capture_mode_zsl">Ničelna zakasnitev sprožilca (poskusno)</string>
+    <string name="photo_ffc_mirror_title">Zrcali sprednji fotoaparat</string>
+    <string name="photo_ffc_mirror_summary">Shrani fotografije sprednjega fotoaparata, kot se prikažejo na predogledu</string>
     <string name="video_stabilization_title">Omogoči stabilizacijo videa</string>
     <string name="video_stabilization_summary">Ko je na voljo, omogoči stabilizacijo videa za zmanjšanje vibracij fotoaparata med snemanjem</string>
     <string name="shortcut_selfie">Posnemi sebek</string>
