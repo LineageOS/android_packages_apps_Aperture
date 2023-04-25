@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0d5ead84_fb10b6d5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-04-25T17:46:22Z",
+      "side": 1,
+      "message": "meh on that one, but they don\u0027t seem to be core classes",
+      "revId": "58f6c3943ffc0d84c5fad9f23e49f6e0ee671432",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
