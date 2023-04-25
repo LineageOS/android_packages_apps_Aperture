@@ -74,7 +74,7 @@ dependencies {
     implementation("androidx.camera:camera-extensions:${cameraxVersion}")
 
     // Media3
-    val media3Version = "1.0.0-beta02"
+    val media3Version = "1.0.1"
     // For media playback using ExoPlayer
     implementation("androidx.media3:media3-exoplayer:$media3Version")
     // For building media playback UIs
