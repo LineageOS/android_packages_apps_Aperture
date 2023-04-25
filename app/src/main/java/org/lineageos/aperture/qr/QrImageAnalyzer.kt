@@ -30,6 +30,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.zxing.BinaryBitmap
 import com.google.zxing.MultiFormatReader
+import com.google.zxing.RGBLuminanceSource
 import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
 import org.lineageos.aperture.R
@@ -71,7 +72,15 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
     private val keyguardManager by lazy { activity.getSystemService(KeyguardManager::class.java) }
 
     override fun analyze(image: ImageProxy) {
-        val source = image.planarYUVLuminanceSource
+        val bitmap = image.toBitmap()
+
+        val width = bitmap.width
+        val height = bitmap.height
+        val pixels = IntArray(width * height).also {
+            bitmap.getPixels(it, 0, width, 0, 0, width, height)
+        }
+
+        val source = RGBLuminanceSource(bitmap.width, bitmap.height, pixels)
 
         val result = runCatching {
             reader.decodeWithState(BinaryBitmap(HybridBinarizer(source)))
