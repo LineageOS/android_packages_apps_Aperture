@@ -26,7 +26,6 @@ import java.io.InputStream
 /**
  * Image/video preview fragment
  */
-@androidx.media3.common.util.UnstableApi
 class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(
     context, attrs
 ) {
