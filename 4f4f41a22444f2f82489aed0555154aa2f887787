@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49131062_5ee684a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-05-02T19:31:28Z",
+      "side": 1,
+      "message": "Let\u0027s merge this for now, UI state handling should be redone properly",
+      "revId": "4f4f41a22444f2f82489aed0555154aa2f887787",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
