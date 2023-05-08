@@ -78,4 +78,8 @@
     <string-array name="config_logicalZoomRatios">
         <!-- No configuration by default. -->
     </string-array>
+
+    <!-- Whether we should use high resolution output size or not.
+         See: StreamConfigurationMap.getHighResolutionOutputSizes() for more info. -->
+    <bool name="config_enableHighResolution">true</bool>
 </resources>
