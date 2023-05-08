@@ -97,6 +97,9 @@ class CameraManager(context: Context) {
             a.key to a.value.toMap()
         }.toMap()
     }
+    val enableHighResolution by lazy {
+        context.resources.getBoolean(context, R.bool.config_enableHighResolution)
+    }
 
     private val cameras: Map<String, Camera>
         get() = cameraProvider.availableCameraInfos.associate {
