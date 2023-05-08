@@ -44,6 +44,8 @@ import androidx.camera.camera2.interop.CaptureRequestOptions
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.resolutionselector.AspectRatioStrategy
+import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.camera.video.Recording
@@ -1061,9 +1063,12 @@ open class CameraActivity : AppCompatActivity() {
                 CameraController.IMAGE_ANALYSIS
             }
             CameraMode.PHOTO -> {
-                cameraController.imageCaptureTargetSize = CameraController.OutputSize(
-                    sharedPreferences.aspectRatio
-                )
+                cameraController.imageCaptureResolutionSelector = ResolutionSelector.Builder()
+                    .setAspectRatioStrategy(AspectRatioStrategy(
+                        sharedPreferences.aspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO
+                    ))
+                    .setHighResolutionEnabledFlag(ResolutionSelector.HIGH_RESOLUTION_FLAG_ON)
+                    .build()
                 CameraController.IMAGE_CAPTURE
             }
             CameraMode.VIDEO -> {
