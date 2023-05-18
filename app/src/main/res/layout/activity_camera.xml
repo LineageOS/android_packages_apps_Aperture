@@ -17,7 +17,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:soundEffectsEnabled="false"
-        app:layout_constraintBottom_toTopOf="@+id/secondaryBottomBarLayout"
+        app:layout_constraintBottom_toTopOf="@+id/secondaryBarHalf"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -112,161 +112,31 @@
         app:trackColorGradientEnd="#242424"
         app:trackColorGradientStart="#8d9299" />
 
-    <HorizontalScrollView
-        android:id="@+id/secondaryTopBarLayout"
+    <LinearLayout
+        android:id="@+id/secondaryBarHalf"
         android:layout_width="0dp"
         android:layout_height="88dp"
-        android:background="#99000000"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/secondaryBottomBarLayout"
+        android:background="@drawable/primary_bar_background"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/primaryBarLayout" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="8dp">
-
-            <!-- Photo mode specific settings -->
-            <Button
-                android:id="@+id/aspectRatioButton"
-                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_aspect_ratio_4_3"
-                android:text="@string/aspect_ratio_4_3"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/effectButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/effectButton"
-                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_effect_none"
-                android:text="@string/effect_none"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/videoQualityButton"
-                app:layout_constraintStart_toEndOf="@+id/aspectRatioButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Video mode specific settings -->
-            <Button
-                android:id="@+id/videoQualityButton"
-                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_video_quality_hd"
-                android:text="@string/video_quality_fhd"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/videoFramerateButton"
-                app:layout_constraintStart_toEndOf="@+id/effectButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/videoFramerateButton"
-                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_video_framerate"
-                android:text="@string/video_framerate_auto"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/micButton"
-                app:layout_constraintStart_toEndOf="@+id/videoQualityButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/micButton"
-                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_mic_off"
-                android:text="@string/mic_off"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/timerButton"
-                app:layout_constraintStart_toEndOf="@+id/videoFramerateButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <!-- Common settings -->
-            <Button
-                android:id="@+id/timerButton"
-                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_timer_off"
-                android:text="@string/timer_off"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/gridButton"
-                app:layout_constraintStart_toEndOf="@+id/micButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/gridButton"
-                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_grid_off"
-                android:text="@string/grid_off"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/settingsButton"
-                app:layout_constraintStart_toEndOf="@+id/timerButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/settingsButton"
-                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_settings"
-                android:text="@string/settings"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/gridButton"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </HorizontalScrollView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/secondaryBottomBarLayout"
+    <org.lineageos.aperture.ui.SecondaryBarLayout
+        android:id="@+id/secondaryBarLayout"
         android:layout_width="0dp"
-        android:layout_height="88dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@+id/primaryBarLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageButton
-            android:id="@+id/proButton"
-            style="@style/Theme.Aperture.Camera.SecondaryBottomBarButton"
-            android:layout_marginStart="40dp"
-            android:contentDescription="@string/pro_button_description"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_pro_button" />
-
-        <org.lineageos.aperture.ui.LensSelectorLayout
-            android:id="@+id/lensSelectorLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/flashButton"
-            style="@style/Theme.Aperture.Camera.SecondaryBottomBarButton"
-            android:layout_marginEnd="40dp"
-            android:contentDescription="@string/flash_button_description"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_flash_off" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/primaryBarLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/primary_bar_background"
+        android:onClick="preventClicks"
         android:paddingTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/modeSelectorLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -356,6 +226,8 @@
         android:id="@+id/modeSelectorLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/primary_bar_background"
+        android:onClick="preventClicks"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
