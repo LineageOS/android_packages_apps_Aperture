@@ -137,7 +137,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/primary_bar_background"
         android:onClick="preventClicks"
-        android:paddingTop="16dp"
+        android:paddingVertical="16dp"
         app:layout_constraintBottom_toTopOf="@+id/modeSelectorLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -225,10 +225,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/modeSelectorLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="64dp"
         android:background="@drawable/primary_bar_background"
         android:onClick="preventClicks"
-        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -236,43 +235,34 @@
         <Button
             android:id="@+id/cameraModeHighlight"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:backgroundTint="?attr/colorSecondaryContainer"
             android:contentDescription="@string/camera_mode_highlight_description"
             android:enabled="false"
             android:padding="0dp"
             app:iconPadding="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/videoModeButton"
+            app:layout_constraintBottom_toBottomOf="@+id/photoModeButton"
+            app:layout_constraintEnd_toEndOf="@+id/photoModeButton"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="@+id/photoModeButton"
+            app:layout_constraintTop_toTopOf="@+id/photoModeButton" />
 
         <Button
             android:id="@+id/photoModeButton"
             style="@style/Theme.Aperture.Camera.CameraModeSelectorButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:contentDescription="@string/photo_mode_button_description"
             android:enabled="false"
-            android:padding="0dp"
             android:text="@string/selector_photo"
-            app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/videoModeButton"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/videoModeButton"
             style="@style/Theme.Aperture.Camera.CameraModeSelectorButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:contentDescription="@string/video_mode_button_description"
-            android:padding="0dp"
             android:text="@string/select_video"
-            app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/qrModeButton"
             app:layout_constraintHorizontal_bias="0.5"
@@ -282,15 +272,10 @@
         <Button
             android:id="@+id/qrModeButton"
             style="@style/Theme.Aperture.Camera.CameraModeSelectorButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:contentDescription="@string/qr_mode_button_description"
-            android:padding="0dp"
             android:text="@string/select_scan"
-            app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/videoModeButton"
             app:layout_constraintTop_toTopOf="parent" />
 
