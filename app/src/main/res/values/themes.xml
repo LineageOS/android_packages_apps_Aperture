@@ -84,10 +84,18 @@
 
     <!-- Camera mode bar icons theme -->
     <style name="Theme.Aperture.Camera.CameraModeSelectorButton" parent="@style/Widget.Material3.Button.TonalButton">
+        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_marginHorizontal">8dp</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:backgroundTint">@android:color/transparent</item>
+        <item name="android:padding">0dp</item>
         <item name="android:textColor">@color/camera_mode_selector_text</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:typeface">monospace</item>
+        <item name="iconPadding">0dp</item>
+        <item name="layout_constraintHorizontal_chainStyle">packed</item>
+        <item name="lineHeight">20sp</item>
     </style>
 
     <!-- Collapsing toolbar style -->
