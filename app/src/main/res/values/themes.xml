@@ -66,6 +66,12 @@
 
     <!-- Secondary top bar icons theme -->
     <style name="Theme.Aperture.Camera.SecondaryTopBarButton" parent="Theme.Aperture.Camera.SecondaryBarButton">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+
+    <!-- Secondary bottom bar icons theme -->
+    <style name="Theme.Aperture.Camera.SecondaryBottomBarButton" parent="Theme.Aperture.Camera.SecondaryBarButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
         <item name="layout_constraintHorizontal_bias">0.5</item>
@@ -74,12 +80,6 @@
         <item name="android:paddingHorizontal">0dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:typeface">monospace</item>
-    </style>
-
-    <!-- Secondary bottom bar icons theme -->
-    <style name="Theme.Aperture.Camera.SecondaryBottomBarButton" parent="Theme.Aperture.Camera.SecondaryBarButton">
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">40dp</item>
     </style>
 
     <!-- Camera mode bar icons theme -->

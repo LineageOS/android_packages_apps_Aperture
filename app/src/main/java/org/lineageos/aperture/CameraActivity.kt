@@ -33,10 +33,9 @@ import android.view.OrientationEventListener
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -57,7 +56,6 @@ import androidx.camera.view.PreviewView
 import androidx.camera.view.onPinchToZoom
 import androidx.camera.view.video.AudioConfig
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
 import androidx.core.content.ContextCompat
 import androidx.core.location.LocationListenerCompat
@@ -66,11 +64,9 @@ import androidx.core.location.LocationRequestCompat
 import androidx.core.view.WindowCompat.getInsetsController
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.children
 import androidx.core.view.doOnLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import coil.decode.VideoFrameDecoder
@@ -94,10 +90,10 @@ import org.lineageos.aperture.ui.CapturePreviewLayout
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
 import org.lineageos.aperture.ui.HorizontalSlider
-import org.lineageos.aperture.ui.LensSelectorLayout
 import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.LocationPermissionsDialog
 import org.lineageos.aperture.ui.PreviewBlurView
+import org.lineageos.aperture.ui.SecondaryBarLayout
 import org.lineageos.aperture.ui.VerticalSlider
 import org.lineageos.aperture.utils.AssistantIntent
 import org.lineageos.aperture.utils.BroadcastUtils
@@ -119,43 +115,31 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 import java.util.concurrent.ExecutorService
 import kotlin.math.abs
-import kotlin.reflect.safeCast
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalZeroShutterLag
 @androidx.camera.view.video.ExperimentalVideo
 open class CameraActivity : AppCompatActivity() {
     // Views
-    private val aspectRatioButton by lazy { findViewById<Button>(R.id.aspectRatioButton) }
     private val cameraModeHighlight by lazy { findViewById<MaterialButton>(R.id.cameraModeHighlight) }
     private val capturePreviewLayout by lazy { findViewById<CapturePreviewLayout>(R.id.capturePreviewLayout) }
     private val countDownView by lazy { findViewById<CountDownView>(R.id.countDownView) }
-    private val effectButton by lazy { findViewById<Button>(R.id.effectButton) }
     private val exposureLevel by lazy { findViewById<VerticalSlider>(R.id.exposureLevel) }
-    private val flashButton by lazy { findViewById<ImageButton>(R.id.flashButton) }
     private val flipCameraButton by lazy { findViewById<ImageButton>(R.id.flipCameraButton) }
     private val galleryButton by lazy { findViewById<ImageView>(R.id.galleryButton) }
     private val galleryButtonCardView by lazy { findViewById<CardView>(R.id.galleryButtonCardView) }
     private val googleLensButton by lazy { findViewById<ImageButton>(R.id.googleLensButton) }
-    private val gridButton by lazy { findViewById<Button>(R.id.gridButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
-    private val lensSelectorLayout by lazy { findViewById<LensSelectorLayout>(R.id.lensSelectorLayout) }
     private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
-    private val micButton by lazy { findViewById<Button>(R.id.micButton) }
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
     private val previewBlurView by lazy { findViewById<PreviewBlurView>(R.id.previewBlurView) }
     private val primaryBarLayoutGroupPhoto by lazy { findViewById<Group>(R.id.primaryBarLayoutGroupPhoto) }
-    private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
     private val qrModeButton by lazy { findViewById<MaterialButton>(R.id.qrModeButton) }
-    private val secondaryBottomBarLayout by lazy { findViewById<ConstraintLayout>(R.id.secondaryBottomBarLayout) }
-    private val secondaryTopBarLayout by lazy { findViewById<HorizontalScrollView>(R.id.secondaryTopBarLayout) }
-    private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
+    private val secondaryBarHalf by lazy { findViewById<LinearLayout>(R.id.secondaryBarHalf) }
+    private val secondaryBarLayout by lazy { findViewById<SecondaryBarLayout>(R.id.secondaryBarLayout) }
     private val shutterButton by lazy { findViewById<ImageButton>(R.id.shutterButton) }
-    private val timerButton by lazy { findViewById<Button>(R.id.timerButton) }
     private val videoDuration by lazy { findViewById<MaterialButton>(R.id.videoDuration) }
-    private val videoFramerateButton by lazy { findViewById<Button>(R.id.videoFramerateButton) }
     private val videoModeButton by lazy { findViewById<MaterialButton>(R.id.videoModeButton) }
-    private val videoQualityButton by lazy { findViewById<Button>(R.id.videoQualityButton) }
     private val videoRecordingStateButton by lazy { findViewById<ImageButton>(R.id.videoRecordingStateButton) }
     private val viewFinder by lazy { findViewById<PreviewView>(R.id.viewFinder) }
     private val viewFinderFocus by lazy { findViewById<ImageView>(R.id.viewFinderFocus) }
@@ -504,20 +488,17 @@ open class CameraActivity : AppCompatActivity() {
         camera = cameraManager.getCameraOfFacingOrFirstAvailable(initialCameraFacing, cameraMode)
 
         // Set secondary top bar button callbacks
-        aspectRatioButton.setOnClickListener { cycleAspectRatio() }
-        videoQualityButton.setOnClickListener { cycleVideoQuality() }
-        videoFramerateButton.setOnClickListener { cycleVideoFramerate() }
-        effectButton.setOnClickListener { cyclePhotoEffects() }
-        gridButton.setOnClickListener { cycleGridMode() }
-        timerButton.setOnClickListener { toggleTimerMode() }
-        micButton.setOnClickListener { toggleMicrophoneMode() }
-        settingsButton.setOnClickListener { openSettings() }
+        secondaryBarLayout.aspectRatioButton.setOnClickListener { cycleAspectRatio() }
+        secondaryBarLayout.videoQualityButton.setOnClickListener { cycleVideoQuality() }
+        secondaryBarLayout.videoFramerateButton.setOnClickListener { cycleVideoFramerate() }
+        secondaryBarLayout.effectButton.setOnClickListener { cyclePhotoEffects() }
+        secondaryBarLayout.gridButton.setOnClickListener { cycleGridMode() }
+        secondaryBarLayout.timerButton.setOnClickListener { toggleTimerMode() }
+        secondaryBarLayout.micButton.setOnClickListener { toggleMicrophoneMode() }
+        secondaryBarLayout.settingsButton.setOnClickListener { openSettings() }
 
         // Set secondary bottom bar button callbacks
-        proButton.setOnClickListener {
-            secondaryTopBarLayout.slide()
-        }
-        flashButton.setOnClickListener { cycleFlashMode() }
+        secondaryBarLayout.flashButton.setOnClickListener { cycleFlashMode() }
 
         // Initialize camera mode highlight position
         (cameraModeHighlight.parent as View).doOnLayout {
@@ -584,7 +565,7 @@ open class CameraActivity : AppCompatActivity() {
             handler.removeMessages(MSG_HIDE_EXPOSURE_SLIDER)
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_EXPOSURE_SLIDER), 2000)
 
-            secondaryTopBarLayout.slideDown()
+            secondaryBarLayout.slideDown()
         }
 
         // Observe preview stream state
@@ -621,7 +602,7 @@ open class CameraActivity : AppCompatActivity() {
             handler.removeMessages(MSG_HIDE_ZOOM_SLIDER)
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_ZOOM_SLIDER), 2000)
 
-            lensSelectorLayout.onZoomRatioChanged(it.zoomRatio)
+            secondaryBarLayout.lensSelectorLayout.onZoomRatioChanged(it.zoomRatio)
         }
 
         zoomLevel.onProgressChangedByUser = {
@@ -700,13 +681,13 @@ open class CameraActivity : AppCompatActivity() {
         galleryButton.setOnClickListener { openGallery() }
 
         // Set lens switching callback
-        lensSelectorLayout.onCameraChangeCallback = {
+        secondaryBarLayout.lensSelectorLayout.onCameraChangeCallback = {
             if (canRestartCamera()) {
                 camera = it
                 bindCameraUseCases()
             }
         }
-        lensSelectorLayout.onZoomRatioChangeCallback = {
+        secondaryBarLayout.lensSelectorLayout.onZoomRatioChangeCallback = {
             cameraController.setZoomRatio(it)
         }
 
@@ -1111,20 +1092,20 @@ open class CameraActivity : AppCompatActivity() {
         // Setup UI depending on camera mode
         when (cameraMode) {
             CameraMode.QR -> {
-                timerButton.isVisible = false
-                secondaryBottomBarLayout.isVisible = false
+                secondaryBarLayout.isVisible = false
+                secondaryBarHalf.isVisible = false
                 primaryBarLayoutGroupPhoto.isVisible = false
                 googleLensButton.isVisible = isGoogleLensAvailable
             }
             CameraMode.PHOTO -> {
-                timerButton.isVisible = true
-                secondaryBottomBarLayout.isVisible = true
+                secondaryBarLayout.isVisible = true
+                secondaryBarHalf.isVisible = true
                 primaryBarLayoutGroupPhoto.isVisible = true
                 googleLensButton.isVisible = false
             }
             CameraMode.VIDEO -> {
-                timerButton.isVisible = true
-                secondaryBottomBarLayout.isVisible = true
+                secondaryBarLayout.isVisible = true
+                secondaryBarHalf.isVisible = true
                 primaryBarLayoutGroupPhoto.isVisible = true
                 googleLensButton.isVisible = false
             }
@@ -1197,7 +1178,7 @@ open class CameraActivity : AppCompatActivity() {
         updateMicrophoneModeIcon()
 
         // Update lens selector
-        lensSelectorLayout.setCamera(
+        secondaryBarLayout.lensSelectorLayout.setCamera(
             camera, cameraManager.getCameras(cameraMode, camera.cameraFacing)
         )
     }
@@ -1235,8 +1216,8 @@ open class CameraActivity : AppCompatActivity() {
         this.cameraMode = cameraMode
         sharedPreferences.lastCameraMode = cameraMode
 
-        // Hide secondary top bar
-        secondaryTopBarLayout.isVisible = false
+        // Close secondary top bar
+        secondaryBarLayout.slideDown()
 
         bindCameraUseCases()
     }
@@ -1295,17 +1276,18 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updateSecondaryBarButtons() {
         runOnUiThread {
-            timerButton.isEnabled = cameraState == CameraState.IDLE
-            aspectRatioButton.isEnabled = cameraState == CameraState.IDLE
-            videoQualityButton.isEnabled = cameraState == CameraState.IDLE
-            videoFramerateButton.isEnabled = cameraState == CameraState.IDLE
-            effectButton.isEnabled = cameraState == CameraState.IDLE
+            secondaryBarLayout.timerButton.isEnabled = cameraState == CameraState.IDLE
+            secondaryBarLayout.aspectRatioButton.isEnabled = cameraState == CameraState.IDLE
+            secondaryBarLayout.videoQualityButton.isEnabled = cameraState == CameraState.IDLE
+            secondaryBarLayout.videoFramerateButton.isEnabled = cameraState == CameraState.IDLE
+            secondaryBarLayout.effectButton.isEnabled = cameraState == CameraState.IDLE
             // Grid mode can be toggled at any time
             // Torch mode can be toggled at any time
-            flashButton.isEnabled =
+            secondaryBarLayout.flashButton.isEnabled =
                 cameraMode != CameraMode.PHOTO || cameraState == CameraState.IDLE
-            micButton.isEnabled = cameraState == CameraState.IDLE || audioConfig.audioEnabled
-            settingsButton.isEnabled = cameraState == CameraState.IDLE
+            secondaryBarLayout.micButton.isEnabled =
+                cameraState == CameraState.IDLE || audioConfig.audioEnabled
+            secondaryBarLayout.settingsButton.isEnabled = cameraState == CameraState.IDLE
         }
     }
 
@@ -1353,10 +1335,10 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun updateVideoFramerateIcon() {
-        videoFramerateButton.isEnabled = supportedVideoFramerates.size > 1
-        videoFramerateButton.isVisible = cameraMode == CameraMode.VIDEO
+        secondaryBarLayout.videoFramerateButton.isEnabled = supportedVideoFramerates.size > 1
+        secondaryBarLayout.videoFramerateButton.isVisible = cameraMode == CameraMode.VIDEO
 
-        videoFramerateButton.text = sharedPreferences.videoFramerate?.let {
+        secondaryBarLayout.videoFramerateButton.text = sharedPreferences.videoFramerate?.let {
             resources.getString(R.string.video_framerate_value, it.value)
         } ?: resources.getString(R.string.video_framerate_auto)
     }
@@ -1382,7 +1364,7 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updateGridIcon() {
         sharedPreferences.lastGridMode.let {
-            gridButton.setCompoundDrawablesWithIntrinsicBounds(
+            secondaryBarLayout.gridButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
                     GridMode.OFF -> R.drawable.ic_grid_off
@@ -1393,7 +1375,7 @@ open class CameraActivity : AppCompatActivity() {
                 0,
                 0
             )
-            gridButton.text = resources.getText(
+            secondaryBarLayout.gridButton.text = resources.getText(
                 when (it) {
                     GridMode.OFF -> R.string.grid_off
                     GridMode.ON_3 -> R.string.grid_on_3
@@ -1422,7 +1404,7 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updateTimerModeIcon() {
         sharedPreferences.timerMode.let {
-            timerButton.setCompoundDrawablesWithIntrinsicBounds(
+            secondaryBarLayout.timerButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
                     TimerMode.OFF -> R.drawable.ic_timer_off
@@ -1432,7 +1414,7 @@ open class CameraActivity : AppCompatActivity() {
                 0,
                 0
             )
-            timerButton.text = resources.getText(
+            secondaryBarLayout.timerButton.text = resources.getText(
                 when (it) {
                     TimerMode.OFF -> R.string.timer_off
                     TimerMode.ON_3S -> R.string.timer_3
@@ -1451,10 +1433,10 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun updateAspectRatioIcon() {
-        aspectRatioButton.isVisible = cameraMode != CameraMode.VIDEO
+        secondaryBarLayout.aspectRatioButton.isVisible = cameraMode != CameraMode.VIDEO
 
         sharedPreferences.aspectRatio.let {
-            aspectRatioButton.setCompoundDrawablesWithIntrinsicBounds(
+            secondaryBarLayout.aspectRatioButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
                     AspectRatio.RATIO_4_3 -> R.drawable.ic_aspect_ratio_4_3
@@ -1464,7 +1446,7 @@ open class CameraActivity : AppCompatActivity() {
                 0,
                 0
             )
-            aspectRatioButton.text = resources.getText(
+            secondaryBarLayout.aspectRatioButton.text = resources.getText(
                 when (it) {
                     AspectRatio.RATIO_4_3 -> R.string.aspect_ratio_4_3
                     AspectRatio.RATIO_16_9 -> R.string.aspect_ratio_16_9
@@ -1475,10 +1457,10 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     private fun updateVideoQualityIcon() {
-        videoQualityButton.isVisible = cameraMode == CameraMode.VIDEO
+        secondaryBarLayout.videoQualityButton.isVisible = cameraMode == CameraMode.VIDEO
 
         sharedPreferences.videoQuality.let {
-            videoQualityButton.setCompoundDrawablesWithIntrinsicBounds(
+            secondaryBarLayout.videoQualityButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
                     Quality.SD -> R.drawable.ic_video_quality_sd
@@ -1490,7 +1472,7 @@ open class CameraActivity : AppCompatActivity() {
                 0,
                 0
             )
-            videoQualityButton.text = resources.getText(
+            secondaryBarLayout.videoQualityButton.text = resources.getText(
                 when (it) {
                     Quality.SD -> R.string.video_quality_sd
                     Quality.HD -> R.string.video_quality_hd
@@ -1506,10 +1488,10 @@ open class CameraActivity : AppCompatActivity() {
      * Update the flash mode button icon based on the value set in imageCapture
      */
     private fun updateFlashModeIcon() {
-        flashButton.isVisible = camera.hasFlashUnit
+        secondaryBarLayout.flashButton.isVisible = camera.hasFlashUnit
 
         cameraController.flashMode.let {
-            flashButton.setImageDrawable(
+            secondaryBarLayout.flashButton.setImageDrawable(
                 ContextCompat.getDrawable(
                     this,
                     when (it) {
@@ -1559,16 +1541,16 @@ open class CameraActivity : AppCompatActivity() {
      * Update the microphone mode button icon based on the value set in audioConfig
      */
     private fun updateMicrophoneModeIcon() {
-        micButton.isVisible = cameraMode == CameraMode.VIDEO
+        secondaryBarLayout.micButton.isVisible = cameraMode == CameraMode.VIDEO
 
         sharedPreferences.lastMicMode.let {
-            micButton.setCompoundDrawablesWithIntrinsicBounds(
+            secondaryBarLayout.micButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 if (it) R.drawable.ic_mic_on else R.drawable.ic_mic_off,
                 0,
                 0
             )
-            micButton.text = resources.getText(if (it) R.string.mic_on else R.string.mic_off)
+            secondaryBarLayout.micButton.text = resources.getText(if (it) R.string.mic_on else R.string.mic_off)
         }
     }
 
@@ -1594,13 +1576,13 @@ open class CameraActivity : AppCompatActivity() {
      * Update the photo effect icon based on the current value of extensionMode
      */
     private fun updatePhotoEffectIcon() {
-        effectButton.isVisible =
+        secondaryBarLayout.effectButton.isVisible =
             cameraMode == CameraMode.PHOTO &&
                     photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG &&
                     camera.supportedExtensionModes.size > 1
 
         sharedPreferences.photoEffect.let {
-            effectButton.setCompoundDrawablesWithIntrinsicBounds(
+            secondaryBarLayout.effectButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
                     ExtensionMode.NONE -> R.drawable.ic_effect_none
@@ -1614,7 +1596,7 @@ open class CameraActivity : AppCompatActivity() {
                 0,
                 0
             )
-            effectButton.text = resources.getText(
+            secondaryBarLayout.effectButton.text = resources.getText(
                 when (it) {
                     ExtensionMode.NONE -> R.string.effect_none
                     ExtensionMode.BOKEH -> R.string.effect_bokeh
@@ -1894,36 +1876,8 @@ open class CameraActivity : AppCompatActivity() {
         // Rotate capture preview buttons
         capturePreviewLayout.screenRotation = screenRotation
 
-        // Rotate secondary top bar buttons
-        ConstraintLayout::class.safeCast(
-            secondaryTopBarLayout.getChildAt(0)
-        )?.let { layout ->
-            for (child in layout.children) {
-                Button::class.safeCast(child)?.let {
-                    it.smoothRotate(compensationValue)
-                    ValueAnimator.ofFloat(
-                        (it.layoutParams as ConstraintLayout.LayoutParams).verticalBias,
-                        when (screenRotation) {
-                            Rotation.ROTATION_0 -> 0.0f
-                            Rotation.ROTATION_180 -> 1.0f
-                            Rotation.ROTATION_90,
-                            Rotation.ROTATION_270 -> 0.5f
-                        }
-                    ).apply {
-                        addUpdateListener { anim ->
-                            it.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                                verticalBias = anim.animatedValue as Float
-                            }
-                        }
-                    }.start()
-                }
-            }
-        }
-
-        // Rotate secondary bottom bar buttons
-        proButton.smoothRotate(compensationValue)
-        lensSelectorLayout.screenRotation = screenRotation
-        flashButton.smoothRotate(compensationValue)
+        // Rotate secondary bar buttons
+        secondaryBarLayout.screenRotation = screenRotation
 
         // Rotate primary bar buttons
         galleryButtonCardView.smoothRotate(compensationValue)
