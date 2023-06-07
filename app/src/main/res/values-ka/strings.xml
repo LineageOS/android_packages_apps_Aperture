@@ -23,8 +23,8 @@
     <string name="timer_off">ᲣᲙᲣᲗᲕᲚᲐ ᲒᲐᲛᲝᲠᲗ.</string>
     <string name="timer_3">ᲣᲙᲣᲗᲕᲚᲐ 3ᲬᲛ</string>
     <string name="timer_10">ᲣᲙᲣᲗᲕᲚᲐ 10ᲬᲛ</string>
-    <string name="video_framerate_auto">ᲙᲐᲓᲠ/ᲬᲛ ᲗᲕᲘᲗ.</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> კადრ/წმ</string>
+    <string name="video_frame_rate_auto">ᲙᲐᲓᲠ/ᲬᲛ ᲗᲕᲘᲗ.</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> კადრ/წმ</string>
     <string name="effect_none">ᲐᲠᲪᲔᲠᲗᲘ</string>
     <string name="effect_night">ᲦᲐᲛᲘᲡ</string>
     <string name="effect_face_retouch">ᲡᲐᲮᲘᲡ ᲨᲔᲡᲬᲝᲠᲔᲑᲐ</string>

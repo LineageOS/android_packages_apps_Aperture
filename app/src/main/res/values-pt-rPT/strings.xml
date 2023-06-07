@@ -23,8 +23,8 @@
     <string name="timer_off">TEMPORIZADOR DESLIGADO</string>
     <string name="timer_3">TEMPORIZADOR 3s</string>
     <string name="timer_10">TEMPORIZADOR 10s</string>
-    <string name="video_framerate_auto">FPS AUTOMÁTICO</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">FPS AUTOMÁTICO</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">NENHUM</string>
     <string name="effect_night">NOITE</string>
     <string name="effect_face_retouch">RETOQUE FACIAL</string>

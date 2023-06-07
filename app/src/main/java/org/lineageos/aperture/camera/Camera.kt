@@ -44,11 +44,11 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
     val logicalZoomRatios = cameraManager.getLogicalZoomRatios(cameraId)
 
-    private val supportedVideoFramerates = cameraInfo.supportedFrameRateRanges.mapNotNull {
-        Framerate.fromRange(it)
+    private val supportedVideoFrameRates = cameraInfo.supportedFrameRateRanges.mapNotNull {
+        FrameRate.fromRange(it)
     }.distinct().sorted()
     val supportedVideoQualities = QualitySelector.getSupportedQualities(cameraInfo).associateWith {
-        supportedVideoFramerates + cameraManager.getAdditionalVideoFramerates(cameraId, it)
+        supportedVideoFrameRates + cameraManager.getAdditionalVideoFrameRates(cameraId, it)
     }.toSortedMap { a, b ->
         listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.UHD).let {
             it.indexOf(a) - it.indexOf(b)

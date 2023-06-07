@@ -26,7 +26,7 @@ class CameraManager(context: Context) {
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
     private val additionalVideoConfigurations by lazy {
-        mutableMapOf<String, MutableMap<Quality, MutableList<Framerate>>>().apply {
+        mutableMapOf<String, MutableMap<Quality, MutableList<FrameRate>>>().apply {
             context.resources.getStringArray(context, R.array.config_additionalVideoConfigurations)
                 .let {
                     if (it.size % 3 != 0) {
@@ -36,8 +36,8 @@ class CameraManager(context: Context) {
 
                     for (i in it.indices step 3) {
                         val cameraId = it[i]
-                        val framerates = it[i + 2].split("|").mapNotNull {
-                            Framerate.fromValue(it.toInt())
+                        val frameRates = it[i + 2].split("|").mapNotNull {
+                            FrameRate.fromValue(it.toInt())
                         }
 
                         it[i + 1].split("|").mapNotNull {
@@ -55,7 +55,7 @@ class CameraManager(context: Context) {
                             if (!this[cameraId]!!.containsKey(it)) {
                                 this[cameraId]!![it] = mutableListOf()
                             }
-                            this[cameraId]!![it]!!.addAll(framerates)
+                            this[cameraId]!![it]!!.addAll(frameRates)
                         }
                     }
                 }
@@ -142,7 +142,7 @@ class CameraManager(context: Context) {
     private val availableCamerasSupportingVideoRecording: List<Camera>
         get() = availableCameras.filter { it.supportsVideoRecording }
 
-    fun getAdditionalVideoFramerates(cameraId: String, quality: Quality) =
+    fun getAdditionalVideoFrameRates(cameraId: String, quality: Quality) =
         additionalVideoConfigurations[cameraId]?.get(quality) ?: listOf()
 
     fun getLogicalZoomRatios(cameraId: String) = mutableMapOf(1.0f to 1.0f).apply {

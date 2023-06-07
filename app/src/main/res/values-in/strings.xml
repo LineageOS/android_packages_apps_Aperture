@@ -11,8 +11,8 @@
     <string name="flash_button_description">Mode flash</string>
     <string name="gallery_button_description">Galeri</string>
     <string name="image_view_description">Pratinjau gambar</string>
-    <string name="video_framerate_auto">FPS OTOMATIS</string>
-    <string name="video_framerate_value"><xliff:g contoh="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">FPS OTOMATIS</string>
+    <string name="video_frame_rate_value"><xliff:g contoh="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">TIDAK ADA</string>
     <string name="effect_night">MALAM</string>
     <string name="effect_auto">OTOMATIS</string>
