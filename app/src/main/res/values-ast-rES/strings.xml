@@ -9,7 +9,7 @@
     <string name="gallery_button_description">Galería</string>
     <string name="pro_button_description">Configuración Pro</string>
     <string name="shutter_button_description">Obturador</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_face_retouch">RETOQUE FACIAL</string>
     <string name="grid_off">REXÁU NON</string>
     <string name="grid_on_3">REXÁU 3x3</string>

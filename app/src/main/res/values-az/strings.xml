@@ -23,8 +23,8 @@
     <string name="timer_off">TAYMER BAĞLIDIR</string>
     <string name="timer_3">TAYMER 3 san</string>
     <string name="timer_10">TAYMER 10 san</string>
-    <string name="video_framerate_auto">AVTO FPS</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">AVTO FPS</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">YOXDUR</string>
     <string name="effect_night">GECƏ</string>
     <string name="effect_face_retouch">ÜZ RETUŞU</string>

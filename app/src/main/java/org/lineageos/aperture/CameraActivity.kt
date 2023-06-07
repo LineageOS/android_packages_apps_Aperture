@@ -82,7 +82,7 @@ import org.lineageos.aperture.camera.CameraManager
 import org.lineageos.aperture.camera.CameraMode
 import org.lineageos.aperture.camera.CameraState
 import org.lineageos.aperture.camera.FlashMode
-import org.lineageos.aperture.camera.Framerate
+import org.lineageos.aperture.camera.FrameRate
 import org.lineageos.aperture.camera.VideoStabilizationMode
 import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.qr.QrImageAnalyzer
@@ -191,7 +191,7 @@ open class CameraActivity : AppCompatActivity() {
     // Video
     private val supportedVideoQualities: List<Quality>
         get() = camera.supportedVideoQualities.keys.toList()
-    private val supportedVideoFramerates: List<Framerate>
+    private val supportedVideoFrameRates: List<FrameRate>
         get() = camera.supportedVideoQualities.getOrDefault(
             sharedPreferences.videoQuality, listOf()
         )
@@ -490,7 +490,7 @@ open class CameraActivity : AppCompatActivity() {
         // Set secondary top bar button callbacks
         secondaryBarLayout.aspectRatioButton.setOnClickListener { cycleAspectRatio() }
         secondaryBarLayout.videoQualityButton.setOnClickListener { cycleVideoQuality() }
-        secondaryBarLayout.videoFramerateButton.setOnClickListener { cycleVideoFramerate() }
+        secondaryBarLayout.videoFrameRateButton.setOnClickListener { cycleVideoFrameRate() }
         secondaryBarLayout.effectButton.setOnClickListener { cyclePhotoEffects() }
         secondaryBarLayout.gridButton.setOnClickListener { cycleGridMode() }
         secondaryBarLayout.timerButton.setOnClickListener { toggleTimerMode() }
@@ -1064,9 +1064,9 @@ open class CameraActivity : AppCompatActivity() {
                 cameraController.videoCaptureTargetQuality = null // FIXME: video preview restart
                 cameraController.videoCaptureTargetQuality = sharedPreferences.videoQuality
 
-                // Set proper video framerate
-                sharedPreferences.videoFramerate = (Framerate::getLowerOrHigher)(
-                    sharedPreferences.videoFramerate ?: Framerate.FPS_30, supportedVideoFramerates
+                // Set proper video frame rate
+                sharedPreferences.videoFrameRate = (FrameRate::getLowerOrHigher)(
+                    sharedPreferences.videoFrameRate ?: FrameRate.FPS_30, supportedVideoFrameRates
                 )
 
                 CameraController.VIDEO_CAPTURE
@@ -1127,9 +1127,9 @@ open class CameraActivity : AppCompatActivity() {
             cameraController.camera2CameraControl?.apply {
                 captureRequestOptions = CaptureRequestOptions.Builder()
                     .apply {
-                        setFramerate(
+                        setFrameRate(
                             if (cameraMode == CameraMode.VIDEO) {
-                                sharedPreferences.videoFramerate
+                                sharedPreferences.videoFrameRate
                             } else {
                                 null
                             }
@@ -1171,7 +1171,7 @@ open class CameraActivity : AppCompatActivity() {
         updateTimerModeIcon()
         updateAspectRatioIcon()
         updateVideoQualityIcon()
-        updateVideoFramerateIcon()
+        updateVideoFrameRateIcon()
         updatePhotoEffectIcon()
         updateGridIcon()
         updateFlashModeIcon()
@@ -1279,7 +1279,7 @@ open class CameraActivity : AppCompatActivity() {
             secondaryBarLayout.timerButton.isEnabled = cameraState == CameraState.IDLE
             secondaryBarLayout.aspectRatioButton.isEnabled = cameraState == CameraState.IDLE
             secondaryBarLayout.videoQualityButton.isEnabled = cameraState == CameraState.IDLE
-            secondaryBarLayout.videoFramerateButton.isEnabled = cameraState == CameraState.IDLE
+            secondaryBarLayout.videoFrameRateButton.isEnabled = cameraState == CameraState.IDLE
             secondaryBarLayout.effectButton.isEnabled = cameraState == CameraState.IDLE
             // Grid mode can be toggled at any time
             // Torch mode can be toggled at any time
@@ -1334,28 +1334,28 @@ open class CameraActivity : AppCompatActivity() {
         bindCameraUseCases()
     }
 
-    private fun updateVideoFramerateIcon() {
-        secondaryBarLayout.videoFramerateButton.isEnabled = supportedVideoFramerates.size > 1
-        secondaryBarLayout.videoFramerateButton.isVisible = cameraMode == CameraMode.VIDEO
+    private fun updateVideoFrameRateIcon() {
+        secondaryBarLayout.videoFrameRateButton.isEnabled = supportedVideoFrameRates.size > 1
+        secondaryBarLayout.videoFrameRateButton.isVisible = cameraMode == CameraMode.VIDEO
 
-        secondaryBarLayout.videoFramerateButton.text = sharedPreferences.videoFramerate?.let {
-            resources.getString(R.string.video_framerate_value, it.value)
-        } ?: resources.getString(R.string.video_framerate_auto)
+        secondaryBarLayout.videoFrameRateButton.text = sharedPreferences.videoFrameRate?.let {
+            resources.getString(R.string.video_frame_rate_value, it.value)
+        } ?: resources.getString(R.string.video_frame_rate_auto)
     }
 
-    private fun cycleVideoFramerate() {
+    private fun cycleVideoFrameRate() {
         if (!canRestartCamera()) {
             return
         }
 
-        val currentVideoFramerate = sharedPreferences.videoFramerate
-        val newVideoFramerate = supportedVideoFramerates.next(currentVideoFramerate)
+        val currentVideoFrameRate = sharedPreferences.videoFrameRate
+        val newVideoFrameRate = supportedVideoFrameRates.next(currentVideoFrameRate)
 
-        if (newVideoFramerate == currentVideoFramerate) {
+        if (newVideoFrameRate == currentVideoFrameRate) {
             return
         }
 
-        sharedPreferences.videoFramerate = newVideoFramerate
+        sharedPreferences.videoFrameRate = newVideoFrameRate
         bindCameraUseCases()
     }
 
