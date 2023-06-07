@@ -191,9 +191,9 @@ open class CameraActivity : AppCompatActivity() {
     // Video
     private val supportedVideoQualities: List<Quality>
         get() = camera.supportedVideoQualities.keys.toList()
-    private val supportedVideoFrameRates: List<FrameRate>
+    private val supportedVideoFrameRates: Set<FrameRate>
         get() = camera.supportedVideoQualities.getOrDefault(
-            sharedPreferences.videoQuality, listOf()
+            sharedPreferences.videoQuality, setOf()
         )
     private lateinit var audioConfig: AudioConfig
     private var recording: Recording? = null
@@ -1349,7 +1349,8 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         val currentVideoFrameRate = sharedPreferences.videoFrameRate
-        val newVideoFrameRate = supportedVideoFrameRates.next(currentVideoFrameRate)
+        val newVideoFrameRate = supportedVideoFrameRates.toList().sorted()
+            .next(currentVideoFrameRate)
 
         if (newVideoFrameRate == currentVideoFrameRate) {
             return
