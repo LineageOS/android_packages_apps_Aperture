@@ -38,6 +38,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.camera2.interop.CaptureRequestOptions
 import androidx.camera.core.AspectRatio
@@ -47,7 +48,6 @@ import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
-import androidx.camera.video.Recording
 import androidx.camera.video.VideoRecordEvent
 import androidx.camera.video.muted
 import androidx.camera.view.CameraController
@@ -67,7 +67,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import coil.decode.VideoFrameDecoder
 import coil.load
@@ -76,11 +75,11 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.size.Scale
 import com.google.android.material.button.MaterialButton
-import org.lineageos.aperture.camera.Camera
 import org.lineageos.aperture.camera.CameraFacing
 import org.lineageos.aperture.camera.CameraManager
 import org.lineageos.aperture.camera.CameraMode
 import org.lineageos.aperture.camera.CameraState
+import org.lineageos.aperture.camera.CameraViewModel
 import org.lineageos.aperture.camera.FlashMode
 import org.lineageos.aperture.camera.FrameRate
 import org.lineageos.aperture.camera.VideoStabilizationMode
@@ -162,41 +161,161 @@ open class CameraActivity : AppCompatActivity() {
     private val permissionsUtils by lazy { PermissionsUtils(this) }
 
     // Current camera state
-    private lateinit var camera: Camera
-    private lateinit var cameraMode: CameraMode
+    private val cameraViewModel: CameraViewModel by viewModels()
+
+    private var camera
+        get() = cameraViewModel.camera.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.camera.value = value
+            } else {
+                cameraViewModel.camera.postValue(value)
+            }
+        }
+    private var cameraMode
+        get() = cameraViewModel.cameraMode.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.cameraMode.value = value
+            } else {
+                cameraViewModel.cameraMode.postValue(value)
+            }
+        }
+    private var singleCaptureMode
+        get() = cameraViewModel.inSingleCaptureMode.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.inSingleCaptureMode.value = value
+            } else {
+                cameraViewModel.inSingleCaptureMode.postValue(value)
+            }
+        }
+    private var cameraState
+        get() = cameraViewModel.cameraState.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.cameraState.value = value
+            } else {
+                cameraViewModel.cameraState.postValue(value)
+            }
+        }
+    private val screenRotation
+        get() = cameraViewModel.screenRotation
+    private var gridMode
+        get() = cameraViewModel.gridMode.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.gridMode.value = value
+            } else {
+                cameraViewModel.gridMode.postValue(value)
+            }
+        }
+    private var flashMode
+        get() = cameraViewModel.flashMode.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.flashMode.value = value
+            } else {
+                cameraViewModel.flashMode.postValue(value)
+            }
+        }
+    private var timerMode
+        get() = cameraViewModel.timerMode.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.timerMode.value = value
+            } else {
+                cameraViewModel.timerMode.postValue(value)
+            }
+        }
+    private var photoCaptureMode
+        get() = cameraViewModel.photoCaptureMode.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.photoCaptureMode.value = value
+            } else {
+                cameraViewModel.photoCaptureMode.postValue(value)
+            }
+        }
+    private var photoAspectRatio
+        get() = cameraViewModel.photoAspectRatio.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.photoAspectRatio.value = value
+            } else {
+                cameraViewModel.photoAspectRatio.postValue(value)
+            }
+        }
+    private var photoEffect
+        get() = cameraViewModel.photoEffect.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.photoEffect.value = value
+            } else {
+                cameraViewModel.photoEffect.postValue(value)
+            }
+        }
+    private var videoQuality
+        get() = cameraViewModel.videoQuality.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.videoQuality.value = value
+            } else {
+                cameraViewModel.videoQuality.postValue(value)
+            }
+        }
+    private var videoFrameRate
+        get() = cameraViewModel.videoFrameRate.value
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.videoFrameRate.value = value
+            } else {
+                cameraViewModel.videoFrameRate.postValue(value)
+            }
+        }
+    private var videoMicMode
+        get() = cameraViewModel.videoMicMode.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.videoMicMode.value = value
+            } else {
+                cameraViewModel.videoMicMode.postValue(value)
+            }
+        }
+    private var videoAudioConfig
+        get() = cameraViewModel.videoAudioConfig.value!!
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.videoAudioConfig.value = value
+            } else {
+                cameraViewModel.videoAudioConfig.postValue(value)
+            }
+        }
+    private var videoRecording
+        get() = cameraViewModel.videoRecording.value
+        set(value) {
+            if (Looper.getMainLooper().isCurrentThread) {
+                cameraViewModel.videoRecording.value = value
+            } else {
+                cameraViewModel.videoRecording.postValue(value)
+            }
+        }
+
     private lateinit var initialCameraFacing: CameraFacing
-    private var singleCaptureMode = false
-        set(value) {
-            field = value
-            updateSecondaryBarButtons()
-            updatePrimaryBarButtons()
-            updateCameraModeButtons()
-        }
-    private var cameraState = CameraState.IDLE
-        set(value) {
-            field = value
-            updateSecondaryBarButtons()
-            updatePrimaryBarButtons()
-        }
+
     private var tookSomething: Boolean = false
         set(value) {
             field = value
             updateGalleryButton()
         }
 
-    // Photo
-    private var photoCaptureMode: Int? = null
-        get() = field!!
-
     // Video
     private val supportedVideoQualities: Set<Quality>
         get() = camera.supportedVideoQualities.keys
     private val supportedVideoFrameRates: Set<FrameRate>
         get() = camera.supportedVideoQualities.getOrDefault(
-            sharedPreferences.videoQuality, setOf()
+            videoQuality, setOf()
         )
-    private lateinit var audioConfig: AudioConfig
-    private var recording: Recording? = null
 
     // QR
     private val imageAnalyzer by lazy { QrImageAnalyzer(this) }
@@ -347,7 +466,6 @@ open class CameraActivity : AppCompatActivity() {
         }
     }
 
-    private val screenRotation = MutableLiveData<Rotation>()
     private val orientationEventListener by lazy {
         object : OrientationEventListener(this) {
             override fun onOrientationChanged(orientation: Int) {
@@ -454,6 +572,15 @@ open class CameraActivity : AppCompatActivity() {
         cameraMode = overrideInitialCameraMode() ?: sharedPreferences.lastCameraMode
         initialCameraFacing = sharedPreferences.lastCameraFacing
 
+        // Restore settings from shared preferences
+        gridMode = sharedPreferences.lastGridMode
+        timerMode = sharedPreferences.timerMode
+        photoAspectRatio = sharedPreferences.aspectRatio
+        photoEffect = sharedPreferences.photoEffect
+        videoQuality = sharedPreferences.videoQuality
+        videoFrameRate = sharedPreferences.videoFrameRate
+        videoMicMode = sharedPreferences.lastMicMode
+
         // Handle intent
         intent.action?.let {
             intentActions[it]?.invoke()
@@ -514,6 +641,8 @@ open class CameraActivity : AppCompatActivity() {
 
         // Observe torch state
         cameraController.torchState.observe(this) {
+            flashMode = cameraController.flashMode
+
             updateFlashModeIcon()
         }
 
@@ -640,8 +769,8 @@ open class CameraActivity : AppCompatActivity() {
 
         videoRecordingStateButton.setOnClickListener {
             when (cameraState) {
-                CameraState.RECORDING_VIDEO -> recording?.pause()
-                CameraState.RECORDING_VIDEO_PAUSED -> recording?.resume()
+                CameraState.RECORDING_VIDEO -> videoRecording?.pause()
+                CameraState.RECORDING_VIDEO_PAUSED -> videoRecording?.resume()
                 else -> throw Exception("videoRecordingStateButton clicked while in invalid state: $cameraState")
             }
         }
@@ -708,6 +837,23 @@ open class CameraActivity : AppCompatActivity() {
 
         // Observe screen rotation
         screenRotation.observe(this) { rotateViews(it) }
+
+        // Observe camera mode
+        cameraViewModel.cameraMode.observe(this) {
+            updateCameraModeButtons()
+        }
+
+        // Observe single capture mode
+        cameraViewModel.inSingleCaptureMode.observe(this) {
+            updatePrimaryBarButtons()
+            updateCameraModeButtons()
+        }
+
+        // Observe camera state
+        cameraViewModel.cameraState.observe(this) {
+            updateSecondaryBarButtons()
+            updatePrimaryBarButtons()
+        }
 
         // Request camera permissions
         if (!permissionsUtils.mainPermissionsGranted()) {
@@ -914,7 +1060,7 @@ open class CameraActivity : AppCompatActivity() {
         if (cameraState != CameraState.IDLE) {
             if (cameraController.isRecording) {
                 // Stop the current recording session.
-                recording?.stop()
+                videoRecording?.stop()
             }
             return
         }
@@ -933,9 +1079,9 @@ open class CameraActivity : AppCompatActivity() {
 
         handler.postDelayed({
             // Start recording
-            recording = cameraController.startRecording(
+            videoRecording = cameraController.startRecording(
                 outputOptions,
-                audioConfig,
+                videoAudioConfig,
                 cameraExecutor
             ) {
                 val updateRecordingStatus = { enabled: Boolean, duration: Long ->
@@ -988,7 +1134,7 @@ open class CameraActivity : AppCompatActivity() {
                             }
                         }
                         cameraState = CameraState.IDLE
-                        recording = null
+                        videoRecording = null
                     }
                 }
             }
@@ -1033,8 +1179,8 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         // Fallback to ExtensionMode.NONE if necessary
-        if (!camera.supportsExtensionMode(sharedPreferences.photoEffect)) {
-            sharedPreferences.photoEffect = ExtensionMode.NONE
+        if (!camera.supportsExtensionMode(photoEffect)) {
+            photoEffect = ExtensionMode.NONE
         }
 
         // Initialize the use case we want and set its properties
@@ -1046,7 +1192,7 @@ open class CameraActivity : AppCompatActivity() {
             CameraMode.PHOTO -> {
                 cameraController.imageCaptureResolutionSelector = ResolutionSelector.Builder()
                     .setAspectRatioStrategy(AspectRatioStrategy(
-                        sharedPreferences.aspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO
+                        photoAspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO
                     ))
                     .setAllowedResolutionMode(if (cameraManager.enableHighResolution) {
                         ResolutionSelector.ALLOWED_RESOLUTIONS_SLOW
@@ -1058,15 +1204,15 @@ open class CameraActivity : AppCompatActivity() {
             }
             CameraMode.VIDEO -> {
                 // Fallback to highest supported video quality
-                if (!supportedVideoQualities.contains(sharedPreferences.videoQuality)) {
-                    sharedPreferences.videoQuality = supportedVideoQualities.first()
+                if (!supportedVideoQualities.contains(videoQuality)) {
+                    videoQuality = supportedVideoQualities.first()
                 }
                 cameraController.videoCaptureTargetQuality = null // FIXME: video preview restart
-                cameraController.videoCaptureTargetQuality = sharedPreferences.videoQuality
+                cameraController.videoCaptureTargetQuality = videoQuality
 
                 // Set proper video frame rate
-                sharedPreferences.videoFrameRate = (FrameRate::getLowerOrHigher)(
-                    sharedPreferences.videoFrameRate ?: FrameRate.FPS_30, supportedVideoFrameRates
+                videoFrameRate = (FrameRate::getLowerOrHigher)(
+                    videoFrameRate ?: FrameRate.FPS_30, supportedVideoFrameRates
                 )
 
                 CameraController.VIDEO_CAPTURE
@@ -1083,7 +1229,7 @@ open class CameraActivity : AppCompatActivity() {
             photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG
         ) {
             cameraManager.extensionsManager.getExtensionEnabledCameraSelector(
-                camera.cameraSelector, sharedPreferences.photoEffect
+                camera.cameraSelector, photoEffect
             )
         } else {
             camera.cameraSelector
@@ -1116,7 +1262,7 @@ open class CameraActivity : AppCompatActivity() {
         cameraController.setEnabledUseCases(cameraUseCases)
 
         // Restore settings that needs a rebind
-        cameraController.imageCaptureMode = photoCaptureMode as Int
+        cameraController.imageCaptureMode = photoCaptureMode
 
         // Bind camera controller to lifecycle
         cameraController.bindToLifecycle(this)
@@ -1129,7 +1275,7 @@ open class CameraActivity : AppCompatActivity() {
                     .apply {
                         setFrameRate(
                             if (cameraMode == CameraMode.VIDEO) {
-                                sharedPreferences.videoFrameRate
+                                videoFrameRate
                             } else {
                                 null
                             }
@@ -1149,17 +1295,17 @@ open class CameraActivity : AppCompatActivity() {
         }, ContextCompat.getMainExecutor(this))
 
         // Restore settings that can be set on the fly
-        setGridMode(
-            if (cameraMode != CameraMode.QR) sharedPreferences.lastGridMode else GridMode.OFF
+        changeGridMode(
+            if (cameraMode != CameraMode.QR) gridMode else GridMode.OFF
         )
-        setFlashMode(
+        changeFlashMode(
             when (cameraMode) {
                 CameraMode.PHOTO -> sharedPreferences.photoFlashMode
                 CameraMode.VIDEO -> sharedPreferences.videoFlashMode
                 CameraMode.QR -> FlashMode.OFF
             }
         )
-        setMicrophoneMode(sharedPreferences.lastMicMode)
+        setMicrophoneMode(videoMicMode)
 
         // Reset exposure level
         exposureLevel.progress = 0.5f
@@ -1167,7 +1313,6 @@ open class CameraActivity : AppCompatActivity() {
             camera.exposureCompensationRange.upper - camera.exposureCompensationRange.lower
 
         // Update icons from last state
-        updateCameraModeButtons()
         updateTimerModeIcon()
         updateAspectRatioIcon()
         updateVideoQualityIcon()
@@ -1243,16 +1388,18 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updateCameraModeButtons() {
         runOnUiThread {
-            cameraModeHighlight.isInvisible = singleCaptureMode
-            photoModeButton.isInvisible = singleCaptureMode
-            videoModeButton.isInvisible = singleCaptureMode
-            qrModeButton.isInvisible = singleCaptureMode
+            val inSingleCaptureMode =
+                cameraViewModel.inSingleCaptureMode.value ?: return@runOnUiThread
+            val cameraMode = cameraViewModel.cameraMode.value ?: return@runOnUiThread
 
-            cameraMode.let {
-                qrModeButton.isEnabled = it != CameraMode.QR
-                photoModeButton.isEnabled = it != CameraMode.PHOTO
-                videoModeButton.isEnabled = it != CameraMode.VIDEO
-            }
+            cameraModeHighlight.isInvisible = inSingleCaptureMode
+            photoModeButton.isInvisible = inSingleCaptureMode
+            videoModeButton.isInvisible = inSingleCaptureMode
+            qrModeButton.isInvisible = inSingleCaptureMode
+
+            qrModeButton.isEnabled = cameraMode != CameraMode.QR
+            photoModeButton.isEnabled = cameraMode != CameraMode.PHOTO
+            videoModeButton.isEnabled = cameraMode != CameraMode.VIDEO
 
             // Animate camera mode change
             (cameraModeHighlight.parent as View).doOnLayout {
@@ -1286,7 +1433,7 @@ open class CameraActivity : AppCompatActivity() {
             secondaryBarLayout.flashButton.isEnabled =
                 cameraMode != CameraMode.PHOTO || cameraState == CameraState.IDLE
             secondaryBarLayout.micButton.isEnabled =
-                cameraState == CameraState.IDLE || audioConfig.audioEnabled
+                cameraState == CameraState.IDLE || videoAudioConfig.audioEnabled
             secondaryBarLayout.settingsButton.isEnabled = cameraState == CameraState.IDLE
         }
     }
@@ -1296,7 +1443,11 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun updatePrimaryBarButtons() {
         runOnUiThread {
-            galleryButtonCardView.isInvisible = singleCaptureMode
+            val inSingleCaptureMode =
+                cameraViewModel.inSingleCaptureMode.value ?: return@runOnUiThread
+            val cameraState = cameraViewModel.cameraState.value ?: return@runOnUiThread
+
+            galleryButtonCardView.isInvisible = inSingleCaptureMode
             galleryButton.isEnabled = cameraState == CameraState.IDLE
             // Shutter button must stay enabled
             flipCameraButton.isEnabled = cameraState == CameraState.IDLE
@@ -1308,11 +1459,13 @@ open class CameraActivity : AppCompatActivity() {
             return
         }
 
-        sharedPreferences.aspectRatio = when (sharedPreferences.aspectRatio) {
+        photoAspectRatio = when (photoAspectRatio) {
             AspectRatio.RATIO_4_3 -> AspectRatio.RATIO_16_9
             AspectRatio.RATIO_16_9 -> AspectRatio.RATIO_4_3
             else -> AspectRatio.RATIO_4_3
         }
+
+        sharedPreferences.aspectRatio = photoAspectRatio
 
         bindCameraUseCases()
     }
@@ -1322,7 +1475,7 @@ open class CameraActivity : AppCompatActivity() {
             return
         }
 
-        val currentVideoQuality = sharedPreferences.videoQuality
+        val currentVideoQuality = videoQuality
         val newVideoQuality = supportedVideoQualities.toList().sortedWith { a, b ->
             listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.UHD).let {
                 it.indexOf(a) - it.indexOf(b)
@@ -1333,7 +1486,9 @@ open class CameraActivity : AppCompatActivity() {
             return
         }
 
-        sharedPreferences.videoQuality = newVideoQuality
+        videoQuality = newVideoQuality
+
+        sharedPreferences.videoQuality = videoQuality
 
         bindCameraUseCases()
     }
@@ -1342,7 +1497,7 @@ open class CameraActivity : AppCompatActivity() {
         secondaryBarLayout.videoFrameRateButton.isEnabled = supportedVideoFrameRates.size > 1
         secondaryBarLayout.videoFrameRateButton.isVisible = cameraMode == CameraMode.VIDEO
 
-        secondaryBarLayout.videoFrameRateButton.text = sharedPreferences.videoFrameRate?.let {
+        secondaryBarLayout.videoFrameRateButton.text = videoFrameRate?.let {
             resources.getString(R.string.video_frame_rate_value, it.value)
         } ?: resources.getString(R.string.video_frame_rate_auto)
     }
@@ -1352,7 +1507,7 @@ open class CameraActivity : AppCompatActivity() {
             return
         }
 
-        val currentVideoFrameRate = sharedPreferences.videoFrameRate
+        val currentVideoFrameRate = videoFrameRate
         val newVideoFrameRate = supportedVideoFrameRates.toList().sorted()
             .next(currentVideoFrameRate)
 
@@ -1360,7 +1515,10 @@ open class CameraActivity : AppCompatActivity() {
             return
         }
 
-        sharedPreferences.videoFrameRate = newVideoFrameRate
+        videoFrameRate = newVideoFrameRate
+
+        sharedPreferences.videoFrameRate = videoFrameRate
+
         bindCameraUseCases()
     }
 
@@ -1368,7 +1526,7 @@ open class CameraActivity : AppCompatActivity() {
      * Update the grid button icon based on the value set in grid view
      */
     private fun updateGridIcon() {
-        sharedPreferences.lastGridMode.let {
+        gridMode.let {
             secondaryBarLayout.gridButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
@@ -1395,11 +1553,14 @@ open class CameraActivity : AppCompatActivity() {
      * Set the specified grid mode, also updating the icon
      */
     private fun cycleGridMode() {
-        sharedPreferences.lastGridMode = sharedPreferences.lastGridMode.next()
-        setGridMode(sharedPreferences.lastGridMode)
+        gridMode = gridMode.next()
+
+        sharedPreferences.lastGridMode = gridMode
+
+        changeGridMode(gridMode)
     }
 
-    private fun setGridMode(gridMode: GridMode) {
+    private fun changeGridMode(gridMode: GridMode) {
         gridView.mode = gridMode
         updateGridIcon()
     }
@@ -1408,7 +1569,7 @@ open class CameraActivity : AppCompatActivity() {
      * Update the timer mode button icon based on the value set in settings
      */
     private fun updateTimerModeIcon() {
-        sharedPreferences.timerMode.let {
+        timerMode.let {
             secondaryBarLayout.timerButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
@@ -1433,14 +1594,17 @@ open class CameraActivity : AppCompatActivity() {
      * Toggle timer mode
      */
     private fun toggleTimerMode() {
-        sharedPreferences.timerMode = sharedPreferences.timerMode.next()
+        timerMode = timerMode.next()
+
+        sharedPreferences.timerMode = timerMode
+
         updateTimerModeIcon()
     }
 
     private fun updateAspectRatioIcon() {
         secondaryBarLayout.aspectRatioButton.isVisible = cameraMode != CameraMode.VIDEO
 
-        sharedPreferences.aspectRatio.let {
+        photoAspectRatio.let {
             secondaryBarLayout.aspectRatioButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
@@ -1464,7 +1628,7 @@ open class CameraActivity : AppCompatActivity() {
     private fun updateVideoQualityIcon() {
         secondaryBarLayout.videoQualityButton.isVisible = cameraMode == CameraMode.VIDEO
 
-        sharedPreferences.videoQuality.let {
+        videoQuality.let {
             secondaryBarLayout.videoQualityButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
@@ -1495,7 +1659,7 @@ open class CameraActivity : AppCompatActivity() {
     private fun updateFlashModeIcon() {
         secondaryBarLayout.flashButton.isVisible = camera.hasFlashUnit
 
-        cameraController.flashMode.let {
+        flashMode.let {
             secondaryBarLayout.flashButton.setImageDrawable(
                 ContextCompat.getDrawable(
                     this,
@@ -1513,33 +1677,37 @@ open class CameraActivity : AppCompatActivity() {
     /**
      * Set the specified flash mode, saving the value to shared prefs and updating the icon
      */
-    private fun setFlashMode(flashMode: FlashMode) {
+    private fun changeFlashMode(flashMode: FlashMode) {
         cameraController.flashMode = flashMode
-        updateFlashModeIcon()
 
-        when (cameraMode) {
-            CameraMode.PHOTO -> sharedPreferences.photoFlashMode = flashMode
-            CameraMode.VIDEO -> sharedPreferences.videoFlashMode = flashMode
-            else -> {}
-        }
+        this.flashMode = flashMode
+
+        updateFlashModeIcon()
     }
 
     /**
      * Cycle flash mode
      */
     private fun cycleFlashMode() {
-        setFlashMode(
-            when (cameraMode) {
-                CameraMode.PHOTO -> cameraController.flashMode.next()
-                CameraMode.VIDEO ->
-                    if (cameraController.flashMode != FlashMode.OFF) {
-                        FlashMode.OFF
-                    } else {
-                        FlashMode.TORCH
-                    }
-                else -> FlashMode.OFF
-            }
-        )
+        val currentFlashMode = flashMode
+        val newFlashMode = when (cameraMode) {
+            CameraMode.PHOTO -> currentFlashMode.next()
+            CameraMode.VIDEO ->
+                if (currentFlashMode != FlashMode.OFF) {
+                    FlashMode.OFF
+                } else {
+                    FlashMode.TORCH
+                }
+            else -> FlashMode.OFF
+        }
+
+        changeFlashMode(newFlashMode)
+
+        when (cameraMode) {
+            CameraMode.PHOTO -> sharedPreferences.photoFlashMode = newFlashMode
+            CameraMode.VIDEO -> sharedPreferences.videoFlashMode = newFlashMode
+            else -> {}
+        }
     }
 
     /**
@@ -1548,7 +1716,7 @@ open class CameraActivity : AppCompatActivity() {
     private fun updateMicrophoneModeIcon() {
         secondaryBarLayout.micButton.isVisible = cameraMode == CameraMode.VIDEO
 
-        sharedPreferences.lastMicMode.let {
+        videoMicMode.let {
             secondaryBarLayout.micButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 if (it) R.drawable.ic_mic_on else R.drawable.ic_mic_off,
@@ -1563,7 +1731,7 @@ open class CameraActivity : AppCompatActivity() {
      * Toggles microphone during video recording
      */
     private fun toggleMicrophoneMode() {
-        setMicrophoneMode(!sharedPreferences.lastMicMode)
+        setMicrophoneMode(!videoMicMode)
     }
 
     /**
@@ -1571,9 +1739,13 @@ open class CameraActivity : AppCompatActivity() {
      */
     @SuppressLint("MissingPermission")
     private fun setMicrophoneMode(microphoneMode: Boolean) {
-        audioConfig = AudioConfig.create(microphoneMode)
-        recording?.muted = !microphoneMode
-        sharedPreferences.lastMicMode = microphoneMode
+        videoAudioConfig = AudioConfig.create(microphoneMode)
+        videoRecording?.muted = !microphoneMode
+
+        videoMicMode = microphoneMode
+
+        sharedPreferences.lastMicMode = videoMicMode
+
         updateMicrophoneModeIcon()
     }
 
@@ -1586,7 +1758,7 @@ open class CameraActivity : AppCompatActivity() {
                     photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG &&
                     camera.supportedExtensionModes.size > 1
 
-        sharedPreferences.photoEffect.let {
+        photoEffect.let {
             secondaryBarLayout.effectButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (it) {
@@ -1623,14 +1795,16 @@ open class CameraActivity : AppCompatActivity() {
             return
         }
 
-        val currentExtensionMode = sharedPreferences.photoEffect
+        val currentExtensionMode = photoEffect
         val newExtensionMode = camera.supportedExtensionModes.next(currentExtensionMode)
 
         if (newExtensionMode == currentExtensionMode) {
             return
         }
 
-        sharedPreferences.photoEffect = newExtensionMode
+        photoEffect = newExtensionMode
+
+        sharedPreferences.photoEffect = photoEffect
 
         bindCameraUseCases()
     }
@@ -1850,7 +2024,7 @@ open class CameraActivity : AppCompatActivity() {
     private fun startTimerAndRun(runnable: () -> Unit) {
         // Allow forcing timer if requested by the assistant
         val timerModeSeconds =
-            assistantIntent?.timerDurationSeconds ?: sharedPreferences.timerMode.seconds
+            assistantIntent?.timerDurationSeconds ?: timerMode.seconds
 
         if (timerModeSeconds <= 0 || !canRestartCamera()) {
             runnable()
