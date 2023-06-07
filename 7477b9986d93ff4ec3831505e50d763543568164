@@ -3,6 +3,23 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "241c2287_90405b42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-06-07T18:06:20Z",
+      "side": 1,
+      "message": "Abandon?",
+      "revId": "7477b9986d93ff4ec3831505e50d763543568164",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "679d21ac_b899e78a",
         "filename": "app/Android.bp",
         "patchSetId": 2
