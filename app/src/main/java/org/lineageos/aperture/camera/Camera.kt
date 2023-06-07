@@ -11,7 +11,6 @@ import android.os.Build
 import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
-import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
 import org.lineageos.aperture.ext.*
 import kotlin.reflect.safeCast
@@ -49,11 +48,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     }.toSet()
     val supportedVideoQualities = QualitySelector.getSupportedQualities(cameraInfo).associateWith {
         supportedVideoFrameRates + cameraManager.getAdditionalVideoFrameRates(cameraId, it)
-    }.toSortedMap { a, b ->
-        listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.UHD).let {
-            it.indexOf(a) - it.indexOf(b)
-        }
-    }
+    }.toMap()
     val supportsVideoRecording = supportedVideoQualities.isNotEmpty()
 
     val supportedExtensionModes = cameraManager.extensionsManager.getSupportedModes(cameraSelector)

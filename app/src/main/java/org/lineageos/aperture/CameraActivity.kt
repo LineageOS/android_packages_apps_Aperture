@@ -187,8 +187,8 @@ open class CameraActivity : AppCompatActivity() {
         get() = field!!
 
     // Video
-    private val supportedVideoQualities: List<Quality>
-        get() = camera.supportedVideoQualities.keys.toList()
+    private val supportedVideoQualities: Set<Quality>
+        get() = camera.supportedVideoQualities.keys
     private val supportedVideoFrameRates: Set<FrameRate>
         get() = camera.supportedVideoQualities.getOrDefault(
             sharedPreferences.videoQuality, setOf()
@@ -1314,7 +1314,11 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         val currentVideoQuality = sharedPreferences.videoQuality
-        val newVideoQuality = supportedVideoQualities.next(currentVideoQuality)
+        val newVideoQuality = supportedVideoQualities.toList().sortedWith { a, b ->
+            listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.UHD).let {
+                it.indexOf(a) - it.indexOf(b)
+            }
+        }.next(currentVideoQuality)
 
         if (newVideoQuality == currentVideoQuality) {
             return
