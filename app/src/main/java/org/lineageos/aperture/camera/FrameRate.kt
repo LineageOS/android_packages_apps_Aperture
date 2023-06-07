@@ -19,7 +19,7 @@ enum class FrameRate(val value: Int) {
      * Get the closer frame rate to the requested one, first finding a lower one
      * then checking for a higher one if no one exists.
      */
-    fun getLowerOrHigher(frameRates: List<FrameRate>): FrameRate? {
+    fun getLowerOrHigher(frameRates: Collection<FrameRate>): FrameRate? {
         val smaller = frameRates.filter { it <= this }.sortedDescending()
         val bigger = frameRates.filter { it > this }.sorted()
 

@@ -46,7 +46,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     private val supportedVideoFrameRates = cameraInfo.supportedFrameRateRanges.mapNotNull {
         FrameRate.fromRange(it)
-    }.distinct().sorted()
+    }.toSet()
     val supportedVideoQualities = QualitySelector.getSupportedQualities(cameraInfo).associateWith {
         supportedVideoFrameRates + cameraManager.getAdditionalVideoFrameRates(cameraId, it)
     }.toSortedMap { a, b ->
