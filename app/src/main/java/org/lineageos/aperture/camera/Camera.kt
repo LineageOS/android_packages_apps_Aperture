@@ -47,7 +47,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     private val supportedVideoFrameRates = cameraInfo.supportedFrameRateRanges.mapNotNull {
         FrameRate.fromRange(it)
-    }.distinct().sorted()
+    }.toSet()
     val supportedVideoQualities =
         Recorder.getVideoCapabilities(cameraInfo).getSupportedQualities(DynamicRange.SDR)
             .associateWith {
