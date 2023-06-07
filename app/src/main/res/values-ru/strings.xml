@@ -23,8 +23,8 @@
     <string name="timer_off">АВТОСПУСК ОТКЛЮЧЕН</string>
     <string name="timer_3">ТАЙМЕР 3 сек.</string>
     <string name="timer_10">ТАЙМЕР 10 сек.</string>
-    <string name="video_framerate_auto">АВТО FPS</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">АВТО FPS</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">НЕТ</string>
     <string name="effect_night">НОЧНАЯ СЪЕМКА</string>
     <string name="effect_face_retouch">РЕТУШЬ ЛИЦА</string>

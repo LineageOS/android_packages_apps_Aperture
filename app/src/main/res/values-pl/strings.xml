@@ -23,8 +23,8 @@
     <string name="timer_off">TIMER WYŁ.</string>
     <string name="timer_3">TIMER 3s</string>
     <string name="timer_10">TIMER 10s</string>
-    <string name="video_framerate_auto">AUTOMATYCZNE Kl/s</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> Kl/s</string>
+    <string name="video_frame_rate_auto">AUTOMATYCZNE Kl/s</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> Kl/s</string>
     <string name="effect_none">BRAK</string>
     <string name="effect_night">NOC</string>
     <string name="effect_face_retouch">RETUSZ TWARZY</string>

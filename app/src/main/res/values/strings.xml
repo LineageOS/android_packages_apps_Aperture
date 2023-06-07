@@ -37,8 +37,8 @@
     <string name="video_quality_fhd" translatable="false">1080p</string>
     <string name="video_quality_uhd" translatable="false">2160p</string>
 
-    <string name="video_framerate_auto">AUTO FPS</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">AUTO FPS</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
 
     <string name="effect_none">NONE</string>
     <string name="effect_bokeh" translatable="false">BOKEH</string>

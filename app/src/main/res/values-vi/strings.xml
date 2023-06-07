@@ -23,8 +23,8 @@
     <string name="timer_off">TẮT BỘ TÍNH GIỜ</string>
     <string name="timer_3">HẸN GIỜ 3s</string>
     <string name="timer_10">HẸN GIỜ 10s</string>
-    <string name="video_framerate_auto">FPS TỰ ĐỘNG</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">FPS TỰ ĐỘNG</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">KHÔNG CÓ</string>
     <string name="effect_night">ĐÊM</string>
     <string name="effect_face_retouch">CHỈNH SỬA KHUÔN MẶT</string>

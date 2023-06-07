@@ -20,8 +20,8 @@
     <string name="timer_off">타이머 꺼짐</string>
     <string name="timer_3">타이머 3초</string>
     <string name="timer_10">타이머 10초</string>
-    <string name="video_framerate_auto">FPS 자동</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">FPS 자동</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">없음</string>
     <string name="effect_night">야간</string>
     <string name="effect_auto">자동</string>

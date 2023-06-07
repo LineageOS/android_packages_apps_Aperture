@@ -23,8 +23,8 @@
     <string name="timer_off">ΧΡΟΝΟΜΕΤΡΟ OFF</string>
     <string name="timer_3">ΧΡΟΝΟΜΕΤΡΟ 3δ</string>
     <string name="timer_10">ΧΡΟΝΟΜΕΤΡΟ 10δ</string>
-    <string name="video_framerate_auto">AUTO FPS</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">AUTO FPS</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">ΚΑΝΕΝΑ</string>
     <string name="effect_night">ΝΥΧΤΑ</string>
     <string name="effect_face_retouch">ΡΕΤΟΥΣ ΠΡΟΣΩΠΟΥ</string>

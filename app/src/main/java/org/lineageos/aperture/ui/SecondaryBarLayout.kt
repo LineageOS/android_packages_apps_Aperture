@@ -29,7 +29,7 @@ class SecondaryBarLayout @JvmOverloads constructor(
     val proButton by lazy { findViewById<ImageButton>(R.id.proButton)!! }
     val settingsButton by lazy { findViewById<Button>(R.id.settingsButton)!! }
     val timerButton by lazy { findViewById<Button>(R.id.timerButton)!! }
-    val videoFramerateButton by lazy { findViewById<Button>(R.id.videoFramerateButton)!! }
+    val videoFrameRateButton by lazy { findViewById<Button>(R.id.videoFrameRateButton)!! }
     val videoQualityButton by lazy { findViewById<Button>(R.id.videoQualityButton)!! }
 
     // System services

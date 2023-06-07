@@ -23,8 +23,8 @@
     <string name="timer_off">ZAMANLAYICI KAPALI</string>
     <string name="timer_3">ZAMANLAYICI 3s</string>
     <string name="timer_10">ZAMANLAYICI 10s</string>
-    <string name="video_framerate_auto">Otomatik FPS</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">Otomatik FPS</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">YOK</string>
     <string name="effect_night">GECE</string>
     <string name="effect_face_retouch">YÜZ RÖTUŞU</string>
