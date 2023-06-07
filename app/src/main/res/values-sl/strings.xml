@@ -23,8 +23,8 @@
     <string name="timer_off">ODŠTEVALNIK IZKLOPLJEN</string>
     <string name="timer_3">ODŠTEVALNIK 3s</string>
     <string name="timer_10">ODŠTEVALNIK 10s</string>
-    <string name="video_framerate_auto">SAMODEJNO SL./S</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> SL./S</string>
+    <string name="video_frame_rate_auto">SAMODEJNO SL./S</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> SL./S</string>
     <string name="effect_none">BREZ</string>
     <string name="effect_night">PONOČI</string>
     <string name="effect_face_retouch">RETUŠIRANJE OBRAZA</string>

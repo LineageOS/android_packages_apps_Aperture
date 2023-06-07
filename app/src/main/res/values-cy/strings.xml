@@ -23,8 +23,8 @@
     <string name="timer_off">AMSERYDD I FFWRDD</string>
     <string name="timer_3">AMSERYDD 3e</string>
     <string name="timer_10">AMSERYDD 10e</string>
-    <string name="video_framerate_auto">FF/E AWTO</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> Ff/e</string>
+    <string name="video_frame_rate_auto">FF/E AWTO</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> Ff/e</string>
     <string name="effect_none">DIM</string>
     <string name="effect_night">NOS</string>
     <string name="effect_face_retouch">ATGYFFWRDD WYNEB</string>

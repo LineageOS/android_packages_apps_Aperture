@@ -23,8 +23,8 @@
     <string name="timer_off">TIMER UIT</string>
     <string name="timer_3">TIMER 3s</string>
     <string name="timer_10">TIMER 10s</string>
-    <string name="video_framerate_auto">AUTOMATISCH FPS</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">AUTOMATISCH FPS</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">GEEN</string>
     <string name="effect_night">NACHT</string>
     <string name="effect_auto">AUTOMATISCH</string>

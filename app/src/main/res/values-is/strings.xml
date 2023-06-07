@@ -22,7 +22,7 @@
     <string name="timer_off">SLÖKKT Á NIÐURTELJARA</string>
     <string name="timer_3">NIÐURTALN. 3s</string>
     <string name="timer_10">NIÐURTALN. 10s</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> RPS</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> RPS</string>
     <string name="effect_none">EKKERT</string>
     <string name="effect_night">NÓTT</string>
     <string name="effect_auto">SJÁLFVIRKT</string>
