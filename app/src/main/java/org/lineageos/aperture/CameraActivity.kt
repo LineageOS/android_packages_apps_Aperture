@@ -105,7 +105,6 @@ import org.lineageos.aperture.utils.Rotation
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StorageUtils
 import org.lineageos.aperture.utils.TimeUtils
-import org.lineageos.aperture.utils.TimerMode
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
@@ -570,6 +569,9 @@ open class CameraActivity : AppCompatActivity() {
         cameraMode = overrideInitialCameraMode() ?: sharedPreferences.lastCameraMode
         initialCameraFacing = sharedPreferences.lastCameraFacing
 
+        // Pass the view model to the views
+        secondaryBarLayout.cameraViewModel = cameraViewModel
+
         // Restore settings from shared preferences
         gridMode = sharedPreferences.lastGridMode
         timerMode = sharedPreferences.timerMode
@@ -640,8 +642,6 @@ open class CameraActivity : AppCompatActivity() {
         // Observe torch state
         cameraController.torchState.observe(this) {
             flashMode = cameraController.flashMode
-
-            updateFlashModeIcon()
         }
 
         // Observe focus state
@@ -849,7 +849,6 @@ open class CameraActivity : AppCompatActivity() {
 
         // Observe camera state
         cameraViewModel.cameraState.observe(this) {
-            updateSecondaryBarButtons()
             updatePrimaryBarButtons()
         }
 
@@ -1303,16 +1302,6 @@ open class CameraActivity : AppCompatActivity() {
         exposureLevel.steps =
             camera.exposureCompensationRange.upper - camera.exposureCompensationRange.lower
 
-        // Update icons from last state
-        updateTimerModeIcon()
-        updateAspectRatioIcon()
-        updateVideoQualityIcon()
-        updateVideoFrameRateIcon()
-        updatePhotoEffectIcon()
-        updateGridIcon()
-        updateFlashModeIcon()
-        updateMicrophoneModeIcon()
-
         // Update lens selector
         secondaryBarLayout.lensSelectorLayout.setCamera(
             camera, cameraManager.getCameras(cameraMode, camera.cameraFacing)
@@ -1410,26 +1399,6 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     /**
-     * Enable or disable secondary bar buttons
-     */
-    private fun updateSecondaryBarButtons() {
-        runOnUiThread {
-            secondaryBarLayout.timerButton.isEnabled = cameraState == CameraState.IDLE
-            secondaryBarLayout.aspectRatioButton.isEnabled = cameraState == CameraState.IDLE
-            secondaryBarLayout.videoQualityButton.isEnabled = cameraState == CameraState.IDLE
-            secondaryBarLayout.videoFrameRateButton.isEnabled = cameraState == CameraState.IDLE
-            secondaryBarLayout.effectButton.isEnabled = cameraState == CameraState.IDLE
-            // Grid mode can be toggled at any time
-            // Torch mode can be toggled at any time
-            secondaryBarLayout.flashButton.isEnabled =
-                cameraMode != CameraMode.PHOTO || cameraState == CameraState.IDLE
-            secondaryBarLayout.micButton.isEnabled =
-                cameraState == CameraState.IDLE || videoAudioConfig.audioEnabled
-            secondaryBarLayout.settingsButton.isEnabled = cameraState == CameraState.IDLE
-        }
-    }
-
-    /**
      * Enable or disable primary bar buttons
      */
     private fun updatePrimaryBarButtons() {
@@ -1484,15 +1453,6 @@ open class CameraActivity : AppCompatActivity() {
         bindCameraUseCases()
     }
 
-    private fun updateVideoFrameRateIcon() {
-        secondaryBarLayout.videoFrameRateButton.isEnabled = supportedVideoFrameRates.size > 1
-        secondaryBarLayout.videoFrameRateButton.isVisible = cameraMode == CameraMode.VIDEO
-
-        secondaryBarLayout.videoFrameRateButton.text = videoFrameRate?.let {
-            resources.getString(R.string.video_frame_rate_value, it.value)
-        } ?: resources.getString(R.string.video_frame_rate_auto)
-    }
-
     private fun cycleVideoFrameRate() {
         if (!canRestartCamera()) {
             return
@@ -1514,33 +1474,6 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     /**
-     * Update the grid button icon based on the value set in grid view
-     */
-    private fun updateGridIcon() {
-        gridMode.let {
-            secondaryBarLayout.gridButton.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                when (it) {
-                    GridMode.OFF -> R.drawable.ic_grid_off
-                    GridMode.ON_3 -> R.drawable.ic_grid_on_3
-                    GridMode.ON_4 -> R.drawable.ic_grid_on_4
-                    GridMode.ON_GOLDENRATIO -> R.drawable.ic_grid_on_goldenratio
-                },
-                0,
-                0
-            )
-            secondaryBarLayout.gridButton.text = resources.getText(
-                when (it) {
-                    GridMode.OFF -> R.string.grid_off
-                    GridMode.ON_3 -> R.string.grid_on_3
-                    GridMode.ON_4 -> R.string.grid_on_4
-                    GridMode.ON_GOLDENRATIO -> R.string.grid_on_goldenratio
-                }
-            )
-        }
-    }
-
-    /**
      * Set the specified grid mode, also updating the icon
      */
     private fun cycleGridMode() {
@@ -1553,32 +1486,6 @@ open class CameraActivity : AppCompatActivity() {
 
     private fun changeGridMode(gridMode: GridMode) {
         gridView.mode = gridMode
-        updateGridIcon()
-    }
-
-    /**
-     * Update the timer mode button icon based on the value set in settings
-     */
-    private fun updateTimerModeIcon() {
-        timerMode.let {
-            secondaryBarLayout.timerButton.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                when (it) {
-                    TimerMode.OFF -> R.drawable.ic_timer_off
-                    TimerMode.ON_3S -> R.drawable.ic_timer_3
-                    TimerMode.ON_10S -> R.drawable.ic_timer_10
-                },
-                0,
-                0
-            )
-            secondaryBarLayout.timerButton.text = resources.getText(
-                when (it) {
-                    TimerMode.OFF -> R.string.timer_off
-                    TimerMode.ON_3S -> R.string.timer_3
-                    TimerMode.ON_10S -> R.string.timer_10
-                }
-            )
-        }
     }
 
     /**
@@ -1588,81 +1495,6 @@ open class CameraActivity : AppCompatActivity() {
         timerMode = timerMode.next()
 
         sharedPreferences.timerMode = timerMode
-
-        updateTimerModeIcon()
-    }
-
-    private fun updateAspectRatioIcon() {
-        secondaryBarLayout.aspectRatioButton.isVisible = cameraMode != CameraMode.VIDEO
-
-        photoAspectRatio.let {
-            secondaryBarLayout.aspectRatioButton.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                when (it) {
-                    AspectRatio.RATIO_4_3 -> R.drawable.ic_aspect_ratio_4_3
-                    AspectRatio.RATIO_16_9 -> R.drawable.ic_aspect_ratio_16_9
-                    else -> throw Exception("Unknown aspect ratio $it")
-                },
-                0,
-                0
-            )
-            secondaryBarLayout.aspectRatioButton.text = resources.getText(
-                when (it) {
-                    AspectRatio.RATIO_4_3 -> R.string.aspect_ratio_4_3
-                    AspectRatio.RATIO_16_9 -> R.string.aspect_ratio_16_9
-                    else -> throw Exception("Unknown aspect ratio $it")
-                }
-            )
-        }
-    }
-
-    private fun updateVideoQualityIcon() {
-        secondaryBarLayout.videoQualityButton.isVisible = cameraMode == CameraMode.VIDEO
-
-        videoQuality.let {
-            secondaryBarLayout.videoQualityButton.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                when (it) {
-                    Quality.SD -> R.drawable.ic_video_quality_sd
-                    Quality.HD -> R.drawable.ic_video_quality_hd
-                    Quality.FHD -> R.drawable.ic_video_quality_hd
-                    Quality.UHD -> R.drawable.ic_video_quality_uhd
-                    else -> throw Exception("Unknown video quality $it")
-                },
-                0,
-                0
-            )
-            secondaryBarLayout.videoQualityButton.text = resources.getText(
-                when (it) {
-                    Quality.SD -> R.string.video_quality_sd
-                    Quality.HD -> R.string.video_quality_hd
-                    Quality.FHD -> R.string.video_quality_fhd
-                    Quality.UHD -> R.string.video_quality_uhd
-                    else -> throw Exception("Unknown video quality $it")
-                }
-            )
-        }
-    }
-
-    /**
-     * Update the flash mode button icon based on the value set in imageCapture
-     */
-    private fun updateFlashModeIcon() {
-        secondaryBarLayout.flashButton.isVisible = camera.hasFlashUnit
-
-        flashMode.let {
-            secondaryBarLayout.flashButton.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    when (it) {
-                        FlashMode.OFF -> R.drawable.ic_flash_off
-                        FlashMode.AUTO -> R.drawable.ic_flash_auto
-                        FlashMode.ON -> R.drawable.ic_flash_on
-                        FlashMode.TORCH -> R.drawable.ic_flash_torch
-                    }
-                )
-            )
-        }
     }
 
     /**
@@ -1672,8 +1504,6 @@ open class CameraActivity : AppCompatActivity() {
         cameraController.flashMode = flashMode
 
         this.flashMode = flashMode
-
-        updateFlashModeIcon()
     }
 
     /**
@@ -1702,23 +1532,6 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     /**
-     * Update the microphone mode button icon based on the value set in audioConfig
-     */
-    private fun updateMicrophoneModeIcon() {
-        secondaryBarLayout.micButton.isVisible = cameraMode == CameraMode.VIDEO
-
-        videoMicMode.let {
-            secondaryBarLayout.micButton.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                if (it) R.drawable.ic_mic_on else R.drawable.ic_mic_off,
-                0,
-                0
-            )
-            secondaryBarLayout.micButton.text = resources.getText(if (it) R.string.mic_on else R.string.mic_off)
-        }
-    }
-
-    /**
      * Toggles microphone during video recording
      */
     private fun toggleMicrophoneMode() {
@@ -1736,46 +1549,6 @@ open class CameraActivity : AppCompatActivity() {
         videoMicMode = microphoneMode
 
         sharedPreferences.lastMicMode = videoMicMode
-
-        updateMicrophoneModeIcon()
-    }
-
-    /**
-     * Update the photo effect icon based on the current value of extensionMode
-     */
-    private fun updatePhotoEffectIcon() {
-        secondaryBarLayout.effectButton.isVisible =
-            cameraMode == CameraMode.PHOTO &&
-                    photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG &&
-                    camera.supportedExtensionModes.size > 1
-
-        photoEffect.let {
-            secondaryBarLayout.effectButton.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                when (it) {
-                    ExtensionMode.NONE -> R.drawable.ic_effect_none
-                    ExtensionMode.BOKEH -> R.drawable.ic_effect_bokeh
-                    ExtensionMode.HDR -> R.drawable.ic_effect_hdr
-                    ExtensionMode.NIGHT -> R.drawable.ic_effect_night
-                    ExtensionMode.FACE_RETOUCH -> R.drawable.ic_effect_face_retouch
-                    ExtensionMode.AUTO -> R.drawable.ic_effect_auto
-                    else -> R.drawable.ic_effect_none
-                },
-                0,
-                0
-            )
-            secondaryBarLayout.effectButton.text = resources.getText(
-                when (it) {
-                    ExtensionMode.NONE -> R.string.effect_none
-                    ExtensionMode.BOKEH -> R.string.effect_bokeh
-                    ExtensionMode.HDR -> R.string.effect_hdr
-                    ExtensionMode.NIGHT -> R.string.effect_night
-                    ExtensionMode.FACE_RETOUCH -> R.string.effect_face_retouch
-                    ExtensionMode.AUTO -> R.string.effect_auto
-                    else -> R.string.effect_none
-                }
-            )
-        }
     }
 
     /**
@@ -2045,9 +1818,6 @@ open class CameraActivity : AppCompatActivity() {
 
         // Rotate capture preview buttons
         capturePreviewLayout.screenRotation = screenRotation
-
-        // Rotate secondary bar buttons
-        secondaryBarLayout.screenRotation = screenRotation
 
         // Rotate primary bar buttons
         galleryButtonCardView.smoothRotate(compensationValue)
