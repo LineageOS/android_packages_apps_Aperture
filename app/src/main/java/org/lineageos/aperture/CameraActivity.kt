@@ -1642,13 +1642,8 @@ open class CameraActivity : AppCompatActivity() {
     private fun cycleFlashMode() {
         val currentFlashMode = flashMode
         val newFlashMode = when (cameraMode) {
-            CameraMode.PHOTO -> currentFlashMode.next()
-            CameraMode.VIDEO ->
-                if (currentFlashMode != FlashMode.OFF) {
-                    FlashMode.OFF
-                } else {
-                    FlashMode.TORCH
-                }
+            CameraMode.PHOTO -> FlashMode.PHOTO_ALLOWED_MODES.next(currentFlashMode)
+            CameraMode.VIDEO -> FlashMode.VIDEO_ALLOWED_MODES.next(currentFlashMode)
             else -> FlashMode.OFF
         }
 
