@@ -842,18 +842,51 @@ open class CameraActivity : AppCompatActivity() {
 
         // Observe camera mode
         cameraViewModel.cameraMode.observe(this) {
-            updateCameraModeButtons()
+            val cameraMode = it ?: return@observe
+
+            // Update camera mode buttons
+            qrModeButton.isEnabled = cameraMode != CameraMode.QR
+            photoModeButton.isEnabled = cameraMode != CameraMode.PHOTO
+            videoModeButton.isEnabled = cameraMode != CameraMode.VIDEO
+
+            // Animate camera mode change
+            (cameraModeHighlight.parent as View).doOnLayout {
+                ValueAnimator.ofFloat(
+                    cameraModeHighlight.x, when (cameraMode) {
+                        CameraMode.QR -> qrModeButton.x
+                        CameraMode.PHOTO -> photoModeButton.x
+                        CameraMode.VIDEO -> videoModeButton.x
+                    }
+                ).apply {
+                    addUpdateListener { valueAnimator ->
+                        cameraModeHighlight.x = valueAnimator.animatedValue as Float
+                    }
+                }.start()
+            }
         }
 
         // Observe single capture mode
         cameraViewModel.inSingleCaptureMode.observe(this) {
-            updatePrimaryBarButtons()
-            updateCameraModeButtons()
+            val inSingleCaptureMode = it ?: return@observe
+
+            // Update primary bar buttons
+            galleryButtonCardView.isInvisible = inSingleCaptureMode
+
+            // Update camera mode buttons
+            cameraModeHighlight.isInvisible = inSingleCaptureMode
+            photoModeButton.isInvisible = inSingleCaptureMode
+            videoModeButton.isInvisible = inSingleCaptureMode
+            qrModeButton.isInvisible = inSingleCaptureMode
         }
 
         // Observe camera state
         cameraViewModel.cameraState.observe(this) {
-            updatePrimaryBarButtons()
+            val cameraState = it ?: return@observe
+
+            // Update primary bar buttons
+            galleryButton.isEnabled = cameraState == CameraState.IDLE
+            // Shutter button must stay enabled
+            flipCameraButton.isEnabled = cameraState == CameraState.IDLE
         }
 
         // Request camera permissions
@@ -1372,57 +1405,6 @@ open class CameraActivity : AppCompatActivity() {
         sharedPreferences.lastCameraFacing = camera.cameraFacing
 
         bindCameraUseCases()
-    }
-
-    /**
-     * Update the camera mode buttons reflecting the current mode
-     */
-    private fun updateCameraModeButtons() {
-        runOnUiThread {
-            val inSingleCaptureMode =
-                cameraViewModel.inSingleCaptureMode.value ?: return@runOnUiThread
-            val cameraMode = cameraViewModel.cameraMode.value ?: return@runOnUiThread
-
-            cameraModeHighlight.isInvisible = inSingleCaptureMode
-            photoModeButton.isInvisible = inSingleCaptureMode
-            videoModeButton.isInvisible = inSingleCaptureMode
-            qrModeButton.isInvisible = inSingleCaptureMode
-
-            qrModeButton.isEnabled = cameraMode != CameraMode.QR
-            photoModeButton.isEnabled = cameraMode != CameraMode.PHOTO
-            videoModeButton.isEnabled = cameraMode != CameraMode.VIDEO
-
-            // Animate camera mode change
-            (cameraModeHighlight.parent as View).doOnLayout {
-                ValueAnimator.ofFloat(
-                    cameraModeHighlight.x, when (cameraMode) {
-                        CameraMode.QR -> qrModeButton.x
-                        CameraMode.PHOTO -> photoModeButton.x
-                        CameraMode.VIDEO -> videoModeButton.x
-                    }
-                ).apply {
-                    addUpdateListener {
-                        cameraModeHighlight.x = it.animatedValue as Float
-                    }
-                }.start()
-            }
-        }
-    }
-
-    /**
-     * Enable or disable primary bar buttons
-     */
-    private fun updatePrimaryBarButtons() {
-        runOnUiThread {
-            val inSingleCaptureMode =
-                cameraViewModel.inSingleCaptureMode.value ?: return@runOnUiThread
-            val cameraState = cameraViewModel.cameraState.value ?: return@runOnUiThread
-
-            galleryButtonCardView.isInvisible = inSingleCaptureMode
-            galleryButton.isEnabled = cameraState == CameraState.IDLE
-            // Shutter button must stay enabled
-            flipCameraButton.isEnabled = cameraState == CameraState.IDLE
-        }
     }
 
     private fun cycleAspectRatio() {
