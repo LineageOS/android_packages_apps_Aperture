@@ -572,6 +572,8 @@ open class CameraActivity : AppCompatActivity() {
         initialCameraFacing = sharedPreferences.lastCameraFacing
 
         // Pass the view model to the views
+        capturePreviewLayout.cameraViewModel = cameraViewModel
+        countDownView.cameraViewModel = cameraViewModel
         secondaryBarLayout.cameraViewModel = cameraViewModel
 
         // Restore settings from shared preferences
@@ -1821,12 +1823,6 @@ open class CameraActivity : AppCompatActivity() {
         // Rotate sliders
         exposureLevel.screenRotation = screenRotation
         zoomLevel.screenRotation = screenRotation
-
-        // Rotate countdown
-        countDownView.screenRotation = screenRotation
-
-        // Rotate capture preview buttons
-        capturePreviewLayout.screenRotation = screenRotation
 
         // Rotate primary bar buttons
         galleryButtonCardView.smoothRotate(compensationValue)
