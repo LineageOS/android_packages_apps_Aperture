@@ -38,4 +38,23 @@ enum class FlashMode {
      * Get the next mode.
      */
     fun next() = values().next(this)
+
+    companion object {
+        /**
+         * Allowed flash modes when in photo mode.
+         */
+        val PHOTO_ALLOWED_MODES = listOf(
+            OFF,
+            AUTO,
+            ON,
+        )
+
+        /**
+         * Allowed flash modes when in video mode.
+         */
+        val VIDEO_ALLOWED_MODES = listOf(
+            OFF,
+            TORCH,
+        )
+    }
 }
