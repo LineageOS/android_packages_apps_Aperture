@@ -1292,6 +1292,67 @@ open class CameraActivity : AppCompatActivity() {
         // Bind camera controller to lifecycle
         cameraController.bindToLifecycle(this)
 
+        // Observe camera state
+        camera.cameraState.observe(this) { cameraState ->
+            cameraState.error?.let {
+                // Log the error
+                Log.e(LOG_TAG, "Error: code: ${it.code}, type: ${it.type}", it.cause)
+
+                val showToast = { s: Int ->
+                    Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+                }
+
+                when (it.code) {
+                    androidx.camera.core.CameraState.ERROR_MAX_CAMERAS_IN_USE -> {
+                        // No way to fix it without user action, bail out
+                        showToast(R.string.error_max_cameras_in_use)
+                        finish()
+                    }
+                    androidx.camera.core.CameraState.ERROR_CAMERA_IN_USE -> {
+                        // No way to fix it without user action, bail out
+                        showToast(R.string.error_camera_in_use)
+                        finish()
+                    }
+                    androidx.camera.core.CameraState.ERROR_OTHER_RECOVERABLE_ERROR -> {
+                        // Warn the user and don't do anything
+                        showToast(R.string.error_other_recoverable_error)
+                    }
+                    androidx.camera.core.CameraState.ERROR_STREAM_CONFIG -> {
+                        // CameraX use case misconfiguration, no way to recover
+                        showToast(R.string.error_stream_config)
+                        finish()
+                    }
+                    androidx.camera.core.CameraState.ERROR_CAMERA_DISABLED -> {
+                        // No way to fix it without user action, bail out
+                        showToast(R.string.error_camera_disabled)
+                        finish()
+                    }
+                    androidx.camera.core.CameraState.ERROR_CAMERA_FATAL_ERROR -> {
+                        // No way to fix it without user action, bail out
+                        showToast(R.string.error_camera_fatal_error)
+                        finish()
+                    }
+                    androidx.camera.core.CameraState.ERROR_DO_NOT_DISTURB_MODE_ENABLED -> {
+                        // No way to fix it without user action, bail out
+                        showToast(R.string.error_do_not_disturbe_mode_enabled)
+                        finish()
+                    }
+                    else ->  {
+                        // We know anything about it, just check if it's recoverable or critical
+                        when (it.type) {
+                            androidx.camera.core.CameraState.ErrorType.RECOVERABLE -> {
+                                showToast(R.string.error_unknown_recoverable)
+                            }
+                            androidx.camera.core.CameraState.ErrorType.CRITICAL -> {
+                                showToast(R.string.error_unknown_critical)
+                                finish()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         // Wait for camera to be ready
         cameraController.initializationFuture.addListener({
             // Set Camera2 CaptureRequest options
