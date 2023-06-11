@@ -93,6 +93,7 @@
     <string name="shutter_sound_summary">Play a sound on capture</string>
     <string name="leveler_title">Leveler</string>
     <string name="leveler_summary">Indicator that shows device orientation</string>
+    <string name="volume_buttons_action_title">Volume buttons action</string>
 
     <!-- Photo Preferences -->
     <string name="photo_capture_mode_title">Capture mode</string>
@@ -128,4 +129,10 @@
     <string name="error_do_not_disturb_mode_enabled">Do Not Disturb mode is enabled. Disable it and reopen the app.</string>
     <string name="error_unknown_recoverable">A recoverable unknown error has been found. Please report this to the developers.</string>
     <string name="error_unknown_critical">A critical unknown error has been found. Please report this to the developers.</string>
+
+    <!-- Gesture actions -->
+    <string name="gesture_action_shutter">Shutter</string>
+    <string name="gesture_action_zoom">Zoom</string>
+    <string name="gesture_action_volume">Volume</string>
+    <string name="gesture_action_nothing">Nothing</string>
 </resources>

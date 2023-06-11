@@ -16,6 +16,7 @@ import org.lineageos.aperture.camera.CameraFacing
 import org.lineageos.aperture.camera.CameraMode
 import org.lineageos.aperture.camera.FlashMode
 import org.lineageos.aperture.camera.FrameRate
+import org.lineageos.aperture.utils.GestureActions
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.TimerMode
 
@@ -335,3 +336,16 @@ private const val VIDEO_STABILIZATION_KEY = "video_stabilization"
 private const val VIDEO_STABILIZATION_DEFAULT = true
 internal val SharedPreferences.videoStabilization: Boolean
     get() = getBoolean(VIDEO_STABILIZATION_KEY, VIDEO_STABILIZATION_DEFAULT)
+
+// Volume buttons action
+private const val VOLUME_BUTTONS_ACTION_KEY = "volume_buttons_action"
+private const val VOLUME_BUTTONS_ACTION_DEFAULT = "shutter"
+internal val SharedPreferences.volumeButtonsAction: GestureActions
+    get() = when (getString(VOLUME_BUTTONS_ACTION_KEY, VOLUME_BUTTONS_ACTION_DEFAULT)) {
+        "shutter" -> GestureActions.SHUTTER
+        "zoom" -> GestureActions.ZOOM
+        "volume" -> GestureActions.VOLUME
+        "nothing" -> GestureActions.NOTHING
+        // Default to shutter
+        else -> GestureActions.SHUTTER
+    }

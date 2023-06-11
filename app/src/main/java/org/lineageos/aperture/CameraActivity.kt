@@ -60,6 +60,7 @@ import androidx.camera.view.video.AudioConfig
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.Group
+import androidx.core.animation.addListener
 import androidx.core.content.ContextCompat
 import androidx.core.location.LocationListenerCompat
 import androidx.core.location.LocationManagerCompat
@@ -80,6 +81,7 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.size.Scale
 import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.sync.Mutex
 import org.lineageos.aperture.camera.CameraFacing
 import org.lineageos.aperture.camera.CameraManager
 import org.lineageos.aperture.camera.CameraMode
@@ -103,6 +105,7 @@ import org.lineageos.aperture.utils.AssistantIntent
 import org.lineageos.aperture.utils.BroadcastUtils
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.ExifUtils
+import org.lineageos.aperture.utils.GestureActions
 import org.lineageos.aperture.utils.GoogleLensUtils
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.MediaStoreUtils
@@ -265,6 +268,8 @@ open class CameraActivity : AppCompatActivity() {
             field = value
             updateGalleryButton()
         }
+
+    private var zoomGestureMutex = Mutex()
 
     // Video
     private val supportedVideoQualities: Set<Quality>
@@ -914,13 +919,34 @@ open class CameraActivity : AppCompatActivity() {
                 }
                 true
             }
-            KeyEvent.KEYCODE_CAMERA,
-            KeyEvent.KEYCODE_VOLUME_UP,
-            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+            KeyEvent.KEYCODE_CAMERA -> {
                 if (cameraMode == CameraMode.VIDEO && shutterButton.isEnabled && event?.repeatCount == 1) {
                     shutterButton.performClick()
                 }
                 true
+            }
+            KeyEvent.KEYCODE_VOLUME_UP,
+            KeyEvent.KEYCODE_VOLUME_DOWN -> when (sharedPreferences.volumeButtonsAction) {
+                GestureActions.SHUTTER -> {
+                    if (cameraMode == CameraMode.VIDEO && shutterButton.isEnabled && event?.repeatCount == 1) {
+                        shutterButton.performClick()
+                    }
+                    true
+                }
+                GestureActions.ZOOM -> {
+                    when (keyCode) {
+                        KeyEvent.KEYCODE_VOLUME_UP -> zoomIn()
+                        KeyEvent.KEYCODE_VOLUME_DOWN -> zoomOut()
+                    }
+                    true
+                }
+                GestureActions.VOLUME -> {
+                    super.onKeyDown(keyCode, event)
+                }
+                GestureActions.NOTHING -> {
+                    // Do nothing
+                    true
+                }
             }
             else -> super.onKeyDown(keyCode, event)
         }
@@ -930,13 +956,32 @@ open class CameraActivity : AppCompatActivity() {
         return if (capturePreviewLayout.isVisible) {
             super.onKeyUp(keyCode, event)
         } else when (keyCode) {
-            KeyEvent.KEYCODE_CAMERA,
-            KeyEvent.KEYCODE_VOLUME_UP,
-            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+            KeyEvent.KEYCODE_CAMERA -> {
                 if (cameraMode != CameraMode.QR && shutterButton.isEnabled) {
                     shutterButton.performClick()
                 }
                 true
+            }
+            KeyEvent.KEYCODE_VOLUME_UP,
+            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                when (sharedPreferences.volumeButtonsAction) {
+                    GestureActions.SHUTTER -> {
+                        if (cameraMode != CameraMode.QR && shutterButton.isEnabled) {
+                            shutterButton.performClick()
+                        }
+                        true
+                    }
+                    GestureActions.ZOOM -> {
+                        true
+                    }
+                    GestureActions.VOLUME -> {
+                        super.onKeyDown(keyCode, event)
+                    }
+                    GestureActions.NOTHING -> {
+                        // Do nothing
+                        true
+                    }
+                }
             }
             else -> super.onKeyUp(keyCode, event)
         }
@@ -2092,6 +2137,58 @@ open class CameraActivity : AppCompatActivity() {
         galleryButtonCardView.smoothRotate(compensationValue)
         shutterButton.smoothRotate(compensationValue)
         flipCameraButton.smoothRotate(compensationValue)
+    }
+
+    /**
+     * Zoom in by a power of 2.
+     */
+    private fun zoomIn() {
+        val acquired = zoomGestureMutex.tryLock()
+        if (!acquired) {
+            return
+        }
+
+        val zoomState = cameraController.zoomState.value ?: return
+
+        ValueAnimator.ofFloat(
+            zoomState.zoomRatio,
+            zoomState.zoomRatio.nextPowerOfTwo().takeUnless {
+                it > zoomState.maxZoomRatio
+            } ?: zoomState.maxZoomRatio
+        ).apply {
+            addUpdateListener {
+                cameraController.setZoomRatio(it.animatedValue as Float)
+            }
+            addListener(onEnd = {
+                zoomGestureMutex.unlock()
+            })
+        }.start()
+    }
+
+    /**
+     * Zoom out by a power of 2.
+     */
+    private fun zoomOut() {
+        val acquired = zoomGestureMutex.tryLock()
+        if (!acquired) {
+            return
+        }
+
+        val zoomState = cameraController.zoomState.value ?: return
+
+        ValueAnimator.ofFloat(
+            zoomState.zoomRatio,
+            zoomState.zoomRatio.previousPowerOfTwo().takeUnless {
+                it < zoomState.minZoomRatio
+            } ?: zoomState.minZoomRatio
+        ).apply {
+            addUpdateListener {
+                cameraController.setZoomRatio(it.animatedValue as Float)
+            }
+            addListener(onEnd = {
+                zoomGestureMutex.unlock()
+            })
+        }.start()
     }
 
     fun preventClicks(@Suppress("UNUSED_PARAMETER") view: View) {}
