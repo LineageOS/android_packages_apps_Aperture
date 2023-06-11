@@ -40,6 +40,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.camera2.interop.CaptureRequestOptions
 import androidx.camera.core.AspectRatio
@@ -120,6 +121,7 @@ import java.io.InputStream
 import java.util.concurrent.ExecutorService
 import kotlin.math.abs
 import kotlin.reflect.safeCast
+import androidx.camera.core.CameraState as CameraXCameraState
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalZeroShutterLag
@@ -1263,6 +1265,67 @@ open class CameraActivity : AppCompatActivity() {
 
         // Bind camera controller to lifecycle
         cameraController.bindToLifecycle(this)
+
+        // Observe camera state
+        camera.cameraState.observe(this) { cameraState ->
+            cameraState.error?.let {
+                // Log the error
+                Log.e(LOG_TAG, "Error: code: ${it.code}, type: ${it.type}", it.cause)
+
+                val showToast = { stringId: @receiver:StringRes Int ->
+                    Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show()
+                }
+
+                when (it.code) {
+                    CameraXCameraState.ERROR_MAX_CAMERAS_IN_USE -> {
+                        // No way to fix it without user action, bail out
+                        showToast(R.string.error_max_cameras_in_use)
+                        finish()
+                    }
+                    CameraXCameraState.ERROR_CAMERA_IN_USE -> {
+                        // No way to fix it without user action, bail out
+                        showToast(R.string.error_camera_in_use)
+                        finish()
+                    }
+                    CameraXCameraState.ERROR_OTHER_RECOVERABLE_ERROR -> {
+                        // Warn the user and don't do anything
+                        showToast(R.string.error_other_recoverable_error)
+                    }
+                    CameraXCameraState.ERROR_STREAM_CONFIG -> {
+                        // CameraX use case misconfiguration, no way to recover
+                        showToast(R.string.error_stream_config)
+                        finish()
+                    }
+                    CameraXCameraState.ERROR_CAMERA_DISABLED -> {
+                        // No way to fix it without user action, bail out
+                        showToast(R.string.error_camera_disabled)
+                        finish()
+                    }
+                    CameraXCameraState.ERROR_CAMERA_FATAL_ERROR -> {
+                        // No way to fix it without user action, bail out
+                        showToast(R.string.error_camera_fatal_error)
+                        finish()
+                    }
+                    CameraXCameraState.ERROR_DO_NOT_DISTURB_MODE_ENABLED -> {
+                        // No way to fix it without user action, bail out
+                        showToast(R.string.error_do_not_disturb_mode_enabled)
+                        finish()
+                    }
+                    else -> {
+                        // We know anything about it, just check if it's recoverable or critical
+                        when (it.type) {
+                            CameraXCameraState.ErrorType.RECOVERABLE -> {
+                                showToast(R.string.error_unknown_recoverable)
+                            }
+                            CameraXCameraState.ErrorType.CRITICAL -> {
+                                showToast(R.string.error_unknown_critical)
+                                finish()
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         // Wait for camera to be ready
         cameraController.initializationFuture.addListener({
