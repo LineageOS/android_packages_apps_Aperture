@@ -24,6 +24,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.os.PowerManager
+import android.os.PowerManager.OnThermalStatusChangedListener
 import android.provider.MediaStore
 import android.util.Log
 import android.view.GestureDetector
@@ -39,6 +41,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.camera2.interop.CaptureRequestOptions
 import androidx.camera.core.AspectRatio
@@ -76,6 +79,7 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.size.Scale
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.sync.Semaphore
 import org.lineageos.aperture.camera.CameraFacing
 import org.lineageos.aperture.camera.CameraManager
@@ -149,6 +153,7 @@ open class CameraActivity : AppCompatActivity() {
     // System services
     private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
     private val locationManager by lazy { getSystemService(LocationManager::class.java) }
+    private val powerManager by lazy { getSystemService(PowerManager::class.java) }
 
     // Core camera utils
     private lateinit var cameraManager: CameraManager
@@ -481,6 +486,40 @@ open class CameraActivity : AppCompatActivity() {
 
                 if (screenRotation.value != rotation) {
                     screenRotation.value = rotation
+                }
+            }
+        }
+    }
+
+    @get:RequiresApi(Build.VERSION_CODES.Q)
+    private val onThermalStatusChangedListener by lazy {
+        OnThermalStatusChangedListener {
+            val showSnackBar = { s: Int ->
+                Snackbar.make(secondaryBarHalf, s, Snackbar.LENGTH_INDEFINITE)
+                    .setAnchorView(secondaryBarHalf)
+                    .setAction(android.R.string.ok) {
+                        // Do nothing
+                    }
+                    .show()
+            }
+
+            when (it) {
+                PowerManager.THERMAL_STATUS_MODERATE -> {
+                    showSnackBar(R.string.thermal_status_moderate)
+                }
+                PowerManager.THERMAL_STATUS_SEVERE -> {
+                    showSnackBar(R.string.thermal_status_severe)
+                }
+                PowerManager.THERMAL_STATUS_CRITICAL -> {
+                    showSnackBar(R.string.thermal_status_critical)
+                }
+                PowerManager.THERMAL_STATUS_EMERGENCY -> {
+                    showSnackBar(R.string.thermal_status_emergency)
+                    emergencyClose()
+                }
+                PowerManager.THERMAL_STATUS_SHUTDOWN -> {
+                    showSnackBar(R.string.thermal_status_shutdown)
+                    emergencyClose()
                 }
             }
         }
@@ -925,6 +964,11 @@ open class CameraActivity : AppCompatActivity() {
         // Enable orientation listener
         orientationEventListener.enable()
 
+        // Start observing thermal status
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            powerManager.addThermalStatusListener(onThermalStatusChangedListener)
+        }
+
         // Re-bind the use cases
         bindCameraUseCases()
     }
@@ -935,6 +979,11 @@ open class CameraActivity : AppCompatActivity() {
 
         // Disable orientation listener
         orientationEventListener.disable()
+
+        // Remove thermal status observer
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            powerManager.removeThermalStatusListener(onThermalStatusChangedListener)
+        }
 
         super.onPause()
     }
@@ -1963,6 +2012,20 @@ open class CameraActivity : AppCompatActivity() {
                 zoomGestureSemaphore.release()
             })
         }.start()
+    }
+
+    /**
+     * Use this function when the app must be closed due to emergency reasons.
+     * It will try to save whatever is going on and close the app.
+     */
+    private fun emergencyClose() {
+        // Stop the recording if there's an active one
+        if (cameraController.isRecording) {
+            videoRecording?.stop()
+        }
+
+        // Close the app
+        finish()
     }
 
     fun preventClicks(@Suppress("UNUSED_PARAMETER") view: View) {}
