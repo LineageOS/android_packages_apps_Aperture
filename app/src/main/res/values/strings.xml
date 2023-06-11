@@ -135,4 +135,11 @@
     <string name="gesture_action_zoom">Zoom</string>
     <string name="gesture_action_volume">Volume</string>
     <string name="gesture_action_nothing">Nothing</string>
+
+    <!-- Thermal status -->
+    <string name="thermal_status_moderate">Moderate throttling, make sure the device isn\'t under direct sunlight.</string>
+    <string name="thermal_status_severe">Severe throttling, it is recommended to let the device cool down a bit.</string>
+    <string name="thermal_status_critical">Critical throttling, the app might be closed soon.</string>
+    <string name="thermal_status_emergency">Emergency throttling, the app will close now.</string>
+    <string name="thermal_status_shutdown">Shutdown throttling, the device will power off.</string>
 </resources>
