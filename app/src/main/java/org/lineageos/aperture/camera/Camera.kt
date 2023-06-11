@@ -80,6 +80,8 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     val supportsZsl = cameraInfo.isZslSupported
 
+    val cameraState = cameraInfo.cameraState
+
     override fun equals(other: Any?): Boolean {
         val camera = this::class.safeCast(other) ?: return false
         return this.cameraId == camera.cameraId
