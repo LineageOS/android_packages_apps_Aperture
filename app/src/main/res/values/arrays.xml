@@ -4,6 +4,21 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
+    <!-- Volume buttons actions -->
+    <string-array name="volume_buttons_action_entries" translatable="false">
+        <item>@string/gesture_action_shutter</item>
+        <item>@string/gesture_action_zoom</item>
+        <item>@string/gesture_action_volume</item>
+        <item>@string/gesture_action_nothing</item>
+    </string-array>
+
+    <string-array name="volume_buttons_action_values" translatable="false">
+        <item>shutter</item>
+        <item>zoom</item>
+        <item>volume</item>
+        <item>nothing</item>
+    </string-array>
+
     <!-- Photo capture mode Preference -->
     <string-array name="photo_capture_mode_entries" translatable="false">
         <item>@string/photo_capture_mode_maximize_quality</item>
