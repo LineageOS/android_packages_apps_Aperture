@@ -117,4 +117,15 @@
     <string name="location_permission_dialog_description">Map your memories by including location metadata with each capture.</string>
     <string name="location_permission_dialog_later">Later</string>
     <string name="location_permission_dialog_turn_on">Turn on</string>
+
+    <!-- Error messages -->
+    <string name="error_max_cameras_in_use">Maximum number of open cameras has been reached, try to close other apps using the device\'s cameras.</string>
+    <string name="error_camera_in_use">This camera is already in use, try closing the app using it.</string>
+    <string name="error_stream_config">There was an error while preparing the stream. Please report this to the developers.</string>
+    <string name="error_other_recoverable_error">Error while setting up the session. The app will try to recover.</string>
+    <string name="error_camera_disabled">The camera is disabled. This might be caused by the device policy.</string>
+    <string name="error_camera_fatal_error">A fatal error has been encountered. Try to restart your device.</string>
+    <string name="error_do_not_disturb_mode_enabled">Do Not Disturb mode is enabled. Disable it and reopen the app.</string>
+    <string name="error_unknown_recoverable">A recoverable unknown error has been found. Please report this to the developers.</string>
+    <string name="error_unknown_critical">A critical unknown error has been found. Please report this to the developers.</string>
 </resources>
