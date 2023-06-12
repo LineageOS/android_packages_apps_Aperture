@@ -8,7 +8,10 @@ package org.lineageos.aperture
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.app.KeyguardManager
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.ActivityInfo
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -95,6 +98,7 @@ import org.lineageos.aperture.ui.CapturePreviewLayout
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
 import org.lineageos.aperture.ui.HorizontalSlider
+import org.lineageos.aperture.ui.InfoChipView
 import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.LocationPermissionsDialog
 import org.lineageos.aperture.ui.PreviewBlurView
@@ -135,6 +139,7 @@ open class CameraActivity : AppCompatActivity() {
     private val galleryButtonCardView by lazy { findViewById<CardView>(R.id.galleryButtonCardView) }
     private val googleLensButton by lazy { findViewById<ImageButton>(R.id.googleLensButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
+    private val infoChipView by lazy { findViewById<InfoChipView>(R.id.infoChipView) }
     private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
     private val previewBlurView by lazy { findViewById<PreviewBlurView>(R.id.previewBlurView) }
@@ -525,6 +530,14 @@ open class CameraActivity : AppCompatActivity() {
         }
     }
 
+    private val batteryBroadcastReceiver by lazy {
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                infoChipView.batteryIntent = intent
+            }
+        }
+    }
+
     enum class ShutterAnimation(val resourceId: Int) {
         InitPhoto(R.drawable.avd_photo_capture),
         InitVideo(R.drawable.avd_mode_video_photo),
@@ -618,6 +631,7 @@ open class CameraActivity : AppCompatActivity() {
         // Pass the view model to the views
         capturePreviewLayout.cameraViewModel = cameraViewModel
         countDownView.cameraViewModel = cameraViewModel
+        infoChipView.cameraViewModel = cameraViewModel
         secondaryBarLayout.cameraViewModel = cameraViewModel
 
         // Restore settings from shared preferences
@@ -969,6 +983,9 @@ open class CameraActivity : AppCompatActivity() {
             powerManager.addThermalStatusListener(onThermalStatusChangedListener)
         }
 
+        // Start observing battery status
+        registerReceiver(batteryBroadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+
         // Re-bind the use cases
         bindCameraUseCases()
     }
@@ -984,6 +1001,9 @@ open class CameraActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             powerManager.removeThermalStatusListener(onThermalStatusChangedListener)
         }
+
+        // Remove battery status receiver
+        unregisterReceiver(batteryBroadcastReceiver)
 
         super.onPause()
     }

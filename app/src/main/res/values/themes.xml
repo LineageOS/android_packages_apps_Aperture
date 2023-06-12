@@ -108,4 +108,13 @@
         <item name="android:textSize">36sp</item>
         <item name="android:drawablePadding">10dp</item>
     </style>
+
+    <!-- Info chip -->
+    <style name="Theme.Aperture.Camera.InfoChip" />
+
+    <style name="Theme.Aperture.Camera.InfoChip.ImageView">
+        <item name="android:layout_width">16dp</item>
+        <item name="android:layout_height">16dp</item>
+        <item name="android:visibility">gone</item>
+    </style>
 </resources>
