@@ -104,7 +104,6 @@ class SecondaryBarLayout @JvmOverloads constructor(
                     timerButton.isEnabled = cameraState == CameraState.IDLE
                     aspectRatioButton.isEnabled = cameraState == CameraState.IDLE
                     effectButton.isEnabled = cameraState == CameraState.IDLE
-                    videoQualityButton.isEnabled = cameraState == CameraState.IDLE
                     settingsButton.isEnabled = cameraState == CameraState.IDLE
 
                     updateSecondaryBarButtons()
@@ -360,7 +359,8 @@ class SecondaryBarLayout @JvmOverloads constructor(
         val videoQuality = cameraViewModel.videoQuality.value ?: return
         val videoAudioConfig = cameraViewModel.videoAudioConfig.value ?: return
 
-        val supportedVideoFrameRates = camera.supportedVideoQualities.getOrDefault(
+        val supportedVideoQualities = camera.supportedVideoQualities
+        val supportedVideoFrameRates = supportedVideoQualities.getOrDefault(
             videoQuality, setOf()
         )
 
@@ -368,6 +368,8 @@ class SecondaryBarLayout @JvmOverloads constructor(
         effectButton.isVisible = cameraMode == CameraMode.PHOTO &&
                 photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG &&
                 camera.supportedExtensionModes.size > 1
+        videoQualityButton.isEnabled =
+            cameraState == CameraState.IDLE && supportedVideoQualities.size > 1
         videoFrameRateButton.isEnabled =
             cameraState == CameraState.IDLE && supportedVideoFrameRates.size > 1
         micButton.isEnabled = cameraState == CameraState.IDLE || videoAudioConfig.audioEnabled
