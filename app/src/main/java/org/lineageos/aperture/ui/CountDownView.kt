@@ -12,6 +12,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.IntRange
@@ -29,9 +30,14 @@ import org.lineageos.aperture.utils.Rotation
 class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
     context, attrs
 ) {
+    // Views
     private val remainingSecondsView by lazy {
         findViewById<TextView>(R.id.remainingSeconds)
     }
+
+    // System services
+    private val layoutInflater = context.getSystemService(LayoutInflater::class.java)
+
     private var remainingSeconds = 0
     private lateinit var listener: () -> Unit
     private val previewArea = Rect()
@@ -68,6 +74,10 @@ class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
                 }
             }
         }
+
+    init {
+        layoutInflater.inflate(R.layout.count_down_view, this)
+    }
 
     /**
      * Responds to preview area change by centering the countdown UI in the new
