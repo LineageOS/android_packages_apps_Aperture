@@ -82,16 +82,7 @@
         android:layout_height="match_parent"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/remainingSeconds"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@android:color/white"
-            android:textSize="125sp" />
-    </org.lineageos.aperture.ui.CountDownView>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <org.lineageos.aperture.ui.HorizontalSlider
         android:id="@+id/zoomLevel"
