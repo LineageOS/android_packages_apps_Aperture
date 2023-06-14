@@ -7,6 +7,8 @@
 android_app {
     name: "ApertureLensLauncher",
 
+    defaults: ["aapt_version_code_defaults"],
+
     srcs: ["src/main/java/**/*.kt"],
     manifest: "src/main/AndroidManifest.xml",
 
