@@ -6,12 +6,22 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Cámara</string>
     <string name="video_camera_label">Videocámara</string>
+    <string name="cancel_button_description">Encaboxar</string>
+    <string name="confirm_button_description">Confirmar</string>
+    <string name="flash_button_description">Mou del flax</string>
     <string name="gallery_button_description">Galería</string>
+    <string name="google_lens_button_description">Abrir Google Lens</string>
     <string name="pro_button_description">Configuración Pro</string>
     <string name="shutter_button_description">Obturador</string>
+    <string name="timer_off">ENSIN TEMPORIZADOR</string>
+    <string name="timer_3">TEMPORIZADOR A 3s</string>
+    <string name="timer_10">TEMPORIZADOR A 10s</string>
+    <string name="video_framerate_auto">FPS AUTO</string>
     <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="effect_night">NUECHE</string>
     <string name="effect_face_retouch">RETOQUE FACIAL</string>
-    <string name="grid_off">REXÁU NON</string>
+    <string name="effect_auto">AUTO</string>
+    <string name="grid_off">ENSIN REXÁU</string>
     <string name="grid_on_3">REXÁU 3x3</string>
     <string name="grid_on_4">REXÁU 4x4</string>
     <string name="grid_on_goldenratio">REXÁU φ</string>
@@ -21,6 +31,9 @@
     <string name="selector_photo">SEMEYA</string>
     <string name="select_video">VÍDEU</string>
     <string name="select_scan">ESCANÉU</string>
+    <string name="camcorder_unsupported_toast">Nun hai nenguna cámara que seya compatible cola grabación de vídeos.</string>
+    <string name="qr_icon_description">Iconu</string>
+    <string name="qr_share_description">Compartir</string>
     <string name="title_activity_settings">Configuración</string>
     <string name="general_header">Xeneral</string>
     <string name="photos_header">Semeyes</string>
@@ -30,8 +43,14 @@
     <string name="leveler_title">Nivelador</string>
     <string name="leveler_summary">Un indicador qu\'amuesa la orientación del preséu</string>
     <string name="photo_capture_mode_maximize_quality">Maximizar la calidá</string>
+    <string name="enable_zsl_title">Activar el mou ZSL cuando tea disponible</string>
     <string name="photo_ffc_mirror_title">Espeyar la cámara d\'alantre</string>
     <string name="photo_ffc_mirror_summary">Guarda les semeyes de la cámara d\'alantre tal cuál apaecen na previsualización</string>
+    <string name="video_stabilization_title">Activar la estabilización del videu</string>
+    <string name="video_stabilization_summary">Cuando esta opción ta disponible, actívase la función qu\'amenorga\'l cimblíu demientres la grabación de vídeos</string>
+    <string name="shortcut_selfie">Facer un autorretratu</string>
+    <string name="shortcut_video">Grabar un videu</string>
+    <string name="shortcut_qr">Escaniar un códigu de barres</string>
     <string name="location_permission_dialog_later">Dempués</string>
     <string name="location_permission_dialog_turn_on">Activar</string>
 </resources>

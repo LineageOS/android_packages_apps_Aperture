@@ -57,7 +57,7 @@
     <string name="save_location_summary">Uwzględnia pozycję GPS w metadanych</string>
     <string name="save_location_toast">Uprawnienia lokalizacji nie zostały przyznane przez użytkownika.</string>
     <string name="shutter_sound_title">Dźwięk migawki</string>
-    <string name="shutter_sound_summary">Odtwórz dźwięk przy przechwytywaniu</string>
+    <string name="shutter_sound_summary">Odtwarza dźwięk przy przechwytywaniu</string>
     <string name="leveler_title">Poziomica</string>
     <string name="leveler_summary">Wskaźnik pokazujący orientację urządzenia</string>
     <string name="photo_capture_mode_title">Tryb fotografowania</string>
@@ -68,7 +68,7 @@
     <string name="photo_ffc_mirror_title">Lustrzane odbicie przedniego aparatu</string>
     <string name="photo_ffc_mirror_summary">Zapisywanie zdjęć z przedniego aparatu tak, jak są widoczne na podglądzie</string>
     <string name="video_stabilization_title">Włącz stabilizację wideo</string>
-    <string name="video_stabilization_summary">Włącz stabilizację wideo, aby zmniejszyć wibracje kamery podczas nagrywania</string>
+    <string name="video_stabilization_summary">Jeżeli możliwe, włącz stabilizację wideo, aby zredukować drgania kamery podczas nagrywania</string>
     <string name="shortcut_selfie">Zrób selfie</string>
     <string name="shortcut_video">Nagraj wideo</string>
     <string name="shortcut_qr">Zeskanuj kod kreskowy</string>
