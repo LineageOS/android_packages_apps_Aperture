@@ -53,7 +53,6 @@ object StorageUtils {
     /**
      * Returns a new OutputFileOptions to use to store a MP4 video
      */
-    @androidx.camera.view.video.ExperimentalVideo
     fun getVideoMediaStoreOutputOptions(
         contentResolver: ContentResolver,
         location: Location?
