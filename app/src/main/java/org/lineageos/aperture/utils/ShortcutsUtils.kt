@@ -20,7 +20,6 @@ object ShortcutsUtils {
 
     @androidx.camera.camera2.interop.ExperimentalCamera2Interop
     @androidx.camera.core.ExperimentalZeroShutterLag
-    @androidx.camera.view.video.ExperimentalVideo
     fun registerShortcuts(context: Context) {
         val shortcutManager = context.getSystemService(ShortcutManager::class.java)
         shortcutManager.dynamicShortcuts = listOf(

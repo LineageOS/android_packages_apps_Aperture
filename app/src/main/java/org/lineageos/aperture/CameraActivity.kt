@@ -48,6 +48,7 @@ import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
+import androidx.camera.video.QualitySelector
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoRecordEvent
 import androidx.camera.video.muted
@@ -123,7 +124,6 @@ import kotlin.reflect.safeCast
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalZeroShutterLag
-@androidx.camera.view.video.ExperimentalVideo
 open class CameraActivity : AppCompatActivity() {
     // Views
     private val aspectRatioButton by lazy { findViewById<Button>(R.id.aspectRatioButton) }
@@ -1068,9 +1068,9 @@ open class CameraActivity : AppCompatActivity() {
                         sharedPreferences.aspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO
                     ))
                     .setAllowedResolutionMode(if (cameraManager.enableHighResolution) {
-                        ResolutionSelector.ALLOWED_RESOLUTIONS_SLOW
+                        ResolutionSelector.PREFER_HIGHER_RESOLUTION_OVER_CAPTURE_RATE
                     } else {
-                        ResolutionSelector.ALLOWED_RESOLUTIONS_NORMAL
+                        ResolutionSelector.PREFER_CAPTURE_RATE_OVER_HIGHER_RESOLUTION
                     })
                     .build()
                 CameraController.IMAGE_CAPTURE
@@ -1080,8 +1080,8 @@ open class CameraActivity : AppCompatActivity() {
                 if (!supportedVideoQualities.contains(sharedPreferences.videoQuality)) {
                     sharedPreferences.videoQuality = supportedVideoQualities.first()
                 }
-                cameraController.videoCaptureTargetQuality = null // FIXME: video preview restart
-                cameraController.videoCaptureTargetQuality = sharedPreferences.videoQuality
+                cameraController.videoCaptureQualitySelector =
+                    QualitySelector.from(sharedPreferences.videoQuality)
 
                 // Set proper video framerate
                 sharedPreferences.videoFramerate = (Framerate::getLowerOrHigher)(
