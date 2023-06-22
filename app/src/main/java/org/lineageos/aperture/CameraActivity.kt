@@ -588,6 +588,10 @@ open class CameraActivity : AppCompatActivity() {
         cameraMode = overrideInitialCameraMode() ?: sharedPreferences.lastCameraMode
         initialCameraFacing = sharedPreferences.lastCameraFacing
 
+        // Pass the view model to the views
+        capturePreviewLayout.cameraViewModel = model
+        countDownView.cameraViewModel = model
+
         // Restore settings from shared preferences
         gridMode = sharedPreferences.lastGridMode
         timerMode = sharedPreferences.timerMode
@@ -2070,12 +2074,6 @@ open class CameraActivity : AppCompatActivity() {
         // Rotate sliders
         exposureLevel.screenRotation = screenRotation
         zoomLevel.screenRotation = screenRotation
-
-        // Rotate countdown
-        countDownView.screenRotation = screenRotation
-
-        // Rotate capture preview buttons
-        capturePreviewLayout.screenRotation = screenRotation
 
         // Rotate secondary top bar buttons
         ConstraintLayout::class.safeCast(
