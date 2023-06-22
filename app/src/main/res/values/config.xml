@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
@@ -29,19 +29,19 @@
         <!-- No camera is unignored by default. -->
     </string-array>
 
-    <!-- An array of triplets made of (camera ID, qualities, framerates).
+    <!-- An array of triplets made of (camera ID, qualities, frame rates).
          These video modes will be added to the available
-         quality/framerate combinations of a camera device.
+         quality/frame rate combinations of a camera device.
          Make sure the device is able to handle those configurations
-         and maintain a stable framerate at any condition.
+         and maintain a stable frame rate at any condition.
          Note that you can't add video qualities that aren't
-         exposed by the camera, only new framerates.
+         exposed by the camera, only new frame rates.
          Valid values of resolution are:
           - "sd" (480p)
           - "hd" (720p)
           - "fhd" (1080p)
           - "uhd" (2160p)
-         Valid values of framerate are:
+         Valid values of frame rate are:
           - "24"
           - "30"
           - "60"

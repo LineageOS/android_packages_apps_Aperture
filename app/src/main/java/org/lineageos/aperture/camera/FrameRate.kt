@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -7,7 +7,7 @@ package org.lineageos.aperture.camera
 
 import android.util.Range
 
-enum class Framerate(val value: Int) {
+enum class FrameRate(val value: Int) {
     FPS_24(24),
     FPS_30(30),
     FPS_60(60),
@@ -16,12 +16,12 @@ enum class Framerate(val value: Int) {
     val range = Range(value, value)
 
     /**
-     * Get the closer framerate to the requested one, first finding a lower one
+     * Get the closer frame rate to the requested one, first finding a lower one
      * then checking for a higher one if no one exists.
      */
-    fun getLowerOrHigher(framerates: List<Framerate>): Framerate? {
-        val smaller = framerates.filter { it <= this }.sortedDescending()
-        val bigger = framerates.filter { it > this }.sorted()
+    fun getLowerOrHigher(frameRates: List<FrameRate>): FrameRate? {
+        val smaller = frameRates.filter { it <= this }.sortedDescending()
+        val bigger = frameRates.filter { it > this }.sorted()
 
         return (smaller + bigger).firstOrNull()
     }
