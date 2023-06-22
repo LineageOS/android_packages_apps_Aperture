@@ -920,7 +920,6 @@ open class CameraActivity : AppCompatActivity() {
             timerButton.isEnabled = cameraState == CameraState.IDLE
             aspectRatioButton.isEnabled = cameraState == CameraState.IDLE
             effectButton.isEnabled = cameraState == CameraState.IDLE
-            videoQualityButton.isEnabled = cameraState == CameraState.IDLE
             settingsButton.isEnabled = cameraState == CameraState.IDLE
 
             lensSelectorLayout.children.forEach { view ->
@@ -1778,7 +1777,8 @@ open class CameraActivity : AppCompatActivity() {
             val videoQuality = model.videoQuality.value ?: return@runOnUiThread
             val videoAudioConfig = model.videoAudioConfig.value ?: return@runOnUiThread
 
-            val supportedVideoFrameRates = camera.supportedVideoQualities.getOrDefault(
+            val supportedVideoQualities = camera.supportedVideoQualities
+            val supportedVideoFrameRates = supportedVideoQualities.getOrDefault(
                 videoQuality, setOf()
             )
 
@@ -1787,6 +1787,8 @@ open class CameraActivity : AppCompatActivity() {
             effectButton.isVisible = cameraMode == CameraMode.PHOTO &&
                     photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG &&
                     camera.supportedExtensionModes.size > 1
+            videoQualityButton.isEnabled =
+                cameraState == CameraState.IDLE && supportedVideoQualities.size > 1
             videoFrameRateButton.isEnabled =
                 cameraState == CameraState.IDLE && supportedVideoFrameRates.size > 1
             micButton.isEnabled = cameraState == CameraState.IDLE || videoAudioConfig.audioEnabled
