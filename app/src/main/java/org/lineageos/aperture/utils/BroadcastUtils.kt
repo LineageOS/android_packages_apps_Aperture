@@ -15,6 +15,7 @@ object BroadcastUtils {
 
     fun broadcastNewPicture(context: Context, uri: Uri) =
         context.sendBroadcast(Intent(ACTION_NEW_PICTURE, uri))
+
     fun broadcastNewVideo(context: Context, uri: Uri) =
         context.sendBroadcast(Intent(ACTION_NEW_VIDEO, uri))
 }
