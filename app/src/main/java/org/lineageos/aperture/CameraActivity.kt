@@ -1521,14 +1521,18 @@ open class CameraActivity : AppCompatActivity() {
             }
             CameraMode.PHOTO -> {
                 cameraController.imageCaptureResolutionSelector = ResolutionSelector.Builder()
-                    .setAspectRatioStrategy(AspectRatioStrategy(
-                        photoAspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO
-                    ))
-                    .setAllowedResolutionMode(if (cameraManager.enableHighResolution) {
-                        ResolutionSelector.PREFER_HIGHER_RESOLUTION_OVER_CAPTURE_RATE
-                    } else {
-                        ResolutionSelector.PREFER_CAPTURE_RATE_OVER_HIGHER_RESOLUTION
-                    })
+                    .setAspectRatioStrategy(
+                        AspectRatioStrategy(
+                            photoAspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO
+                        )
+                    )
+                    .setAllowedResolutionMode(
+                        if (cameraManager.enableHighResolution) {
+                            ResolutionSelector.PREFER_HIGHER_RESOLUTION_OVER_CAPTURE_RATE
+                        } else {
+                            ResolutionSelector.PREFER_CAPTURE_RATE_OVER_HIGHER_RESOLUTION
+                        }
+                    )
                     .build()
                 CameraController.IMAGE_CAPTURE
             }
