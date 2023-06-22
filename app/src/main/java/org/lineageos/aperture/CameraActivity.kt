@@ -897,6 +897,25 @@ open class CameraActivity : AppCompatActivity() {
                     }
                 }.start()
             }
+
+            // Setup UI depending on camera mode
+            when (cameraMode) {
+                CameraMode.QR -> {
+                    secondaryBottomBarLayout.isVisible = false
+                    primaryBarLayoutGroupPhoto.isVisible = false
+                    googleLensButton.isVisible = isGoogleLensAvailable
+                }
+                CameraMode.PHOTO -> {
+                    secondaryBottomBarLayout.isVisible = true
+                    primaryBarLayoutGroupPhoto.isVisible = true
+                    googleLensButton.isVisible = false
+                }
+                CameraMode.VIDEO -> {
+                    secondaryBottomBarLayout.isVisible = true
+                    primaryBarLayoutGroupPhoto.isVisible = true
+                    googleLensButton.isVisible = false
+                }
+            }
         }
 
         // Observe single capture mode
@@ -1568,25 +1587,6 @@ open class CameraActivity : AppCompatActivity() {
             )
         } else {
             camera.cameraSelector
-        }
-
-        // Setup UI depending on camera mode
-        when (cameraMode) {
-            CameraMode.QR -> {
-                secondaryBottomBarLayout.isVisible = false
-                primaryBarLayoutGroupPhoto.isVisible = false
-                googleLensButton.isVisible = isGoogleLensAvailable
-            }
-            CameraMode.PHOTO -> {
-                secondaryBottomBarLayout.isVisible = true
-                primaryBarLayoutGroupPhoto.isVisible = true
-                googleLensButton.isVisible = false
-            }
-            CameraMode.VIDEO -> {
-                secondaryBottomBarLayout.isVisible = true
-                primaryBarLayoutGroupPhoto.isVisible = true
-                googleLensButton.isVisible = false
-            }
         }
 
         // Bind use cases to camera
