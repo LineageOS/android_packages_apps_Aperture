@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Theme.Aperture.Camera.InfoChip"
+    android:layout_width="wrap_content"
+    android:layout_height="32dp"
+    android:background="@drawable/info_chip_view_background"
+    android:backgroundTint="#222222"
+    android:minWidth="32dp"
+    android:orientation="horizontal"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="8dp">
+
+    <ImageView
+        android:id="@+id/lowBatteryImageView"
+        style="@style/Theme.Aperture.Camera.InfoChip.ImageView"
+        android:src="@drawable/ic_battery_1_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#EE5555" />
+
+    <ImageView
+        android:id="@+id/videoMicMutedImageView"
+        style="@style/Theme.Aperture.Camera.InfoChip.ImageView"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_mic_off"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lowBatteryImageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginStart="0dp"
+        app:tint="@android:color/white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
