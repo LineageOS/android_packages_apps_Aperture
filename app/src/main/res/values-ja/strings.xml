@@ -23,8 +23,8 @@
     <string name="timer_off">タイマー OFF</string>
     <string name="timer_3">タイマー 3s</string>
     <string name="timer_10">タイマー 10 s</string>
-    <string name="video_framerate_auto">自動 FPS</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">自動 FPS</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">なし</string>
     <string name="effect_night">夜景</string>
     <string name="effect_face_retouch">美肌</string>

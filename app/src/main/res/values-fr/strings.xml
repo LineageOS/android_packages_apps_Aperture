@@ -23,8 +23,8 @@
     <string name="timer_off">RETARDATEUR DÉSACTIVÉ</string>
     <string name="timer_3">RETARDATEUR 3s</string>
     <string name="timer_10">RETARDATEUR 10s</string>
-    <string name="video_framerate_auto">IPS AUTO</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> IPS</string>
+    <string name="video_frame_rate_auto">IPS AUTO</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> IPS</string>
     <string name="effect_none">AUCUN</string>
     <string name="effect_night">NUIT</string>
     <string name="effect_face_retouch">RETOUCHE DU VISAGE</string>

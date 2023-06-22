@@ -21,8 +21,8 @@
     <string name="timer_off">ENSIN TEMPORIZADOR</string>
     <string name="timer_3">TEMPORIZADOR A 3s</string>
     <string name="timer_10">TEMPORIZADOR A 10s</string>
-    <string name="video_framerate_auto">FPS AUTO</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">FPS AUTO</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">NADA</string>
     <string name="effect_night">NUECHE</string>
     <string name="effect_face_retouch">RETOQUE FACIAL</string>

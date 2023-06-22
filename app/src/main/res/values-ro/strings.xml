@@ -23,8 +23,8 @@
     <string name="timer_off">CRONOMETRU DEZACTIVAT</string>
     <string name="timer_3">CRONOMETRU 3s</string>
     <string name="timer_10">CRONOMETRU 10s</string>
-    <string name="video_framerate_auto">FPS AUTO</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="video_frame_rate_auto">FPS AUTO</string>
+    <string name="video_frame_rate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">NICIUNUL</string>
     <string name="effect_night">NOAPTE</string>
     <string name="effect_face_retouch">RETUȘARE FACIALĂ</string>

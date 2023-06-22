@@ -158,15 +158,15 @@
                 android:drawableTop="@drawable/ic_video_quality_hd"
                 android:text="@string/video_quality_fhd"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/videoFramerateButton"
+                app:layout_constraintEnd_toStartOf="@+id/videoFrameRateButton"
                 app:layout_constraintStart_toEndOf="@+id/effectButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                android:id="@+id/videoFramerateButton"
+                android:id="@+id/videoFrameRateButton"
                 style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_video_framerate"
-                android:text="@string/video_framerate_auto"
+                android:drawableTop="@drawable/ic_video_frame_rate"
+                android:text="@string/video_frame_rate_auto"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/micButton"
                 app:layout_constraintStart_toEndOf="@+id/videoQualityButton"
@@ -179,7 +179,7 @@
                 android:text="@string/mic_off"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/timerButton"
-                app:layout_constraintStart_toEndOf="@+id/videoFramerateButton"
+                app:layout_constraintStart_toEndOf="@+id/videoFrameRateButton"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <!-- Common settings -->

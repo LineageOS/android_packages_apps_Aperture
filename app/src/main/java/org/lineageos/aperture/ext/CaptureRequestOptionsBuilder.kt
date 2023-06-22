@@ -9,12 +9,12 @@ import android.hardware.camera2.CameraMetadata
 import android.hardware.camera2.CaptureRequest
 import android.os.Build
 import androidx.camera.camera2.interop.CaptureRequestOptions
-import org.lineageos.aperture.camera.Framerate
+import org.lineageos.aperture.camera.FrameRate
 import org.lineageos.aperture.camera.VideoStabilizationMode
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
-fun CaptureRequestOptions.Builder.setFramerate(framerate: Framerate?) {
-    framerate?.let {
+fun CaptureRequestOptions.Builder.setFrameRate(frameRate: FrameRate?) {
+    frameRate?.let {
         setCaptureRequestOption(
             CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, it.range
         )
