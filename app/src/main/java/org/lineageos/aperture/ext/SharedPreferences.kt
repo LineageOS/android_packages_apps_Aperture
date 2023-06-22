@@ -15,7 +15,7 @@ import androidx.core.content.edit
 import org.lineageos.aperture.camera.CameraFacing
 import org.lineageos.aperture.camera.CameraMode
 import org.lineageos.aperture.camera.FlashMode
-import org.lineageos.aperture.camera.Framerate
+import org.lineageos.aperture.camera.FrameRate
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.TimerMode
 
@@ -216,12 +216,12 @@ internal var SharedPreferences.photoEffect: Int
     }
 
 // Video prefs
-private const val VIDEO_FRAMERATE_KEY = "video_framerate"
+private const val VIDEO_FRAME_RATE_KEY = "video_framerate"
 
-internal var SharedPreferences.videoFramerate: Framerate?
-    get() = Framerate.fromValue(getInt(VIDEO_FRAMERATE_KEY, -1))
+internal var SharedPreferences.videoFrameRate: FrameRate?
+    get() = FrameRate.fromValue(getInt(VIDEO_FRAME_RATE_KEY, -1))
     set(value) = edit {
-        putInt(VIDEO_FRAMERATE_KEY, value?.value ?: -1)
+        putInt(VIDEO_FRAME_RATE_KEY, value?.value ?: -1)
     }
 
 private const val VIDEO_QUALITY_KEY = "video_quality"
