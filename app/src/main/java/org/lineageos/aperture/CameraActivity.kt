@@ -1631,19 +1631,16 @@ open class CameraActivity : AppCompatActivity() {
         // Setup UI depending on camera mode
         when (cameraMode) {
             CameraMode.QR -> {
-                timerButton.isVisible = false
                 secondaryBottomBarLayout.isVisible = false
                 primaryBarLayoutGroupPhoto.isVisible = false
                 googleLensButton.isVisible = isGoogleLensAvailable
             }
             CameraMode.PHOTO -> {
-                timerButton.isVisible = true
                 secondaryBottomBarLayout.isVisible = true
                 primaryBarLayoutGroupPhoto.isVisible = true
                 googleLensButton.isVisible = false
             }
             CameraMode.VIDEO -> {
-                timerButton.isVisible = true
                 secondaryBottomBarLayout.isVisible = true
                 primaryBarLayoutGroupPhoto.isVisible = true
                 googleLensButton.isVisible = false
