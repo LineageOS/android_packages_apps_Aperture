@@ -590,6 +590,7 @@ open class CameraActivity : AppCompatActivity() {
         capturePreviewLayout.cameraViewModel = model
         countDownView.cameraViewModel = model
         infoChipView.cameraViewModel = model
+        lensSelectorLayout.cameraViewModel = model
 
         // Restore settings from shared preferences
         gridMode = sharedPreferences.lastGridMode
@@ -940,10 +941,6 @@ open class CameraActivity : AppCompatActivity() {
             aspectRatioButton.isEnabled = cameraState == CameraState.IDLE
             effectButton.isEnabled = cameraState == CameraState.IDLE
             settingsButton.isEnabled = cameraState == CameraState.IDLE
-
-            lensSelectorLayout.children.forEach { view ->
-                view.isSoundEffectsEnabled = cameraState == CameraState.IDLE
-            }
 
             updateSecondaryBarButtons()
 
@@ -2218,7 +2215,6 @@ open class CameraActivity : AppCompatActivity() {
 
         // Rotate secondary bottom bar buttons
         proButton.smoothRotate(compensationValue)
-        lensSelectorLayout.screenRotation = screenRotation
         flashButton.smoothRotate(compensationValue)
 
         // Rotate primary bar buttons
