@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dc86867a_8937cddc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 32245
+      },
+      "writtenOn": "2023-07-02T16:58:30Z",
+      "side": 1,
+      "message": "Maybe it\u0027s useful in some special cases, and/or on some less good devices?",
+      "revId": "30e1acb1fd4a4ff100eb7bc247ea42f13061367c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
