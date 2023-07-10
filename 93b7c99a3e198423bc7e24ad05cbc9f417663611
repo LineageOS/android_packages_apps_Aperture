@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9c557371_14bc7003",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 1338,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-07-10T17:09:16Z",
+      "side": 1,
+      "message": "why don\u0027t you use an aliased import?",
+      "revId": "93b7c99a3e198423bc7e24ad05cbc9f417663611",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
