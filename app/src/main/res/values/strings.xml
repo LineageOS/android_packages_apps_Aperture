@@ -82,6 +82,7 @@
     <string name="general_header">General</string>
     <string name="photos_header">Photos</string>
     <string name="video_header">Video</string>
+    <string name="advanced_header">Advanced</string>
 
     <!-- General Preferences -->
     <string name="bright_screen_title">Bright screen</string>
@@ -107,6 +108,49 @@
     <!-- Video Preferences -->
     <string name="video_stabilization_title">Enable video stabilization</string>
     <string name="video_stabilization_summary">When available, enable video stabilization to reduce camera vibrations during recording</string>
+
+    <!-- Advanced Preferences -->
+    <string name="processing_title">Processing</string>
+
+    <!-- Processing Preferences -->
+    <string name="processing_info">On photo mode, when ZSL mode is used, only default and off values will be taken into consideration. For video mode, only default, off and fast values will be taken into consideration.</string>
+    <string name="edge_mode_title">Sharpening</string>
+    <string name="edge_mode_summary">Edge enhancement improves sharpness and details in the captured image.</string>
+    <string name="edge_mode_default">Default</string>
+    <string name="edge_mode_off">Off</string>
+    <string name="edge_mode_fast">Fast</string>
+    <string name="edge_mode_high_quality">High quality</string>
+    <string name="noise_reduction_mode_title">Denoising</string>
+    <string name="noise_reduction_mode_summary">The noise reduction algorithm attempts to improve image quality by removing excessive noise added by the capture process, especially in dark conditions.</string>
+    <string name="noise_reduction_mode_default">Default</string>
+    <string name="noise_reduction_mode_off">Off</string>
+    <string name="noise_reduction_mode_fast">Fast</string>
+    <string name="noise_reduction_mode_high_quality">High quality</string>
+    <string name="noise_reduction_mode_minimal">Minimal</string>
+    <string name="shading_mode_title">Vignette correction</string>
+    <string name="shading_mode_summary">Quality of lens shading correction applied to the image data.</string>
+    <string name="shading_mode_default">Default</string>
+    <string name="shading_mode_off">Off</string>
+    <string name="shading_mode_fast">Fast</string>
+    <string name="shading_mode_high_quality">High quality</string>
+    <string name="color_correction_aberration_mode_title">Color correction aberration mode</string>
+    <string name="color_correction_aberration_mode_summary">Mode of operation for the chromatic aberration correction algorithm.</string>
+    <string name="color_correction_aberration_mode_default">Default</string>
+    <string name="color_correction_aberration_mode_off">Off</string>
+    <string name="color_correction_aberration_mode_fast">Fast</string>
+    <string name="color_correction_aberration_mode_high_quality">High quality</string>
+    <string name="distortion_correction_mode_title">Distortion correction mode</string>
+    <string name="distortion_correction_mode_summary">Mode of operation for the lens distortion correction block.</string>
+    <string name="distortion_correction_mode_default">Default</string>
+    <string name="distortion_correction_mode_off">Off</string>
+    <string name="distortion_correction_mode_fast">Fast</string>
+    <string name="distortion_correction_mode_high_quality">High quality</string>
+    <string name="hot_pixel_mode_title">Hot pixel mode</string>
+    <string name="hot_pixel_mode_summary">Quality of lens shading correction applied to the image data.</string>
+    <string name="hot_pixel_mode_default">Default</string>
+    <string name="hot_pixel_mode_off">Off</string>
+    <string name="hot_pixel_mode_fast">Fast</string>
+    <string name="hot_pixel_mode_high_quality">High quality</string>
 
     <!-- Shortcuts -->
     <string name="shortcut_selfie">Take a selfie</string>
