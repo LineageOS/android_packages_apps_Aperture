@@ -6,7 +6,7 @@
 package org.lineageos.aperture.camera
 
 enum class CameraMode {
-    QR,
     PHOTO,
     VIDEO,
+    QR,
 }
