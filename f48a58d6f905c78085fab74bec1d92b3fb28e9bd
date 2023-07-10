@@ -16,6 +16,24 @@
       "message": "a semaphore with 1 permit is equivalent to a mutex, can you use that instead?",
       "revId": "f48a58d6f905c78085fab74bec1d92b3fb28e9bd",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "89366b38_11d0aee0",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 8
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-07-10T19:54:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb9e1a6_1ea2c43c",
+      "revId": "f48a58d6f905c78085fab74bec1d92b3fb28e9bd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
