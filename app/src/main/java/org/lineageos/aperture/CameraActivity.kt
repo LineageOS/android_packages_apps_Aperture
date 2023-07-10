@@ -1729,6 +1729,29 @@ open class CameraActivity : AppCompatActivity() {
                                 VideoStabilizationMode.OFF
                             }
                         )
+                        sharedPreferences.edgeMode?.let {
+                            if (cameraMode == CameraMode.PHOTO &&
+                                photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG &&
+                                camera.supportedEdgeModes.contains(it)
+                            ) {
+                                setEdgeMode(it)
+                            }
+                        }
+                        sharedPreferences.noiseReductionMode?.let {
+                            if (cameraMode == CameraMode.PHOTO &&
+                                photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG &&
+                                camera.supportedNoiseReductionModes.contains(it)
+                            ) {
+                                setNoiseReductionMode(it)
+                            }
+                        }
+                        sharedPreferences.shadingMode?.let {
+                            if (cameraMode == CameraMode.PHOTO &&
+                                camera.supportedShadingModes.contains(it)
+                            ) {
+                                setShadingMode(it)
+                            }
+                        }
                     }
                     .build()
             } ?: Log.wtf(LOG_TAG, "Camera2CameraControl not available even with camera ready?")

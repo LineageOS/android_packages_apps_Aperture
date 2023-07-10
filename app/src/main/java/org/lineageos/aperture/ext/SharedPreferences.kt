@@ -14,8 +14,11 @@ import androidx.camera.video.Quality
 import androidx.core.content.edit
 import org.lineageos.aperture.camera.CameraFacing
 import org.lineageos.aperture.camera.CameraMode
+import org.lineageos.aperture.camera.EdgeMode
 import org.lineageos.aperture.camera.FlashMode
 import org.lineageos.aperture.camera.FrameRate
+import org.lineageos.aperture.camera.NoiseReductionMode
+import org.lineageos.aperture.camera.ShadingMode
 import org.lineageos.aperture.utils.GestureActions
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.TimerMode
@@ -348,4 +351,44 @@ internal val SharedPreferences.volumeButtonsAction: GestureActions
         "nothing" -> GestureActions.NOTHING
         // Default to shutter
         else -> GestureActions.SHUTTER
+    }
+
+// Edge mode
+private const val EDGE_MODE_KEY = "edge_mode"
+private const val EDGE_MODE_DEFAULT = "default"
+internal val SharedPreferences.edgeMode: EdgeMode?
+    get() = when (getString(EDGE_MODE_KEY, EDGE_MODE_DEFAULT)) {
+        "default" -> null
+        "off" -> EdgeMode.OFF
+        "fast" -> EdgeMode.FAST
+        "high_quality" -> EdgeMode.HIGH_QUALITY
+        // Default to default
+        else -> null
+    }
+
+// Noise reduction mode
+private const val NOISE_REDUCTION_MODE_KEY = "noise_reduction_mode"
+private const val NOISE_REDUCTION_MODE_DEFAULT = "default"
+internal val SharedPreferences.noiseReductionMode: NoiseReductionMode?
+    get() = when (getString(NOISE_REDUCTION_MODE_KEY, NOISE_REDUCTION_MODE_DEFAULT)) {
+        "default" -> null
+        "off" -> NoiseReductionMode.OFF
+        "fast" -> NoiseReductionMode.FAST
+        "high_quality" -> NoiseReductionMode.HIGH_QUALITY
+        "minimal" -> NoiseReductionMode.MINIMAL
+        // Default to default
+        else -> null
+    }
+
+// Shading mode
+private const val SHADING_MODE_KEY = "shading_mode"
+private const val SHADING_MODE_DEFAULT = "default"
+internal val SharedPreferences.shadingMode: ShadingMode?
+    get() = when (getString(SHADING_MODE_KEY, SHADING_MODE_DEFAULT)) {
+        "default" -> null
+        "off" -> ShadingMode.OFF
+        "fast" -> ShadingMode.FAST
+        "high_quality" -> ShadingMode.HIGH_QUALITY
+        // Default to default
+        else -> null
     }

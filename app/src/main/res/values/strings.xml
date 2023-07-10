@@ -103,10 +103,32 @@
     <string name="enable_zsl_summary">Use Zero-Shutter Lag mode when the camera supports it. On this mode photo effects are disabled. Note that this mode is currently experimental</string>
     <string name="photo_ffc_mirror_title">Mirror front camera</string>
     <string name="photo_ffc_mirror_summary">Save front camera photos as they appear in the preview</string>
+    <string name="photo_processing_settings_title">Processing</string>
 
     <!-- Video Preferences -->
     <string name="video_stabilization_title">Enable video stabilization</string>
     <string name="video_stabilization_summary">When available, enable video stabilization to reduce camera vibrations during recording</string>
+
+    <!-- Photo processing Preferences -->
+    <string name="edge_mode_title">Sharpening</string>
+    <string name="edge_mode_summary">Edge enhancement improves sharpness and details in the captured image. When ZSL mode is used, this option will be ignored.</string>
+    <string name="edge_mode_default">Default</string>
+    <string name="edge_mode_off">Off</string>
+    <string name="edge_mode_fast">Fast</string>
+    <string name="edge_mode_high_quality">High quality</string>
+    <string name="noise_reduction_mode_title">Denoising</string>
+    <string name="noise_reduction_mode_summary">The noise reduction algorithm attempts to improve image quality by removing excessive noise added by the capture process, especially in dark conditions. When ZSL mode is used, this option will be ignored.</string>
+    <string name="noise_reduction_mode_default">Default</string>
+    <string name="noise_reduction_mode_off">Off</string>
+    <string name="noise_reduction_mode_fast">Fast</string>
+    <string name="noise_reduction_mode_high_quality">High quality</string>
+    <string name="noise_reduction_mode_minimal">Minimal</string>
+    <string name="shading_mode_title">Vignette correction</string>
+    <string name="shading_mode_summary">Quality of lens shading correction applied to the image data.</string>
+    <string name="shading_mode_default">Default</string>
+    <string name="shading_mode_off">Off</string>
+    <string name="shading_mode_fast">Fast</string>
+    <string name="shading_mode_high_quality">High quality</string>
 
     <!-- Shortcuts -->
     <string name="shortcut_selfie">Take a selfie</string>
