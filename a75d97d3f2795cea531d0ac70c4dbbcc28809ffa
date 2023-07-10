@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02e68776_8848dbf8",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/CameraMode.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-07-10T20:56:56Z",
+      "side": 1,
+      "message": "make these an extension, not a fun of methods inside the enum.\nor put them in a companion object, those should be static",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 44
+      },
+      "revId": "a75d97d3f2795cea531d0ac70c4dbbcc28809ffa",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
