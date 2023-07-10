@@ -31,6 +31,7 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="alertDialogTheme">@style/Theme.Aperture.Settings.AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/Theme.Aperture.Settings.AlertDialog</item>
+        <item name="preferenceTheme">@style/Theme.Aperture.Settings.Preference</item>
     </style>
 
     <!-- Settings alert dialog theme. -->
@@ -44,6 +45,16 @@
     <style name="Theme.Aperture.Settings.AlertDialogStyle" parent="MaterialAlertDialog.Material3">
         <item name="shapeAppearance">@style/ShapeAppearance.Material3.MediumComponent</item>
         <item name="shapeAppearanceOverlay">@null</item>
+    </style>
+
+    <!-- Settings message box -->
+    <style name="Theme.Aperture.Settings.MessageBox">
+        <item name="selectable">false</item>
+    </style>
+
+    <!-- Settings preference style. -->
+    <style name="Theme.Aperture.Settings.Preference" parent="PreferenceThemeOverlay">
+        <item name="android:tint">?attr/colorOnSurface</item>
     </style>
 
     <!-- Settings switch theme. -->
