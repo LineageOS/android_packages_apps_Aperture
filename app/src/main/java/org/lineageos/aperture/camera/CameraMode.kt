@@ -5,8 +5,20 @@
 
 package org.lineageos.aperture.camera
 
+import org.lineageos.aperture.ext.*
+
 enum class CameraMode {
     PHOTO,
     VIDEO,
-    QR,
+    QR;
+
+    /**
+     * Get the next mode.
+     */
+    fun next() = values().next(this)
+
+    /**
+     * Get the previous mode.
+     */
+    fun previous() = values().previous(this)
 }
