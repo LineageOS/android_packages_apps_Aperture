@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
@@ -28,5 +28,97 @@
     <string-array name="photo_capture_mode_values" translatable="false">
         <item>maximize_quality</item>
         <item>minimize_latency</item>
+    </string-array>
+
+    <!-- Edge mode preference -->
+    <string-array name="edge_mode_entries" translatable="false">
+        <item>@string/edge_mode_default</item>
+        <item>@string/edge_mode_off</item>
+        <item>@string/edge_mode_fast</item>
+        <item>@string/edge_mode_high_quality</item>
+    </string-array>
+
+    <string-array name="edge_mode_values" translatable="false">
+        <item>default</item>
+        <item>off</item>
+        <item>fast</item>
+        <item>high_quality</item>
+    </string-array>
+
+    <!-- Noise reduction mode preference -->
+    <string-array name="noise_reduction_mode_entries" translatable="false">
+        <item>@string/noise_reduction_mode_default</item>
+        <item>@string/noise_reduction_mode_off</item>
+        <item>@string/noise_reduction_mode_fast</item>
+        <item>@string/noise_reduction_mode_high_quality</item>
+        <item>@string/noise_reduction_mode_minimal</item>
+    </string-array>
+
+    <string-array name="noise_reduction_mode_values" translatable="false">
+        <item>default</item>
+        <item>off</item>
+        <item>fast</item>
+        <item>high_quality</item>
+        <item>minimal</item>
+    </string-array>
+
+    <!-- Shading mode preference -->
+    <string-array name="shading_mode_entries" translatable="false">
+        <item>@string/shading_mode_default</item>
+        <item>@string/shading_mode_off</item>
+        <item>@string/shading_mode_fast</item>
+        <item>@string/shading_mode_high_quality</item>
+    </string-array>
+
+    <string-array name="shading_mode_values" translatable="false">
+        <item>default</item>
+        <item>off</item>
+        <item>fast</item>
+        <item>high_quality</item>
+    </string-array>
+
+    <!-- Color correction aberration mode preference -->
+    <string-array name="color_correction_aberration_mode_entries" translatable="false">
+        <item>@string/color_correction_aberration_mode_default</item>
+        <item>@string/color_correction_aberration_mode_off</item>
+        <item>@string/color_correction_aberration_mode_fast</item>
+        <item>@string/color_correction_aberration_mode_high_quality</item>
+    </string-array>
+
+    <string-array name="color_correction_aberration_mode_values" translatable="false">
+        <item>default</item>
+        <item>off</item>
+        <item>fast</item>
+        <item>high_quality</item>
+    </string-array>
+
+    <!-- Distortion correction mode preference -->
+    <string-array name="distortion_correction_mode_entries" translatable="false">
+        <item>@string/distortion_correction_mode_default</item>
+        <item>@string/distortion_correction_mode_off</item>
+        <item>@string/distortion_correction_mode_fast</item>
+        <item>@string/distortion_correction_mode_high_quality</item>
+    </string-array>
+
+    <string-array name="distortion_correction_mode_values" translatable="false">
+        <item>default</item>
+        <item>off</item>
+        <item>fast</item>
+        <item>high_quality</item>
+    </string-array>
+
+    <!-- Hot pixel mode preference -->
+    <string-array name="hot_pixel_mode_entries" translatable="false">
+        <item>@string/hot_pixel_mode_default</item>
+        <item>@string/hot_pixel_mode_off</item>
+        <item>@string/hot_pixel_mode_fast</item>
+        <item>@string/hot_pixel_mode_high_quality</item>
+    </string-array>
+
+    <string-array name="hot_pixel_mode_values" translatable="false">
+        <item>default</item>
+        <item>off</item>
+        <item>fast</item>
+        <item>high_quality</item>
     </string-array>
 </resources>
