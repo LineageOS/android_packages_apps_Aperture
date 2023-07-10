@@ -46,6 +46,54 @@
       },
       "revId": "d9b235d6d39e2d57644663d5c883c903df9e7e18",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d6f7bee_ffb1d469",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-07-10T21:38:57Z",
+      "side": 1,
+      "message": "that\u0027s fine for now, but we should come up with a way to ensure the data is properly fed in the model before triggering callbacks of sort.",
+      "parentUuid": "4d32f7d6_59985301",
+      "range": {
+        "startLine": 1754,
+        "startChar": 0,
+        "endLine": 1759,
+        "endChar": 87
+      },
+      "revId": "d9b235d6d39e2d57644663d5c883c903df9e7e18",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c1ff044_0d2d1045",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-07-10T21:38:57Z",
+      "side": 1,
+      "message": "that\u0027s fine for now, but we should ensure the order of callbacks is sane to ensure this doesn\u0027t happen",
+      "parentUuid": "4d32f7d6_59985301",
+      "range": {
+        "startLine": 1754,
+        "startChar": 0,
+        "endLine": 1759,
+        "endChar": 87
+      },
+      "revId": "d9b235d6d39e2d57644663d5c883c903df9e7e18",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
