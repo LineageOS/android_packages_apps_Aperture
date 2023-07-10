@@ -9,7 +9,10 @@ import android.hardware.camera2.CameraMetadata
 import android.hardware.camera2.CaptureRequest
 import android.os.Build
 import androidx.camera.camera2.interop.CaptureRequestOptions
+import org.lineageos.aperture.camera.EdgeMode
 import org.lineageos.aperture.camera.FrameRate
+import org.lineageos.aperture.camera.NoiseReductionMode
+import org.lineageos.aperture.camera.ShadingMode
 import org.lineageos.aperture.camera.VideoStabilizationMode
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
@@ -36,6 +39,46 @@ fun CaptureRequestOptions.Builder.setVideoStabilizationMode(videoStabilizationMo
                 } else {
                     CameraMetadata.CONTROL_VIDEO_STABILIZATION_MODE_ON
                 }
+        }
+    )
+}
+
+@androidx.camera.camera2.interop.ExperimentalCamera2Interop
+fun CaptureRequestOptions.Builder.setEdgeMode(edgeMode: EdgeMode) {
+    setCaptureRequestOption(
+        CaptureRequest.EDGE_MODE,
+        when (edgeMode) {
+            EdgeMode.OFF -> CameraMetadata.EDGE_MODE_OFF
+            EdgeMode.FAST -> CameraMetadata.EDGE_MODE_FAST
+            EdgeMode.HIGH_QUALITY -> CameraMetadata.EDGE_MODE_HIGH_QUALITY
+            EdgeMode.ZERO_SHUTTER_LAG -> CameraMetadata.EDGE_MODE_ZERO_SHUTTER_LAG
+        }
+    )
+}
+
+@androidx.camera.camera2.interop.ExperimentalCamera2Interop
+fun CaptureRequestOptions.Builder.setNoiseReductionMode(noiseReductionMode: NoiseReductionMode) {
+    setCaptureRequestOption(
+        CaptureRequest.NOISE_REDUCTION_MODE,
+        when (noiseReductionMode) {
+            NoiseReductionMode.OFF -> CameraMetadata.NOISE_REDUCTION_MODE_OFF
+            NoiseReductionMode.FAST -> CameraMetadata.NOISE_REDUCTION_MODE_FAST
+            NoiseReductionMode.HIGH_QUALITY -> CameraMetadata.NOISE_REDUCTION_MODE_HIGH_QUALITY
+            NoiseReductionMode.MINIMAL -> CameraMetadata.NOISE_REDUCTION_MODE_MINIMAL
+            NoiseReductionMode.ZERO_SHUTTER_LAG ->
+                CameraMetadata.NOISE_REDUCTION_MODE_ZERO_SHUTTER_LAG
+        }
+    )
+}
+
+@androidx.camera.camera2.interop.ExperimentalCamera2Interop
+fun CaptureRequestOptions.Builder.setShadingMode(shadingMode: ShadingMode) {
+    setCaptureRequestOption(
+        CaptureRequest.SHADING_MODE,
+        when (shadingMode) {
+            ShadingMode.OFF -> CameraMetadata.SHADING_MODE_OFF
+            ShadingMode.FAST -> CameraMetadata.SHADING_MODE_FAST
+            ShadingMode.HIGH_QUALITY -> CameraMetadata.SHADING_MODE_HIGH_QUALITY
         }
     )
 }

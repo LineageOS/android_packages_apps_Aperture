@@ -82,6 +82,56 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
 
     val cameraState = cameraInfo.cameraState
 
+    val supportedEdgeModes = mutableSetOf<EdgeMode>().apply {
+        val availableEdgeModes = camera2CameraInfo.getCameraCharacteristic(
+            CameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES
+        ) ?: IntArray(0)
+
+        availableEdgeModes.toSet().mapNotNullTo(this) {
+            when (it) {
+                CameraCharacteristics.EDGE_MODE_OFF -> EdgeMode.OFF
+                CameraCharacteristics.EDGE_MODE_FAST -> EdgeMode.FAST
+                CameraCharacteristics.EDGE_MODE_HIGH_QUALITY -> EdgeMode.HIGH_QUALITY
+                CameraCharacteristics.EDGE_MODE_ZERO_SHUTTER_LAG -> EdgeMode.ZERO_SHUTTER_LAG
+                else -> null
+            }
+        }
+    }.toSet()
+
+    val supportedNoiseReductionModes = mutableSetOf<NoiseReductionMode>().apply {
+        val availableNoiseReductionModes = camera2CameraInfo.getCameraCharacteristic(
+            CameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES
+        ) ?: IntArray(0)
+
+        availableNoiseReductionModes.toSet().mapNotNullTo(this) {
+            when (it) {
+                CameraCharacteristics.NOISE_REDUCTION_MODE_OFF -> NoiseReductionMode.OFF
+                CameraCharacteristics.NOISE_REDUCTION_MODE_FAST -> NoiseReductionMode.FAST
+                CameraCharacteristics.NOISE_REDUCTION_MODE_HIGH_QUALITY ->
+                    NoiseReductionMode.HIGH_QUALITY
+                CameraCharacteristics.NOISE_REDUCTION_MODE_MINIMAL -> NoiseReductionMode.MINIMAL
+                CameraCharacteristics.NOISE_REDUCTION_MODE_ZERO_SHUTTER_LAG ->
+                    NoiseReductionMode.ZERO_SHUTTER_LAG
+                else -> null
+            }
+        }
+    }.toSet()
+
+    val supportedShadingModes = mutableSetOf<ShadingMode>().apply {
+        val availableShadingModes = camera2CameraInfo.getCameraCharacteristic(
+            CameraCharacteristics.SHADING_AVAILABLE_MODES
+        ) ?: IntArray(0)
+
+        availableShadingModes.toSet().mapNotNullTo(this) {
+            when (it) {
+                CameraCharacteristics.SHADING_MODE_OFF -> ShadingMode.OFF
+                CameraCharacteristics.SHADING_MODE_FAST -> ShadingMode.FAST
+                CameraCharacteristics.SHADING_MODE_HIGH_QUALITY -> ShadingMode.HIGH_QUALITY
+                else -> null
+            }
+        }
+    }.toSet()
+
     override fun equals(other: Any?): Boolean {
         val camera = this::class.safeCast(other) ?: return false
         return this.cameraId == camera.cameraId

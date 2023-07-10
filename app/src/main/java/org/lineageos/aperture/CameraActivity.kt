@@ -94,8 +94,11 @@ import org.lineageos.aperture.camera.CameraManager
 import org.lineageos.aperture.camera.CameraMode
 import org.lineageos.aperture.camera.CameraState
 import org.lineageos.aperture.camera.CameraViewModel
+import org.lineageos.aperture.camera.EdgeMode
 import org.lineageos.aperture.camera.FlashMode
 import org.lineageos.aperture.camera.FrameRate
+import org.lineageos.aperture.camera.NoiseReductionMode
+import org.lineageos.aperture.camera.ShadingMode
 import org.lineageos.aperture.camera.VideoStabilizationMode
 import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.qr.QrImageAnalyzer
@@ -1670,6 +1673,42 @@ open class CameraActivity : AppCompatActivity() {
                                 VideoStabilizationMode.OFF
                             }
                         )
+                        sharedPreferences.edgeMode?.takeIf {
+                            camera.supportedEdgeModes.contains(it) && when (cameraMode) {
+                                    CameraMode.PHOTO -> photoCaptureMode !=
+                                            ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
+                                            EdgeMode.ALLOWED_MODES_ON_ZSL.contains(it)
+                                    CameraMode.VIDEO ->
+                                        EdgeMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+                                    CameraMode.QR -> false
+                            }
+                        }?.let {
+                            setEdgeMode(it)
+                        }
+                        sharedPreferences.noiseReductionMode?.takeIf {
+                            camera.supportedNoiseReductionModes.contains(it) && when (cameraMode) {
+                                CameraMode.PHOTO -> photoCaptureMode !=
+                                        ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
+                                        NoiseReductionMode.ALLOWED_MODES_ON_ZSL.contains(it)
+                                CameraMode.VIDEO ->
+                                    NoiseReductionMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+                                CameraMode.QR -> false
+                            }
+                        }?.let {
+                            setNoiseReductionMode(it)
+                        }
+                        sharedPreferences.shadingMode?.takeIf {
+                            camera.supportedShadingModes.contains(it) && when (cameraMode) {
+                                CameraMode.PHOTO -> photoCaptureMode !=
+                                        ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
+                                        ShadingMode.ALLOWED_MODES_ON_ZSL.contains(it)
+                                CameraMode.VIDEO ->
+                                    ShadingMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+                                CameraMode.QR -> false
+                            }
+                        }?.let {
+                            setShadingMode(it)
+                        }
                     }
                     .build()
             } ?: Log.wtf(LOG_TAG, "Camera2CameraControl not available even with camera ready?")
