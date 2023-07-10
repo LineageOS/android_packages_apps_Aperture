@@ -16,6 +16,24 @@
       "message": "can\u0027t you create an extension to avoid code duplication?",
       "revId": "191292c29703cacbd75961d48aacefb5042ccf66",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "061f9630_2e96ac56",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-07-10T19:54:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64980838_fa7717f7",
+      "revId": "191292c29703cacbd75961d48aacefb5042ccf66",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
