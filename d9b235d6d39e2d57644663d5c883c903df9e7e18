@@ -22,6 +22,30 @@
       },
       "revId": "d9b235d6d39e2d57644663d5c883c903df9e7e18",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d32f7d6_59985301",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 1759,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-07-10T21:33:58Z",
+      "side": 1,
+      "message": "It might happen during init: e.g. `model.camera` gets set and updateSecondaryBarButtons is called, but the other fields aren\u0027t set",
+      "parentUuid": "77e1a36e_97735181",
+      "range": {
+        "startLine": 1754,
+        "startChar": 0,
+        "endLine": 1759,
+        "endChar": 87
+      },
+      "revId": "d9b235d6d39e2d57644663d5c883c903df9e7e18",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
