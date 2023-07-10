@@ -193,78 +193,26 @@ open class CameraActivity : AppCompatActivity() {
     // Current camera state
     private val model: CameraViewModel by viewModels()
 
-    private var camera
-        get() = model.camera.value!!
-        set(value) {
-            model.camera.setOrPostValue(value)
-        }
-    private var cameraMode
-        get() = model.cameraMode.value!!
-        set(value) {
-            model.cameraMode.setOrPostValue(value)
-        }
-    private var singleCaptureMode
-        get() = model.inSingleCaptureMode.value!!
-        set(value) {
-            model.inSingleCaptureMode.setOrPostValue(value)
-        }
-    private var cameraState
-        get() = model.cameraState.value!!
-        set(value) {
-            model.cameraState.setOrPostValue(value)
-        }
+    private var camera by model.camera.asPropertyDelegate()
+    private var cameraMode by model.cameraMode.asPropertyDelegate()
+    private var singleCaptureMode by model.inSingleCaptureMode.asPropertyDelegate()
+    private var cameraState by model.cameraState.asPropertyDelegate()
     private val screenRotation
         get() = model.screenRotation
-    private var gridMode
-        get() = model.gridMode.value!!
-        set(value) {
-            model.gridMode.setOrPostValue(value)
-        }
-    private var flashMode
-        get() = model.flashMode.value!!
-        set(value) {
-            model.flashMode.setOrPostValue(value)
-        }
-    private var timerMode
-        get() = model.timerMode.value!!
-        set(value) {
-            model.timerMode.setOrPostValue(value)
-        }
-    private var photoCaptureMode
-        get() = model.photoCaptureMode.value!!
-        set(value) {
-            model.photoCaptureMode.setOrPostValue(value)
-        }
-    private var photoAspectRatio
-        get() = model.photoAspectRatio.value!!
-        set(value) {
-            model.photoAspectRatio.setOrPostValue(value)
-        }
-    private var photoEffect
-        get() = model.photoEffect.value!!
-        set(value) {
-            model.photoEffect.setOrPostValue(value)
-        }
-    private var videoQuality
-        get() = model.videoQuality.value!!
-        set(value) {
-            model.videoQuality.setOrPostValue(value)
-        }
+    private var gridMode by model.gridMode.asPropertyDelegate()
+    private var flashMode by model.flashMode.asPropertyDelegate()
+    private var timerMode by model.timerMode.asPropertyDelegate()
+    private var photoCaptureMode by model.photoCaptureMode.asPropertyDelegate()
+    private var photoAspectRatio by model.photoAspectRatio.asPropertyDelegate()
+    private var photoEffect by model.photoEffect.asPropertyDelegate()
+    private var videoQuality by model.videoQuality.asPropertyDelegate()
     private var videoFrameRate
         get() = model.videoFrameRate.value
         set(value) {
             model.videoFrameRate.setOrPostValue(value)
         }
-    private var videoMicMode
-        get() = model.videoMicMode.value!!
-        set(value) {
-            model.videoMicMode.setOrPostValue(value)
-        }
-    private var videoAudioConfig
-        get() = model.videoAudioConfig.value!!
-        set(value) {
-            model.videoAudioConfig.setOrPostValue(value)
-        }
+    private var videoMicMode by model.videoMicMode.asPropertyDelegate()
+    private var videoAudioConfig by model.videoAudioConfig.asPropertyDelegate()
     private var videoRecording
         get() = model.videoRecording.value
         set(value) {
