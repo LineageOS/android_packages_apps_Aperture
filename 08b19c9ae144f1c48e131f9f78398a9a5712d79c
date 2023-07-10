@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "beea84aa_9e6d0d02",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-07-10T20:52:09Z",
+      "side": 1,
+      "message": "code wise looks good, still not sure how I feel about the UX.",
+      "revId": "08b19c9ae144f1c48e131f9f78398a9a5712d79c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
