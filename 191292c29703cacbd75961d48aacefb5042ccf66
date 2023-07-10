@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64980838_fa7717f7",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-07-10T17:03:43Z",
+      "side": 1,
+      "message": "can\u0027t you create an extension to avoid code duplication?",
+      "revId": "191292c29703cacbd75961d48aacefb5042ccf66",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
