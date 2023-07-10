@@ -5,16 +5,9 @@
 
 package org.lineageos.aperture.utils
 
-import org.lineageos.aperture.ext.*
-
 enum class GridMode {
     OFF,
     ON_3,
     ON_4,
-    ON_GOLDENRATIO;
-
-    /**
-     * Get the next mode.
-     */
-    fun next() = values().next(this)
+    ON_GOLDENRATIO,
 }
