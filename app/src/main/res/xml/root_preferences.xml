@@ -75,6 +75,11 @@
             app:summary="@string/photo_ffc_mirror_summary"
             app:title="@string/photo_ffc_mirror_title" />
 
+        <Preference
+            app:fragment="org.lineageos.aperture.SettingsActivity$PhotoProcessingSettingsFragment"
+            app:iconSpaceReserved="false"
+            app:title="@string/photo_processing_settings_title" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

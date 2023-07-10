@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/photo_processing_settings_title">
+
+        <ListPreference
+            app:defaultValue="default"
+            app:entries="@array/edge_mode_entries"
+            app:entryValues="@array/edge_mode_values"
+            app:iconSpaceReserved="false"
+            app:key="edge_mode"
+            app:summary="@string/edge_mode_summary"
+            app:title="@string/edge_mode_title" />
+
+        <ListPreference
+            app:defaultValue="default"
+            app:entries="@array/noise_reduction_mode_entries"
+            app:entryValues="@array/noise_reduction_mode_values"
+            app:iconSpaceReserved="false"
+            app:key="noise_reduction_mode"
+            app:summary="@string/noise_reduction_mode_summary"
+            app:title="@string/noise_reduction_mode_title" />
+
+        <ListPreference
+            app:defaultValue="default"
+            app:entries="@array/shading_mode_entries"
+            app:entryValues="@array/shading_mode_values"
+            app:iconSpaceReserved="false"
+            app:key="shading_mode"
+            app:summary="@string/shading_mode_summary"
+            app:title="@string/shading_mode_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

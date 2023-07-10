@@ -23,14 +23,13 @@ import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.PermissionsUtils
 
 class SettingsActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.settings, SettingsFragment())
+                .replace(R.id.settings, RootSettingsFragment())
                 .commit()
         }
 
@@ -55,7 +54,16 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    class SettingsFragment : PreferenceFragmentCompat() {
+    abstract class SettingsFragment : PreferenceFragmentCompat() {
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+
+            setDivider(ColorDrawable(Color.TRANSPARENT))
+            setDividerHeight(0)
+        }
+    }
+
+    class RootSettingsFragment : SettingsFragment() {
         private val enableZsl by lazy { findPreference<SwitchPreference>("enable_zsl")!! }
         private val photoCaptureMode by lazy {
             findPreference<ListPreference>("photo_capture_mode")!!
@@ -91,13 +99,6 @@ class SettingsActivity : AppCompatActivity() {
                 true
             }
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
-
-            setDivider(ColorDrawable(Color.TRANSPARENT))
-            setDividerHeight(0)
-        }
-
         @SuppressLint("UnsafeOptInUsageError")
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
@@ -117,6 +118,12 @@ class SettingsActivity : AppCompatActivity() {
             // Photo capture mode
             photoCaptureMode.onPreferenceChangeListener = photoCaptureModePreferenceChangeListener
             enableZsl.isEnabled = photoCaptureMode.value == "minimize_latency"
+        }
+    }
+
+    class PhotoProcessingSettingsFragment : SettingsFragment() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.photo_processing_preferences, rootKey)
         }
     }
 }
