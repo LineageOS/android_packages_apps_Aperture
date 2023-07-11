@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "42707e82_e4089618",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/MutableLiveData.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-07-11T07:02:02Z",
+      "side": 1,
+      "message": "I don\u0027t think you need that, the other statement should have the same values",
+      "revId": "95dc92917784ce67cee27fac111e50fbef4b3705",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
