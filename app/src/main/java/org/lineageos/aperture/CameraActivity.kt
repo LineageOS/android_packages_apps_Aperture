@@ -434,6 +434,16 @@ open class CameraActivity : AppCompatActivity() {
         }
     }
 
+    private val forceTorchSnackbar by lazy {
+        Snackbar.make(
+            secondaryBottomBarLayout, R.string.force_torch_help, Snackbar.LENGTH_INDEFINITE
+        )
+            .setAnchorView(secondaryBottomBarLayout)
+            .setAction(android.R.string.ok) {
+                sharedPreferences.forceTorchHelpShown = true
+            }
+    }
+
     enum class ShutterAnimation(val resourceId: Int) {
         InitPhoto(R.drawable.avd_photo_capture),
         InitVideo(R.drawable.avd_mode_video_photo),
@@ -587,6 +597,14 @@ open class CameraActivity : AppCompatActivity() {
             secondaryTopBarLayout.slide()
         }
         flashButton.setOnClickListener { cycleFlashMode() }
+        flashButton.setOnLongClickListener {
+            if (cameraMode == CameraMode.PHOTO) {
+                toggleForceTorch()
+                true
+            } else {
+                false
+            }
+        }
 
         // Initialize camera mode highlight position
         (cameraModeHighlight.parent as View).doOnLayout {
@@ -1914,6 +1932,31 @@ open class CameraActivity : AppCompatActivity() {
             CameraMode.PHOTO -> sharedPreferences.photoFlashMode = newFlashMode
             CameraMode.VIDEO -> sharedPreferences.videoFlashMode = newFlashMode
             else -> {}
+        }
+
+        if (cameraMode == CameraMode.PHOTO && !sharedPreferences.forceTorchHelpShown &&
+            !forceTorchSnackbar.isShownOrQueued) {
+            forceTorchSnackbar.show()
+        }
+    }
+
+    /**
+     * Toggle torch mode on photo mode.
+     */
+    private fun toggleForceTorch() {
+        val currentFlashMode = flashMode
+
+        val newFlashMode = if (currentFlashMode != FlashMode.TORCH) {
+            FlashMode.TORCH
+        } else {
+            FlashMode.OFF
+        }
+
+        changeFlashMode(newFlashMode)
+
+        if (!sharedPreferences.forceTorchHelpShown) {
+            // The user figured it out by themself
+            sharedPreferences.forceTorchHelpShown = true
         }
     }
 
