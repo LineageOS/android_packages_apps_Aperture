@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "364c1a80_fe00406a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-07-12T17:16:58Z",
+      "side": 1,
+      "message": "once again, nope, I had to leave the phone without touching it with flash+camera",
+      "revId": "2fd2079951b14fb698a0c75228f8dca83998fd7a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
