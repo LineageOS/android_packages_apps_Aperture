@@ -16,6 +16,24 @@
       "message": "I don\u0027t think you need that, the other statement should have the same values",
       "revId": "95dc92917784ce67cee27fac111e50fbef4b3705",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e3afe3d_2c798d05",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/MutableLiveData.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-07-12T14:01:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42707e82_e4089618",
+      "revId": "95dc92917784ce67cee27fac111e50fbef4b3705",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
