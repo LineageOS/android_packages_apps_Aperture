@@ -16,6 +16,24 @@
       "message": "once again, nope, I had to leave the phone without touching it with flash+camera",
       "revId": "2fd2079951b14fb698a0c75228f8dca83998fd7a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ff27e5e2_71734fb3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-07-12T17:18:44Z",
+      "side": 1,
+      "message": "This isn\u0027t like PTT, you long press and it enables torch, but you don\u0027t need to keep it pressed",
+      "parentUuid": "364c1a80_fe00406a",
+      "revId": "2fd2079951b14fb698a0c75228f8dca83998fd7a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
