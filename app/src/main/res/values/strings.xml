@@ -186,4 +186,7 @@
     <string name="thermal_status_critical">Critical thermal throttling, the app might be closed soon.</string>
     <string name="thermal_status_emergency">Emergency thermal throttling, the app will close now.</string>
     <string name="thermal_status_shutdown">Shutdown thermal throttling, the device will power off.</string>
+
+    <!-- Force torch help -->
+    <string name="force_torch_help">On photo mode, you can long press the flash button to switch into torch mode.</string>
 </resources>
