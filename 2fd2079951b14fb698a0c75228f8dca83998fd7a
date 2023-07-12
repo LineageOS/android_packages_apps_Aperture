@@ -34,6 +34,24 @@
       "parentUuid": "364c1a80_fe00406a",
       "revId": "2fd2079951b14fb698a0c75228f8dca83998fd7a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "314f959a_d5cdd5e1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-07-12T17:19:20Z",
+      "side": 1,
+      "message": "I just wanted to get rid of torch mode while cycling flash modes on photo mode",
+      "parentUuid": "ff27e5e2_71734fb3",
+      "revId": "2fd2079951b14fb698a0c75228f8dca83998fd7a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
