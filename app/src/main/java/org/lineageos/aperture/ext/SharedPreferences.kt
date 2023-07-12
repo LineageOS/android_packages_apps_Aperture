@@ -436,3 +436,12 @@ internal val SharedPreferences.hotPixelMode: HotPixelMode?
         // Default to default
         else -> null
     }
+
+// Force torch mode help shown
+private const val FORCE_TORCH_HELP_SHOWN_KEY = "force_torch_help_shown"
+private const val FORCE_TORCH_HELP_SHOWN_DEFAULT = false
+internal var SharedPreferences.forceTorchHelpShown: Boolean
+    get() = getBoolean(FORCE_TORCH_HELP_SHOWN_KEY, FORCE_TORCH_HELP_SHOWN_DEFAULT)
+    set(value) = edit {
+        putBoolean(FORCE_TORCH_HELP_SHOWN_KEY, value)
+    }
