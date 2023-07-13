@@ -1395,7 +1395,7 @@ open class CameraActivity : AppCompatActivity() {
             // Torch mode can be toggled at any time
             flashButton.isEnabled =
                 cameraMode != CameraMode.PHOTO || cameraState == CameraState.IDLE
-            micButton.isEnabled = cameraState == CameraState.IDLE || videoAudioConfig.audioEnabled
+            micButton.isEnabled = cameraState == CameraState.IDLE && videoAudioConfig.audioEnabled
             settingsButton.isEnabled = cameraState == CameraState.IDLE
 
             // Bottom
