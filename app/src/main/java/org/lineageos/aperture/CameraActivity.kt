@@ -1722,7 +1722,7 @@ open class CameraActivity : AppCompatActivity() {
                 cameraState == CameraState.IDLE && supportedVideoQualities.size > 1
             videoFrameRateButton.isEnabled =
                 cameraState == CameraState.IDLE && supportedVideoFrameRates.size > 1
-            micButton.isEnabled = cameraState == CameraState.IDLE || videoAudioConfig.audioEnabled
+            micButton.isEnabled = cameraState == CameraState.IDLE && videoAudioConfig.audioEnabled
         }
     }
 
