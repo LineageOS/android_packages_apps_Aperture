@@ -230,6 +230,19 @@ tasks.register("generateBp") {
         var targetSdkVersion = android.defaultConfig.targetSdk
         var minSdkVersion = 14
 
+        // Download license files
+        it.file.parentFile.parentFile.walk().firstOrNull { file -> file.extension == "pom" }
+            ?.let { file ->
+                val pom = XmlParser().parse(file)
+                val license = (pom["licenses"] as NodeList).firstOrNull() ?: return@let
+                val node = ((license as Node).value() as NodeList).first() as Node
+
+                ant.invokeMethod("get", mapOf(
+                    "src" to (node.get("url") as NodeList).text(),
+                    "dest" to File("$filePath.license")
+                ))
+            }
+
         // Extract AndroidManifest.xml for AARs
         if (it.file.extension == "aar") {
             copy {
