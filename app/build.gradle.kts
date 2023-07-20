@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 import groovy.util.Node
 import groovy.util.NodeList
 import groovy.xml.XmlParser

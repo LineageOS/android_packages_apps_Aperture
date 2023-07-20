@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
