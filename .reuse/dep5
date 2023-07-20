@@ -1,0 +1,17 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Aperture
+Upstream-Contact: The LineageOS Project
+Source: https://github.com/LineageOS/android_packages_apps_Aperture
+
+Files: .github/workflows/* .gitignore app/.gitignore lens_launcher/.gitignore
+       .idea/*
+Copyright: 2023 The LineageOS Project
+License: Apache-2.0
+
+Files: gradle/wrapper/*
+Copyright: 2007-2023 Gradle, Inc.
+License: Apache-2.0
+
+Files: gradlew*
+Copyright: 2007-2023 Gradle, Inc.
+License: Apache-2.0
