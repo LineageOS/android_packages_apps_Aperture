@@ -60,6 +60,22 @@ class SettingsActivity : AppCompatActivity() {
 
             setDivider(ColorDrawable(Color.TRANSPARENT))
             setDividerHeight(0)
+
+            @SuppressLint("InternalInsetResource", "DiscouragedApi")
+            var navigationBarHeight = requireContext().resources
+                .getIdentifier("navigation_bar_height", "dimen", "android")
+
+            if (navigationBarHeight > 0) {
+                navigationBarHeight =
+                    requireContext().resources.getDimensionPixelSize(navigationBarHeight)
+            }
+
+            view.setPaddingRelative(
+                view.paddingStart,
+                view.paddingTop,
+                view.paddingEnd,
+                view.paddingBottom + navigationBarHeight
+            )
         }
     }
 
