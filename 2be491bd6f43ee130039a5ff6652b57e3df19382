@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cca656a_52ca05ff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-07-25T18:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d85b7c84_fba0a629",
+      "revId": "2be491bd6f43ee130039a5ff6652b57e3df19382",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "290d12e4_5ca5a531",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-07-25T17:27:42Z",
       "side": 1,
       "message": "over 100ch",
+      "revId": "2be491bd6f43ee130039a5ff6652b57e3df19382",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "814d7c9c_6a1303f7",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 14
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-07-25T18:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "290d12e4_5ca5a531",
       "revId": "2be491bd6f43ee130039a5ff6652b57e3df19382",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
