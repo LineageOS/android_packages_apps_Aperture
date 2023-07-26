@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "508e3c3b_171ca443",
+        "filename": "app/proguard-rules.pro",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-07-26T14:32:38Z",
+      "side": 1,
+      "message": "too many `n`s",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "8cfbca0d8feed16ee38e64906c30e340a2d91608",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
