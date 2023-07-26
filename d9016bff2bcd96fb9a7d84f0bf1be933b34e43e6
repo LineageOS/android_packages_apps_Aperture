@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a184aeec_dab68b18",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-07-26T14:28:02Z",
+      "side": 1,
+      "message": "d8 doesn\u0027t like using wildcards for inner classes and strips out the classes...",
+      "revId": "d9016bff2bcd96fb9a7d84f0bf1be933b34e43e6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
