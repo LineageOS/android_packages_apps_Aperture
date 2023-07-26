@@ -22,3 +22,7 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# SettingsActivity inner classes can be referenced in XML,
+# hence we have to keep the inner class (explicitly).
+-keep class org.lineageos.aperture.SettingsActivity$ProcessingSettingsFragment { *; }
