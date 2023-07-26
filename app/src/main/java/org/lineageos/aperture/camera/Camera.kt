@@ -25,7 +25,7 @@ import kotlin.reflect.safeCast
 class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val cameraSelector = cameraInfo.cameraSelector
 
-    val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
+    private val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
     val cameraId = camera2CameraInfo.cameraId
 
     val cameraFacing = when (cameraInfo.lensFacing) {

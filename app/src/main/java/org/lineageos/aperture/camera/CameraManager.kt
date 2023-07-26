@@ -36,26 +36,26 @@ class CameraManager(context: Context) {
 
                     for (i in it.indices step 3) {
                         val cameraId = it[i]
-                        val frameRates = it[i + 2].split("|").mapNotNull {
-                            FrameRate.fromValue(it.toInt())
+                        val frameRates = it[i + 2].split("|").mapNotNull { frameRate ->
+                            FrameRate.fromValue(frameRate.toInt())
                         }
 
-                        it[i + 1].split("|").mapNotNull {
-                            when (it) {
+                        it[i + 1].split("|").mapNotNull { quality ->
+                            when (quality) {
                                 "sd" -> Quality.SD
                                 "hd" -> Quality.HD
                                 "fhd" -> Quality.FHD
                                 "uhd" -> Quality.UHD
                                 else -> null
                             }
-                        }.distinct().forEach {
+                        }.distinct().forEach { quality ->
                             if (!this.containsKey(cameraId)) {
                                 this[cameraId] = mutableMapOf()
                             }
-                            if (!this[cameraId]!!.containsKey(it)) {
-                                this[cameraId]!![it] = mutableSetOf()
+                            if (!this[cameraId]!!.containsKey(quality)) {
+                                this[cameraId]!![quality] = mutableSetOf()
                             }
-                            this[cameraId]!![it]!!.addAll(frameRates)
+                            this[cameraId]!![quality]!!.addAll(frameRates)
                         }
                     }
                 }

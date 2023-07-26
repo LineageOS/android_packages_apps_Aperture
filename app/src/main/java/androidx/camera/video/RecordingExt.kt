@@ -14,6 +14,7 @@ private val Recording.audioSource
 
 var Recording.muted
     get() = audioSource.muted
+    @Suppress("RestrictedApi")
     set(value) {
         audioSource.mute(value)
     }

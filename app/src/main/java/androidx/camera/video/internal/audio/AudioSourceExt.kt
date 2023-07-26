@@ -6,4 +6,5 @@
 package androidx.camera.video.internal.audio
 
 val AudioSource.muted
+    @Suppress("RestrictedApi")
     get() = mMuted

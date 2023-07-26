@@ -21,6 +21,7 @@ import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.utils.Rotation
 
+@Suppress("PrivateResource")
 abstract class Slider @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {

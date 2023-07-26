@@ -48,7 +48,7 @@ class GridView(context: Context?, attributeSet: AttributeSet?) : View(context, a
             GridMode.OFF -> 0
             GridMode.ON_3 -> 3
             GridMode.ON_4 -> 4
-            GridMode.ON_GOLDENRATIO -> 3
+            GridMode.ON_GOLDEN_RATIO -> 3
         }
 
         if (size <= 0) {
@@ -65,14 +65,14 @@ class GridView(context: Context?, attributeSet: AttributeSet?) : View(context, a
         val wOffset = (this.width - width) / 2F
         val hOffset = (this.height - height) / 2F
 
-        val unitDiv = if (mode == GridMode.ON_GOLDENRATIO) GOLDEN_RATIO_UNIT else size.toFloat()
+        val unitDiv = if (mode == GridMode.ON_GOLDEN_RATIO) GOLDEN_RATIO_UNIT else size.toFloat()
 
         val widthSection = width / unitDiv
         val heightSection = height / unitDiv
 
         for (i in size - 1 downTo 1) {
             val position =
-                if (mode == GridMode.ON_GOLDENRATIO && i == 2) 1 + GOLDEN_RATIO
+                if (mode == GridMode.ON_GOLDEN_RATIO && i == 2) 1 + GOLDEN_RATIO
                 else i.toFloat()
 
             canvas.drawLine(
