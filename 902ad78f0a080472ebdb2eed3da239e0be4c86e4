@@ -22,6 +22,30 @@
       },
       "revId": "902ad78f0a080472ebdb2eed3da239e0be4c86e4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "52017b66_4bd45ca6",
+        "filename": "app/proguard-rules.pro",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-07-26T14:53:02Z",
+      "side": 1,
+      "message": "Done\nDuh didn\u0027t think to use the abstract class as an anchor lol",
+      "parentUuid": "d6f0ce36_2ad57163",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 100
+      },
+      "revId": "902ad78f0a080472ebdb2eed3da239e0be4c86e4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
