@@ -22,3 +22,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# SettingsActivity inner classes can be referenced in XML.
+-keep public class org.lineageos.aperture.SettingsActivity$** extends androidx.fragment.app.Fragment
