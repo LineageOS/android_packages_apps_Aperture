@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6f0ce36_2ad57163",
+        "filename": "app/proguard-rules.pro",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-07-26T14:49:51Z",
+      "side": 1,
+      "message": "`-keep class ** extends org.lineageos.aperture.SettingsActivity$SettingsFragment`",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 100
+      },
+      "revId": "902ad78f0a080472ebdb2eed3da239e0be4c86e4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
