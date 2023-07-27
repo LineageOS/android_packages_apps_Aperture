@@ -219,6 +219,7 @@ open class CameraActivity : AppCompatActivity() {
     private var videoRecording by nullablePropertyDelegate { model.videoRecording }
 
     private lateinit var initialCameraFacing: CameraFacing
+    private lateinit var previousFlashMode: FlashMode
 
     private var tookSomething: Boolean = false
         set(value) {
@@ -1950,9 +1951,10 @@ open class CameraActivity : AppCompatActivity() {
         val currentFlashMode = flashMode
 
         val newFlashMode = if (currentFlashMode != FlashMode.TORCH) {
+            previousFlashMode = currentFlashMode
             FlashMode.TORCH
         } else {
-            FlashMode.OFF
+            previousFlashMode
         }
 
         changeFlashMode(newFlashMode)
