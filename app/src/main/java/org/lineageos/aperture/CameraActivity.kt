@@ -219,6 +219,7 @@ open class CameraActivity : AppCompatActivity() {
     private var videoRecording by nullablePropertyDelegate { model.videoRecording }
 
     private lateinit var initialCameraFacing: CameraFacing
+    private lateinit var currentFlashMode: FlashMode
 
     private var tookSomething: Boolean = false
         set(value) {
@@ -1947,12 +1948,11 @@ open class CameraActivity : AppCompatActivity() {
      * Toggle torch mode on photo mode.
      */
     private fun toggleForceTorch() {
-        val currentFlashMode = flashMode
-
-        val newFlashMode = if (currentFlashMode != FlashMode.TORCH) {
+        val newFlashMode = if (flashMode != FlashMode.TORCH) {
+            currentFlashMode = flashMode
             FlashMode.TORCH
         } else {
-            FlashMode.OFF
+            currentFlashMode
         }
 
         changeFlashMode(newFlashMode)
