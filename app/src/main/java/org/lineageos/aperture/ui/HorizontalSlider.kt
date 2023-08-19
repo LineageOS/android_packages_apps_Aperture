@@ -5,7 +5,6 @@
 
 package org.lineageos.aperture.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.RectF
 import android.util.AttributeSet
@@ -43,7 +42,7 @@ class HorizontalSlider @JvmOverloads constructor(
         return Triple(cx, cy, height / 2.15f)
     }
 
-    @SuppressLint("ClickableViewAccessibility")
+    @Suppress("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         super.onTouchEvent(event)
 

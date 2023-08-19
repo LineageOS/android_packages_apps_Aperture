@@ -5,7 +5,6 @@
 
 package org.lineageos.aperture.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.icu.text.DecimalFormat
 import android.icu.text.DecimalFormatSymbols
@@ -156,7 +155,7 @@ class LensSelectorLayout @JvmOverloads constructor(
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @Suppress("SetTextI18n")
     private fun updateButtonAttributes(button: Button, currentCamera: Boolean) {
         button.isEnabled = !currentCamera
         val formattedZoomRatio = formatZoomRatio(buttonToApproximateZoomRatio[button]!!)
