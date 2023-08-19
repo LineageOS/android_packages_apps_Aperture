@@ -51,6 +51,23 @@
       "parentUuid": "56b61ed9_26ee45a9",
       "revId": "d7a9d103b6070f21e10a61f67b54bcf5cb0384ec",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d80f4f42_db39eb76",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-08-19T00:49:14Z",
+      "side": 1,
+      "message": "https://review.lineageos.org/c/LineageOS/android_packages_apps_Aperture/+/364758",
+      "revId": "d7a9d103b6070f21e10a61f67b54bcf5cb0384ec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
