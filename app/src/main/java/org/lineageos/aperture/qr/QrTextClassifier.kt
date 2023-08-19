@@ -55,6 +55,7 @@ class QrTextClassifier(
                 )
                 .build()
         }
+
         Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && isValidWifiUri(text.toString()) -> {
             val wifiNetwork = WifiNetwork.fromQr(text.toString())!!
             val networkSuggestion = wifiNetwork.toNetworkSuggestion()!!
@@ -82,6 +83,7 @@ class QrTextClassifier(
                 )
                 .build()
         }
+
         else -> parent.classifyText(text, startIndex, endIndex, defaultLocales)
     }
 

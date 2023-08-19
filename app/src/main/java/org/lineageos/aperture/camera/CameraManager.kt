@@ -164,6 +164,7 @@ class CameraManager(context: Context) {
                 CameraFacing.EXTERNAL -> externalCamerasSupportingVideoRecording
                 else -> throw Exception("Unknown facing")
             }
+
             else -> when (cameraFacing) {
                 CameraFacing.BACK -> backCameras
                 CameraFacing.FRONT -> frontCameras
