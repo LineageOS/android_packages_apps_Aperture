@@ -34,6 +34,24 @@
       "parentUuid": "6e401930_2c3625c1",
       "revId": "046553ddf21e364383d8e4a330b418a1d98c8fd6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e252809_fc59b86d",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/Bitmap.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-08-19T12:08:40Z",
+      "side": 1,
+      "message": "Done, I guess Android Studio suggested that to avoid importing min/max",
+      "parentUuid": "6e401930_2c3625c1",
+      "revId": "046553ddf21e364383d8e4a330b418a1d98c8fd6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
