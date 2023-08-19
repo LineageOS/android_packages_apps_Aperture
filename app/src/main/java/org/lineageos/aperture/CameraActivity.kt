@@ -1224,7 +1224,8 @@ open class CameraActivity : AppCompatActivity() {
             }
             KeyEvent.KEYCODE_CAMERA -> {
                 if (cameraMode == CameraMode.VIDEO && shutterButton.isEnabled &&
-                    event?.repeatCount == 1) {
+                    event?.repeatCount == 1
+                ) {
                     shutterButton.performClick()
                 }
                 true
@@ -1233,7 +1234,8 @@ open class CameraActivity : AppCompatActivity() {
             KeyEvent.KEYCODE_VOLUME_DOWN -> when (sharedPreferences.volumeButtonsAction) {
                 GestureActions.SHUTTER -> {
                     if (cameraMode == CameraMode.VIDEO && shutterButton.isEnabled &&
-                        event?.repeatCount == 1) {
+                        event?.repeatCount == 1
+                    ) {
                         shutterButton.performClick()
                     }
                     true
@@ -1682,12 +1684,14 @@ open class CameraActivity : AppCompatActivity() {
                         )
                         sharedPreferences.edgeMode?.takeIf {
                             camera.supportedEdgeModes.contains(it) && when (cameraMode) {
-                                    CameraMode.PHOTO -> photoCaptureMode !=
-                                            ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
-                                            EdgeMode.ALLOWED_MODES_ON_ZSL.contains(it)
-                                    CameraMode.VIDEO ->
-                                        EdgeMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
-                                    CameraMode.QR -> false
+                                CameraMode.PHOTO -> photoCaptureMode !=
+                                        ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
+                                        EdgeMode.ALLOWED_MODES_ON_ZSL.contains(it)
+
+                                CameraMode.VIDEO ->
+                                    EdgeMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+
+                                CameraMode.QR -> false
                             }
                         }?.let {
                             setEdgeMode(it)
@@ -1720,9 +1724,15 @@ open class CameraActivity : AppCompatActivity() {
                             camera.supportedColorCorrectionAberrationModes.contains(it) && when (cameraMode) {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
-                                        ColorCorrectionAberrationMode.ALLOWED_MODES_ON_ZSL.contains(it)
+                                        ColorCorrectionAberrationMode.ALLOWED_MODES_ON_ZSL.contains(
+                                            it
+                                        )
+
                                 CameraMode.VIDEO ->
-                                    ColorCorrectionAberrationMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+                                    ColorCorrectionAberrationMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(
+                                        it
+                                    )
+
                                 CameraMode.QR -> false
                             }
                         }?.let {
@@ -1981,7 +1991,8 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         if (cameraMode == CameraMode.PHOTO && !sharedPreferences.forceTorchHelpShown &&
-            !forceTorchSnackbar.isShownOrQueued) {
+            !forceTorchSnackbar.isShownOrQueued
+        ) {
             forceTorchSnackbar.show()
         }
     }
