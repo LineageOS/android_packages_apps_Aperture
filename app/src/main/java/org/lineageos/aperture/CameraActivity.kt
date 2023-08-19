@@ -37,6 +37,7 @@ import android.view.MotionEvent
 import android.view.OrientationEventListener
 import android.view.ScaleGestureDetector
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.HorizontalScrollView
@@ -72,6 +73,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.location.LocationListenerCompat
 import androidx.core.location.LocationManagerCompat
 import androidx.core.location.LocationRequestCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowCompat.getInsetsController
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -160,7 +163,9 @@ open class CameraActivity : AppCompatActivity() {
     private val infoChipView by lazy { findViewById<InfoChipView>(R.id.infoChipView) }
     private val lensSelectorLayout by lazy { findViewById<LensSelectorLayout>(R.id.lensSelectorLayout) }
     private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
+    private val mainLayout by lazy { findViewById<ConstraintLayout>(R.id.mainLayout) }
     private val micButton by lazy { findViewById<Button>(R.id.micButton) }
+    private val modeSelectorLayout by lazy { findViewById<ConstraintLayout>(R.id.modeSelectorLayout) }
     private val photoModeButton by lazy { findViewById<MaterialButton>(R.id.photoModeButton) }
     private val previewBlurView by lazy { findViewById<PreviewBlurView>(R.id.previewBlurView) }
     private val primaryBarLayoutGroupPhoto by lazy { findViewById<Group>(R.id.primaryBarLayoutGroupPhoto) }
@@ -513,6 +518,8 @@ open class CameraActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_camera)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
             && keyguardManager.isKeyguardLocked
         ) {
@@ -582,6 +589,25 @@ open class CameraActivity : AppCompatActivity() {
 
         // Select a camera
         camera = cameraManager.getCameraOfFacingOrFirstAvailable(initialCameraFacing, cameraMode)
+
+        // Setup window insets
+        ViewCompat.setOnApplyWindowInsetsListener(mainLayout) { _, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            modeSelectorLayout.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = insets.bottom
+                leftMargin = insets.left
+                rightMargin = insets.right
+            }
+
+            capturePreviewLayout.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = insets.bottom
+                leftMargin = insets.left
+                rightMargin = insets.right
+            }
+
+            windowInsets
+        }
 
         // Set secondary top bar button callbacks
         aspectRatioButton.setOnClickListener { cycleAspectRatio() }
