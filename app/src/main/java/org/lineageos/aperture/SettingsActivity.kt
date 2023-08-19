@@ -5,7 +5,6 @@
 
 package org.lineageos.aperture
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -128,7 +127,7 @@ class SettingsActivity : AppCompatActivity() {
                 true
             }
 
-        @SuppressLint("UnsafeOptInUsageError")
+        @Suppress("UnsafeOptInUsageError")
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
             saveLocation?.let {
