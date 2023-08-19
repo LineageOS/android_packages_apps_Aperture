@@ -109,9 +109,11 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
                 CameraCharacteristics.NOISE_REDUCTION_MODE_FAST -> NoiseReductionMode.FAST
                 CameraCharacteristics.NOISE_REDUCTION_MODE_HIGH_QUALITY ->
                     NoiseReductionMode.HIGH_QUALITY
+
                 CameraCharacteristics.NOISE_REDUCTION_MODE_MINIMAL -> NoiseReductionMode.MINIMAL
                 CameraCharacteristics.NOISE_REDUCTION_MODE_ZERO_SHUTTER_LAG ->
                     NoiseReductionMode.ZERO_SHUTTER_LAG
+
                 else -> null
             }
         }
@@ -142,10 +144,13 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
                 when (it) {
                     CameraCharacteristics.COLOR_CORRECTION_ABERRATION_MODE_OFF ->
                         ColorCorrectionAberrationMode.OFF
+
                     CameraCharacteristics.COLOR_CORRECTION_ABERRATION_MODE_FAST ->
                         ColorCorrectionAberrationMode.FAST
+
                     CameraCharacteristics.COLOR_CORRECTION_ABERRATION_MODE_HIGH_QUALITY ->
                         ColorCorrectionAberrationMode.HIGH_QUALITY
+
                     else -> null
                 }
             }
@@ -161,10 +166,13 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
                 when (it) {
                     CameraCharacteristics.DISTORTION_CORRECTION_MODE_OFF ->
                         DistortionCorrectionMode.OFF
+
                     CameraCharacteristics.DISTORTION_CORRECTION_MODE_FAST ->
                         DistortionCorrectionMode.FAST
+
                     CameraCharacteristics.DISTORTION_CORRECTION_MODE_HIGH_QUALITY ->
                         DistortionCorrectionMode.HIGH_QUALITY
+
                     else -> null
                 }
             }

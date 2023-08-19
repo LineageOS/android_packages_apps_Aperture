@@ -55,6 +55,7 @@ class SettingsActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
             true
         }
+
         else -> {
             super.onOptionsItemSelected(item)
         }

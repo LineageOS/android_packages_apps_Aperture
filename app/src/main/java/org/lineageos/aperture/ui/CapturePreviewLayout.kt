@@ -123,6 +123,7 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
                     imageView.setImageBitmap(bitmap)
                 }
             }
+
             MediaType.VIDEO -> {
                 exoPlayer = ExoPlayer.Builder(context)
                     .build()

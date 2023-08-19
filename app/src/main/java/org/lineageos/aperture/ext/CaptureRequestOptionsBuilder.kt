@@ -97,6 +97,7 @@ fun CaptureRequestOptions.Builder.setColorCorrectionAberrationMode(
             ColorCorrectionAberrationMode.OFF -> CameraMetadata.COLOR_CORRECTION_ABERRATION_MODE_OFF
             ColorCorrectionAberrationMode.FAST ->
                 CameraMetadata.COLOR_CORRECTION_ABERRATION_MODE_FAST
+
             ColorCorrectionAberrationMode.HIGH_QUALITY ->
                 CameraMetadata.COLOR_CORRECTION_ABERRATION_MODE_HIGH_QUALITY
         }

@@ -290,9 +290,11 @@ open class CameraActivity : AppCompatActivity() {
                 MSG_HIDE_ZOOM_SLIDER -> {
                     zoomLevel.visibility = View.GONE
                 }
+
                 MSG_HIDE_FOCUS_RING -> {
                     viewFinderFocus.visibility = View.GONE
                 }
+
                 MSG_HIDE_EXPOSURE_SLIDER -> {
                     exposureLevel.visibility = View.GONE
                 }
@@ -431,16 +433,20 @@ open class CameraActivity : AppCompatActivity() {
                 PowerManager.THERMAL_STATUS_MODERATE -> {
                     showSnackBar(R.string.thermal_status_moderate)
                 }
+
                 PowerManager.THERMAL_STATUS_SEVERE -> {
                     showSnackBar(R.string.thermal_status_severe)
                 }
+
                 PowerManager.THERMAL_STATUS_CRITICAL -> {
                     showSnackBar(R.string.thermal_status_critical)
                 }
+
                 PowerManager.THERMAL_STATUS_EMERGENCY -> {
                     showSnackBar(R.string.thermal_status_emergency)
                     emergencyClose()
                 }
+
                 PowerManager.THERMAL_STATUS_SHUTDOWN -> {
                     showSnackBar(R.string.thermal_status_shutdown)
                     emergencyClose()
@@ -679,6 +685,7 @@ open class CameraActivity : AppCompatActivity() {
                         }
                     }.start()
                 }
+
                 else -> {
                     handler.removeMessages(MSG_HIDE_FOCUS_RING)
                     ValueAnimator.ofInt(8.px, 0.px).apply {
@@ -736,6 +743,7 @@ open class CameraActivity : AppCompatActivity() {
                         shutterButton.performClick()
                     }
                 }
+
                 else -> {}
             }
         }
@@ -816,6 +824,7 @@ open class CameraActivity : AppCompatActivity() {
                         startShutterAnimation(ShutterAnimation.VideoStart)
                     }
                 }
+
                 else -> {}
             }
 
@@ -847,8 +856,10 @@ open class CameraActivity : AppCompatActivity() {
                 null -> {
                     capturePreviewLayout.isVisible = false
                 }
+
                 is InputStream,
                 is Uri -> sendIntentResultAndExit(input)
+
                 else -> throw Exception("Invalid input")
             }
         }
@@ -905,11 +916,13 @@ open class CameraActivity : AppCompatActivity() {
                     primaryBarLayoutGroupPhoto.isVisible = false
                     googleLensButton.isVisible = isGoogleLensAvailable
                 }
+
                 CameraMode.PHOTO -> {
                     secondaryBottomBarLayout.isVisible = true
                     primaryBarLayoutGroupPhoto.isVisible = true
                     googleLensButton.isVisible = false
                 }
+
                 CameraMode.VIDEO -> {
                     secondaryBottomBarLayout.isVisible = true
                     primaryBarLayoutGroupPhoto.isVisible = true
@@ -1222,6 +1235,7 @@ open class CameraActivity : AppCompatActivity() {
                 }
                 true
             }
+
             KeyEvent.KEYCODE_CAMERA -> {
                 if (cameraMode == CameraMode.VIDEO && shutterButton.isEnabled &&
                     event?.repeatCount == 1
@@ -1230,6 +1244,7 @@ open class CameraActivity : AppCompatActivity() {
                 }
                 true
             }
+
             KeyEvent.KEYCODE_VOLUME_UP,
             KeyEvent.KEYCODE_VOLUME_DOWN -> when (sharedPreferences.volumeButtonsAction) {
                 GestureActions.SHUTTER -> {
@@ -1240,6 +1255,7 @@ open class CameraActivity : AppCompatActivity() {
                     }
                     true
                 }
+
                 GestureActions.ZOOM -> {
                     when (keyCode) {
                         KeyEvent.KEYCODE_VOLUME_UP -> zoomIn()
@@ -1247,14 +1263,17 @@ open class CameraActivity : AppCompatActivity() {
                     }
                     true
                 }
+
                 GestureActions.VOLUME -> {
                     super.onKeyDown(keyCode, event)
                 }
+
                 GestureActions.NOTHING -> {
                     // Do nothing
                     true
                 }
             }
+
             else -> super.onKeyDown(keyCode, event)
         }
     }
@@ -1269,6 +1288,7 @@ open class CameraActivity : AppCompatActivity() {
                 }
                 true
             }
+
             KeyEvent.KEYCODE_VOLUME_UP,
             KeyEvent.KEYCODE_VOLUME_DOWN -> {
                 when (sharedPreferences.volumeButtonsAction) {
@@ -1278,18 +1298,22 @@ open class CameraActivity : AppCompatActivity() {
                         }
                         true
                     }
+
                     GestureActions.ZOOM -> {
                         true
                     }
+
                     GestureActions.VOLUME -> {
                         super.onKeyDown(keyCode, event)
                     }
+
                     GestureActions.NOTHING -> {
                         // Do nothing
                         true
                     }
                 }
             }
+
             else -> super.onKeyUp(keyCode, event)
         }
     }
@@ -1313,6 +1337,7 @@ open class CameraActivity : AppCompatActivity() {
         when (shutterAnimation) {
             ShutterAnimation.InitPhoto,
             ShutterAnimation.InitVideo -> drawable.reset()
+
             else -> drawable.start()
         }
     }
@@ -1456,17 +1481,21 @@ open class CameraActivity : AppCompatActivity() {
                         cameraState = CameraState.RECORDING_VIDEO
                         startVideoRecordingStateAnimation(VideoRecordingStateAnimation.Init)
                     }
+
                     is VideoRecordEvent.Pause -> runOnUiThread {
                         cameraState = CameraState.RECORDING_VIDEO_PAUSED
                         startVideoRecordingStateAnimation(VideoRecordingStateAnimation.ResumeToPause)
                     }
+
                     is VideoRecordEvent.Resume -> runOnUiThread {
                         cameraState = CameraState.RECORDING_VIDEO
                         startVideoRecordingStateAnimation(VideoRecordingStateAnimation.PauseToResume)
                     }
+
                     is VideoRecordEvent.Status -> runOnUiThread {
                         updateRecordingStatus(true, it.recordingStats.recordedDurationNanos)
                     }
+
                     is VideoRecordEvent.Finalize -> {
                         runOnUiThread {
                             startShutterAnimation(ShutterAnimation.VideoEnd)
@@ -1517,6 +1546,7 @@ open class CameraActivity : AppCompatActivity() {
             CameraMode.QR -> cameraManager.getCameraOfFacingOrFirstAvailable(
                 CameraFacing.BACK, cameraMode
             )
+
             else -> camera
         }
 
@@ -1539,6 +1569,7 @@ open class CameraActivity : AppCompatActivity() {
                 cameraController.setImageAnalysisAnalyzer(cameraExecutor, imageAnalyzer)
                 CameraController.IMAGE_ANALYSIS
             }
+
             CameraMode.PHOTO -> {
                 cameraController.imageCaptureResolutionSelector = ResolutionSelector.Builder()
                     .setAspectRatioStrategy(
@@ -1556,6 +1587,7 @@ open class CameraActivity : AppCompatActivity() {
                     .build()
                 CameraController.IMAGE_CAPTURE
             }
+
             CameraMode.VIDEO -> {
                 // Fallback to highest supported video quality
                 if (!supportedVideoQualities.contains(videoQuality)) {
@@ -1615,41 +1647,49 @@ open class CameraActivity : AppCompatActivity() {
                         showToast(R.string.error_max_cameras_in_use)
                         finish()
                     }
+
                     CameraXCameraState.ERROR_CAMERA_IN_USE -> {
                         // No way to fix it without user action, bail out
                         showToast(R.string.error_camera_in_use)
                         finish()
                     }
+
                     CameraXCameraState.ERROR_OTHER_RECOVERABLE_ERROR -> {
                         // Warn the user and don't do anything
                         showToast(R.string.error_other_recoverable_error)
                     }
+
                     CameraXCameraState.ERROR_STREAM_CONFIG -> {
                         // CameraX use case misconfiguration, no way to recover
                         showToast(R.string.error_stream_config)
                         finish()
                     }
+
                     CameraXCameraState.ERROR_CAMERA_DISABLED -> {
                         // No way to fix it without user action, bail out
                         showToast(R.string.error_camera_disabled)
                         finish()
                     }
+
                     CameraXCameraState.ERROR_CAMERA_FATAL_ERROR -> {
                         // No way to fix it without user action, bail out
                         showToast(R.string.error_camera_fatal_error)
                         finish()
                     }
+
                     CameraXCameraState.ERROR_DO_NOT_DISTURB_MODE_ENABLED -> {
                         // No way to fix it without user action, bail out
                         showToast(R.string.error_do_not_disturb_mode_enabled)
                         finish()
                     }
+
                     else -> {
                         // We know anything about it, just check if it's recoverable or critical
                         when (it.type) {
                             CameraXCameraState.ErrorType.RECOVERABLE -> {
                                 showToast(R.string.error_unknown_recoverable)
                             }
+
                             CameraXCameraState.ErrorType.CRITICAL -> {
                                 showToast(R.string.error_unknown_critical)
                                 finish()
@@ -1701,8 +1741,10 @@ open class CameraActivity : AppCompatActivity() {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
                                         NoiseReductionMode.ALLOWED_MODES_ON_ZSL.contains(it)
+
                                 CameraMode.VIDEO ->
                                     NoiseReductionMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+
                                 CameraMode.QR -> false
                             }
                         }?.let {
@@ -1713,8 +1755,10 @@ open class CameraActivity : AppCompatActivity() {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
                                         ShadingMode.ALLOWED_MODES_ON_ZSL.contains(it)
+
                                 CameraMode.VIDEO ->
                                     ShadingMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+
                                 CameraMode.QR -> false
                             }
                         }?.let {
@@ -1743,8 +1787,10 @@ open class CameraActivity : AppCompatActivity() {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
                                         DistortionCorrectionMode.ALLOWED_MODES_ON_ZSL.contains(it)
+
                                 CameraMode.VIDEO ->
                                     DistortionCorrectionMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+
                                 CameraMode.QR -> false
                             }
                         }?.let {
@@ -1757,8 +1803,10 @@ open class CameraActivity : AppCompatActivity() {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
                                         HotPixelMode.ALLOWED_MODES_ON_ZSL.contains(it)
+
                                 CameraMode.VIDEO ->
                                     HotPixelMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+
                                 CameraMode.QR -> false
                             }
                         }?.let {
@@ -1813,6 +1861,7 @@ open class CameraActivity : AppCompatActivity() {
                     startShutterAnimation(ShutterAnimation.InitPhoto)
                 }
             }
+
             CameraMode.VIDEO -> {
                 if (this.cameraMode == CameraMode.PHOTO) {
                     startShutterAnimation(ShutterAnimation.PhotoToVideo)
@@ -1820,6 +1869,7 @@ open class CameraActivity : AppCompatActivity() {
                     startShutterAnimation(ShutterAnimation.InitVideo)
                 }
             }
+
             else -> {}
         }
 
@@ -2220,9 +2270,11 @@ open class CameraActivity : AppCompatActivity() {
                         is InputStream -> input.use {
                             input.copyTo(outputStream!!)
                         }
+
                         is Uri -> contentResolver.openInputStream(input).use { inputStream ->
                             inputStream!!.copyTo(outputStream!!)
                         }
+
                         else -> throw IllegalStateException("Input is not Uri or InputStream")
                     }
                 }
@@ -2244,12 +2296,14 @@ open class CameraActivity : AppCompatActivity() {
                     ).transform(transform)
                     putExtra("data", scaledAndRotatedBitmap)
                 }
+
                 is Uri -> {
                     // We saved the media (video), so return the URI that we saved.
                     data = input
                     flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                     putExtra(MediaStore.EXTRA_OUTPUT, input)
                 }
+
                 else -> throw IllegalStateException("Input is not Uri or InputStream")
             }
         })

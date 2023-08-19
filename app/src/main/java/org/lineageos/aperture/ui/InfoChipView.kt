@@ -145,12 +145,14 @@ class InfoChipView @JvmOverloads constructor(
                 Rotation.ROTATION_0,
                 Rotation.ROTATION_90,
                 Rotation.ROTATION_180 -> R.id.viewFinder
+
                 Rotation.ROTATION_270 -> LayoutParams.UNSET
             }
             endToEnd = when (screenRotation) {
                 Rotation.ROTATION_0,
                 Rotation.ROTATION_90,
                 Rotation.ROTATION_180 -> LayoutParams.UNSET
+
                 Rotation.ROTATION_270 -> R.id.viewFinder
             }
         }
@@ -162,12 +164,14 @@ class InfoChipView @JvmOverloads constructor(
         translationX = when (screenRotation) {
             Rotation.ROTATION_0,
             Rotation.ROTATION_180 -> 0F
+
             Rotation.ROTATION_90 -> -((measuredWidth - measuredHeight) / 2).toFloat()
             Rotation.ROTATION_270 -> ((measuredWidth - measuredHeight) / 2).toFloat()
         }
         translationY = when (screenRotation) {
             Rotation.ROTATION_0,
             Rotation.ROTATION_180 -> 0F
+
             Rotation.ROTATION_90,
             Rotation.ROTATION_270 -> -((measuredHeight - measuredWidth) / 2).toFloat()
         }

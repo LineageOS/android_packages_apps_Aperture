@@ -46,9 +46,11 @@ data class WifiNetwork(
                             // this networks supports WPA2
                             setWpa2Passphrase(it)
                         }
+
                         EncryptionType.SAE -> {
                             setWpa3Passphrase(it)
                         }
+
                         else -> throw Exception("Invalid encryption type/password combination")
                     }
                 }
