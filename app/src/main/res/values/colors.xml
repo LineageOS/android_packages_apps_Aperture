@@ -4,7 +4,6 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
-    <color name="grey">#FF888888</color>
     <color name="gray_10">#FFF6FAFA</color>
     <color name="gray_30">#FFBFC8C9</color>
     <color name="gray_40">#FF808D8D</color>

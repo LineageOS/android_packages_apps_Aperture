@@ -57,7 +57,6 @@
                 tools:src="@drawable/ic_copy" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/infoLayout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="16dp"
