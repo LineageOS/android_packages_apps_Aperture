@@ -367,6 +367,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/cameraModeButtonsGroup"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="cameraModeHighlight,photoModeButton,videoModeButton,qrModeButton" />
+
         <Button
             android:id="@+id/cameraModeHighlight"
             android:layout_width="wrap_content"
@@ -414,7 +420,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/videoDuration"
+            android:id="@+id/videoDurationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/rec_red"

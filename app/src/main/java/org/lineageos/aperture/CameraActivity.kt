@@ -148,6 +148,7 @@ import androidx.camera.core.CameraState as CameraXCameraState
 open class CameraActivity : AppCompatActivity() {
     // Views
     private val aspectRatioButton by lazy { findViewById<Button>(R.id.aspectRatioButton) }
+    private val cameraModeButtonsGroup by lazy { findViewById<Group>(R.id.cameraModeButtonsGroup) }
     private val cameraModeHighlight by lazy { findViewById<MaterialButton>(R.id.cameraModeHighlight) }
     private val capturePreviewLayout by lazy { findViewById<CapturePreviewLayout>(R.id.capturePreviewLayout) }
     private val countDownView by lazy { findViewById<CountDownView>(R.id.countDownView) }
@@ -176,7 +177,7 @@ open class CameraActivity : AppCompatActivity() {
     private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
     private val shutterButton by lazy { findViewById<ImageButton>(R.id.shutterButton) }
     private val timerButton by lazy { findViewById<Button>(R.id.timerButton) }
-    private val videoDuration by lazy { findViewById<MaterialButton>(R.id.videoDuration) }
+    private val videoDurationButton by lazy { findViewById<MaterialButton>(R.id.videoDurationButton) }
     private val videoFrameRateButton by lazy { findViewById<Button>(R.id.videoFrameRateButton) }
     private val videoModeButton by lazy { findViewById<MaterialButton>(R.id.videoModeButton) }
     private val videoQualityButton by lazy { findViewById<Button>(R.id.videoQualityButton) }
@@ -940,10 +941,7 @@ open class CameraActivity : AppCompatActivity() {
             galleryButtonCardView.isInvisible = inSingleCaptureMode
 
             // Update camera mode buttons
-            cameraModeHighlight.isInvisible = inSingleCaptureMode
-            photoModeButton.isInvisible = inSingleCaptureMode
-            videoModeButton.isInvisible = inSingleCaptureMode
-            qrModeButton.isInvisible = inSingleCaptureMode
+            updateCameraModeButtons()
         }
 
         // Observe camera state
@@ -962,6 +960,14 @@ open class CameraActivity : AppCompatActivity() {
             galleryButton.isEnabled = cameraState == CameraState.IDLE
             // Shutter button must stay enabled
             flipCameraButton.isEnabled = cameraState == CameraState.IDLE
+            flipCameraButton.isInvisible = cameraState.isRecordingVideo
+            videoRecordingStateButton.isVisible = cameraState.isRecordingVideo
+
+            // Update camera mode buttons
+            updateCameraModeButtons()
+
+            // Update video duration button
+            videoDurationButton.isVisible = cameraState.isRecordingVideo
         }
 
         // Observe screen rotation
@@ -1444,6 +1450,9 @@ open class CameraActivity : AppCompatActivity() {
         // Disallow state changes while we are about to prepare for recording video
         cameraState = CameraState.PRE_RECORDING_VIDEO
 
+        // Update duration text
+        videoDurationButton.text = TimeUtils.convertNanosToString(0)
+
         // Create output options object which contains file + metadata
         val outputOptions = StorageUtils.getVideoMediaStoreOutputOptions(
             contentResolver,
@@ -1460,23 +1469,6 @@ open class CameraActivity : AppCompatActivity() {
                 videoAudioConfig,
                 cameraExecutor
             ) {
-                val updateRecordingStatus = { enabled: Boolean, duration: Long ->
-                    // Hide mode buttons
-                    photoModeButton.isInvisible = enabled || singleCaptureMode
-                    videoModeButton.isInvisible = enabled || singleCaptureMode
-                    qrModeButton.isInvisible = enabled || singleCaptureMode
-
-                    // Update duration text and visibility state
-                    videoDuration.text = TimeUtils.convertNanosToString(duration)
-                    videoDuration.isVisible = enabled
-
-                    // Update video recording pause/resume button visibility state
-                    if (duration == 0L) {
-                        flipCameraButton.isInvisible = enabled
-                        videoRecordingStateButton.isVisible = enabled
-                    }
-                }
-
                 when (it) {
                     is VideoRecordEvent.Start -> runOnUiThread {
                         cameraState = CameraState.RECORDING_VIDEO
@@ -1494,13 +1486,13 @@ open class CameraActivity : AppCompatActivity() {
                     }
 
                     is VideoRecordEvent.Status -> runOnUiThread {
-                        updateRecordingStatus(true, it.recordingStats.recordedDurationNanos)
+                        videoDurationButton.text =
+                            TimeUtils.convertNanosToString(it.recordingStats.recordedDurationNanos)
                     }
 
                     is VideoRecordEvent.Finalize -> {
                         runOnUiThread {
                             startShutterAnimation(ShutterAnimation.VideoEnd)
-                            updateRecordingStatus(false, 0)
                         }
                         cameraSoundsUtils.playStopVideoRecording()
                         if (it.error != VideoRecordEvent.Finalize.ERROR_NO_VALID_DATA) {
@@ -1928,6 +1920,19 @@ open class CameraActivity : AppCompatActivity() {
                 cameraState == CameraState.IDLE && supportedVideoFrameRates.size > 1
             micButton.isEnabled =
                 cameraState == CameraState.IDLE || videoRecording?.isAudioSourceConfigured == true
+        }
+    }
+
+    /**
+     * Some UI elements requires checking more than one value, this function will be called
+     * when one of these values will change.
+     */
+    private fun updateCameraModeButtons() {
+        runOnUiThread {
+            val inSingleCaptureMode = model.inSingleCaptureMode.value ?: return@runOnUiThread
+            val cameraState = model.cameraState.value ?: return@runOnUiThread
+
+            cameraModeButtonsGroup.isInvisible = cameraState.isRecordingVideo || inSingleCaptureMode
         }
     }
 
