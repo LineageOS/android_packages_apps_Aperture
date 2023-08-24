@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d50a45c_acf0a2a1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25276
+      },
+      "writtenOn": "2023-08-24T15:10:13Z",
+      "side": 1,
+      "message": "Works and successfully fixes the 96mb JPEG issue on a52q and a72q.",
+      "revId": "a75c7d4f919ed91b0f8452f08a231334fb2ac560",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
