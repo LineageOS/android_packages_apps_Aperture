@@ -385,46 +385,31 @@
         <Button
             android:id="@+id/photoModeButton"
             style="@style/Theme.Aperture.Camera.CameraModeSelectorButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:contentDescription="@string/photo_mode_button_description"
-            android:enabled="false"
-            android:padding="0dp"
             android:text="@string/selector_photo"
-            app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/videoModeButton"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:enabled="false" />
 
         <Button
             android:id="@+id/videoModeButton"
             style="@style/Theme.Aperture.Camera.CameraModeSelectorButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:contentDescription="@string/video_mode_button_description"
-            android:padding="0dp"
             android:text="@string/select_video"
-            app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/qrModeButton"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/photoModeButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/qrModeButton"
             style="@style/Theme.Aperture.Camera.CameraModeSelectorButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:contentDescription="@string/qr_mode_button_description"
-            android:padding="0dp"
             android:text="@string/select_scan"
-            app:iconPadding="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/videoModeButton"
             app:layout_constraintTop_toTopOf="parent" />
 
