@@ -58,6 +58,7 @@ import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
 import androidx.camera.video.VideoRecordEvent
+import androidx.camera.video.isAudioSourceConfigured
 import androidx.camera.video.muted
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
@@ -219,7 +220,6 @@ open class CameraActivity : AppCompatActivity() {
     private var videoQuality by nonNullablePropertyDelegate { model.videoQuality }
     private var videoFrameRate by nullablePropertyDelegate { model.videoFrameRate }
     private var videoMicMode by nonNullablePropertyDelegate { model.videoMicMode }
-    private var videoAudioConfig by nonNullablePropertyDelegate { model.videoAudioConfig }
     private var videoRecording by nullablePropertyDelegate { model.videoRecording }
 
     private lateinit var initialCameraFacing: CameraFacing
@@ -239,6 +239,7 @@ open class CameraActivity : AppCompatActivity() {
         get() = camera.supportedVideoQualities.getOrDefault(
             videoQuality, setOf()
         )
+    private var videoAudioConfig = AudioConfig.AUDIO_DISABLED
 
     // QR
     private val imageAnalyzer by lazy { QrImageAnalyzer(this) }
@@ -1152,8 +1153,8 @@ open class CameraActivity : AppCompatActivity() {
             )
         }
 
-        // Observe video AudioConfig
-        model.videoAudioConfig.observe(this) {
+        // Observe video recording
+        model.videoRecording.observe(this) {
             // Update secondary bar buttons
             updateSecondaryBarButtons()
         }
@@ -1909,7 +1910,7 @@ open class CameraActivity : AppCompatActivity() {
             val cameraState = model.cameraState.value ?: return@runOnUiThread
             val photoCaptureMode = model.photoCaptureMode.value ?: return@runOnUiThread
             val videoQuality = model.videoQuality.value ?: return@runOnUiThread
-            val videoAudioConfig = model.videoAudioConfig.value ?: return@runOnUiThread
+            val videoRecording = model.videoRecording.value
 
             val supportedVideoQualities = camera.supportedVideoQualities
             val supportedVideoFrameRates = supportedVideoQualities.getOrDefault(
@@ -1925,7 +1926,8 @@ open class CameraActivity : AppCompatActivity() {
                 cameraState == CameraState.IDLE && supportedVideoQualities.size > 1
             videoFrameRateButton.isEnabled =
                 cameraState == CameraState.IDLE && supportedVideoFrameRates.size > 1
-            micButton.isEnabled = cameraState == CameraState.IDLE || videoAudioConfig.audioEnabled
+            micButton.isEnabled =
+                cameraState == CameraState.IDLE || videoRecording?.isAudioSourceConfigured == true
         }
     }
 
@@ -2079,7 +2081,11 @@ open class CameraActivity : AppCompatActivity() {
      */
     @Suppress("MissingPermission")
     private fun setMicrophoneMode(microphoneMode: Boolean) {
-        videoAudioConfig = AudioConfig.create(microphoneMode)
+        videoAudioConfig = if (microphoneMode) {
+            AudioConfig.create(true)
+        } else {
+            AudioConfig.AUDIO_DISABLED
+        }
         videoRecording?.muted = !microphoneMode
 
         videoMicMode = microphoneMode
