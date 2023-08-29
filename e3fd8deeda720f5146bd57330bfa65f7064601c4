@@ -22,6 +22,30 @@
       },
       "revId": "e3fd8deeda720f5146bd57330bfa65f7064601c4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "586d5346_ecac94e2",
+        "filename": "app/src/debug/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 24334
+      },
+      "writtenOn": "2023-08-29T18:59:34Z",
+      "side": 1,
+      "message": "\u0027Dev\u0027 looks better than \u0027dev\u0027 imo.",
+      "parentUuid": "01826d54_a20b2197",
+      "range": {
+        "startLine": 3,
+        "startChar": 36,
+        "endLine": 3,
+        "endChar": 39
+      },
+      "revId": "e3fd8deeda720f5146bd57330bfa65f7064601c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
