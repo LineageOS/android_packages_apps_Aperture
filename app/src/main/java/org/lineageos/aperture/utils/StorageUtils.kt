@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 object StorageUtils {
-    private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+    private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
     private val STORAGE_DESTINATION = "${Environment.DIRECTORY_DCIM}/Camera"
 
     /**
@@ -30,7 +30,7 @@ object StorageUtils {
         outputStream: OutputStream? = null
     ): ImageCapture.OutputFileOptions {
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
+            put(MediaStore.MediaColumns.DISPLAY_NAME, "IMG_" + getCurrentTimeString())
             put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 put(MediaStore.Images.Media.RELATIVE_PATH, STORAGE_DESTINATION)
@@ -58,7 +58,7 @@ object StorageUtils {
         location: Location?
     ): MediaStoreOutputOptions {
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
+            put(MediaStore.MediaColumns.DISPLAY_NAME, "VID_" + getCurrentTimeString())
             put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 put(MediaStore.Video.Media.RELATIVE_PATH, STORAGE_DESTINATION)
