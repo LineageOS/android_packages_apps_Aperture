@@ -46,6 +46,30 @@
       },
       "revId": "e3fd8deeda720f5146bd57330bfa65f7064601c4",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1746b802_53b2294a",
+        "filename": "app/src/debug/res/values/strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-09-05T14:58:22Z",
+      "side": 1,
+      "message": "https://m3.material.io/foundations/content-design/style-guide/ux-writing-best-practices#fc5c2a78-f4bf-4d42-bdac-42ff80391129",
+      "parentUuid": "586d5346_ecac94e2",
+      "range": {
+        "startLine": 3,
+        "startChar": 36,
+        "endLine": 3,
+        "endChar": 39
+      },
+      "revId": "e3fd8deeda720f5146bd57330bfa65f7064601c4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
