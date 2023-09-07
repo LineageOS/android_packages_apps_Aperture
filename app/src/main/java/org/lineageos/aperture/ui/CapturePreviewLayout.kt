@@ -13,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
@@ -42,6 +43,10 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
     private val imageView by lazy { findViewById<ImageView>(R.id.imageView) }
     private val videoView by lazy { findViewById<PlayerView>(R.id.videoView) }
 
+    private val screenRotationObserver = Observer { screenRotation: Rotation ->
+        updateViewsRotation(screenRotation)
+    }
+
     /**
      * input is null == canceled
      * input is not null == confirmed
@@ -50,20 +55,14 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
 
     internal var cameraViewModel: CameraViewModel? = null
         set(value) {
-            val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
-
             // Unregister
-            field?.screenRotation?.removeObservers(lifecycleOwner)
+            field?.screenRotation?.removeObserver(screenRotationObserver)
 
             field = value
 
-            value?.let { cameraViewModel ->
-                cameraViewModel.screenRotation.observe(lifecycleOwner) {
-                    val screenRotation = it ?: return@observe
+            val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
 
-                    updateViewsRotation(screenRotation)
-                }
-            }
+            value?.screenRotation?.observe(lifecycleOwner, screenRotationObserver)
         }
     private val screenRotation
         get() = cameraViewModel?.screenRotation?.value ?: Rotation.ROTATION_0

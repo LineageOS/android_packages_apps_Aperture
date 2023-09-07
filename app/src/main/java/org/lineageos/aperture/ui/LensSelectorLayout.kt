@@ -14,6 +14,7 @@ import android.widget.Button
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.children
 import androidx.core.view.setMargins
+import androidx.lifecycle.Observer
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import org.lineageos.aperture.R
 import org.lineageos.aperture.camera.Camera
@@ -39,33 +40,31 @@ class LensSelectorLayout @JvmOverloads constructor(
     private val buttonToCamera = mutableMapOf<Button, Camera>()
     private val buttonToZoomRatio = mutableMapOf<Button, Float>()
 
+    private val cameraStateObserver = Observer { cameraState: CameraState ->
+        children.forEach { view ->
+            view.isSoundEffectsEnabled = cameraState == CameraState.IDLE
+        }
+    }
+
+    private val screenRotationObserver = Observer { screenRotation: Rotation ->
+        updateViewsRotation(screenRotation)
+    }
+
     var onCameraChangeCallback: (camera: Camera) -> Unit = {}
     var onZoomRatioChangeCallback: (zoomRatio: Float) -> Unit = {}
 
     internal var cameraViewModel: CameraViewModel? = null
         set(value) {
-            val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
-
             // Unregister
-            field?.cameraState?.removeObservers(lifecycleOwner)
-            field?.screenRotation?.removeObservers(lifecycleOwner)
+            field?.cameraState?.removeObserver(cameraStateObserver)
+            field?.screenRotation?.removeObserver(screenRotationObserver)
 
             field = value
 
-            value?.let { cameraViewModel ->
-                cameraViewModel.cameraState.observe(lifecycleOwner) {
-                    val cameraState = it ?: return@observe
+            val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
 
-                    children.forEach { view ->
-                        view.isSoundEffectsEnabled = cameraState == CameraState.IDLE
-                    }
-                }
-                cameraViewModel.screenRotation.observe(lifecycleOwner) {
-                    val screenRotation = it ?: return@observe
-
-                    updateViewsRotation(screenRotation)
-                }
-            }
+            value?.cameraState?.observe(lifecycleOwner, cameraStateObserver)
+            value?.screenRotation?.observe(lifecycleOwner, screenRotationObserver)
         }
     private val screenRotation
         get() = cameraViewModel?.screenRotation?.value ?: Rotation.ROTATION_0

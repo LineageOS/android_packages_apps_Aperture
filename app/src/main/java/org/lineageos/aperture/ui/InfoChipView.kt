@@ -16,6 +16,7 @@ import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.Observer
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import org.lineageos.aperture.R
 import org.lineageos.aperture.camera.CameraMode
@@ -37,6 +38,18 @@ class InfoChipView @JvmOverloads constructor(
         resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
     }
 
+    private val screenRotationObserver = Observer { screenRotation: Rotation ->
+        updateRotation(screenRotation)
+    }
+
+    private val cameraModeObserver = Observer { _: CameraMode ->
+        update()
+    }
+
+    private val videoMicModeObserver = Observer { _: Boolean ->
+        update()
+    }
+
     internal var batteryIntent: Intent? = null
         set(value) {
             field = value
@@ -45,28 +58,18 @@ class InfoChipView @JvmOverloads constructor(
         }
     internal var cameraViewModel: CameraViewModel? = null
         set(value) {
-            val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
-
-            field?.let {
-                // Unregister
-                it.screenRotation.removeObservers(lifecycleOwner)
-                it.cameraMode.removeObservers(lifecycleOwner)
-                it.videoMicMode.removeObservers(lifecycleOwner)
-            }
+            // Unregister
+            field?.screenRotation?.removeObserver(screenRotationObserver)
+            field?.cameraMode?.removeObserver(cameraModeObserver)
+            field?.videoMicMode?.removeObserver(videoMicModeObserver)
 
             field = value
 
-            value?.let { cameraViewModel ->
-                cameraViewModel.screenRotation.observe(lifecycleOwner) {
-                    updateRotation()
-                }
-                cameraViewModel.cameraMode.observe(lifecycleOwner) {
-                    update()
-                }
-                cameraViewModel.videoMicMode.observe(lifecycleOwner) {
-                    update()
-                }
-            }
+            val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
+
+            value?.screenRotation?.observe(lifecycleOwner, screenRotationObserver)
+            value?.cameraMode?.observe(lifecycleOwner, cameraModeObserver)
+            value?.videoMicMode?.observe(lifecycleOwner, videoMicModeObserver)
         }
 
     init {
@@ -77,6 +80,7 @@ class InfoChipView @JvmOverloads constructor(
         val cameraViewModel = cameraViewModel ?: return
 
         val cameraMode = cameraViewModel.cameraMode.value ?: return
+        val screenRotation = cameraViewModel.screenRotation.value ?: return
         val videoMicMode = cameraViewModel.videoMicMode.value ?: return
 
         // Get the new visibility values
@@ -100,7 +104,7 @@ class InfoChipView @JvmOverloads constructor(
             lowBatteryImageView.isVisible = lowBatteryImageViewVisible
             videoMicMutedImageView.isVisible = videoMicMutedImageViewVisible
 
-            updateRotation()
+            updateRotation(screenRotation)
         }
 
         if (shouldBeVisible && !isVisible) {
@@ -133,11 +137,7 @@ class InfoChipView @JvmOverloads constructor(
         }
     }
 
-    private fun updateRotation() {
-        val cameraViewModel = cameraViewModel ?: return
-
-        val screenRotation = cameraViewModel.screenRotation.value ?: return
-
+    private fun updateRotation(screenRotation: Rotation) {
         val compensationValue = screenRotation.compensationValue.toFloat()
 
         updateLayoutParams<LayoutParams> {
