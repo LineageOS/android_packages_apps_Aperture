@@ -120,9 +120,6 @@ class CameraManager(context: Context) {
         it.supportsVideoRecording
     }
 
-    val internalCamerasSupportingVideoRecoding =
-        backCamerasSupportingVideoRecording + frontCamerasSupportingVideoRecording
-
     private val externalCameras: List<Camera>
         get() = cameras.values.filter {
             it.cameraFacing == CameraFacing.EXTERNAL
@@ -218,6 +215,8 @@ class CameraManager(context: Context) {
             cameras[newCameraIndex]
         }
     }
+
+    fun videoRecordingAvailable() = availableCamerasSupportingVideoRecording.isNotEmpty()
 
     fun shutdown() {
         cameraExecutor.shutdown()

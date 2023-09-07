@@ -9,7 +9,6 @@
     <string name="video_camera_label">Camcorder</string>
 
     <!-- Content descriptions -->
-    <string name="camera_mode_highlight_description">Camera mode highlight</string>
     <string name="cancel_button_description">Cancel</string>
     <string name="confirm_button_description">Confirm</string>
     <string name="flash_button_description">Flash mode</string>
@@ -17,11 +16,8 @@
     <string name="gallery_button_description">Gallery</string>
     <string name="google_lens_button_description">Open Google Lens</string>
     <string name="image_view_description">Image preview</string>
-    <string name="photo_mode_button_description">Switch to photo mode</string>
     <string name="pro_button_description">Pro settings</string>
-    <string name="qr_mode_button_description">Switch to QR scanner mode</string>
     <string name="shutter_button_description">Shutter</string>
-    <string name="video_mode_button_description">Switch to video mode</string>
     <string name="video_recording_state_button_description">Pause/resume video recording</string>
 
     <!-- Secondary button text -->
@@ -56,11 +52,6 @@
     <string name="mic_on">MIC ON</string>
 
     <string name="settings">SETTINGS</string>
-
-    <!-- Selector chip -->
-    <string name="selector_photo">PHOTO</string>
-    <string name="select_video">VIDEO</string>
-    <string name="select_scan">SCAN</string>
 
     <!-- Toast messages -->
     <string name="app_permissions_toast">Permissions not granted by the user.</string>
@@ -189,4 +180,9 @@
 
     <!-- Force torch help -->
     <string name="force_torch_help">On photo mode, you can long press the flash button to switch into torch mode.</string>
+
+    <!-- Camera modes -->
+    <string name="camera_mode_photo">Photo</string>
+    <string name="camera_mode_video">Video</string>
+    <string name="camera_mode_qr">Scan</string>
 </resources>

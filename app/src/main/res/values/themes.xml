@@ -90,14 +90,6 @@
         <item name="android:layout_height">40dp</item>
     </style>
 
-    <!-- Camera mode bar icons theme -->
-    <style name="Theme.Aperture.Camera.CameraModeSelectorButton" parent="@style/Widget.Material3.Button.TonalButton">
-        <item name="android:backgroundTint">@android:color/transparent</item>
-        <item name="android:textColor">@color/camera_mode_selector_text</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:typeface">monospace</item>
-    </style>
-
     <!-- Collapsing toolbar style -->
     <style name="Theme.Aperture.Camera.ToolbarCollapsed" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
         <item name="android:fontFamily">sans-serif</item>

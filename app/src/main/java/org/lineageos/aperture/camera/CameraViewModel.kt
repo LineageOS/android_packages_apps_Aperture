@@ -100,4 +100,9 @@ class CameraViewModel : ViewModel() {
      * Video [Recording].
      */
     val videoRecording = MutableLiveData<Recording?>()
+
+    /**
+     * Video recording duration.
+     */
+    val videoRecordingDuration = MutableLiveData<Long>()
 }
