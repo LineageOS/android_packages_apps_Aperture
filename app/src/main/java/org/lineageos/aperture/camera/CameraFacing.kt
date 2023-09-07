@@ -5,9 +5,19 @@
 
 package org.lineageos.aperture.camera
 
-enum class CameraFacing {
-    UNKNOWN,
-    FRONT,
-    BACK,
-    EXTERNAL,
+enum class CameraFacing(
+    val cameraType: CameraType,
+) {
+    UNKNOWN(
+        CameraType.INTERNAL,
+    ),
+    FRONT(
+        CameraType.INTERNAL,
+    ),
+    BACK(
+        CameraType.INTERNAL,
+    ),
+    EXTERNAL(
+        CameraType.EXTERNAL,
+    ),
 }

@@ -29,12 +29,14 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val cameraId = camera2CameraInfo.cameraId
 
     val cameraFacing = when (cameraInfo.lensFacing) {
+        CameraSelector.LENS_FACING_UNKNOWN -> CameraFacing.UNKNOWN
         CameraSelector.LENS_FACING_FRONT -> CameraFacing.FRONT
         CameraSelector.LENS_FACING_BACK -> CameraFacing.BACK
         CameraSelector.LENS_FACING_EXTERNAL -> CameraFacing.EXTERNAL
-        CameraSelector.LENS_FACING_UNKNOWN -> CameraFacing.UNKNOWN
         else -> throw Exception("Unknown lens facing value")
     }
+
+    val cameraType = cameraFacing.cameraType
 
     val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
     val hasFlashUnit = cameraInfo.hasFlashUnit()
