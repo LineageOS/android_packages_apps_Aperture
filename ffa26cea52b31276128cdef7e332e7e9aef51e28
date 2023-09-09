@@ -52,6 +52,24 @@
       "parentUuid": "1ae8f44a_91852781",
       "revId": "ffa26cea52b31276128cdef7e332e7e9aef51e28",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c718300f_79900eb5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-09-09T19:19:25Z",
+      "side": 1,
+      "message": "What string would it pick if you switched to translated language?",
+      "parentUuid": "e054ef8b_9bb4c3e2",
+      "revId": "ffa26cea52b31276128cdef7e332e7e9aef51e28",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
