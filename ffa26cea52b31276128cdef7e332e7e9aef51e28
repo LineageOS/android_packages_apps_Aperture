@@ -70,6 +70,24 @@
       "parentUuid": "e054ef8b_9bb4c3e2",
       "revId": "ffa26cea52b31276128cdef7e332e7e9aef51e28",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "64e83673_8676bdb8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-09-09T19:26:07Z",
+      "side": 1,
+      "message": "wdym? If we throw this file on Crowdin translated strings will end up in app/src/debug/res/values-$lang/strings.xml and those will be included only if we build debug flavor with Gradle",
+      "parentUuid": "c718300f_79900eb5",
+      "revId": "ffa26cea52b31276128cdef7e332e7e9aef51e28",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
