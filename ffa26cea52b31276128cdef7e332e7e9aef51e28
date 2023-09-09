@@ -16,6 +16,24 @@
       "message": "If this is fine with Crowdin, lgtm",
       "revId": "ffa26cea52b31276128cdef7e332e7e9aef51e28",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ae8f44a_91852781",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-09-09T19:13:18Z",
+      "side": 1,
+      "message": "crowdin doesn\u0027t touch this file.",
+      "parentUuid": "0a8ab3f6_0db649db",
+      "revId": "ffa26cea52b31276128cdef7e332e7e9aef51e28",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
