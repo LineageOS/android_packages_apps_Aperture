@@ -1,6 +1,12 @@
 name: build
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      skip-checkout:
+        type: boolean
 
 jobs:
   build:
@@ -8,6 +14,7 @@ jobs:
 
     steps:
     - name: Checkout repo
+      if: ${{ !github.event.inputs.skip-checkout }}
       uses: actions/checkout@v3
 
     - name: Setup JDK 17
