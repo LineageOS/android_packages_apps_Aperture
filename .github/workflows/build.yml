@@ -1,6 +1,16 @@
 name: build
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      gerrit-ref:
+        type: string
+        required: false
+      ref:
+        type: string
+        required: false
 
 jobs:
   build:
@@ -8,7 +18,16 @@ jobs:
 
     steps:
     - name: Checkout repo
+      if: github.event.inputs.ref == '' || github.event.inputs.gerrit-ref == ''
       uses: actions/checkout@v3
+
+    - name: Checkout repo
+      if: github.event.inputs.ref != '' && github.event.inputs.gerrit-ref != ''
+      uses: lineageos-infra/fetch-gerrit-change@main
+      with:
+        repository: ${{ github.repository }}
+        gerrit-ref: ${{ inputs.gerrit-ref }}
+        ref: ${{ inputs.ref }}
 
     - name: Setup JDK 17
       uses: actions/setup-java@v3
