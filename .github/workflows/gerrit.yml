@@ -21,3 +21,10 @@ jobs:
 
     - name: Build
       uses: ./.github/workflows/build
+
+    - uses: lineageos-infra/gerrit-vote@main
+      if: always()
+      with:
+        auth: ${{ secrets.GERRIT_VOTE_CREDS }}
+        change: ${{ inputs.change }}
+        ref: ${{ inputs.ref }}
