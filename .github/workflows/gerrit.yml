@@ -16,7 +16,6 @@ jobs:
     steps:
     - uses: lineageos-infra/fetch-gerrit-change@main
       with:
-        repository: ${{ github.repository }}
         gerrit-ref: ${{ inputs.gerrit-ref }}
         ref: ${{ inputs.ref }}
 
