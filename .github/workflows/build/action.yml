@@ -27,3 +27,10 @@ runs:
       with:
         name: app-debug.apk
         path: app/build/outputs/apk/debug/app-debug.apk
+
+    - uses: lineageos-infra/gerrit-vote@main
+      if: always()
+      with:
+        auth: ${{ secrets.GERRIT_VOTE_CREDS }}
+        change: ${{ inputs.change }}
+        ref: ${{ inputs.ref }}
