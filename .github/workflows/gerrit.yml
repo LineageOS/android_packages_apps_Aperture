@@ -22,3 +22,19 @@ jobs:
 
     - name: Build
       uses: ./.github/workflows/build
+
+    - uses: lineageos-infra/gerrit-vote@main
+      if: success()
+      with:
+        auth: ${{ secrets.GERRIT_REVIEW_CREDS }}
+        change: ${{ inputs.change }}
+        ref: ${{ inputs.ref }}
+        code-review: +1
+
+    - uses: lineageos-infra/gerrit-vote@main
+      if: failure()
+      with:
+        auth: ${{ secrets.GERRIT_REVIEW_CREDS }}
+        change: ${{ inputs.change }}
+        ref: ${{ inputs.ref }}
+        code-review: -1
