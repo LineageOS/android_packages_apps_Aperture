@@ -22,6 +22,7 @@ import org.lineageos.aperture.camera.FrameRate
 import org.lineageos.aperture.camera.HotPixelMode
 import org.lineageos.aperture.camera.NoiseReductionMode
 import org.lineageos.aperture.camera.ShadingMode
+import org.lineageos.aperture.camera.VideoDynamicRange
 import org.lineageos.aperture.utils.GestureActions
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.TimerMode
@@ -444,4 +445,31 @@ internal var SharedPreferences.forceTorchHelpShown: Boolean
     get() = getBoolean(FORCE_TORCH_HELP_SHOWN_KEY, FORCE_TORCH_HELP_SHOWN_DEFAULT)
     set(value) = edit {
         putBoolean(FORCE_TORCH_HELP_SHOWN_KEY, value)
+    }
+
+// Video dynamic range
+private const val VIDEO_DYNAMIC_RANGE_KEY = "video_dynamic_range"
+private const val VIDEO_DYNAMIC_RANGE_DEFAULT = "sdr"
+internal var SharedPreferences.videoDynamicRange: VideoDynamicRange
+    get() = when (getString(VIDEO_DYNAMIC_RANGE_KEY, VIDEO_DYNAMIC_RANGE_DEFAULT)) {
+        "sdr" -> VideoDynamicRange.SDR
+        "hlg_10_bit" -> VideoDynamicRange.HLG_10_BIT
+        "hdr10_10_bit" -> VideoDynamicRange.HDR10_10_BIT
+        "hdr10_plus_10_bit" -> VideoDynamicRange.HDR10_PLUS_10_BIT
+        "dolby_vision_10_bit" -> VideoDynamicRange.DOLBY_VISION_10_BIT
+        "dolby_vision_8_bit" -> VideoDynamicRange.DOLBY_VISION_8_BIT
+        // Default to sdr
+        else -> VideoDynamicRange.SDR
+    }
+    set(value) = edit {
+        putString(
+            VIDEO_DYNAMIC_RANGE_KEY, when (value) {
+                VideoDynamicRange.SDR -> "sdr"
+                VideoDynamicRange.HLG_10_BIT -> "hlg_10_bit"
+                VideoDynamicRange.HDR10_10_BIT -> "hdr10_10_bit"
+                VideoDynamicRange.HDR10_PLUS_10_BIT -> "hdr10_plus_10_bit"
+                VideoDynamicRange.DOLBY_VISION_10_BIT -> "dolby_vision_10_bit"
+                VideoDynamicRange.DOLBY_VISION_8_BIT -> "dolby_vision_8_bit"
+            }
+        )
     }
