@@ -121,4 +121,17 @@
         <item>fast</item>
         <item>high_quality</item>
     </string-array>
+
+    <!-- Video mirror mode preference -->
+    <string-array name="video_mirror_mode_entries" translatable="false">
+        <item>@string/video_mirror_mode_off</item>
+        <item>@string/video_mirror_mode_on</item>
+        <item>@string/video_mirror_mode_on_front_only</item>
+    </string-array>
+
+    <string-array name="video_mirror_mode_values" translatable="false">
+        <item>off</item>
+        <item>on</item>
+        <item>on_front_only</item>
+    </string-array>
 </resources>

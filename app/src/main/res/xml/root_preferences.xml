@@ -88,6 +88,15 @@
             app:summary="@string/video_stabilization_summary"
             app:title="@string/video_stabilization_title" />
 
+        <ListPreference
+            app:defaultValue="off"
+            app:entries="@array/video_mirror_mode_entries"
+            app:entryValues="@array/video_mirror_mode_values"
+            app:iconSpaceReserved="false"
+            app:key="video_mirror_mode"
+            app:title="@string/video_mirror_mode_title"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

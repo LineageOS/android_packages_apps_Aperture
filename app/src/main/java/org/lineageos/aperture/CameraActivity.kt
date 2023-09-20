@@ -52,6 +52,7 @@ import androidx.camera.camera2.interop.CaptureRequestOptions
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.MirrorMode
 import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.extensions.ExtensionMode
@@ -104,6 +105,7 @@ import org.lineageos.aperture.camera.HotPixelMode
 import org.lineageos.aperture.camera.NoiseReductionMode
 import org.lineageos.aperture.camera.ShadingMode
 import org.lineageos.aperture.camera.VideoDynamicRange
+import org.lineageos.aperture.camera.VideoMirrorMode
 import org.lineageos.aperture.camera.VideoQualityInfo
 import org.lineageos.aperture.camera.VideoStabilizationMode
 import org.lineageos.aperture.ext.*
@@ -1560,6 +1562,16 @@ open class CameraActivity : AppCompatActivity() {
                     supportedVideoDynamicRanges.contains(it)
                 } ?: supportedVideoDynamicRanges.first()
                 cameraController.videoCaptureDynamicRange = videoDynamicRange.dynamicRange
+
+                // Set video mirror mode
+                cameraController.videoCaptureMirrorMode = when (sharedPreferences.videoMirrorMode) {
+                    VideoMirrorMode.OFF -> MirrorMode.MIRROR_MODE_OFF
+                    VideoMirrorMode.ON -> MirrorMode.MIRROR_MODE_ON
+                    VideoMirrorMode.ON_FRONT_ONLY -> when (camera.cameraFacing) {
+                        CameraFacing.FRONT -> MirrorMode.MIRROR_MODE_ON
+                        else -> MirrorMode.MIRROR_MODE_OFF
+                    }
+                }
 
                 CameraController.VIDEO_CAPTURE
             }
