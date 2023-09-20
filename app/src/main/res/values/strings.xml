@@ -185,4 +185,12 @@
     <string name="camera_mode_photo">Photo</string>
     <string name="camera_mode_video">Video</string>
     <string name="camera_mode_qr">Scan</string>
+
+    <!-- Video dynamic ranges -->
+    <string name="video_dynamic_range_sdr" translatable="false">SDR</string>
+    <string name="video_dynamic_range_hlg_10_bit" translatable="false">HLG (10 bit)</string>
+    <string name="video_dynamic_range_hdr10_10_bit" translatable="false">HDR10 (10 bit)</string>
+    <string name="video_dynamic_range_hdr10_plus_10_bit" translatable="false">HDR10+ (10 bit)</string>
+    <string name="video_dynamic_range_dolby_vision_10_bit" translatable="false">Dolby Vision (10 bit)</string>
+    <string name="video_dynamic_range_dolby_vision_8_bit" translatable="false">Dolby Vision (8 bit)</string>
 </resources>
