@@ -23,6 +23,7 @@ import org.lineageos.aperture.camera.HotPixelMode
 import org.lineageos.aperture.camera.NoiseReductionMode
 import org.lineageos.aperture.camera.ShadingMode
 import org.lineageos.aperture.camera.VideoDynamicRange
+import org.lineageos.aperture.camera.VideoMirrorMode
 import org.lineageos.aperture.utils.GestureActions
 import org.lineageos.aperture.utils.GridMode
 import org.lineageos.aperture.utils.TimerMode
@@ -472,4 +473,16 @@ internal var SharedPreferences.videoDynamicRange: VideoDynamicRange
                 VideoDynamicRange.DOLBY_VISION_8_BIT -> "dolby_vision_8_bit"
             }
         )
+    }
+
+// Video mirror mode
+private const val VIDEO_MIRROR_MODE_KEY = "video_mirror_mode"
+private const val VIDEO_MIRROR_MODE_DEFAULT = "off"
+internal val SharedPreferences.videoMirrorMode: VideoMirrorMode
+    get() = when (getString(VIDEO_MIRROR_MODE_KEY, VIDEO_MIRROR_MODE_DEFAULT)) {
+        "off" -> VideoMirrorMode.OFF
+        "on" -> VideoMirrorMode.ON
+        "on_front_only" -> VideoMirrorMode.ON_FRONT_ONLY
+        // Default to off
+        else -> VideoMirrorMode.OFF
     }
