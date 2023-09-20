@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: Dolby Laboratories Inc.
+     SPDX-License-Identifier: CC-PDDC
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="279.08dp"
+    android:height="193.28dp"
+    android:tint="#000000"
+    android:viewportWidth="279.08"
+    android:viewportHeight="193.28">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="m279.08,193.28h-28.14c-53.82,0 -96.64,-44.04 -96.64,-96.64C154.31,44.04 198.35,0 250.95,0h28.14z" />
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="m0,0h28.14c53.82,0 96.64,44.04 96.64,96.64 0,52.6 -44.04,96.64 -96.64,96.64H0Z" />
+</vector>

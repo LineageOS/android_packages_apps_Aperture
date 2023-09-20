@@ -5,6 +5,7 @@
 
 package org.lineageos.aperture.camera
 
+import androidx.camera.core.DynamicRange
 import androidx.camera.video.Quality
 import androidx.camera.video.Recording
 import androidx.lifecycle.MutableLiveData
@@ -90,6 +91,11 @@ class CameraViewModel : ViewModel() {
      * Video frame rate.
      */
     val videoFrameRate = MutableLiveData<FrameRate?>()
+
+    /**
+     * Video dynamic range.
+     */
+    val videoDynamicRange = MutableLiveData<VideoDynamicRange>()
 
     /**
      * Video mic mode.
