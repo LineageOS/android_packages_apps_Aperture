@@ -13,22 +13,10 @@ import androidx.camera.camera2.interop.CaptureRequestOptions
 import org.lineageos.aperture.camera.ColorCorrectionAberrationMode
 import org.lineageos.aperture.camera.DistortionCorrectionMode
 import org.lineageos.aperture.camera.EdgeMode
-import org.lineageos.aperture.camera.FrameRate
 import org.lineageos.aperture.camera.HotPixelMode
 import org.lineageos.aperture.camera.NoiseReductionMode
 import org.lineageos.aperture.camera.ShadingMode
 import org.lineageos.aperture.camera.VideoStabilizationMode
-
-@androidx.camera.camera2.interop.ExperimentalCamera2Interop
-fun CaptureRequestOptions.Builder.setFrameRate(frameRate: FrameRate?) {
-    frameRate?.let {
-        setCaptureRequestOption(
-            CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, it.range
-        )
-    } ?: run {
-        clearCaptureRequestOption(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE)
-    }
-}
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 fun CaptureRequestOptions.Builder.setVideoStabilizationMode(videoStabilizationMode: VideoStabilizationMode) {
