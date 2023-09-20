@@ -99,6 +99,7 @@
     <!-- Video Preferences -->
     <string name="video_stabilization_title">Enable video stabilization</string>
     <string name="video_stabilization_summary">When available, enable video stabilization to reduce camera vibrations during recording</string>
+    <string name="video_mirror_mode_title">Enable video mirroring</string>
 
     <!-- Advanced Preferences -->
     <string name="processing_title">Processing</string>
@@ -193,4 +194,9 @@
     <string name="video_dynamic_range_hdr10_plus_10_bit">HDR10+ (10 bit)</string>
     <string name="video_dynamic_range_dolby_vision_10_bit">Dolby Vision (10 bit)</string>
     <string name="video_dynamic_range_dolby_vision_8_bit">Dolby Vision (8 bit)</string>
+
+    <!-- Video mirror mode -->
+    <string name="video_mirror_mode_off">Off</string>
+    <string name="video_mirror_mode_on">On</string>
+    <string name="video_mirror_mode_on_front_only">Front only</string>
 </resources>
