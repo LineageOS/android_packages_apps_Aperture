@@ -57,6 +57,30 @@
       },
       "revId": "9ba9c609ff473dd36814cb870c8117e8e456da99",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea771dd2_403b8c97",
+        "filename": "app/src/main/res/drawable/ic_dolby.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-09-21T18:31:16Z",
+      "side": 1,
+      "message": "https://it.wikipedia.org/wiki/Dolby_Laboratories#/media/File:Dolby_logo_2019.svg\nIt really is public domain, I doubt this should be an issue, open for ideas",
+      "parentUuid": "73beb868_9e47935c",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 37
+      },
+      "revId": "9ba9c609ff473dd36814cb870c8117e8e456da99",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
