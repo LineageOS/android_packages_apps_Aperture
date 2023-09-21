@@ -1556,15 +1556,17 @@ open class CameraActivity : AppCompatActivity() {
                 // Set proper video frame rate
                 videoFrameRate = (FrameRate::getLowerOrHigher)(
                     videoFrameRate ?: FrameRate.FPS_30, supportedVideoFrameRates
-                )
-                cameraController.videoCaptureTargetFrameRate =
-                    videoFrameRate?.range ?: StreamSpec.FRAME_RATE_RANGE_UNSPECIFIED
+                ).also {
+                    cameraController.videoCaptureTargetFrameRate =
+                        it?.range ?: StreamSpec.FRAME_RATE_RANGE_UNSPECIFIED
+                }
 
                 // Set video dynamic range
-                videoDynamicRange = videoDynamicRange.takeIf {
+                videoDynamicRange = (videoDynamicRange.takeIf {
                     supportedVideoDynamicRanges.contains(it)
-                } ?: supportedVideoDynamicRanges.first()
-                cameraController.videoCaptureDynamicRange = videoDynamicRange.dynamicRange
+                } ?: supportedVideoDynamicRanges.first()).also {
+                    cameraController.videoCaptureDynamicRange = it.dynamicRange
+                }
 
                 // Set video mirror mode
                 cameraController.videoCaptureMirrorMode = when (sharedPreferences.videoMirrorMode) {
