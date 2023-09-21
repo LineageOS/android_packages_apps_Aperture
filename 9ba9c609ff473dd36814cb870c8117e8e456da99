@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9b2243f_c60a3a0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-09-21T06:21:49Z",
+      "side": 1,
+      "message": "Maybe we want to hide SDR button if only SDR is available?",
+      "revId": "9ba9c609ff473dd36814cb870c8117e8e456da99",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73beb868_9e47935c",
