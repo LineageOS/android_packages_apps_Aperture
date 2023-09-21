@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73beb868_9e47935c",
+        "filename": "app/src/main/res/drawable/ic_dolby.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-09-21T06:14:19Z",
+      "side": 1,
+      "message": "I have no idea about that one, dolby tends to be on the annoying side when it comes to these stuff",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 37
+      },
+      "revId": "9ba9c609ff473dd36814cb870c8117e8e456da99",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
