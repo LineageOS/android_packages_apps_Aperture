@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cda959d_008125a4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-09-21T16:44:56Z",
+      "side": 1,
+      "message": "Like with frame rate button, we keep it visible to show the current value",
+      "parentUuid": "d9b2243f_c60a3a0e",
+      "revId": "9ba9c609ff473dd36814cb870c8117e8e456da99",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "73beb868_9e47935c",
