@@ -56,6 +56,24 @@
       "message": "\"Front facing camera only\"?\n\nMaybe being bit more descriptive won\u0027t hurt here.",
       "revId": "c2be10690a2da538c98595c119fade29e869122a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2263233b_7bde8ca0",
+        "filename": "app/src/main/res/values/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-10-03T16:35:25Z",
+      "side": 1,
+      "message": "Agree, that\u0027ll be better",
+      "parentUuid": "4fe04510_c1da73ab",
+      "revId": "c2be10690a2da538c98595c119fade29e869122a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
