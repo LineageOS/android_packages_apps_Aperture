@@ -21,9 +21,9 @@ import androidx.media3.ui.PlayerView
 import org.lineageos.aperture.R
 import org.lineageos.aperture.camera.CameraViewModel
 import org.lineageos.aperture.ext.*
+import org.lineageos.aperture.models.MediaType
+import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.utils.ExifUtils
-import org.lineageos.aperture.utils.MediaType
-import org.lineageos.aperture.utils.Rotation
 import java.io.InputStream
 
 /**

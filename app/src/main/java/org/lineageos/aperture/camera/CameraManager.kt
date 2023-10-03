@@ -12,6 +12,10 @@ import androidx.camera.video.Quality
 import androidx.camera.view.LifecycleCameraController
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.*
+import org.lineageos.aperture.models.CameraFacing
+import org.lineageos.aperture.models.CameraMode
+import org.lineageos.aperture.models.CameraType
+import org.lineageos.aperture.models.FrameRate
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 

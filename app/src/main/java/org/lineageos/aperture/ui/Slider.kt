@@ -19,7 +19,7 @@ import android.util.AttributeSet
 import android.view.View
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.*
-import org.lineageos.aperture.utils.Rotation
+import org.lineageos.aperture.models.Rotation
 
 @Suppress("PrivateResource")
 abstract class Slider @JvmOverloads constructor(

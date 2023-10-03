@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.utils
+package org.lineageos.aperture.models
 
 enum class TimerMode(val seconds: Int) {
     OFF(0),

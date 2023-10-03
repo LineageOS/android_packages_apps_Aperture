@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.camera
+package org.lineageos.aperture.models
 
 enum class CameraState(
     val isRecordingVideo: Boolean = false,

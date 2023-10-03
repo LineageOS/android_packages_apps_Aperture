@@ -12,21 +12,21 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.core.content.edit
-import org.lineageos.aperture.camera.CameraFacing
-import org.lineageos.aperture.camera.CameraMode
-import org.lineageos.aperture.camera.ColorCorrectionAberrationMode
-import org.lineageos.aperture.camera.DistortionCorrectionMode
-import org.lineageos.aperture.camera.EdgeMode
-import org.lineageos.aperture.camera.FlashMode
-import org.lineageos.aperture.camera.FrameRate
-import org.lineageos.aperture.camera.HotPixelMode
-import org.lineageos.aperture.camera.NoiseReductionMode
-import org.lineageos.aperture.camera.ShadingMode
-import org.lineageos.aperture.camera.VideoDynamicRange
-import org.lineageos.aperture.camera.VideoMirrorMode
-import org.lineageos.aperture.utils.GestureActions
-import org.lineageos.aperture.utils.GridMode
-import org.lineageos.aperture.utils.TimerMode
+import org.lineageos.aperture.models.CameraFacing
+import org.lineageos.aperture.models.CameraMode
+import org.lineageos.aperture.models.ColorCorrectionAberrationMode
+import org.lineageos.aperture.models.DistortionCorrectionMode
+import org.lineageos.aperture.models.EdgeMode
+import org.lineageos.aperture.models.FlashMode
+import org.lineageos.aperture.models.FrameRate
+import org.lineageos.aperture.models.GestureActions
+import org.lineageos.aperture.models.GridMode
+import org.lineageos.aperture.models.HotPixelMode
+import org.lineageos.aperture.models.NoiseReductionMode
+import org.lineageos.aperture.models.ShadingMode
+import org.lineageos.aperture.models.TimerMode
+import org.lineageos.aperture.models.VideoDynamicRange
+import org.lineageos.aperture.models.VideoMirrorMode
 
 // Helpers
 internal fun SharedPreferences.getBoolean(key: String): Boolean? {

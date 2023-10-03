@@ -11,7 +11,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.AnimationSet
 import android.view.animation.TranslateAnimation
 import androidx.core.view.isVisible
-import org.lineageos.aperture.utils.Rotation
+import org.lineageos.aperture.models.Rotation
 
 internal fun View.setPadding(value: Int) {
     setPadding(value, value, value, value)

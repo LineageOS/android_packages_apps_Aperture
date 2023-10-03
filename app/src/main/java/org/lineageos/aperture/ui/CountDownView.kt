@@ -23,7 +23,7 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import org.lineageos.aperture.R
 import org.lineageos.aperture.camera.CameraViewModel
 import org.lineageos.aperture.ext.*
-import org.lineageos.aperture.utils.Rotation
+import org.lineageos.aperture.models.Rotation
 
 /**
  * This class manages the looks of the countdown.

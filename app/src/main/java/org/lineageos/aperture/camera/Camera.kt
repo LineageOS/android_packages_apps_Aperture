@@ -13,6 +13,18 @@ import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
 import androidx.camera.video.Recorder
 import org.lineageos.aperture.ext.*
+import org.lineageos.aperture.models.CameraFacing
+import org.lineageos.aperture.models.CameraMode
+import org.lineageos.aperture.models.ColorCorrectionAberrationMode
+import org.lineageos.aperture.models.DistortionCorrectionMode
+import org.lineageos.aperture.models.EdgeMode
+import org.lineageos.aperture.models.FrameRate
+import org.lineageos.aperture.models.HotPixelMode
+import org.lineageos.aperture.models.NoiseReductionMode
+import org.lineageos.aperture.models.ShadingMode
+import org.lineageos.aperture.models.VideoDynamicRange
+import org.lineageos.aperture.models.VideoQualityInfo
+import org.lineageos.aperture.models.VideoStabilizationMode
 import kotlin.reflect.safeCast
 
 /**

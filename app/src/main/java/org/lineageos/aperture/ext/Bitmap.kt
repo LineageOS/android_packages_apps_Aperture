@@ -7,7 +7,7 @@ package org.lineageos.aperture.ext
 
 import android.graphics.Bitmap
 import androidx.core.graphics.scale
-import org.lineageos.aperture.utils.ExifUtils.Transform
+import org.lineageos.aperture.models.Transform
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min

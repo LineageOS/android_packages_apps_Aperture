@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.camera
+package org.lineageos.aperture.models
+
+import org.lineageos.aperture.camera.Camera
 
 enum class VideoStabilizationMode {
     OFF,

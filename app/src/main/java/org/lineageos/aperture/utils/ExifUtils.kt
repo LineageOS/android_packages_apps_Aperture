@@ -5,26 +5,12 @@
 
 package org.lineageos.aperture.utils
 
-import android.graphics.Matrix
 import androidx.exifinterface.media.ExifInterface
+import org.lineageos.aperture.models.Rotation
+import org.lineageos.aperture.models.Transform
 import java.io.InputStream
 
 class ExifUtils {
-    data class Transform(val rotation: Rotation, val mirror: Boolean) {
-        fun toMatrix(): Matrix {
-            return Matrix().apply {
-                if (mirror) {
-                    postScale(-1f, 1f)
-                }
-                postRotate(rotation.offset.toFloat())
-            }
-        }
-
-        companion object {
-            val DEFAULT = Transform(Rotation.ROTATION_0, false)
-        }
-    }
-
     companion object {
         private val orientationMap = mapOf(
             ExifInterface.ORIENTATION_UNDEFINED to Transform.DEFAULT,

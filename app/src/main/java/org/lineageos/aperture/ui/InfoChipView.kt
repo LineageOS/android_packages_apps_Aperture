@@ -19,9 +19,9 @@ import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.Observer
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import org.lineageos.aperture.R
-import org.lineageos.aperture.camera.CameraMode
 import org.lineageos.aperture.camera.CameraViewModel
-import org.lineageos.aperture.utils.Rotation
+import org.lineageos.aperture.models.CameraMode
+import org.lineageos.aperture.models.Rotation
 import kotlin.math.roundToInt
 
 class InfoChipView @JvmOverloads constructor(

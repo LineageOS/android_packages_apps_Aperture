@@ -14,7 +14,7 @@ import android.view.TextureView
 import android.view.View
 import androidx.camera.view.PreviewView
 import androidx.core.view.children
-import org.lineageos.aperture.utils.GridMode
+import org.lineageos.aperture.models.GridMode
 import kotlin.math.roundToInt
 
 /**

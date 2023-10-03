@@ -3,20 +3,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.camera
+package org.lineageos.aperture.models
 
-enum class ColorCorrectionAberrationMode {
+enum class EdgeMode {
     OFF,
     FAST,
-    HIGH_QUALITY;
+    HIGH_QUALITY,
+    ZERO_SHUTTER_LAG;
 
     companion object {
         /**
          * We don't want to slow down ZSL, when it's enabled allow
-         * only default (the HAL will decide what to do) and OFF (zero latency).
+         * only default (the HAL will decide what to do), OFF (zero latency) and
+         * ZERO_SHUTTER_LAG.
          */
         val ALLOWED_MODES_ON_ZSL = setOf(
             OFF,
+            ZERO_SHUTTER_LAG,
         )
 
         /**
@@ -27,6 +30,7 @@ enum class ColorCorrectionAberrationMode {
         val ALLOWED_MODES_ON_VIDEO_MODE = setOf(
             OFF,
             FAST,
+            ZERO_SHUTTER_LAG,
         )
     }
 }

@@ -9,9 +9,14 @@ import androidx.camera.video.Quality
 import androidx.camera.video.Recording
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.lineageos.aperture.utils.GridMode
-import org.lineageos.aperture.utils.Rotation
-import org.lineageos.aperture.utils.TimerMode
+import org.lineageos.aperture.models.CameraMode
+import org.lineageos.aperture.models.CameraState
+import org.lineageos.aperture.models.FlashMode
+import org.lineageos.aperture.models.FrameRate
+import org.lineageos.aperture.models.GridMode
+import org.lineageos.aperture.models.Rotation
+import org.lineageos.aperture.models.TimerMode
+import org.lineageos.aperture.models.VideoDynamicRange
 
 /**
  * [ViewModel] representing a camera session. This data is used to receive

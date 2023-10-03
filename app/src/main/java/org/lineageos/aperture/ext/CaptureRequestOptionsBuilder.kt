@@ -10,14 +10,14 @@ import android.hardware.camera2.CaptureRequest
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.camera.camera2.interop.CaptureRequestOptions
-import org.lineageos.aperture.camera.ColorCorrectionAberrationMode
-import org.lineageos.aperture.camera.DistortionCorrectionMode
-import org.lineageos.aperture.camera.EdgeMode
-import org.lineageos.aperture.camera.FrameRate
-import org.lineageos.aperture.camera.HotPixelMode
-import org.lineageos.aperture.camera.NoiseReductionMode
-import org.lineageos.aperture.camera.ShadingMode
-import org.lineageos.aperture.camera.VideoStabilizationMode
+import org.lineageos.aperture.models.ColorCorrectionAberrationMode
+import org.lineageos.aperture.models.DistortionCorrectionMode
+import org.lineageos.aperture.models.EdgeMode
+import org.lineageos.aperture.models.FrameRate
+import org.lineageos.aperture.models.HotPixelMode
+import org.lineageos.aperture.models.NoiseReductionMode
+import org.lineageos.aperture.models.ShadingMode
+import org.lineageos.aperture.models.VideoStabilizationMode
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 fun CaptureRequestOptions.Builder.setFrameRate(frameRate: FrameRate?) {

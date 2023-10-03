@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.camera
+package org.lineageos.aperture.models
 
-enum class DistortionCorrectionMode {
+enum class HotPixelMode {
     OFF,
     FAST,
     HIGH_QUALITY;
