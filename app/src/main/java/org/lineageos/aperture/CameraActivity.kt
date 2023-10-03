@@ -53,6 +53,7 @@ import androidx.camera.core.AspectRatio
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.MirrorMode
+import androidx.camera.core.impl.StreamSpec
 import androidx.camera.core.resolutionselector.AspectRatioStrategy
 import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.extensions.ExtensionMode
@@ -1556,6 +1557,8 @@ open class CameraActivity : AppCompatActivity() {
                 videoFrameRate = (FrameRate::getLowerOrHigher)(
                     videoFrameRate ?: FrameRate.FPS_30, supportedVideoFrameRates
                 )
+                cameraController.videoCaptureTargetFrameRate =
+                    videoFrameRate?.range ?: StreamSpec.FRAME_RATE_RANGE_UNSPECIFIED
 
                 // Set video dynamic range
                 videoDynamicRange = videoDynamicRange.takeIf {
@@ -1678,13 +1681,6 @@ open class CameraActivity : AppCompatActivity() {
             cameraController.camera2CameraControl?.apply {
                 captureRequestOptions = CaptureRequestOptions.Builder()
                     .apply {
-                        setFrameRate(
-                            if (cameraMode == CameraMode.VIDEO) {
-                                videoFrameRate
-                            } else {
-                                null
-                            }
-                        )
                         setVideoStabilizationMode(
                             if (cameraMode == CameraMode.VIDEO &&
                                 sharedPreferences.videoStabilization
