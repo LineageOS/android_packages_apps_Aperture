@@ -23,7 +23,6 @@ import org.lineageos.aperture.camera.CameraState
 import org.lineageos.aperture.camera.CameraViewModel
 import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.utils.TimeUtils
-import java.lang.Exception
 import kotlin.reflect.cast
 
 class CameraModeSelectorLayout @JvmOverloads constructor(
