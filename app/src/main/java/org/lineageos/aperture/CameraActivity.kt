@@ -2483,8 +2483,6 @@ open class CameraActivity : AppCompatActivity() {
         finish()
     }
 
-    fun preventClicks(@Suppress("UNUSED_PARAMETER") view: View) {}
-
     companion object {
         private const val LOG_TAG = "Aperture"
 
