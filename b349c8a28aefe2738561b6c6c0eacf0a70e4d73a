@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9e9bbe6b_a89fb455",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-10-03T09:04:43Z",
+      "side": 1,
+      "message": "Cannot really test on my end, but changes seem ok.",
+      "revId": "b349c8a28aefe2738561b6c6c0eacf0a70e4d73a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
