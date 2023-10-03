@@ -81,6 +81,30 @@
       },
       "revId": "9ba9c609ff473dd36814cb870c8117e8e456da99",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d24fc9b6_8788e44a",
+        "filename": "app/src/main/res/drawable/ic_dolby.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-10-03T09:05:22Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "ea771dd2_403b8c97",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 37
+      },
+      "revId": "9ba9c609ff473dd36814cb870c8117e8e456da99",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
