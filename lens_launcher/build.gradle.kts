@@ -10,6 +10,7 @@ plugins {
 
 android {
     compileSdk = 33
+    namespace = "com.google.android.apps.googlecamera.fishfood"
 
     defaultConfig {
         applicationId = "com.google.android.apps.googlecamera.fishfood"
