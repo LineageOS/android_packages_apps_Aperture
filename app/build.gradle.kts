@@ -27,6 +27,7 @@ buildscript {
 }
 
 android {
+    namespace = "org.lineageos.aperture"
     compileSdk = 33
 
     defaultConfig {
