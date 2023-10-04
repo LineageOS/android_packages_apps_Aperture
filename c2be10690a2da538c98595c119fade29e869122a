@@ -41,6 +41,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "27af2576_4087b28c",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/VideoMirrorMode.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-10-04T16:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d21d99fd_f3a81179",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "c2be10690a2da538c98595c119fade29e869122a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fe04510_c1da73ab",
@@ -72,6 +96,24 @@
       "side": 1,
       "message": "Agree, that\u0027ll be better",
       "parentUuid": "4fe04510_c1da73ab",
+      "revId": "c2be10690a2da538c98595c119fade29e869122a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b80aae8_e5104674",
+        "filename": "app/src/main/res/values/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-10-04T16:37:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2263233b_7bde8ca0",
       "revId": "c2be10690a2da538c98595c119fade29e869122a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
