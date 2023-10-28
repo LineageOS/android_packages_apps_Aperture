@@ -37,14 +37,12 @@ object StorageUtils {
             }
         }
 
-        val outputFileOptions = if (outputStream != null) {
-            ImageCapture.OutputFileOptions.Builder(outputStream)
-        } else {
-            ImageCapture.OutputFileOptions.Builder(
-                contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                contentValues
-            )
-        }
+        val outputFileOptions = outputStream?.let {
+            ImageCapture.OutputFileOptions.Builder(it)
+        } ?: ImageCapture.OutputFileOptions.Builder(
+            contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            contentValues
+        )
         return outputFileOptions
             .setMetadata(metadata)
             .build()
