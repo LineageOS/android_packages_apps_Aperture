@@ -75,9 +75,17 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
         videoQualityForDynamicRanges.values.flatten().toSet().associateWith {
             VideoQualityInfo(
                 it,
-                supportedVideoFrameRates.plus(
-                    cameraManager.getAdditionalVideoFrameRates(cameraId, it)
-                ),
+                mutableSetOf<FrameRate>().apply {
+                    addAll(supportedVideoFrameRates)
+
+                    cameraManager.getAdditionalVideoFrameRates(cameraId, it).forEach { frameRate ->
+                        if (frameRate.delete) {
+                            remove(frameRate)
+                        } else {
+                            add(frameRate)
+                        }
+                    }
+                },
                 videoQualityForDynamicRanges.entries.filter { dynamicRangeToQualities ->
                     dynamicRangeToQualities.value.contains(it)
                 }.map { dynamicRangeToQualities -> dynamicRangeToQualities.key }.toSet()
