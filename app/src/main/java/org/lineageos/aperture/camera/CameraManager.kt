@@ -18,6 +18,7 @@ import org.lineageos.aperture.models.CameraType
 import org.lineageos.aperture.models.FrameRate
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.math.absoluteValue
 
 /**
  * Class managing an app camera session
@@ -30,7 +31,7 @@ class CameraManager(context: Context) {
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
     private val additionalVideoConfigurations by lazy {
-        mutableMapOf<String, MutableMap<Quality, MutableSet<FrameRate>>>().apply {
+        mutableMapOf<String, MutableMap<Quality, MutableMap<FrameRate, Boolean>>>().apply {
             context.resources.getStringArray(context, R.array.config_additionalVideoConfigurations)
                 .let {
                     if (it.size % 3 != 0) {
@@ -41,8 +42,10 @@ class CameraManager(context: Context) {
                     for (i in it.indices step 3) {
                         val cameraId = it[i]
                         val frameRates = it[i + 2].split("|").mapNotNull { frameRate ->
-                            FrameRate.fromValue(frameRate.toInt())
-                        }
+                            FrameRate.fromValue(frameRate.toInt().absoluteValue)?.let { value ->
+                                value to frameRate.startsWith('-')
+                            }
+                        }.toMap()
 
                         it[i + 1].split("|").mapNotNull { quality ->
                             when (quality) {
@@ -57,9 +60,9 @@ class CameraManager(context: Context) {
                                 this[cameraId] = mutableMapOf()
                             }
                             if (!this[cameraId]!!.containsKey(quality)) {
-                                this[cameraId]!![quality] = mutableSetOf()
+                                this[cameraId]!![quality] = mutableMapOf()
                             }
-                            this[cameraId]!![quality]!!.addAll(frameRates)
+                            this[cameraId]!![quality]!!.putAll(frameRates)
                         }
                     }
                 }
