@@ -53,6 +53,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "690b3413_e0a256d6",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/CameraManager.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-10-28T09:59:17Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a2f74e5d_f092989f",
+      "revId": "72d5873066c9a60196ecdd27a8bef2c785adb384",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "29177287_d2989561",
