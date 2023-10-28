@@ -33,6 +33,24 @@
       "message": "I\u0027m pretty sure you can bring back the max frame rate from media config, set it to 24fps",
       "revId": "7f36150829c772fe3edb448c41c43615490c3a62",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a7aad849_c043b14b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-10-28T10:40:26Z",
+      "side": 1,
+      "message": "*bring down",
+      "parentUuid": "574c837b_7dc28382",
+      "revId": "7f36150829c772fe3edb448c41c43615490c3a62",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
