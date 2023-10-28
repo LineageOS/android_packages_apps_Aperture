@@ -46,9 +46,11 @@
           - "30"
           - "60"
           - "120"
+         Additionally you can prepend `-` to frame rate to mark it as unsupported.
          Example:
              <string-array name="config_additionalVideoConfigurations">
                  <item>0</item> <item>sd|hd|fhd</item> <item>60|120</item>
+                 <item>0</item> <item>uhd</item> <item>-60</item>
                  <item>1</item> <item>sd|hd|fhd</item> <item>60</item>
              </string-array>
     -->
