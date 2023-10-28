@@ -262,10 +262,14 @@ open class CameraActivity : AppCompatActivity() {
                 ) {
                     if (e2.x > e1.x) {
                         // Left to right
-                        changeCameraMode(cameraMode.previous())
+                        cameraMode.previous()?.let {
+                            changeCameraMode(it)
+                        }
                     } else {
                         // Right to left
-                        changeCameraMode(cameraMode.next())
+                        cameraMode.next()?.let {
+                            changeCameraMode(it)
+                        }
                     }
                 }
                 return true
@@ -1955,21 +1959,20 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         val currentVideoQuality = videoQuality
-        val newVideoQuality = supportedVideoQualities.toList().sortedWith { a, b ->
+
+        supportedVideoQualities.toList().sortedWith { a, b ->
             listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.UHD).let {
                 it.indexOf(a) - it.indexOf(b)
             }
-        }.next(currentVideoQuality)
+        }.next(currentVideoQuality)?.takeUnless {
+            it == currentVideoQuality
+        }?.let {
+            videoQuality = it
 
-        if (newVideoQuality == currentVideoQuality) {
-            return
+            sharedPreferences.videoQuality = it
+
+            bindCameraUseCases()
         }
-
-        videoQuality = newVideoQuality
-
-        sharedPreferences.videoQuality = videoQuality
-
-        bindCameraUseCases()
     }
 
     private fun cycleVideoFrameRate() {
@@ -1998,29 +2001,29 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         val currentVideoDynamicRange = videoDynamicRange
-        val newVideoDynamicRange =
-            supportedVideoDynamicRanges.toList().sorted().next(currentVideoDynamicRange)
 
-        if (newVideoDynamicRange == currentVideoDynamicRange) {
-            return
+        supportedVideoDynamicRanges.toList().sorted().next(currentVideoDynamicRange)?.takeUnless {
+            it == currentVideoDynamicRange
+        }?.let {
+            videoDynamicRange = it
+
+            sharedPreferences.videoDynamicRange = it
+
+            bindCameraUseCases()
         }
-
-        videoDynamicRange = newVideoDynamicRange
-
-        sharedPreferences.videoDynamicRange = videoDynamicRange
-
-        bindCameraUseCases()
     }
 
     /**
      * Set the specified grid mode, also updating the icon
      */
     private fun cycleGridMode() {
-        gridMode = gridMode.next()
+        gridMode.next()?.let {
+            gridMode = it
 
-        sharedPreferences.lastGridMode = gridMode
+            sharedPreferences.lastGridMode = it
 
-        changeGridMode(gridMode)
+            changeGridMode(gridMode)
+        }
     }
 
     private fun changeGridMode(gridMode: GridMode) {
@@ -2031,9 +2034,11 @@ open class CameraActivity : AppCompatActivity() {
      * Toggle timer mode
      */
     private fun toggleTimerMode() {
-        timerMode = timerMode.next()
+        timerMode.next()?.let {
+            timerMode = it
 
-        sharedPreferences.timerMode = timerMode
+            sharedPreferences.timerMode = it
+        }
     }
 
     /**
@@ -2050,18 +2055,19 @@ open class CameraActivity : AppCompatActivity() {
      */
     private fun cycleFlashMode() {
         val currentFlashMode = flashMode
-        val newFlashMode = when (cameraMode) {
+
+        when (cameraMode) {
             CameraMode.PHOTO -> FlashMode.PHOTO_ALLOWED_MODES.next(currentFlashMode)
             CameraMode.VIDEO -> FlashMode.VIDEO_ALLOWED_MODES.next(currentFlashMode)
             else -> FlashMode.OFF
-        }
+        }?.let {
+            changeFlashMode(it)
 
-        changeFlashMode(newFlashMode)
-
-        when (cameraMode) {
-            CameraMode.PHOTO -> sharedPreferences.photoFlashMode = newFlashMode
-            CameraMode.VIDEO -> sharedPreferences.videoFlashMode = newFlashMode
-            else -> {}
+            when (cameraMode) {
+                CameraMode.PHOTO -> sharedPreferences.photoFlashMode = it
+                CameraMode.VIDEO -> sharedPreferences.videoFlashMode = it
+                else -> {}
+            }
         }
 
         if (cameraMode == CameraMode.PHOTO && !sharedPreferences.forceTorchHelpShown &&
@@ -2124,17 +2130,16 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         val currentExtensionMode = photoEffect
-        val newExtensionMode = camera.supportedExtensionModes.next(currentExtensionMode)
 
-        if (newExtensionMode == currentExtensionMode) {
-            return
+        camera.supportedExtensionModes.next(currentExtensionMode)?.takeUnless {
+            it == currentExtensionMode
+        }?.let {
+            photoEffect = it
+
+            sharedPreferences.photoEffect = it
+
+            bindCameraUseCases()
         }
-
-        photoEffect = newExtensionMode
-
-        sharedPreferences.photoEffect = photoEffect
-
-        bindCameraUseCases()
     }
 
     private fun setBrightScreen(brightScreen: Boolean) {
