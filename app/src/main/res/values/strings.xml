@@ -61,10 +61,24 @@
     <string name="qr_copy_description">Copy to clipboard</string>
     <string name="qr_icon_description">Icon</string>
     <string name="qr_share_description">Share</string>
-    <string name="qr_wifi_title">Connect to this Wi-Fi network</string>
+    <string name="qr_no_app_available_for_action">No app available to handle this action</string>
+
+    <!-- QR types -->
+    <string name="qr_calendar_title">Add event to calendar</string>
+    <string name="qr_calendar_content_description">Add this event to the calendar</string>
     <string name="qr_dpp_title" translatable="false">Wi-Fi Easy Connect™ (DPP)</string>
     <string name="qr_dpp_description">Configure this device</string>
+    <string name="qr_email_title">Send a new email</string>
+    <string name="qr_email_content_description">Compose a new email to the specified emails</string>
+    <string name="qr_isbn_title">Lookup this ISBN</string>
+    <string name="qr_isbn_content_description">Search this ISBN on isbnsearch.org</string>
     <string name="qr_text">Text</string>
+    <string name="qr_uri_title">Open in browser</string>
+    <string name="qr_uri_content_description">Open this URL in the browser</string>
+    <string name="qr_vin_title">Lookup VIN</string>
+    <string name="qr_vin_content_description">Lookup this Vehicle Identification Number (VIN)</string>
+    <string name="qr_wifi_title">Connect to this Wi-Fi network</string>
+    <string name="qr_wifi_content_description">Add this Wi-Fi network to the list of known networks and connect the device to it</string>
 
     <!-- Settings title -->
     <string name="title_activity_settings">Settings</string>
