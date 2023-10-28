@@ -16,6 +16,24 @@
       "message": "This sets to INVISIBLE instead of GONE, though - not sure if that\u0027s intended? For GONE, you need isGone \u003d true.",
       "revId": "803d81eabb926270c9f53ad8ea8682d0dbe4aab3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "28062652_6a418d4e",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-10-28T21:06:31Z",
+      "side": 1,
+      "message": "No, it sets it to gone",
+      "parentUuid": "ee8020ee_7714d231",
+      "revId": "803d81eabb926270c9f53ad8ea8682d0dbe4aab3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
