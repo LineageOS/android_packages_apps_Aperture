@@ -18,6 +18,7 @@ import org.lineageos.aperture.models.CameraType
 import org.lineageos.aperture.models.FrameRate
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.math.absoluteValue
 
 /**
  * Class managing an app camera session
@@ -41,7 +42,9 @@ class CameraManager(context: Context) {
                     for (i in it.indices step 3) {
                         val cameraId = it[i]
                         val frameRates = it[i + 2].split("|").mapNotNull { frameRate ->
-                            FrameRate.fromValue(frameRate.toInt())
+                            FrameRate.fromValue(frameRate.toInt().absoluteValue)?.apply {
+                                delete = frameRate.startsWith('-')
+                            }
                         }
 
                         it[i + 1].split("|").mapNotNull { quality ->

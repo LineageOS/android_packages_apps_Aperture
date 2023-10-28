@@ -7,7 +7,7 @@ package org.lineageos.aperture.models
 
 import android.util.Range
 
-enum class FrameRate(val value: Int) {
+enum class FrameRate(val value: Int, var delete: Boolean = false) {
     FPS_24(24),
     FPS_30(30),
     FPS_60(60),
