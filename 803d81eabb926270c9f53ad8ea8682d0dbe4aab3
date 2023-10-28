@@ -34,6 +34,24 @@
       "parentUuid": "ee8020ee_7714d231",
       "revId": "803d81eabb926270c9f53ad8ea8682d0dbe4aab3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e4a92787_606b210f",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-10-28T21:07:14Z",
+      "side": 1,
+      "message": "https://android.github.io/android-ktx/core-ktx/androidx.view/android.view.-view/is-visible.html",
+      "parentUuid": "28062652_6a418d4e",
+      "revId": "803d81eabb926270c9f53ad8ea8682d0dbe4aab3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
