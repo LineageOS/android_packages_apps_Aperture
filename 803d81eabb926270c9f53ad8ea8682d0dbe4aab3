@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ee8020ee_7714d231",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2023-10-28T20:30:24Z",
+      "side": 1,
+      "message": "This sets to INVISIBLE instead of GONE, though - not sure if that\u0027s intended? For GONE, you need isGone \u003d true.",
+      "revId": "803d81eabb926270c9f53ad8ea8682d0dbe4aab3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
