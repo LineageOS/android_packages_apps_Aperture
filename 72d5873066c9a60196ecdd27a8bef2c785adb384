@@ -86,6 +86,24 @@
       "message": "can be made Val after that, also no need for default?",
       "revId": "72d5873066c9a60196ecdd27a8bef2c785adb384",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d3208d8f_f9930976",
+        "filename": "app/src/main/java/org/lineageos/aperture/models/FrameRate.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-10-28T09:59:47Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "29177287_d2989561",
+      "revId": "72d5873066c9a60196ecdd27a8bef2c785adb384",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
