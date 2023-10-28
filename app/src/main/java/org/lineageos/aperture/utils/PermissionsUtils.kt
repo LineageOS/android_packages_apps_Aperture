@@ -16,7 +16,9 @@ import androidx.core.content.ContextCompat
  */
 class PermissionsUtils(private val context: Context) {
     fun mainPermissionsGranted() = permissionsGranted(mainPermissions)
-    fun locationPermissionsGranted() = permissionsGranted(locationPermissions)
+    fun locationPermissionsGranted() = locationPermissions.any {
+        permissionGranted(it)
+    }
 
     private fun permissionGranted(permission: String) =
         ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
@@ -45,11 +47,5 @@ class PermissionsUtils(private val context: Context) {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
         )
-
-        /**
-         * All the permissions that the app might use
-         */
-        val allPermissions = mainPermissions
-            .plus(locationPermissions)
     }
 }
