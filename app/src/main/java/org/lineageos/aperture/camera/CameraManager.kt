@@ -26,7 +26,7 @@ import kotlin.math.absoluteValue
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 class CameraManager(context: Context) {
     private val cameraProvider = ProcessCameraProvider.getInstance(context).get()
-    val extensionsManager = ExtensionsManager.getInstanceAsync(context, cameraProvider).get()!!
+    val extensionsManager: ExtensionsManager = ExtensionsManager.getInstanceAsync(context, cameraProvider).get()
     val cameraController = LifecycleCameraController(context)
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
@@ -56,13 +56,11 @@ class CameraManager(context: Context) {
                                 else -> null
                             }
                         }.distinct().forEach { quality ->
-                            if (!this.containsKey(cameraId)) {
-                                this[cameraId] = mutableMapOf()
+                            getOrCreate(cameraId).apply {
+                                getOrCreate(quality).apply {
+                                    putAll(frameRates)
+                                }
                             }
-                            if (!this[cameraId]!!.containsKey(quality)) {
-                                this[cameraId]!![quality] = mutableMapOf()
-                            }
-                            this[cameraId]!![quality]!!.putAll(frameRates)
                         }
                     }
                 }
@@ -94,10 +92,9 @@ class CameraManager(context: Context) {
                     val approximateZoomRatio = it[i + 1].toFloat()
                     val exactZoomRatio = it[i + 2].toFloat()
 
-                    if (!this.containsKey(cameraId)) {
-                        this[cameraId] = mutableMapOf()
+                    getOrCreate(cameraId).apply {
+                        this[approximateZoomRatio] = exactZoomRatio
                     }
-                    this[cameraId]!![approximateZoomRatio] = exactZoomRatio
                 }
             }
         }.map { a ->
