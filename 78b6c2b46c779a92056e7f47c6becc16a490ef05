@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90e45653_a4780d9f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-10-28T09:42:28Z",
+      "side": 1,
+      "message": "On xiaomi 8996 4k30 doesn\u0027t work properly and with this change we can pass -30 to disable it. This will make the UI show \"AUTO FPS\" instead and fallback to default frame rate, which is pretty good in my opinion.",
+      "revId": "78b6c2b46c779a92056e7f47c6becc16a490ef05",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
