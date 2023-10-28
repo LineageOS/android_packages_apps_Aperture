@@ -7,6 +7,7 @@ package org.lineageos.aperture.qr
 
 import android.app.Activity
 import android.app.KeyguardManager
+import android.app.PendingIntent
 import android.content.ClipData
 import android.content.ClipDescription
 import android.content.ClipboardManager
@@ -21,6 +22,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.LinearLayoutCompat.LayoutParams
 import androidx.camera.core.ImageAnalysis
@@ -108,16 +110,38 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
                         textClassification.actions.isNotEmpty()
                     ) {
                         with(textClassification.actions[0]) {
-                            bottomSheetDialogCardView.setOnClickListener { actionIntent.send() }
+                            bottomSheetDialogCardView.setOnClickListener {
+                                try {
+                                    actionIntent.send()
+                                } catch (e: PendingIntent.CanceledException) {
+                                    Toast.makeText(
+                                        activity,
+                                        "No activity available to handle this action",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                            bottomSheetDialogCardView.contentDescription = contentDescription
                             bottomSheetDialogData.movementMethod = null
-                            bottomSheetDialogTitle.text = this.title
+                            bottomSheetDialogTitle.text = title
                             this.icon.loadDrawableAsync(activity, {
                                 bottomSheetDialogIcon.setImageDrawable(it)
                             }, Handler(Looper.getMainLooper()))
                         }
                         for (action in textClassification.actions.drop(1)) {
                             bottomSheetDialogActionsLayout.addView(inflateButton().apply {
-                                setOnClickListener { action.actionIntent.send() }
+                                setOnClickListener {
+                                    try {
+                                        action.actionIntent.send()
+                                    } catch (e: PendingIntent.CanceledException) {
+                                        Toast.makeText(
+                                            activity,
+                                            "No activity available to handle this action",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                                contentDescription = action.contentDescription
                                 text = action.title
                                 action.icon.loadDrawableAsync(activity, {
                                     it.setBounds(0, 0, 15.px, 15.px)

@@ -61,10 +61,14 @@
     <string name="qr_copy_description">Copy to clipboard</string>
     <string name="qr_icon_description">Icon</string>
     <string name="qr_share_description">Share</string>
+
+    <!-- QR types -->
     <string name="qr_wifi_title">Connect to this Wi-Fi network</string>
     <string name="qr_dpp_title" translatable="false">Wi-Fi Easy Connect™ (DPP)</string>
     <string name="qr_dpp_description">Configure this device</string>
     <string name="qr_text">Text</string>
+    <string name="qr_email_title">Send a new email</string>
+    <string name="qr_email_content_description">Compose a new email to the specified emails</string>
 
     <!-- Settings title -->
     <string name="title_activity_settings">Settings</string>
