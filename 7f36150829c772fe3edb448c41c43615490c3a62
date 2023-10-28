@@ -51,6 +51,24 @@
       "parentUuid": "574c837b_7dc28382",
       "revId": "7f36150829c772fe3edb448c41c43615490c3a62",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b56eb847_a28eafd2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-10-28T10:48:27Z",
+      "side": 1,
+      "message": "Doesn\u0027t work.\n\n```\nnatrium / # grep height\u003d\\\"2160\\\" /vendor/etc/media_profiles_V1_0.xml -A1\n             height\u003d\"2160\"\n             frameRate\u003d\"24\" /\u003e\n--\n            height\u003d\"2160\"\n            frameRate\u003d\"24\" /\u003e\n--\n             height\u003d\"2160\"\n             frameRate\u003d\"24\" /\u003e\n--\n            height\u003d\"2160\"\n            frameRate\u003d\"24\" /\u003e\nnatrium / # dumpsys media.camera | grep android.control.aeTargetFpsRange -A1\n        android.control.aeTargetFpsRange (10005): int32[2]\n          [30 30 ]\n--\n        android.control.aeTargetFpsRange (10005): int32[2]\n          [30 30 ]\n\n```",
+      "parentUuid": "a7aad849_c043b14b",
+      "revId": "7f36150829c772fe3edb448c41c43615490c3a62",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
