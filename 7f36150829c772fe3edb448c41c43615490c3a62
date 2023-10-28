@@ -104,6 +104,24 @@
       "parentUuid": "e2c9454a_3f309dc9",
       "revId": "7f36150829c772fe3edb448c41c43615490c3a62",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d6c91be9_4c8eff23",
+        "filename": "app/src/main/java/org/lineageos/aperture/models/FrameRate.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-10-28T12:00:19Z",
+      "side": 1,
+      "message": "nvm, map is fine.",
+      "parentUuid": "55a8a499_812c5a62",
+      "revId": "7f36150829c772fe3edb448c41c43615490c3a62",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
