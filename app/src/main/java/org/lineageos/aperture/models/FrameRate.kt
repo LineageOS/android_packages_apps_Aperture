@@ -6,6 +6,7 @@
 package org.lineageos.aperture.models
 
 import android.util.Range
+import kotlin.math.absoluteValue
 
 enum class FrameRate(val value: Int) {
     FPS_24(24),
@@ -13,6 +14,7 @@ enum class FrameRate(val value: Int) {
     FPS_60(60),
     FPS_120(120);
 
+    var delete = false
     val range = Range(value, value)
 
     /**
@@ -28,6 +30,11 @@ enum class FrameRate(val value: Int) {
 
     companion object {
         fun fromValue(value: Int) = values().firstOrNull { it.value == value }
+        fun fromValue(value: String) = values().firstOrNull {
+            it.value == value.toInt().absoluteValue
+        }?.apply {
+            delete = value.startsWith('-')
+        }
         fun fromRange(range: Range<Int>) = if (range.lower == range.upper) {
             fromValue(range.upper)
         } else {

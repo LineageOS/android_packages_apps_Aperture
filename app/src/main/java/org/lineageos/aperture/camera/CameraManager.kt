@@ -41,7 +41,7 @@ class CameraManager(context: Context) {
                     for (i in it.indices step 3) {
                         val cameraId = it[i]
                         val frameRates = it[i + 2].split("|").mapNotNull { frameRate ->
-                            FrameRate.fromValue(frameRate.toInt())
+                            FrameRate.fromValue(frameRate)
                         }
 
                         it[i + 1].split("|").mapNotNull { quality ->
