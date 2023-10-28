@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a2f74e5d_f092989f",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/CameraManager.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-10-28T09:58:58Z",
+      "side": 1,
+      "message": "Not sure if we can really do that, but I relocated the delete handling to FrameRate.kt.",
+      "parentUuid": "b1eb8a21_36e8457a",
+      "revId": "72d5873066c9a60196ecdd27a8bef2c785adb384",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "29177287_d2989561",
         "filename": "app/src/main/java/org/lineageos/aperture/models/FrameRate.kt",
         "patchSetId": 3
