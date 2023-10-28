@@ -35,7 +35,6 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.OrientationEventListener
 import android.view.ScaleGestureDetector
-import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
@@ -294,15 +293,15 @@ open class CameraActivity : AppCompatActivity() {
             super.handleMessage(msg)
             when (msg.what) {
                 MSG_HIDE_ZOOM_SLIDER -> {
-                    zoomLevel.visibility = View.GONE
+                    zoomLevel.isVisible = false
                 }
 
                 MSG_HIDE_FOCUS_RING -> {
-                    viewFinderFocus.visibility = View.GONE
+                    viewFinderFocus.isVisible = false
                 }
 
                 MSG_HIDE_EXPOSURE_SLIDER -> {
-                    exposureLevel.visibility = View.GONE
+                    exposureLevel.isVisible = false
                 }
             }
         }
@@ -673,7 +672,7 @@ open class CameraActivity : AppCompatActivity() {
         cameraController.tapToFocusState.observe(this) {
             when (it) {
                 CameraController.TAP_TO_FOCUS_STARTED -> {
-                    viewFinderFocus.visibility = View.VISIBLE
+                    viewFinderFocus.isVisible = true
                     handler.removeMessages(MSG_HIDE_FOCUS_RING)
                     ValueAnimator.ofInt(0.px, 8.px).apply {
                         addUpdateListener { anim ->
@@ -751,7 +750,7 @@ open class CameraActivity : AppCompatActivity() {
             }
 
             zoomLevel.progress = it.linearZoom
-            zoomLevel.visibility = View.VISIBLE
+            zoomLevel.isVisible = true
 
             handler.removeMessages(MSG_HIDE_ZOOM_SLIDER)
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_ZOOM_SLIDER), 2000)
