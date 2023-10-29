@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2901a192_950c394e",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/ParsedResult.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-10-29T09:12:06Z",
+      "side": 1,
+      "message": "dupe",
+      "revId": "a3fd93a95ffbf4c3bdf5b50d20c9d1bfe4651829",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c83641d5_9c5eeb47",
+        "filename": "app/src/main/java/org/lineageos/aperture/qr/QrImageAnalyzer.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-10-29T09:12:06Z",
+      "side": 1,
+      "message": "translations.",
+      "revId": "a3fd93a95ffbf4c3bdf5b50d20c9d1bfe4651829",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
