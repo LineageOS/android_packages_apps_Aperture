@@ -18,6 +18,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef3867cc_e67989d0",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/ParsedResult.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-10-29T14:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2901a192_950c394e",
+      "revId": "a3fd93a95ffbf4c3bdf5b50d20c9d1bfe4651829",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c83641d5_9c5eeb47",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-10-29T09:12:06Z",
       "side": 1,
       "message": "translations.",
+      "revId": "a3fd93a95ffbf4c3bdf5b50d20c9d1bfe4651829",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b0993b14_84a5a99f",
+        "filename": "app/src/main/java/org/lineageos/aperture/qr/QrImageAnalyzer.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-10-29T14:31:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c83641d5_9c5eeb47",
       "revId": "a3fd93a95ffbf4c3bdf5b50d20c9d1bfe4651829",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
