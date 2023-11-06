@@ -17,6 +17,10 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.ColorDrawable
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.icu.text.DecimalFormat
 import android.location.Location
 import android.location.LocationManager
@@ -186,6 +190,7 @@ open class CameraActivity : AppCompatActivity() {
     private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
     private val locationManager by lazy { getSystemService(LocationManager::class.java) }
     private val powerManager by lazy { getSystemService(PowerManager::class.java) }
+    private val sensorManager by lazy { getSystemService(SensorManager::class.java) }
 
     // Core camera utils
     private lateinit var cameraManager: CameraManager
@@ -417,6 +422,17 @@ open class CameraActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private val doubleTwistSensor by lazy {
+        sensorManager.getSensorList(Sensor.TYPE_ALL).find {
+            it.stringType == "com.google.sensor.double_twist"
+        }
+    }
+
+    private val doubleTwistSensorListener = object : SensorEventListener {
+        override fun onSensorChanged(event: SensorEvent?) = flipCamera()
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
     }
 
     @get:RequiresApi(Build.VERSION_CODES.Q)
@@ -1152,6 +1168,13 @@ open class CameraActivity : AppCompatActivity() {
         // Register location updates
         locationListener.register()
 
+        // Enable double twist listener
+        if (doubleTwistSensor != null) {
+            sensorManager.registerListener(
+                doubleTwistSensorListener, doubleTwistSensor, SensorManager.SENSOR_DELAY_NORMAL
+            )
+        }
+
         // Enable orientation listener
         orientationEventListener.enable()
 
@@ -1175,6 +1198,9 @@ open class CameraActivity : AppCompatActivity() {
     override fun onPause() {
         // Remove location and location updates
         locationListener.unregister()
+
+        // Disable double twist listener
+        sensorManager.unregisterListener(doubleTwistSensorListener)
 
         // Disable orientation listener
         orientationEventListener.disable()
