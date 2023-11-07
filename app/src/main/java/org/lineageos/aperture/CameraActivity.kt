@@ -614,7 +614,12 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         // Select a camera
-        camera = cameraManager.getCameraOfFacingOrFirstAvailable(initialCameraFacing, cameraMode)
+        camera = cameraManager.getCameraOfFacingOrFirstAvailable(
+            initialCameraFacing, cameraMode
+        ) ?: run {
+            noCamera()
+            return
+        }
 
         // Setup window insets
         ViewCompat.setOnApplyWindowInsetsListener(mainLayout) { _, windowInsets ->
@@ -1507,6 +1512,9 @@ open class CameraActivity : AppCompatActivity() {
             )
 
             else -> camera
+        } ?: run {
+            noCamera()
+            return
         }
 
         // If the current camera doesn't support the selected camera mode
@@ -1514,7 +1522,10 @@ open class CameraActivity : AppCompatActivity() {
         if (!camera.supportsCameraMode(cameraMode)) {
             camera = cameraManager.getCameraOfFacingOrFirstAvailable(
                 camera.cameraFacing, cameraMode
-            )
+            ) ?: run {
+                noCamera()
+                return
+            }
         }
 
         // Fallback to ExtensionMode.NONE if necessary
@@ -1882,7 +1893,11 @@ open class CameraActivity : AppCompatActivity() {
 
         (flipCameraButton.drawable as AnimatedVectorDrawable).start()
 
-        camera = cameraManager.getNextCamera(camera, cameraMode)
+        camera = cameraManager.getNextCamera(camera, cameraMode) ?: run {
+            noCamera()
+            return
+        }
+
         sharedPreferences.lastCameraFacing = camera.cameraFacing
 
         bindCameraUseCases()
@@ -2445,6 +2460,16 @@ open class CameraActivity : AppCompatActivity() {
                 zoomGestureMutex.unlock()
             })
         }.start()
+    }
+
+    /**
+     * Show a toast warning the user that no camera is available and close the activity.
+     */
+    private fun noCamera() {
+        Toast.makeText(
+            this, R.string.error_no_cameras_available, Toast.LENGTH_LONG
+        ).show()
+        finish()
     }
 
     /**
