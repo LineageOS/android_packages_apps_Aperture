@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f5edab79_b3ff4ced",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-11-07T20:46:51Z",
+      "side": 1,
+      "message": "not sure if we want to invoke intent action w/o camera present.",
+      "parentUuid": "fa0f1f42_d2b9c38c",
+      "revId": "c3b566575c8a8dba8ee6e5402401af41cd3a04bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8b05e272_7c65ad5c",
         "filename": "app/src/main/java/org/lineageos/aperture/camera/CameraManager.kt",
         "patchSetId": 1
