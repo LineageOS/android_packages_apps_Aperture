@@ -584,6 +584,15 @@ open class CameraActivity : AppCompatActivity() {
         videoDynamicRange = sharedPreferences.videoDynamicRange
         videoMicMode = sharedPreferences.lastMicMode
 
+        // If user opens camera app when no cameras are available, we have to bail out
+        if (cameraManager.cameras.isEmpty()) {
+            Toast.makeText(
+                this, getString(R.string.error_no_cameras_available), Toast.LENGTH_LONG
+            ).show()
+            finish()
+            return
+        }
+
         // Handle intent
         intent.action?.let {
             intentActions[it]?.invoke()

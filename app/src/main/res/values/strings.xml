@@ -165,6 +165,7 @@
     <string name="error_do_not_disturb_mode_enabled">Do Not Disturb mode is enabled. Disable it and reopen the app.</string>
     <string name="error_unknown_recoverable">A recoverable unknown error has been found. Please report this to the developers.</string>
     <string name="error_unknown_critical">A critical unknown error has been found. Please report this to the developers.</string>
+    <string name="error_no_cameras_available">No cameras were found on the device, cannot start the app.</string>
 
     <!-- Gesture actions -->
     <string name="gesture_action_shutter">Shutter</string>

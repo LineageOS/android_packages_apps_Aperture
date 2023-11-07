@@ -108,7 +108,7 @@ class CameraManager(context: Context) {
         context.resources.getBoolean(context, R.bool.config_enableHighResolution)
     }
 
-    private val cameras: List<Camera>
+    val cameras: List<Camera>
         get() = cameraProvider.availableCameraInfos.map {
             Camera(it, this)
         }.sortedBy { it.cameraId }
