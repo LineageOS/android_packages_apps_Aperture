@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa0f1f42_d2b9c38c",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-11-07T18:01:58Z",
+      "side": 1,
+      "message": "Move the check here if possible, so it\u0027s close to the video one",
+      "revId": "c3b566575c8a8dba8ee6e5402401af41cd3a04bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b05e272_7c65ad5c",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/CameraManager.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-11-07T18:01:58Z",
+      "side": 1,
+      "message": "Can be removed altogether, nothing \u003d\u003d public",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "c3b566575c8a8dba8ee6e5402401af41cd3a04bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d8354ae_10f30af0",
+        "filename": "app/src/main/res/values/strings.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2023-11-07T18:01:58Z",
+      "side": 1,
+      "message": "the app",
+      "range": {
+        "startLine": 168,
+        "startChar": 96,
+        "endLine": 168,
+        "endChar": 99
+      },
+      "revId": "c3b566575c8a8dba8ee6e5402401af41cd3a04bf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
