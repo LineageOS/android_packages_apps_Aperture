@@ -178,9 +178,15 @@ class CameraManager(context: Context) {
         }
     }
 
+    /**
+     * Get a suitable [Camera] for the provided [CameraFacing] and [CameraMode].
+     * @param cameraFacing The requested [CameraFacing]
+     * @param cameraMode The requested [CameraMode]
+     * @return A [Camera] that is compatible with the provided configuration or null
+     */
     fun getCameraOfFacingOrFirstAvailable(
         cameraFacing: CameraFacing, cameraMode: CameraMode
-    ): Camera {
+    ): Camera? {
         val camera = when (cameraFacing) {
             CameraFacing.BACK -> mainBackCamera
             CameraFacing.FRONT -> mainFrontCamera
@@ -189,17 +195,23 @@ class CameraManager(context: Context) {
         }
         return camera?.let {
             if (cameraMode == CameraMode.VIDEO && !it.supportsVideoRecording) {
-                availableCamerasSupportingVideoRecording.first()
+                availableCamerasSupportingVideoRecording.firstOrNull()
             } else {
                 it
             }
         } ?: when (cameraMode) {
-            CameraMode.VIDEO -> availableCamerasSupportingVideoRecording.first()
-            else -> availableCameras.first()
+            CameraMode.VIDEO -> availableCamerasSupportingVideoRecording.firstOrNull()
+            else -> availableCameras.firstOrNull()
         }
     }
 
-    fun getNextCamera(camera: Camera, cameraMode: CameraMode): Camera {
+    /**
+     * Return the next camera, used for flip camera.
+     * @param camera The current [Camera] used
+     * @param cameraMode The current [CameraMode]
+     * @return The next camera, may return null if all the cameras disappeared
+     */
+    fun getNextCamera(camera: Camera, cameraMode: CameraMode): Camera? {
         val cameras = when (cameraMode) {
             CameraMode.VIDEO -> availableCamerasSupportingVideoRecording
             else -> availableCameras
@@ -217,7 +229,7 @@ class CameraManager(context: Context) {
         ) + 1
 
         return if (newCameraIndex >= cameras.size) {
-            cameras.first()
+            cameras.firstOrNull()
         } else {
             cameras[newCameraIndex]
         }
