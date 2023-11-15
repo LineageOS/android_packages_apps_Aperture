@@ -608,6 +608,7 @@ open class CameraActivity : AppCompatActivity() {
                     this, getString(R.string.camcorder_unsupported_toast), Toast.LENGTH_LONG
                 ).show()
                 finish()
+                return
             }
             // Fallback to photo mode
             cameraMode = CameraMode.PHOTO
