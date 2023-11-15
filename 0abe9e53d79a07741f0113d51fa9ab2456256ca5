@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca76890d_694b2513",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/MutableMap.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2023-11-15T16:35:34Z",
+      "side": 1,
+      "message": "over 100ch",
+      "revId": "0abe9e53d79a07741f0113d51fa9ab2456256ca5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
