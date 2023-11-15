@@ -449,12 +449,12 @@ open class CameraActivity : AppCompatActivity() {
 
                 PowerManager.THERMAL_STATUS_EMERGENCY -> {
                     showSnackBar(R.string.thermal_status_emergency)
-                    emergencyClose()
+                    finish()
                 }
 
                 PowerManager.THERMAL_STATUS_SHUTDOWN -> {
                     showSnackBar(R.string.thermal_status_shutdown)
-                    emergencyClose()
+                    finish()
                 }
             }
         }
@@ -2497,20 +2497,6 @@ open class CameraActivity : AppCompatActivity() {
                 zoomGestureMutex.unlock()
             })
         }.start()
-    }
-
-    /**
-     * Use this function when the app must be closed due to emergency reasons.
-     * It will try to save whatever is going on and close the app.
-     */
-    private fun emergencyClose() {
-        // Stop the recording if there's an active one
-        if (cameraController.isRecording) {
-            videoRecording?.stop()
-        }
-
-        // Close the app
-        finish()
     }
 
     companion object {
