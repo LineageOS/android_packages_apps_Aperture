@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89741d0e_99960f81",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/CameraManager.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2023-11-26T09:20:55Z",
+      "side": 1,
+      "message": "Not so much async for us, is there a sync getter?",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "4028fc0592d700243d3b347a3758de69527c2ce2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
