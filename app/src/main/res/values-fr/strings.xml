@@ -64,6 +64,7 @@
     <string name="photo_ffc_mirror_summary">Enregistrer les clichés de l\'appareil photo frontal tels qu\'affichés dans l\'aperçu</string>
     <string name="video_stabilization_title">Activer la stabilisation vidéo</string>
     <string name="video_stabilization_summary">Si disponible, activer la stabilisation vidéo pour réduire les vibrations de la caméra pendant l\'enregistrement</string>
+    <string name="video_mirror_mode_title">Activer le mode miroir en vidéo</string>
     <string name="processing_title">Traitement en cours</string>
     <string name="processing_info">En mode photo, lorsque le mode ZSL est utilisé, seules les valeurs par défaut et désactivé seront prises en compte. Pour le mode vidéo, seules les valeurs par défaut, désactivé et rapide seront prises en compte.</string>
     <string name="edge_mode_title">Affinage</string>
@@ -119,6 +120,7 @@
     <string name="error_do_not_disturb_mode_enabled">Le mode Ne Pas Déranger est activé. Désactivez-le et rouvrez l\'application.</string>
     <string name="error_unknown_recoverable">Une erreur inconnue récupérable a été trouvée. Veuillez la signaler aux développeurs.</string>
     <string name="error_unknown_critical">Une erreur critique inconnue a été trouvée. Veuillez la signaler aux développeurs.</string>
+    <string name="error_no_cameras_available">Aucune caméra n\'a été trouvée sur l\'appareil, impossible de démarrer l\'application.</string>
     <string name="gesture_action_shutter">Obturateur</string>
     <string name="gesture_action_zoom">Agrandir</string>
     <string name="gesture_action_volume">Volume</string>
@@ -133,5 +135,6 @@
     <string name="camera_mode_video">Vidéo</string>
     <string name="camera_mode_qr">Scanner</string>
     <string name="video_mirror_mode_off">Désactivé</string>
+    <string name="video_mirror_mode_on">Activé</string>
     <string name="video_mirror_mode_on_ffc_only">Caméra frontale uniquement</string>
 </resources>
