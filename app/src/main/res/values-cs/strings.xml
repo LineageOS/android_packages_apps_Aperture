@@ -120,6 +120,7 @@
     <string name="error_do_not_disturb_mode_enabled">Režim Nerušit je povolen. Vypněte jej a znovu otevřete aplikaci.</string>
     <string name="error_unknown_recoverable">Byla nalezena neznámá chyba, kterou lze obnovit. Nahlaste ji prosím vývojářům.</string>
     <string name="error_unknown_critical">Byla nalezena neznámá kritická chyba. Nahlaste ji prosím vývojářům.</string>
+    <string name="error_no_cameras_available">Na zařízení nebyly nalezeny žádné fotoaparáty, nelze spustit aplikaci.</string>
     <string name="gesture_action_shutter">Závěrka</string>
     <string name="gesture_action_zoom">Přiblížení</string>
     <string name="gesture_action_volume">Hlasitost</string>
