@@ -39,7 +39,7 @@ enum class VideoDynamicRange(
     HDR10_PLUS_10_BIT(
         DynamicRange.HDR10_PLUS_10_BIT,
         R.string.video_dynamic_range_hdr10_plus_10_bit,
-        R.drawable.ic_hdr_off,
+        R.drawable.ic_hdr_on,
     ),
     DOLBY_VISION_10_BIT(
         DynamicRange.DOLBY_VISION_10_BIT,
