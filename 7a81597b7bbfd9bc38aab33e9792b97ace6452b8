@@ -69,6 +69,24 @@
       "parentUuid": "8b6f5157_efca2869",
       "revId": "7a81597b7bbfd9bc38aab33e9792b97ace6452b8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2968a519_1260bf75",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-01-17T22:20:30Z",
+      "side": 1,
+      "message": "Yes, we should make generatebp exit if the only thing that was changed was the copyright year. But for now let\u0027s just regen stuff first.",
+      "parentUuid": "3955d3a3_bb8c8d57",
+      "revId": "7a81597b7bbfd9bc38aab33e9792b97ace6452b8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
