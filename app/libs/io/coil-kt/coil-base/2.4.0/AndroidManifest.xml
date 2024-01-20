@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="coil.singleton" >
+    package="coil.base" >
 
-    <uses-sdk
-        android:minSdkVersion="21"
-        android:targetSdkVersion="33" />
+    <uses-sdk android:minSdkVersion="21" />
 
 </manifest>
