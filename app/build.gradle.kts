@@ -78,9 +78,9 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.7.2")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.exifinterface:exifinterface:1.3.6")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    implementation("androidx.preference:preference:1.2.0")
+    implementation("androidx.exifinterface:exifinterface:1.3.7")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.preference:preference:1.2.1")
     implementation("com.google.android.material:material:1.9.0")
 
     // CameraX core library using the camera2 implementation
@@ -108,7 +108,7 @@ dependencies {
     implementation("com.google.zxing:core:3.5.2")
 
     // Coil
-    implementation("io.coil-kt:coil:2.2.2")
+    implementation("io.coil-kt:coil:2.4.0")
     implementation("io.coil-kt:coil-video:2.2.2")
 }
 
