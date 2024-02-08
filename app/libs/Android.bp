@@ -656,7 +656,7 @@ java_library_static {
 
 java_import {
     name: "Aperture_com.squareup.okio_okio-jvm-nodeps",
-    jars: ["com/squareup/okio/okio-jvm/3.3.0/okio-jvm-3.3.0.jar"],
+    jars: ["com/squareup/okio/okio-jvm/3.7.0/okio-jvm-3.7.0.jar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -675,7 +675,7 @@ java_library_static {
     ],
     static_libs: [
         "Aperture_com.squareup.okio_okio-jvm-nodeps",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
     java_version: "1.7",
 }

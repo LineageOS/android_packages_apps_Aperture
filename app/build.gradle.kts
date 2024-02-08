@@ -104,6 +104,9 @@ dependencies {
     // For building media playback UIs
     implementation("androidx.media3:media3-ui:$media3Version")
 
+    // Okio
+    implementation("com.squareup.okio:okio-jvm:3.7.0")
+
     // ZXing
     implementation("com.google.zxing:core:3.5.2")
 
