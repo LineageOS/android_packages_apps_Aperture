@@ -2192,6 +2192,7 @@ open class CameraActivity : AppCompatActivity() {
                         override fun onError(request: ImageRequest, result: ErrorResult) {
                             galleryButton.setPadding(15.px)
                             super.onError(request, result)
+                            Log.e(LOG_TAG, "Failed to load gallery button icon", result.throwable)
                         }
 
                         override fun onCancel(request: ImageRequest) {
