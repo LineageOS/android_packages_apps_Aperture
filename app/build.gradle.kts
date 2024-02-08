@@ -107,6 +107,9 @@ dependencies {
     // ZXing
     implementation("com.google.zxing:core:3.5.2")
 
+    // Okio
+    implementation("com.squareup.okio:okio-jvm:3.7.0")
+
     // Coil
     implementation("io.coil-kt:coil:2.4.0")
     implementation("io.coil-kt:coil-video:2.4.0")
