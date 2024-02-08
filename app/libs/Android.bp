@@ -629,7 +629,7 @@ java_library_static {
 
 java_import {
     name: "Aperture_com.squareup.okhttp3_okhttp-nodeps",
-    jars: ["com/squareup/okhttp3/okhttp/4.11.0/okhttp-4.11.0.jar"],
+    jars: ["com/squareup/okhttp3/okhttp/4.10.0/okhttp-4.10.0.jar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -648,8 +648,8 @@ java_library_static {
     ],
     static_libs: [
         "Aperture_com.squareup.okhttp3_okhttp-nodeps",
+        "Aperture_com.squareup.okio_okio-jvm",
         "kotlin-stdlib",
-        "kotlin-stdlib-jdk8",
     ],
     java_version: "1.7",
 }
@@ -682,7 +682,7 @@ java_library_static {
 
 android_library_import {
     name: "Aperture_io.coil-kt_coil-base-nodeps",
-    aars: ["io/coil-kt/coil-base/2.4.0/coil-base-2.4.0.aar"],
+    aars: ["io/coil-kt/coil-base/2.3.0/coil-base-2.3.0.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -710,7 +710,7 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil-base/2.4.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil-base/2.3.0/AndroidManifest.xml",
     static_libs: [
         "Aperture_io.coil-kt_coil-base-nodeps",
         "androidx.lifecycle_lifecycle-runtime",
@@ -728,7 +728,7 @@ android_library {
 
 android_library_import {
     name: "Aperture_io.coil-kt_coil-video-nodeps",
-    aars: ["io/coil-kt/coil-video/2.4.0/coil-video-2.4.0.aar"],
+    aars: ["io/coil-kt/coil-video/2.3.0/coil-video-2.3.0.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -750,7 +750,7 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil-video/2.4.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil-video/2.3.0/AndroidManifest.xml",
     static_libs: [
         "Aperture_io.coil-kt_coil-video-nodeps",
         "Aperture_io.coil-kt_coil-base",
@@ -762,7 +762,7 @@ android_library {
 
 android_library_import {
     name: "Aperture_io.coil-kt_coil-nodeps",
-    aars: ["io/coil-kt/coil/2.4.0/coil-2.4.0.aar"],
+    aars: ["io/coil-kt/coil/2.3.0/coil-2.3.0.aar"],
     sdk_version: "33",
     min_sdk_version: "14",
     apex_available: [
@@ -783,7 +783,7 @@ android_library {
         "//apex_available:platform",
         "//apex_available:anyapex",
     ],
-    manifest: "io/coil-kt/coil/2.4.0/AndroidManifest.xml",
+    manifest: "io/coil-kt/coil/2.3.0/AndroidManifest.xml",
     static_libs: [
         "Aperture_io.coil-kt_coil-nodeps",
         "Aperture_io.coil-kt_coil-base",

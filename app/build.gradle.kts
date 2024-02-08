@@ -108,8 +108,8 @@ dependencies {
     implementation("com.google.zxing:core:3.5.2")
 
     // Coil
-    implementation("io.coil-kt:coil:2.4.0")
-    implementation("io.coil-kt:coil-video:2.4.0")
+    implementation("io.coil-kt:coil:2.3.0")
+    implementation("io.coil-kt:coil-video:2.3.0")
 }
 
 configure<GenerateBpPluginExtension> {
