@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "539a6b65_7942a5d4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-02-08T11:39:50Z",
+      "side": 1,
+      "message": "Works, but maybe we should eventually figure out how to fix this issue in generatebp.",
+      "revId": "256f21ec48dbda3a8353f64a07d65d39eb3f735e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
