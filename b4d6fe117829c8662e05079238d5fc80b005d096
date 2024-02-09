@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e90116a_0993ea47",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/AddressBookParsedResult.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-09T17:01:28Z",
+      "side": 1,
+      "message": ". maybe add to the Todo list?",
+      "revId": "b4d6fe117829c8662e05079238d5fc80b005d096",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "41435ef0_ffabb0d5",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/EmailAddressParsedResult.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-09T17:01:28Z",
+      "side": 1,
+      "message": "this will throw if no tos are found, be sure you handle that",
+      "revId": "b4d6fe117829c8662e05079238d5fc80b005d096",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}

@@ -36,6 +36,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4272ed9d_a72347ea",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/CalendarParsedResult.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-09T17:01:28Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "869e32fb_29f07b80",
+      "revId": "eefd761eb179600d232c6fdb77f4f0d42bbf9a4b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bf35c484_a0872c63",
