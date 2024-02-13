@@ -18,7 +18,7 @@ apply {
 
 buildscript {
     repositories {
-        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.4/.m2")
+        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.6/.m2")
     }
 
     dependencies {
@@ -103,9 +103,6 @@ dependencies {
     implementation("androidx.media3:media3-exoplayer:$media3Version")
     // For building media playback UIs
     implementation("androidx.media3:media3-ui:$media3Version")
-
-    // Okio
-    implementation("com.squareup.okio:okio-jvm:3.3.0")
 
     // ZXing
     implementation("com.google.zxing:core:3.5.2")
