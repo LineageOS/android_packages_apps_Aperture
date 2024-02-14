@@ -20,6 +20,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "28ed5d00_a1ea332c",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/AddressBookParsedResult.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-14T20:47:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e90116a_0993ea47",
+      "revId": "b4d6fe117829c8662e05079238d5fc80b005d096",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "41435ef0_ffabb0d5",
         "filename": "app/src/main/java/org/lineageos/aperture/ext/EmailAddressParsedResult.kt",
         "patchSetId": 7
@@ -31,6 +49,24 @@
       "writtenOn": "2024-02-09T17:01:28Z",
       "side": 1,
       "message": "this will throw if no tos are found, be sure you handle that",
+      "revId": "b4d6fe117829c8662e05079238d5fc80b005d096",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "023e1f9b_676324cd",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/EmailAddressParsedResult.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-14T20:47:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41435ef0_ffabb0d5",
       "revId": "b4d6fe117829c8662e05079238d5fc80b005d096",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
