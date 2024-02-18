@@ -37,9 +37,9 @@
     <string name="qr_copy_description">ასლის აღება</string>
     <string name="qr_icon_description">ხატულა</string>
     <string name="qr_share_description">გაზიარება</string>
-    <string name="qr_wifi_title">ამ WiFi-ქსელში ჩართვა</string>
     <string name="qr_dpp_description">მოწყობილობის გამართვა</string>
     <string name="qr_text">ტექსტი</string>
+    <string name="qr_wifi_title">ამ WiFi-ქსელში ჩართვა</string>
     <string name="title_activity_settings">პარამეტრები</string>
     <string name="general_header">ძირითადი</string>
     <string name="photos_header">ფოტო</string>

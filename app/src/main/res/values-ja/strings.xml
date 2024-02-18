@@ -37,9 +37,9 @@
     <string name="qr_copy_description">クリップボードにコピー</string>
     <string name="qr_icon_description">アイコン</string>
     <string name="qr_share_description">共有</string>
-    <string name="qr_wifi_title">この Wi-Fi ネットワークに接続</string>
     <string name="qr_dpp_description">このデバイスを設定します</string>
     <string name="qr_text">テキスト</string>
+    <string name="qr_wifi_title">この Wi-Fi ネットワークに接続</string>
     <string name="title_activity_settings">設定</string>
     <string name="general_header">全般</string>
     <string name="photos_header">写真</string>

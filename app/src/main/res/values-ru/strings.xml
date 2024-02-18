@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Скопировать в буфер обмена</string>
     <string name="qr_icon_description">Значок</string>
     <string name="qr_share_description">Поделиться</string>
-    <string name="qr_wifi_title">Подключиться к этой сети Wi-Fi</string>
     <string name="qr_dpp_description">Настроить это устройство</string>
     <string name="qr_text">Текст</string>
+    <string name="qr_wifi_title">Подключиться к этой сети Wi-Fi</string>
     <string name="title_activity_settings">Настройки</string>
     <string name="general_header">Общие</string>
     <string name="photos_header">Фото</string>

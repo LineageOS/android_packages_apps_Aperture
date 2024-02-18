@@ -23,9 +23,9 @@
     <string name="qr_copy_description">Salin ke papan klip</string>
     <string name="qr_icon_description">Ikon</string>
     <string name="qr_share_description">Bagikan</string>
-    <string name="qr_wifi_title">Sambungkan ke jaringan Wi-Fi ini</string>
     <string name="qr_dpp_description">Konfigurasikan perangkat ini</string>
     <string name="qr_text">Teks</string>
+    <string name="qr_wifi_title">Sambungkan ke jaringan Wi-Fi ini</string>
     <string name="title_activity_settings">Pengaturan</string>
     <string name="general_header">Umum</string>
     <string name="video_header">Video</string>

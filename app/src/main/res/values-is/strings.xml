@@ -35,9 +35,9 @@
     <string name="qr_copy_description">Afrita á klippispjald</string>
     <string name="qr_icon_description">Táknmynd</string>
     <string name="qr_share_description">Deila</string>
-    <string name="qr_wifi_title">Tengjast við þetta Wi-Fi netkerfi</string>
     <string name="qr_dpp_description">Stilla þetta tæki</string>
     <string name="qr_text">Texti</string>
+    <string name="qr_wifi_title">Tengjast við þetta Wi-Fi netkerfi</string>
     <string name="title_activity_settings">Stillingar</string>
     <string name="general_header">Almennt</string>
     <string name="photos_header">Ljósmyndir</string>
