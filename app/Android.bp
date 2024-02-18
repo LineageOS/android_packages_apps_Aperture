@@ -1,5 +1,5 @@
 //
-// SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+// SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
 // SPDX-License-Identifier: Apache-2.0
 //
 
@@ -45,6 +45,7 @@ android_app {
         "androidx.camera.extensions.impl"
     ],
     required: [
+        "ApertureFrameworksBaseOverlay",
         "ApertureLensLauncher",
     ],
 

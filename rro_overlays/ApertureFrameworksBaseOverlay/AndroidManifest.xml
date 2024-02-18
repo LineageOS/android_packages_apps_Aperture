@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.aperture.frameworksbaseoverlay"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <application android:hasCode="false" />
+
+    <overlay android:targetPackage="android"
+        android:priority="0"
+        android:isStatic="true" />
+</manifest>
