@@ -37,9 +37,9 @@
     <string name="qr_copy_description">In die Zwischenablage kopieren</string>
     <string name="qr_icon_description">Symbol</string>
     <string name="qr_share_description">Teilen</string>
-    <string name="qr_wifi_title">Mit diesem WLAN-Netzwerk verbinden</string>
     <string name="qr_dpp_description">Dieses Gerät konfigurieren</string>
     <string name="qr_text">Text</string>
+    <string name="qr_wifi_title">Mit diesem WLAN-Netzwerk verbinden</string>
     <string name="title_activity_settings">Einstellungen</string>
     <string name="general_header">Allgemein</string>
     <string name="photos_header">Fotos</string>

@@ -36,6 +36,7 @@
     <string name="qr_copy_description">Copiar nel cartafueyu</string>
     <string name="qr_icon_description">Iconu</string>
     <string name="qr_share_description">Compartir</string>
+    <string name="qr_no_app_available_for_action">Nun hai nenguna aplicación disponible pa remanar esta aición</string>
     <string name="qr_text">Testu</string>
     <string name="title_activity_settings">Configuración</string>
     <string name="general_header">Xeneral</string>

@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Panoya kopyala</string>
     <string name="qr_icon_description">Simge</string>
     <string name="qr_share_description">Paylaş</string>
-    <string name="qr_wifi_title">Bu Wi-Fi ağına bağlan</string>
     <string name="qr_dpp_description">Bu cihazı ayarla</string>
     <string name="qr_text">Metin</string>
+    <string name="qr_wifi_title">Bu Wi-Fi ağına bağlan</string>
     <string name="title_activity_settings">Ayarlar</string>
     <string name="general_header">Genel</string>
     <string name="photos_header">Fotoğraflar</string>

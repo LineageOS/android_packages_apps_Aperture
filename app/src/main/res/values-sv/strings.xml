@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Kopiera till urklipp</string>
     <string name="qr_icon_description">Ikon</string>
     <string name="qr_share_description">Dela</string>
-    <string name="qr_wifi_title">Anslut till detta Wi\u2011Fi\u2011nätverk</string>
     <string name="qr_dpp_description">Konfigurera denna enheten</string>
     <string name="qr_text">Text</string>
+    <string name="qr_wifi_title">Anslut till detta Wi\u2011Fi\u2011nätverk</string>
     <string name="title_activity_settings">Inställningar</string>
     <string name="general_header">Generellt</string>
     <string name="photos_header">Foton</string>
