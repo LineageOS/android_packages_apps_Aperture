@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Kopiraj v odložišče</string>
     <string name="qr_icon_description">Ikona</string>
     <string name="qr_share_description">Deli</string>
-    <string name="qr_wifi_title">Vzpostavite povezavo s tem omrežjem Wi-Fi</string>
     <string name="qr_dpp_description">Nastavite to napravo</string>
     <string name="qr_text">Besedilo</string>
+    <string name="qr_wifi_title">Vzpostavite povezavo s tem omrežjem Wi-Fi</string>
     <string name="title_activity_settings">Nastavitve</string>
     <string name="general_header">Splošno</string>
     <string name="photos_header">Fotografije</string>

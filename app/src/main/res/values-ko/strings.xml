@@ -37,9 +37,9 @@
     <string name="qr_copy_description">클립보드에 복사</string>
     <string name="qr_icon_description">아이콘</string>
     <string name="qr_share_description">공유</string>
-    <string name="qr_wifi_title">이 Wi-Fi 네트워크에 연결</string>
     <string name="qr_dpp_description">이 기기 구성</string>
     <string name="qr_text">텍스트</string>
+    <string name="qr_wifi_title">이 Wi-Fi 네트워크에 연결</string>
     <string name="title_activity_settings">설정</string>
     <string name="general_header">일반</string>
     <string name="photos_header">사진</string>

@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Copie intes notis</string>
     <string name="qr_icon_description">Icone</string>
     <string name="qr_share_description">Condivît</string>
-    <string name="qr_wifi_title">Coleghiti a cheste rêt Wi-Fi</string>
     <string name="qr_dpp_description">Configure chest dispositîf</string>
     <string name="qr_text">Test</string>
+    <string name="qr_wifi_title">Coleghiti a cheste rêt Wi-Fi</string>
     <string name="title_activity_settings">Impostazions</string>
     <string name="general_header">Gjenerâls</string>
     <string name="photos_header">Fotos</string>
