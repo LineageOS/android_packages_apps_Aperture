@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Copier dans le presse-papiers</string>
     <string name="qr_icon_description">Icône</string>
     <string name="qr_share_description">Partager</string>
-    <string name="qr_wifi_title">Se connecter à ce réseau Wi-Fi</string>
     <string name="qr_dpp_description">Configurer cet appareil</string>
     <string name="qr_text">Texte</string>
+    <string name="qr_wifi_title">Se connecter à ce réseau Wi-Fi</string>
     <string name="title_activity_settings">Paramètres</string>
     <string name="general_header">Général</string>
     <string name="photos_header">Photos</string>

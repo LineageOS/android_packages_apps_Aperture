@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Copïo i\'r clipfwrdd</string>
     <string name="qr_icon_description">Eicon</string>
     <string name="qr_share_description">Rhannu</string>
-    <string name="qr_wifi_title">Cysylltu â\'r rhwydwaith Wi-Fi hwn</string>
     <string name="qr_dpp_description">Ffurfweddu\'r ddyfais hon</string>
     <string name="qr_text">Testun</string>
+    <string name="qr_wifi_title">Cysylltu â\'r rhwydwaith Wi-Fi hwn</string>
     <string name="title_activity_settings">Gosodiadau</string>
     <string name="general_header">Cyffredinol</string>
     <string name="photos_header">Lluniau</string>

@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Skopiuj do schowka</string>
     <string name="qr_icon_description">Ikona</string>
     <string name="qr_share_description">Udostępnij</string>
-    <string name="qr_wifi_title">Połącz z tą siecią Wi-Fi</string>
     <string name="qr_dpp_description">Skonfiguruj to urządzenie</string>
     <string name="qr_text">Tekst</string>
+    <string name="qr_wifi_title">Połącz z tą siecią Wi-Fi</string>
     <string name="title_activity_settings">Ustawienia</string>
     <string name="general_header">Ogólne</string>
     <string name="photos_header">Zdjęcia</string>

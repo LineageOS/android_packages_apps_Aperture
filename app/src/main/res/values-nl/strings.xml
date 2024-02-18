@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Kopieer naar klembord</string>
     <string name="qr_icon_description">Pictogram</string>
     <string name="qr_share_description">Deel</string>
-    <string name="qr_wifi_title">Verbinding maken met dit wifi-netwerk</string>
     <string name="qr_dpp_description">Configureer dit apparaat</string>
     <string name="qr_text">Tekst</string>
+    <string name="qr_wifi_title">Verbinding maken met dit wifi-netwerk</string>
     <string name="title_activity_settings">Instellingen</string>
     <string name="general_header">Algemeen</string>
     <string name="photos_header">Foto\'s</string>
