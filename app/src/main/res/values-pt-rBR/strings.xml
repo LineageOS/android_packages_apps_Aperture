@@ -32,9 +32,9 @@
     <string name="qr_copy_description">Copiar para a área de transferência</string>
     <string name="qr_icon_description">Ícone</string>
     <string name="qr_share_description">Compartilhar</string>
-    <string name="qr_wifi_title">Conectar-se a esta rede Wi-Fi</string>
     <string name="qr_dpp_description">Configurar este dispositivo</string>
     <string name="qr_text">Texto</string>
+    <string name="qr_wifi_title">Conectar-se a esta rede Wi-Fi</string>
     <string name="title_activity_settings">Configurações</string>
     <string name="general_header">Geral</string>
     <string name="photos_header">Fotos</string>

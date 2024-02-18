@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Sao chép vào bộ nhớ tạm</string>
     <string name="qr_icon_description">Biểu tượng</string>
     <string name="qr_share_description">Chia sẻ</string>
-    <string name="qr_wifi_title">Kết nối với mạng Wi-Fi này</string>
     <string name="qr_dpp_description">Định cấu hình thiết bị này</string>
     <string name="qr_text">Văn bản</string>
+    <string name="qr_wifi_title">Kết nối với mạng Wi-Fi này</string>
     <string name="title_activity_settings">Cài đặt</string>
     <string name="general_header">Tổng quan</string>
     <string name="photos_header">Ảnh</string>

@@ -37,9 +37,9 @@
     <string name="qr_copy_description">复制到剪贴板</string>
     <string name="qr_icon_description">图标</string>
     <string name="qr_share_description">分享</string>
-    <string name="qr_wifi_title">连接到此 Wi-Fi 网络</string>
     <string name="qr_dpp_description">配置此设备</string>
     <string name="qr_text">文本</string>
+    <string name="qr_wifi_title">连接到此 Wi-Fi 网络</string>
     <string name="title_activity_settings">设置</string>
     <string name="general_header">常规</string>
     <string name="photos_header">照片</string>

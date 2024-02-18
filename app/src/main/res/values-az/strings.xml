@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Lövhəyə kopyala</string>
     <string name="qr_icon_description">Nişan</string>
     <string name="qr_share_description">Paylaş</string>
-    <string name="qr_wifi_title">Bu Wi-Fi şəbəkəsinə bağlan</string>
     <string name="qr_dpp_description">Bu cihazı konfiqurasiya et</string>
     <string name="qr_text">Mətn</string>
+    <string name="qr_wifi_title">Bu Wi-Fi şəbəkəsinə bağlan</string>
     <string name="title_activity_settings">Ayarlar</string>
     <string name="general_header">Ümumi</string>
     <string name="photos_header">Fotolar</string>

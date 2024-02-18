@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Kopjo në \'clipboard\'</string>
     <string name="qr_icon_description">Ikonë</string>
     <string name="qr_share_description">Shpërndaje</string>
-    <string name="qr_wifi_title">Lidhu me këtë rrjet Wi-Fi</string>
     <string name="qr_dpp_description">Konfiguro këtë pajisje</string>
     <string name="qr_text">Tekst</string>
+    <string name="qr_wifi_title">Lidhu me këtë rrjet Wi-Fi</string>
     <string name="title_activity_settings">Cilësimet</string>
     <string name="general_header">Të përgjithshme</string>
     <string name="photos_header">Fotografitë</string>

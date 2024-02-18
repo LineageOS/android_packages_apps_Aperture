@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Copia al porta-retalls</string>
     <string name="qr_icon_description">Icona</string>
     <string name="qr_share_description">Comparteix</string>
-    <string name="qr_wifi_title">Connecta a aquesta xarxa Wi-Fi</string>
     <string name="qr_dpp_description">Configura aquest dispositiu</string>
     <string name="qr_text">Text</string>
+    <string name="qr_wifi_title">Connecta a aquesta xarxa Wi-Fi</string>
     <string name="title_activity_settings">Configuració</string>
     <string name="general_header">General</string>
     <string name="photos_header">Fotos</string>
