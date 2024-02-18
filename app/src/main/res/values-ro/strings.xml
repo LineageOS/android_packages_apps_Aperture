@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Copiați în clipboard</string>
     <string name="qr_icon_description">Iconiță</string>
     <string name="qr_share_description">Distribuiți</string>
-    <string name="qr_wifi_title">Conectați-vă la această rețea Wi-Fi</string>
     <string name="qr_dpp_description">Configurați acest dispozitiv</string>
     <string name="qr_text">Text</string>
+    <string name="qr_wifi_title">Conectați-vă la această rețea Wi-Fi</string>
     <string name="title_activity_settings">Setări</string>
     <string name="general_header">General</string>
     <string name="photos_header">Fotografii</string>

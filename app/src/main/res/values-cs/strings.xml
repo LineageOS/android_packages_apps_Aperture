@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Zkopírovat do schránky</string>
     <string name="qr_icon_description">Ikona</string>
     <string name="qr_share_description">Sdílet</string>
-    <string name="qr_wifi_title">Připojit k této Wi-Fi síti</string>
     <string name="qr_dpp_description">Nastavit toto zařízení</string>
     <string name="qr_text">Text</string>
+    <string name="qr_wifi_title">Připojit k této Wi-Fi síti</string>
     <string name="title_activity_settings">Nastavení</string>
     <string name="general_header">Obecné</string>
     <string name="photos_header">Fotky</string>

@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Αντιγραφή στο πρόχειρο</string>
     <string name="qr_icon_description">Εικονίδιο</string>
     <string name="qr_share_description">Κοινή χρήση</string>
-    <string name="qr_wifi_title">Σύνδεση σε αυτό το δίκτυο Wi-Fi</string>
     <string name="qr_dpp_description">Ρύθμιση αυτής της συσκευής</string>
     <string name="qr_text">Κείμενο</string>
+    <string name="qr_wifi_title">Σύνδεση σε αυτό το δίκτυο Wi-Fi</string>
     <string name="title_activity_settings">Ρυθμίσεις</string>
     <string name="general_header">Γενικές</string>
     <string name="photos_header">Φωτογραφίες</string>

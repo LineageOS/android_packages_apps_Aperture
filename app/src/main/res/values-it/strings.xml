@@ -37,9 +37,9 @@
     <string name="qr_copy_description">Copia negli appunti</string>
     <string name="qr_icon_description">Icona</string>
     <string name="qr_share_description">Condividi</string>
-    <string name="qr_wifi_title">Collegati a questa rete Wi-Fi</string>
     <string name="qr_dpp_description">Configura questo dispositivo</string>
     <string name="qr_text">Testo</string>
+    <string name="qr_wifi_title">Collegati a questa rete Wi-Fi</string>
     <string name="title_activity_settings">Impostazioni</string>
     <string name="general_header">Generali</string>
     <string name="photos_header">Foto</string>
