@@ -19,6 +19,11 @@ android_app {
     sdk_version: "33",
     product_specific: true,
 
+    required: [
+        "ApertureFrameworksBaseOverlay",
+        "ApertureLensLauncher",
+    ],
+
     static_libs: [
         // DO NOT EDIT THIS SECTION MANUALLY
         "androidx.core_core-ktx",
@@ -41,11 +46,9 @@ android_app {
         "Aperture_io.coil-kt_coil",
         "Aperture_io.coil-kt_coil-video",
     ],
+
     optional_uses_libs: [
         "androidx.camera.extensions.impl"
-    ],
-    required: [
-        "ApertureLensLauncher",
     ],
 
     optimize: {
