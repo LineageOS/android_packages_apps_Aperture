@@ -34,11 +34,16 @@ import com.google.zxing.BinaryBitmap
 import com.google.zxing.MultiFormatReader
 import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.*
 import kotlin.reflect.cast
 
-class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
+class QrImageAnalyzer(private val activity: Activity, private val scope: CoroutineScope) :
+    ImageAnalysis.Analyzer {
     // Views
     private val bottomSheetDialog by lazy {
         BottomSheetDialog(activity).apply {
@@ -100,24 +105,22 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
     }
 
     private fun showQrDialog(result: Result) {
-        activity.runOnUiThread {
+        scope.launch {
             if (bottomSheetDialog.isShowing) {
-                return@runOnUiThread
+                return@launch
             }
 
-            val text = result.text ?: return@runOnUiThread
+            val text = result.text ?: return@launch
             bottomSheetDialogData.text = text
 
             // Classify message
-            Thread {
+            withContext(Dispatchers.IO) {
                 val textClassification = qrTextClassifier.classifyText(result)
 
-                activity.runOnUiThread {
+                withContext(Dispatchers.Default) {
                     bottomSheetDialogData.text = textClassification.text
                     bottomSheetDialogActionsLayout.removeAllViews()
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
-                        textClassification.actions.isNotEmpty()
-                    ) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && textClassification.actions.isNotEmpty()) {
                         with(textClassification.actions[0]) {
                             bottomSheetDialogCardView.setOnClickListener {
                                 try {
@@ -179,7 +182,7 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
                         )
                     }
                 }
-            }.start()
+            }
 
             // Make links clickable if not on locked keyguard
             bottomSheetDialogData.movementMethod =
