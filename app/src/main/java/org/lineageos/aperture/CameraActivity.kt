@@ -81,6 +81,7 @@ import androidx.core.view.children
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import coil.decode.VideoFrameDecoder
 import coil.load
@@ -242,7 +243,7 @@ open class CameraActivity : AppCompatActivity() {
     private lateinit var videoAudioConfig: AudioConfig
 
     // QR
-    private val imageAnalyzer by lazy { QrImageAnalyzer(this) }
+    private val imageAnalyzer by lazy { QrImageAnalyzer(this, lifecycleScope) }
     private val isGoogleLensAvailable by lazy { GoogleLensUtils.isGoogleLensAvailable(this) }
 
     private var viewFinderTouchEvent: MotionEvent? = null

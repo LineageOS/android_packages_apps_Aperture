@@ -34,11 +34,16 @@ import com.google.zxing.BinaryBitmap
 import com.google.zxing.MultiFormatReader
 import com.google.zxing.Result
 import com.google.zxing.common.HybridBinarizer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.*
 import kotlin.reflect.cast
 
-class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
+class QrImageAnalyzer(private val activity: Activity, private val scope: CoroutineScope) :
+    ImageAnalysis.Analyzer {
     // Views
     private val bottomSheetDialog by lazy {
         BottomSheetDialog(activity).apply {
@@ -100,86 +105,79 @@ class QrImageAnalyzer(private val activity: Activity) : ImageAnalysis.Analyzer {
     }
 
     private fun showQrDialog(result: Result) {
-        activity.runOnUiThread {
+        scope.launch(Dispatchers.Main) {
             if (bottomSheetDialog.isShowing) {
-                return@runOnUiThread
+                return@launch
             }
 
-            val text = result.text ?: return@runOnUiThread
+            val text = result.text ?: return@launch
             bottomSheetDialogData.text = text
 
             // Classify message
-            Thread {
-                val textClassification = qrTextClassifier.classifyText(result)
+            val textClassification = withContext(Dispatchers.IO) {
+                qrTextClassifier.classifyText(result)
+            }
 
-                activity.runOnUiThread {
-                    bottomSheetDialogData.text = textClassification.text
-                    bottomSheetDialogActionsLayout.removeAllViews()
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P &&
-                        textClassification.actions.isNotEmpty()
-                    ) {
-                        with(textClassification.actions[0]) {
-                            bottomSheetDialogCardView.setOnClickListener {
-                                try {
-                                    actionIntent.send()
-                                } catch (e: PendingIntent.CanceledException) {
-                                    Toast.makeText(
-                                        activity,
-                                        R.string.qr_no_app_available_for_action,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            }
-                            bottomSheetDialogCardView.contentDescription = contentDescription
-                            bottomSheetDialogData.movementMethod = null
-                            bottomSheetDialogTitle.text = title
-                            this.icon.loadDrawableAsync(activity, {
-                                bottomSheetDialogIcon.setImageDrawable(it)
-                            }, Handler(Looper.getMainLooper()))
+            bottomSheetDialogData.text = textClassification.text
+            bottomSheetDialogActionsLayout.removeAllViews()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && textClassification.actions.isNotEmpty()) {
+                with(textClassification.actions[0]) {
+                    bottomSheetDialogCardView.setOnClickListener {
+                        try {
+                            actionIntent.send()
+                        } catch (e: PendingIntent.CanceledException) {
+                            Toast.makeText(
+                                activity,
+                                R.string.qr_no_app_available_for_action,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                        for (action in textClassification.actions.drop(1)) {
-                            bottomSheetDialogActionsLayout.addView(inflateButton().apply {
-                                setOnClickListener {
-                                    try {
-                                        action.actionIntent.send()
-                                    } catch (e: PendingIntent.CanceledException) {
-                                        Toast.makeText(
-                                            activity,
-                                            R.string.qr_no_app_available_for_action,
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-                                }
-                                contentDescription = action.contentDescription
-                                this.text = action.title
-                                action.icon.loadDrawableAsync(activity, {
-                                    it.setBounds(0, 0, 15.px, 15.px)
-                                    setCompoundDrawables(
-                                        it, null, null, null
-                                    )
-                                }, Handler(Looper.getMainLooper()))
-                            })
-                        }
-                    } else {
-                        bottomSheetDialogCardView.setOnClickListener {}
-                        bottomSheetDialogTitle.text = activity.resources.getText(R.string.qr_text)
-                        bottomSheetDialogIcon.setImageDrawable(
-                            AppCompatResources.getDrawable(
-                                activity, R.drawable.ic_text_snippet
-                            )?.let {
-                                DrawableCompat.wrap(it.mutate()).apply {
-                                    DrawableCompat.setTint(
-                                        this,
-                                        activity.getThemeColor(
-                                            com.google.android.material.R.attr.colorOnBackground
-                                        )
-                                    )
-                                }
-                            }
-                        )
+                    }
+                    bottomSheetDialogCardView.contentDescription = contentDescription
+                    bottomSheetDialogData.movementMethod = null
+                    bottomSheetDialogTitle.text = title
+                    scope.launch(Dispatchers.IO) {
+                        bottomSheetDialogIcon.setImageDrawable(icon.loadDrawable(activity))
                     }
                 }
-            }.start()
+                for (action in textClassification.actions.drop(1)) {
+                    bottomSheetDialogActionsLayout.addView(inflateButton().apply {
+                        setOnClickListener {
+                            try {
+                                action.actionIntent.send()
+                            } catch (e: PendingIntent.CanceledException) {
+                                Toast.makeText(
+                                    activity,
+                                    R.string.qr_no_app_available_for_action,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                        contentDescription = action.contentDescription
+                        this.text = action.title
+                        action.icon.loadDrawableAsync(activity, {
+                            it.setBounds(0, 0, 15.px, 15.px)
+                            setCompoundDrawables(
+                                it, null, null, null
+                            )
+                        }, Handler(Looper.getMainLooper()))
+                    })
+                }
+            } else {
+                bottomSheetDialogCardView.setOnClickListener {}
+                bottomSheetDialogTitle.text = activity.resources.getText(R.string.qr_text)
+                bottomSheetDialogIcon.setImageDrawable(AppCompatResources.getDrawable(
+                    activity, R.drawable.ic_text_snippet
+                )?.let {
+                    DrawableCompat.wrap(it.mutate()).apply {
+                        DrawableCompat.setTint(
+                            this, activity.getThemeColor(
+                                com.google.android.material.R.attr.colorOnBackground
+                            )
+                        )
+                    }
+                })
+            }
 
             // Make links clickable if not on locked keyguard
             bottomSheetDialogData.movementMethod =
