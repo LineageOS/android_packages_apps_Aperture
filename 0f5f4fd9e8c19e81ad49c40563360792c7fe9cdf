@@ -22,6 +22,30 @@
       },
       "revId": "0f5f4fd9e8c19e81ad49c40563360792c7fe9cdf",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "890763b9_b15fa839",
+        "filename": "app/src/main/java/org/lineageos/aperture/qr/QrImageAnalyzer.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-02-24T21:53:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f1caa9c_a1e1db11",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 108
+      },
+      "revId": "0f5f4fd9e8c19e81ad49c40563360792c7fe9cdf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
