@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed6fd2bb_808a50f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-02-26T00:06:03Z",
+      "side": 1,
+      "message": "We don\u0027t have generatebp hooked up to lens_launcher, so this won\u0027t get autoupdated.",
+      "revId": "3f510eca9b597b0bdbcdf7a141a6d7b3fd156496",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
