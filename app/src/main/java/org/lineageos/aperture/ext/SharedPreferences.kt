@@ -160,6 +160,7 @@ internal var SharedPreferences.photoFlashMode: FlashMode
         "auto" -> FlashMode.AUTO
         "on" -> FlashMode.ON
         "torch" -> FlashMode.TORCH
+        "screen" -> FlashMode.SCREEN
         // Default to auto
         else -> FlashMode.AUTO
     }
@@ -170,6 +171,7 @@ internal var SharedPreferences.photoFlashMode: FlashMode
                 FlashMode.AUTO -> "auto"
                 FlashMode.ON -> "on"
                 FlashMode.TORCH -> "torch"
+                FlashMode.SCREEN -> "screen"
             }
         )
     }
