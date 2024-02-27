@@ -24,7 +24,6 @@ var CameraController.flashMode: FlashMode
     set(value) {
         enableTorch(value == FlashMode.TORCH)
 
-        // TODO: support FlashMode.RED_EYE
         imageCaptureFlashMode = when (value) {
             FlashMode.OFF -> ImageCapture.FLASH_MODE_OFF
             FlashMode.AUTO -> ImageCapture.FLASH_MODE_AUTO

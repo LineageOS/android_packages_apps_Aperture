@@ -22,12 +22,6 @@ enum class FlashMode {
     ON,
 
     /**
-     * Flash will be fired in red-eye reduction mode.
-     * Currently not supported by CameraX.
-     */
-    // RED_EYE,
-
-    /**
      * Constant emission of light during preview, auto-focus and snapshot.
      */
     TORCH;
