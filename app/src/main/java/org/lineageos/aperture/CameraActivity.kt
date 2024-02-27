@@ -63,6 +63,7 @@ import androidx.camera.video.muted
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
+import androidx.camera.view.ScreenFlashView
 import androidx.camera.view.onPinchToZoom
 import androidx.camera.view.video.AudioConfig
 import androidx.cardview.widget.CardView
@@ -169,6 +170,7 @@ open class CameraActivity : AppCompatActivity() {
     private val previewBlurView by lazy { findViewById<PreviewBlurView>(R.id.previewBlurView) }
     private val primaryBarLayout by lazy { findViewById<ConstraintLayout>(R.id.primaryBarLayout) }
     private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
+    private val screenFlashView by lazy { findViewById<ScreenFlashView>(R.id.screenFlashView) }
     private val secondaryBottomBarLayout by lazy { findViewById<ConstraintLayout>(R.id.secondaryBottomBarLayout) }
     private val secondaryTopBarLayout by lazy { findViewById<HorizontalScrollView>(R.id.secondaryTopBarLayout) }
     private val settingsButton by lazy { findViewById<Button>(R.id.settingsButton) }
@@ -230,6 +232,9 @@ open class CameraActivity : AppCompatActivity() {
         }
 
     private var zoomGestureMutex = Mutex()
+
+    private val supportedFlashModes: Set<FlashMode>
+        get() = cameraMode.supportedFlashModes.intersect(camera.supportedFlashModes)
 
     // Video
     private val supportedVideoQualities: Set<Quality>
@@ -659,18 +664,15 @@ open class CameraActivity : AppCompatActivity() {
         proButton.setOnClickListener {
             secondaryTopBarLayout.slide()
         }
-        flashButton.setOnClickListener { cycleFlashMode() }
-        flashButton.setOnLongClickListener {
-            if (cameraMode == CameraMode.PHOTO) {
-                toggleForceTorch()
-                true
-            } else {
-                false
-            }
-        }
+        flashButton.setOnClickListener { cycleFlashMode(false) }
+        flashButton.setOnLongClickListener { cycleFlashMode(true) }
 
         // Attach CameraController to PreviewView
         viewFinder.controller = cameraController
+
+        // Attach CameraController to ScreenFlashView
+        screenFlashView.setController(cameraController)
+        screenFlashView.setScreenFlashWindow(window)
 
         // Observe torch state
         cameraController.torchState.observe(this) {
@@ -874,11 +876,6 @@ open class CameraActivity : AppCompatActivity() {
 
         // Observe camera
         model.camera.observe(this) {
-            val camera = it ?: return@observe
-
-            // Update secondary bar buttons
-            flashButton.isVisible = camera.hasFlashUnit
-
             updateSecondaryTopBarButtons()
         }
 
@@ -952,6 +949,7 @@ open class CameraActivity : AppCompatActivity() {
                         FlashMode.AUTO -> R.drawable.ic_flash_auto
                         FlashMode.ON -> R.drawable.ic_flash_on
                         FlashMode.TORCH -> R.drawable.ic_flash_torch
+                        FlashMode.SCREEN -> R.drawable.ic_flash_screen
                     }
                 )
             )
@@ -1819,7 +1817,7 @@ open class CameraActivity : AppCompatActivity() {
                 CameraMode.PHOTO -> sharedPreferences.photoFlashMode
                 CameraMode.VIDEO -> sharedPreferences.videoFlashMode
                 CameraMode.QR -> FlashMode.OFF
-            }
+            }.takeIf { supportedFlashModes.contains(it) } ?: FlashMode.OFF
         )
         setMicrophoneMode(videoMicMode)
 
@@ -1928,8 +1926,16 @@ open class CameraActivity : AppCompatActivity() {
             val supportedVideoFrameRates = videoQualityInfo?.supportedFrameRates ?: setOf()
             val supportedVideoDynamicRanges = videoQualityInfo?.supportedDynamicRanges ?: setOf()
 
+            val supportedFlashModes = cameraMode.supportedFlashModes.intersect(
+                camera.supportedFlashModes
+            )
+
+            // Hide the button if the only available mode is off,
+            // we want the user to know if any other mode is being used
+            flashButton.isVisible =
+                supportedFlashModes.size != 1 || supportedFlashModes.first() != FlashMode.OFF
             flashButton.isEnabled =
-                cameraMode != CameraMode.PHOTO || cameraState == CameraState.IDLE
+                cameraState == CameraState.IDLE || cameraMode == CameraMode.VIDEO
             effectButton.isVisible = cameraMode == CameraMode.PHOTO &&
                     photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG &&
                     camera.supportedExtensionModes.size > 1
@@ -2073,49 +2079,51 @@ open class CameraActivity : AppCompatActivity() {
 
     /**
      * Cycle flash mode
+     * @param forceTorch Whether force torch mode should be toggled
+     * @return false if called with an unsupported configuration, true otherwise
      */
-    private fun cycleFlashMode() {
+    private fun cycleFlashMode(forceTorch: Boolean): Boolean {
+        // Long-press is supported only on photo mode and if torch mode is available
+        val forceTorchAvailable = cameraMode == CameraMode.PHOTO
+                && camera.supportedFlashModes.contains(FlashMode.TORCH)
+        if (forceTorch && !forceTorchAvailable) {
+            return false
+        }
+
         val currentFlashMode = flashMode
 
-        when (cameraMode) {
-            CameraMode.PHOTO -> FlashMode.PHOTO_ALLOWED_MODES.next(currentFlashMode)
-            CameraMode.VIDEO -> FlashMode.VIDEO_ALLOWED_MODES.next(currentFlashMode)
-            else -> FlashMode.OFF
+        when (forceTorch) {
+            true -> when (currentFlashMode) {
+                FlashMode.TORCH -> sharedPreferences.photoFlashMode.takeIf {
+                    supportedFlashModes.contains(it)
+                } ?: FlashMode.OFF
+                else -> FlashMode.TORCH
+            }
+
+            else -> supportedFlashModes.toList().next(currentFlashMode)
         }?.let {
             changeFlashMode(it)
 
-            when (cameraMode) {
-                CameraMode.PHOTO -> sharedPreferences.photoFlashMode = it
-                CameraMode.VIDEO -> sharedPreferences.videoFlashMode = it
-                else -> {}
+            if (!forceTorch) {
+                when (cameraMode) {
+                    CameraMode.PHOTO -> sharedPreferences.photoFlashMode = it
+                    CameraMode.VIDEO -> sharedPreferences.videoFlashMode = it
+                    else -> {}
+                }
             }
         }
 
-        if (cameraMode == CameraMode.PHOTO && !sharedPreferences.forceTorchHelpShown &&
-            !forceTorchSnackbar.isShownOrQueued
-        ) {
-            forceTorchSnackbar.show()
-        }
-    }
-
-    /**
-     * Toggle torch mode on photo mode.
-     */
-    private fun toggleForceTorch() {
-        val currentFlashMode = flashMode
-
-        val newFlashMode = if (currentFlashMode != FlashMode.TORCH) {
-            FlashMode.TORCH
-        } else {
-            sharedPreferences.photoFlashMode
-        }
-
-        changeFlashMode(newFlashMode)
-
+        // Check if we should show the force torch suggestion
         if (!sharedPreferences.forceTorchHelpShown) {
-            // The user figured it out by themself
-            sharedPreferences.forceTorchHelpShown = true
+            if (forceTorch) {
+                // The user figured it out by themself
+                sharedPreferences.forceTorchHelpShown = true
+            } else if (!forceTorchSnackbar.isShownOrQueued) {
+                forceTorchSnackbar.show()
+            }
         }
+
+        return true
     }
 
     /**

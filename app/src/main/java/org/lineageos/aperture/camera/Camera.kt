@@ -18,6 +18,7 @@ import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.ColorCorrectionAberrationMode
 import org.lineageos.aperture.models.DistortionCorrectionMode
 import org.lineageos.aperture.models.EdgeMode
+import org.lineageos.aperture.models.FlashMode
 import org.lineageos.aperture.models.FrameRate
 import org.lineageos.aperture.models.HotPixelMode
 import org.lineageos.aperture.models.NoiseReductionMode
@@ -50,7 +51,7 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
     val cameraType = cameraFacing.cameraType
 
     val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
-    val hasFlashUnit = cameraInfo.hasFlashUnit()
+    private val hasFlashUnit = cameraInfo.hasFlashUnit()
 
     val isLogical = camera2CameraInfo.physicalCameraIds.size > 1
 
@@ -233,6 +234,24 @@ class Camera(cameraInfo: CameraInfo, cameraManager: CameraManager) {
             }
         }
     }.toSet()
+
+    /**
+     * The supported flash modes of this camera.
+     * Keep in mind that support also depends on the camera mode used.
+     */
+    val supportedFlashModes = mutableSetOf(
+        FlashMode.OFF,
+    ).apply {
+        if (hasFlashUnit) {
+            add(FlashMode.AUTO)
+            add(FlashMode.ON)
+            add(FlashMode.TORCH)
+        }
+
+        if (cameraFacing == CameraFacing.FRONT) {
+            add(FlashMode.SCREEN)
+        }
+    }
 
     override fun equals(other: Any?): Boolean {
         val camera = this::class.safeCast(other) ?: return false

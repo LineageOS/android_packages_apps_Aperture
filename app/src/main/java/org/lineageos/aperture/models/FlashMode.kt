@@ -24,24 +24,11 @@ enum class FlashMode {
     /**
      * Constant emission of light during preview, auto-focus and snapshot.
      */
-    TORCH;
+    TORCH,
 
-    companion object {
-        /**
-         * Allowed flash modes when in photo mode.
-         */
-        val PHOTO_ALLOWED_MODES = listOf(
-            OFF,
-            AUTO,
-            ON,
-        )
-
-        /**
-         * Allowed flash modes when in video mode.
-         */
-        val VIDEO_ALLOWED_MODES = listOf(
-            OFF,
-            TORCH,
-        )
-    }
+    /**
+     * Display screen brightness will be used as alternative to flash when taking a picture with
+     * front camera.
+     */
+    SCREEN,
 }
