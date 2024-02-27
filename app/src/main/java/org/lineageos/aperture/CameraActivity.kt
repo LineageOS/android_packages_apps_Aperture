@@ -1376,13 +1376,7 @@ open class CameraActivity : AppCompatActivity() {
             outputOptions,
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
-                override fun onError(exc: ImageCaptureException) {
-                    Log.e(LOG_TAG, "Photo capture failed: ${exc.message}", exc)
-                    cameraState = CameraState.IDLE
-                    shutterButton.isEnabled = true
-                }
-
-                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                override fun onCaptureStarted() {
                     cameraSoundsUtils.playShutterClick()
                     viewFinder.foreground = ColorDrawable(Color.BLACK)
                     ValueAnimator.ofInt(0, 255, 0).apply {
@@ -1390,6 +1384,15 @@ open class CameraActivity : AppCompatActivity() {
                             viewFinder.foreground.alpha = anim.animatedValue as Int
                         }
                     }.start()
+                }
+
+                override fun onError(exc: ImageCaptureException) {
+                    Log.e(LOG_TAG, "Photo capture failed: ${exc.message}", exc)
+                    cameraState = CameraState.IDLE
+                    shutterButton.isEnabled = true
+                }
+
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     Log.d(LOG_TAG, "Photo capture succeeded: ${output.savedUri}")
                     cameraState = CameraState.IDLE
                     shutterButton.isEnabled = true
