@@ -16,6 +16,24 @@
       "message": "this uses canDisableShutterSound from Camera1 on \u003c33, so let\u0027s not.",
       "revId": "3ab8d05b61c441d75aa06edf903b1a909b59937a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "424afd85_68833a31",
+        "filename": "app/src/main/java/org/lineageos/aperture/utils/CameraSoundsUtils.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-28T12:48:21Z",
+      "side": 1,
+      "message": "It should actually be fine, it uses the same logic that we were using",
+      "parentUuid": "714e9895_5deaed4d",
+      "revId": "3ab8d05b61c441d75aa06edf903b1a909b59937a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
