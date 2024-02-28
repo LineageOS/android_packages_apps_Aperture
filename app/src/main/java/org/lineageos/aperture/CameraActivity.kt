@@ -157,8 +157,9 @@ open class CameraActivity : AppCompatActivity() {
     private val exposureLevel by lazy { findViewById<VerticalSlider>(R.id.exposureLevel) }
     private val flashButton by lazy { findViewById<ImageButton>(R.id.flashButton) }
     private val flipCameraButton by lazy { findViewById<ImageButton>(R.id.flipCameraButton) }
-    private val galleryButton by lazy { findViewById<ImageView>(R.id.galleryButton) }
     private val galleryButtonCardView by lazy { findViewById<CardView>(R.id.galleryButtonCardView) }
+    private val galleryButtonIconImageView by lazy { findViewById<ImageView>(R.id.galleryButtonIconImageView) }
+    private val galleryButtonPreviewImageView by lazy { findViewById<ImageView>(R.id.galleryButtonPreviewImageView) }
     private val googleLensButton by lazy { findViewById<ImageButton>(R.id.googleLensButton) }
     private val gridButton by lazy { findViewById<Button>(R.id.gridButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
@@ -839,7 +840,7 @@ open class CameraActivity : AppCompatActivity() {
             }
         }
 
-        galleryButton.setOnClickListener { openGallery() }
+        galleryButtonCardView.setOnClickListener { openGallery() }
 
         // Set lens switching callback
         lensSelectorLayout.onCameraChangeCallback = {
@@ -925,7 +926,7 @@ open class CameraActivity : AppCompatActivity() {
             updateSecondaryTopBarButtons()
 
             // Update primary bar buttons
-            galleryButton.isEnabled = cameraState == CameraState.IDLE
+            galleryButtonCardView.isEnabled = cameraState == CameraState.IDLE
             // Shutter button must stay enabled
             flipCameraButton.isEnabled = cameraState == CameraState.IDLE
             videoRecordingStateButton.isVisible = cameraState.isRecordingVideo
@@ -948,7 +949,7 @@ open class CameraActivity : AppCompatActivity() {
                         FlashMode.OFF -> R.drawable.ic_flash_off
                         FlashMode.AUTO -> R.drawable.ic_flash_auto
                         FlashMode.ON -> R.drawable.ic_flash_on
-                        FlashMode.TORCH -> R.drawable.ic_flash_torch
+                        FlashMode.TORCH -> R.drawable.ic_flashlight_on
                         FlashMode.SCREEN -> R.drawable.ic_flash_screen
                     }
                 )
@@ -963,10 +964,10 @@ open class CameraActivity : AppCompatActivity() {
             gridButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (gridMode) {
-                    GridMode.OFF -> R.drawable.ic_grid_off
-                    GridMode.ON_3 -> R.drawable.ic_grid_on_3
-                    GridMode.ON_4 -> R.drawable.ic_grid_on_4
-                    GridMode.ON_GOLDEN_RATIO -> R.drawable.ic_grid_on_goldenratio
+                    GridMode.OFF -> R.drawable.ic_grid_3x3_off
+                    GridMode.ON_3 -> R.drawable.ic_grid_3x3
+                    GridMode.ON_4 -> R.drawable.ic_grid_4x4
+                    GridMode.ON_GOLDEN_RATIO -> R.drawable.ic_grid_goldenratio
                 },
                 0,
                 0
@@ -990,8 +991,8 @@ open class CameraActivity : AppCompatActivity() {
                 0,
                 when (timerMode) {
                     TimerMode.OFF -> R.drawable.ic_timer_off
-                    TimerMode.ON_3S -> R.drawable.ic_timer_3
-                    TimerMode.ON_10S -> R.drawable.ic_timer_10
+                    TimerMode.ON_3S -> R.drawable.ic_timer_3_alt_1
+                    TimerMode.ON_10S -> R.drawable.ic_timer_10_alt_1
                 },
                 0,
                 0
@@ -1016,16 +1017,6 @@ open class CameraActivity : AppCompatActivity() {
             val photoAspectRatio = it ?: return@observe
 
             // Update secondary bar buttons
-            aspectRatioButton.setCompoundDrawablesWithIntrinsicBounds(
-                0,
-                when (photoAspectRatio) {
-                    AspectRatio.RATIO_4_3 -> R.drawable.ic_aspect_ratio_4_3
-                    AspectRatio.RATIO_16_9 -> R.drawable.ic_aspect_ratio_16_9
-                    else -> throw Exception("Unknown aspect ratio $it")
-                },
-                0,
-                0
-            )
             aspectRatioButton.text = resources.getText(
                 when (photoAspectRatio) {
                     AspectRatio.RATIO_4_3 -> R.string.aspect_ratio_4_3
@@ -1043,13 +1034,13 @@ open class CameraActivity : AppCompatActivity() {
             effectButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (photoEffect) {
-                    ExtensionMode.NONE -> R.drawable.ic_effect_none
+                    ExtensionMode.NONE -> R.drawable.ic_blur_off
                     ExtensionMode.BOKEH -> R.drawable.ic_effect_bokeh
-                    ExtensionMode.HDR -> R.drawable.ic_effect_hdr
-                    ExtensionMode.NIGHT -> R.drawable.ic_effect_night
-                    ExtensionMode.FACE_RETOUCH -> R.drawable.ic_effect_face_retouch
-                    ExtensionMode.AUTO -> R.drawable.ic_effect_auto
-                    else -> R.drawable.ic_effect_none
+                    ExtensionMode.HDR -> R.drawable.ic_hdr_on
+                    ExtensionMode.NIGHT -> R.drawable.ic_clear_night
+                    ExtensionMode.FACE_RETOUCH -> R.drawable.ic_face_retouching_natural
+                    ExtensionMode.AUTO -> R.drawable.ic_hdr_auto
+                    else -> R.drawable.ic_blur_off
                 },
                 0,
                 0
@@ -1075,10 +1066,10 @@ open class CameraActivity : AppCompatActivity() {
             videoQualityButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (videoQuality) {
-                    Quality.SD -> R.drawable.ic_video_quality_sd
-                    Quality.HD -> R.drawable.ic_video_quality_hd
-                    Quality.FHD -> R.drawable.ic_video_quality_hd
-                    Quality.UHD -> R.drawable.ic_video_quality_uhd
+                    Quality.SD -> R.drawable.ic_sd
+                    Quality.HD -> R.drawable.ic_hd
+                    Quality.FHD -> R.drawable.ic_full_hd
+                    Quality.UHD -> R.drawable.ic_4k
                     else -> throw Exception("Unknown video quality $it")
                 },
                 0,
@@ -2185,12 +2176,17 @@ open class CameraActivity : AppCompatActivity() {
 
     private fun updateGalleryButton() {
         runOnUiThread {
+            galleryButtonIconImageView.setImageResource(R.drawable.ic_image)
+            galleryButtonIconImageView.isVisible = true
+
+            galleryButtonPreviewImageView.isVisible = false
+
             val uri = sharedPreferences.lastSavedUri?.takeIf {
                 MediaStoreUtils.fileExists(this, it)
             }
             val keyguardLocked = keyguardManager.isKeyguardLocked
             if (uri != null && (!keyguardLocked || tookSomething)) {
-                galleryButton.load(uri) {
+                galleryButtonPreviewImageView.load(uri) {
                     decoderFactory(VideoFrameDecoder.Factory())
                     crossfade(true)
                     scale(Scale.FILL)
@@ -2199,28 +2195,30 @@ open class CameraActivity : AppCompatActivity() {
                     fallback(R.drawable.ic_image)
                     listener(object : ImageRequest.Listener {
                         override fun onSuccess(request: ImageRequest, result: SuccessResult) {
-                            galleryButton.setPadding(0)
                             super.onSuccess(request, result)
+
+                            galleryButtonPreviewImageView.isVisible = true
+                            galleryButtonIconImageView.isVisible = false
                         }
 
                         override fun onError(request: ImageRequest, result: ErrorResult) {
-                            galleryButton.setPadding(15.px)
                             super.onError(request, result)
+
                             Log.e(LOG_TAG, "Failed to load gallery button icon", result.throwable)
+
+                            galleryButtonPreviewImageView.isVisible = false
+                            galleryButtonIconImageView.isVisible = true
                         }
 
                         override fun onCancel(request: ImageRequest) {
-                            galleryButton.setPadding(15.px)
+                            galleryButtonPreviewImageView.isVisible = false
+                            galleryButtonIconImageView.isVisible = true
                             super.onCancel(request)
                         }
                     })
                 }
             } else if (keyguardLocked) {
-                galleryButton.setPadding(15.px)
-                galleryButton.setImageResource(R.drawable.ic_lock)
-            } else {
-                galleryButton.setPadding(15.px)
-                galleryButton.setImageResource(R.drawable.ic_image)
+                galleryButtonIconImageView.setImageResource(R.drawable.ic_lock)
             }
         }
     }
