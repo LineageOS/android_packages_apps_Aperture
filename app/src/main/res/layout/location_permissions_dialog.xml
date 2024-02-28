@@ -79,9 +79,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/location_permission_dialog_turn_on"
                 android:textColor="?attr/colorAccent"
+                app:backgroundTint="@android:color/transparent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:backgroundTint="@android:color/transparent" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

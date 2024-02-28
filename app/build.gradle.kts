@@ -122,6 +122,7 @@ configure<GenerateBpPluginExtension> {
                         !module.group.startsWith("androidx.media3") &&
                         module.name != "lifecycle-common"
             }
+
             module.group.startsWith("org.jetbrains") -> true
             module.group == "com.google.auto.value" -> true
             module.group == "com.google.errorprone" -> true

@@ -16,7 +16,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
-import org.lineageos.aperture.R
 import kotlin.reflect.KClass
 
 fun KClass<RemoteAction>.build(
