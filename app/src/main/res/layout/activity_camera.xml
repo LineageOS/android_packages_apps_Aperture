@@ -140,7 +140,7 @@
             <Button
                 android:id="@+id/aspectRatioButton"
                 style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_aspect_ratio_4_3"
+                android:drawableTop="@drawable/ic_aspect_ratio"
                 android:text="@string/aspect_ratio_4_3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/effectButton"
@@ -150,7 +150,7 @@
             <Button
                 android:id="@+id/effectButton"
                 style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_effect_none"
+                android:drawableTop="@drawable/ic_blur_off"
                 android:text="@string/effect_none"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/videoQualityButton"
@@ -161,7 +161,7 @@
             <Button
                 android:id="@+id/videoQualityButton"
                 style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_video_quality_hd"
+                android:drawableTop="@drawable/ic_hd"
                 android:text="@string/video_quality_fhd"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/videoFrameRateButton"
@@ -212,7 +212,7 @@
             <Button
                 android:id="@+id/gridButton"
                 style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
-                android:drawableTop="@drawable/ic_grid_off"
+                android:drawableTop="@drawable/ic_grid_3x3_off"
                 android:text="@string/grid_off"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/settingsButton"
@@ -314,12 +314,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/galleryButton"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/gallery_button_description"
-                android:scaleType="centerCrop" />
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/galleryButtonIconImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/gallery_button_description"
+                    android:scaleX="0.50"
+                    android:scaleY="0.50"
+                    app:tint="?attr/colorOnSecondaryContainer" />
+
+                <ImageView
+                    android:id="@+id/galleryButtonPreviewImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/gallery_button_description"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
         </androidx.cardview.widget.CardView>
 
         <ImageButton
