@@ -16,6 +16,24 @@
       "message": "Do not use gphotos intent stuff, use clipdata to add medias (we support that on Glimpse)",
       "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9e397c9_44cd1f8b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-02-29T17:15:37Z",
+      "side": 1,
+      "message": "Also references to subclasses in the main class is not good",
+      "parentUuid": "23eb273b_82c553ce",
+      "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
