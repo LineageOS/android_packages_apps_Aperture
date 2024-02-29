@@ -34,6 +34,75 @@
       "parentUuid": "23eb273b_82c553ce",
       "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31369372_cf45262d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 9
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2024-02-29T18:14:36Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a9e397c9_44cd1f8b",
+      "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "134a31d6_613261eb",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2024-02-29T18:14:36Z",
+      "side": 1,
+      "message": "Don\u0027t reference subclass",
+      "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0426b1b3_6689be63",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 2378,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2024-02-29T18:14:36Z",
+      "side": 1,
+      "message": "Don\u0027t reference subclass",
+      "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "735dd58d_1851cf57",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 2633,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2024-02-29T18:14:36Z",
+      "side": 1,
+      "message": "Remove support for this",
+      "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
