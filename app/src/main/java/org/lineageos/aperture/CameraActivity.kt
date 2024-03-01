@@ -216,8 +216,7 @@ open class CameraActivity : AppCompatActivity() {
     private var cameraMode by nonNullablePropertyDelegate { model.cameraMode }
     private var singleCaptureMode by nonNullablePropertyDelegate { model.inSingleCaptureMode }
     private var cameraState by nonNullablePropertyDelegate { model.cameraState }
-    private val screenRotation
-        get() = model.screenRotation
+    private var screenRotation by nonNullablePropertyDelegate { model.screenRotation }
     private var gridMode by nonNullablePropertyDelegate { model.gridMode }
     private var flashMode by nonNullablePropertyDelegate { model.flashMode }
     private var timerMode by nonNullablePropertyDelegate { model.timerMode }
@@ -419,8 +418,8 @@ open class CameraActivity : AppCompatActivity() {
 
                 val rotation = Rotation.fromDegreesInAperture(orientation)
 
-                if (screenRotation.value != rotation) {
-                    screenRotation.value = rotation
+                if (screenRotation != rotation) {
+                    screenRotation = rotation
                 }
             }
         }
