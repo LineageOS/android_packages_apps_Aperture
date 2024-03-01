@@ -14,7 +14,7 @@
     <string name="google_lens_button_description">გაიხსნას Google Lens</string>
     <string name="image_view_description">სურათის შეთვალიერება</string>
     <string name="pro_button_description">გამოცდილთათვის</string>
-    <string name="shutter_button_description">ჩამკეტი</string>
+    <string name="shutter_button_description">ფოტოჩამკეტი</string>
     <string name="video_recording_state_button_description">ვიდეოს ჩაწერის შეჩერება/განგრძობა</string>
     <string name="timer_off">ᲣᲙᲣᲗᲕᲚᲐ ᲒᲐᲛᲝᲠᲗ.</string>
     <string name="timer_3">ᲣᲙᲣᲗᲕᲚᲐ 3ᲬᲛ</string>
@@ -31,7 +31,7 @@
     <string name="grid_on_goldenratio">ᲑᲐᲓᲔ φ</string>
     <string name="mic_off">ᲛᲘᲙᲠ. ᲒᲐᲛᲝᲠᲗ.</string>
     <string name="mic_on">ᲛᲘᲙᲠ. ᲩᲐᲠᲗ.</string>
-    <string name="settings">ᲞᲐᲠᲐᲛᲔᲢᲠᲔᲑᲘ</string>
+    <string name="settings">ᲞᲐᲠᲐᲛᲔᲢᲠ.</string>
     <string name="app_permissions_toast">ნებადართული არაა მომხმარებლისგან.</string>
     <string name="camcorder_unsupported_toast">ვიდეოჩამწერი კამერა არ მოიძებნა.</string>
     <string name="qr_copy_description">ასლის აღება</string>
@@ -55,7 +55,7 @@
     <string name="qr_product_content_description">მოინახოს ნაწარმის ID-შტრიხკოდი</string>
     <string name="qr_sms_title">მოკლე შეტყობინების გაგზავნა</string>
     <string name="qr_sms_content_description">მოკლე შეტყობინების გაგზავნა მითითებულ მიმღებებთან</string>
-    <string name="qr_tel_title">ტელფონის ნომერზე დარეკვა</string>
+    <string name="qr_tel_title">ტელეფონის ნომერზე დარეკვა</string>
     <string name="qr_tel_content_description">სატელეფონო ნომერზე დარეკვა</string>
     <string name="qr_text">ტექსტი</string>
     <string name="qr_uri_title">ბმულის გახსნა</string>
@@ -82,15 +82,15 @@
     <string name="photo_capture_mode_title">გადაღების რეჟიმი</string>
     <string name="photo_capture_mode_maximize_quality">უმაღლესი ხარისხი</string>
     <string name="photo_capture_mode_minimize_latency">უმცირესი დაყოვნება</string>
-    <string name="enable_zsl_title">დაუყოვნებლივი ჩამკეტი, როცა კი ხელმისაწვდომია</string>
-    <string name="enable_zsl_summary">დაუყოვნებლივი ჩამკეტის რეჟიმი, როცა კამერას აქვს მხარდაჭერა. ამ რეჟიმში ფოტოზე ზემოქმედება გათიშულია. გაითვალისწინეთ, რომ ჯერჯერობით საცდელია.</string>
+    <string name="enable_zsl_title">მყისიერი გადაღება (ZSL), თუ ხელმისაწვდომია</string>
+    <string name="enable_zsl_summary">დაუყოვნებლად გადაღება, როცა კამერას აქვს მხარდაჭერა. ამ რეჟიმში ფოტოზე ზემოქმედება გათიშულია. გაითვალისწინეთ, რომ ჯერ საცდელია.</string>
     <string name="photo_ffc_mirror_title">სარკისებრი წინა კამერა</string>
-    <string name="photo_ffc_mirror_summary">წინა კამერით გადაღებულის შენახვა ისე, როგორც შეთვალიერებისას ჩანს</string>
+    <string name="photo_ffc_mirror_summary">წინა კამერით გადაღებული შეინახება ისევე, როგორც შეთვალიერებისას ჩანს</string>
     <string name="video_stabilization_title">ვიდეოგადაღებისას რყევის შემცირება</string>
     <string name="video_stabilization_summary">როცა კი შესაძლებელია, რყევის შემამცირებელი შთანთქავს კამერის მოძრაობას გადაღებისას</string>
     <string name="video_mirror_mode_title">ვიდეოგადაღება სარკისებურად</string>
-    <string name="processing_title">მუშავდება</string>
-    <string name="processing_info">ფოტოგადაღებისას, როცა გამოიყენება ZSL, გათვალისწინებული იქნება მხოლოდ „ნაგულისხმევი“ და „გამორთული“ მნიშვნელობები. ვიდეოგადაღებისას კი მხოლოდ „ნაგულისხმევი“, „გამორთული“ და „სწრაფი“.</string>
+    <string name="processing_title">დამუშავება</string>
+    <string name="processing_info">მყისიერი ფოტოგადაღებისას (ZSL), გაითვალისწინება მხოლოდ „ნაგულისხმევი“ და „გამორთული“ მნიშვნელობები. ვიდეოგადაღებისას კი მხოლოდ „ნაგულისხმევი“, „გამორთული“ და „სწრაფი“.</string>
     <string name="edge_mode_title">გამკვეთრება</string>
     <string name="edge_mode_summary">კიდეების გაუმჯობესება ზრდის სიმკვეთრესა და მკაფიოობას გადაღებულ სურათში.</string>
     <string name="edge_mode_default">ნაგულისხმევი</string>
@@ -98,7 +98,7 @@
     <string name="edge_mode_fast">სწრაფი</string>
     <string name="edge_mode_high_quality">ხარისხიანი</string>
     <string name="noise_reduction_mode_title">ხმაურის არიდება</string>
-    <string name="noise_reduction_mode_summary">ხმაურის შემამცირებელი ალგორითმი ეცდება სურათის ხარისხის გაუმჯობესებას გადაღებისას წარმოქმნილი ზედმეტი ხმაურის მოცილებით, განსაკუთრებით ჩაბნელბულ პირობებში.</string>
+    <string name="noise_reduction_mode_summary">ხმაურის შემცირების ალგორითმი ეცდება სურათის ხარისხის მომატებას გადაღებისას წარმოქმნილი ზედმეტი ხმაურის მოცილებით, განსაკუთრებით ცუდი განათებისას.</string>
     <string name="noise_reduction_mode_default">ნაგულისხმევი</string>
     <string name="noise_reduction_mode_off">გამორთული</string>
     <string name="noise_reduction_mode_fast">სწრაფი</string>
@@ -122,8 +122,8 @@
     <string name="distortion_correction_mode_off">გამორთული</string>
     <string name="distortion_correction_mode_fast">სწრაფი</string>
     <string name="distortion_correction_mode_high_quality">ხარისხიანი</string>
-    <string name="hot_pixel_mode_title">ცხელი პიქსელების გასწორება</string>
-    <string name="hot_pixel_mode_summary">ცხელი პიქსელების გასწორებით მიახლოებით მნიშვნელობას იღებს ან სხვა გზით მოსცილდება ის პიქსელები, რომლებიც არაზუსტად აღიქვამს შემომავალ სინათლეს (ანუ პირობით მნიშვნელობაზეა ჩარჩენილი ან ზემგრძნობიარეა).</string>
+    <string name="hot_pixel_mode_title">გადახურებული პიქსელის გასწორება</string>
+    <string name="hot_pixel_mode_summary">გადახურებული პიქსელი მიახლოებით მნიშვნელობას მიიღებს ან მოსცილდება ის პიქსელები, რომლებიც არაზუსტად აღიქვამს შემომავალ სინათლეს (ანუ პირობით მნიშვნელობაზეა ჩარჩენილი ან ზემგრძნობიარეა).</string>
     <string name="hot_pixel_mode_default">ნაგულისხმევი</string>
     <string name="hot_pixel_mode_off">გამორთული</string>
     <string name="hot_pixel_mode_fast">სწრაფი</string>
@@ -145,7 +145,7 @@
     <string name="error_unknown_recoverable">გამოსწორებადი უცნობი შეცდომაა ნაპოვნი. გთხოვთ, მოახსენოთ შემმუშავებლებს.</string>
     <string name="error_unknown_critical">გადამწყვეტი მნიშვნელობის უცნობი შეცდომაა ნაპოვნი. გთხოვთ, მოახსენოთ შემმუშავებლებს.</string>
     <string name="error_no_cameras_available">კამერა ვერ მოიძებნა მოწყობილობაზე, პროგრამა ვერ გაეშვება.</string>
-    <string name="gesture_action_shutter">ჩამკეტი</string>
+    <string name="gesture_action_shutter">ფოტოჩამკეტი</string>
     <string name="gesture_action_zoom">მოახლოება</string>
     <string name="gesture_action_volume">ხმოვანება</string>
     <string name="gesture_action_nothing">არცერთი</string>
