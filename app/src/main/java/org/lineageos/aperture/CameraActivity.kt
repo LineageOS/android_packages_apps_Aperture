@@ -99,7 +99,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
 import org.lineageos.aperture.camera.CameraManager
-import org.lineageos.aperture.camera.CameraViewModel
 import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.models.AssistantIntent
 import org.lineageos.aperture.models.CameraFacing
@@ -143,6 +142,7 @@ import org.lineageos.aperture.utils.PermissionsGatedCallback
 import org.lineageos.aperture.utils.PermissionsUtils
 import org.lineageos.aperture.utils.ShortcutsUtils
 import org.lineageos.aperture.utils.StorageUtils
+import org.lineageos.aperture.viewmodels.CameraViewModel
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
