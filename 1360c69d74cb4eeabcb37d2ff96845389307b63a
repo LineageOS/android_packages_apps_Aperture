@@ -16,6 +16,24 @@
       "message": "This is especially useless with logical cams, since maybe you managed to get 0.99% zoom and can\u0027t switch to the \"main\" cam\nI don\u0027t know if using state_selected makes sense?",
       "revId": "1360c69d74cb4eeabcb37d2ff96845389307b63a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd681f6d_c9c9e2ce",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-03-01T12:35:08Z",
+      "side": 1,
+      "message": "useful*",
+      "parentUuid": "e3c7cb62_245cf970",
+      "revId": "1360c69d74cb4eeabcb37d2ff96845389307b63a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
