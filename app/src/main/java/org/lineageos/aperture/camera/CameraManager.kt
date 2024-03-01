@@ -10,15 +10,12 @@ import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.Quality
 import androidx.camera.view.LifecycleCameraController
-import org.lineageos.aperture.R
-import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.CameraType
-import org.lineageos.aperture.models.FrameRate
+import org.lineageos.aperture.utils.OverlayConfiguration
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import kotlin.math.absoluteValue
 
 /**
  * Class managing an app camera session
@@ -31,80 +28,7 @@ class CameraManager(context: Context) {
     val cameraController = LifecycleCameraController(context)
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
-    private val additionalVideoConfigurations by lazy {
-        mutableMapOf<String, MutableMap<Quality, MutableMap<FrameRate, Boolean>>>().apply {
-            context.resources.getStringArray(context, R.array.config_additionalVideoConfigurations)
-                .let {
-                    if (it.size % 3 != 0) {
-                        // Invalid configuration
-                        return@apply
-                    }
-
-                    for (i in it.indices step 3) {
-                        val cameraId = it[i]
-                        val frameRates = it[i + 2].split("|").mapNotNull { frameRate ->
-                            FrameRate.fromValue(frameRate.toInt().absoluteValue)?.let { value ->
-                                value to frameRate.startsWith('-')
-                            }
-                        }.toMap()
-
-                        it[i + 1].split("|").mapNotNull { quality ->
-                            when (quality) {
-                                "sd" -> Quality.SD
-                                "hd" -> Quality.HD
-                                "fhd" -> Quality.FHD
-                                "uhd" -> Quality.UHD
-                                else -> null
-                            }
-                        }.distinct().forEach { quality ->
-                            getOrCreate(cameraId).apply {
-                                getOrCreate(quality).apply {
-                                    putAll(frameRates)
-                                }
-                            }
-                        }
-                    }
-                }
-        }.map { a ->
-            a.key to a.value.map { b ->
-                b.key to b.value.toList()
-            }.toMap()
-        }.toMap()
-    }
-    private val enableAuxCameras by lazy {
-        context.resources.getBoolean(context, R.bool.config_enableAuxCameras)
-    }
-    private val ignoredAuxCameraIds by lazy {
-        context.resources.getStringArray(context, R.array.config_ignoredAuxCameraIds)
-    }
-    private val ignoreLogicalAuxCameras by lazy {
-        context.resources.getBoolean(context, R.bool.config_ignoreLogicalAuxCameras)
-    }
-    private val logicalZoomRatios by lazy {
-        mutableMapOf<String, MutableMap<Float, Float>>().apply {
-            context.resources.getStringArray(context, R.array.config_logicalZoomRatios).let {
-                if (it.size % 3 != 0) {
-                    // Invalid configuration
-                    return@apply
-                }
-
-                for (i in it.indices step 3) {
-                    val cameraId = it[i]
-                    val approximateZoomRatio = it[i + 1].toFloat()
-                    val exactZoomRatio = it[i + 2].toFloat()
-
-                    getOrCreate(cameraId).apply {
-                        this[approximateZoomRatio] = exactZoomRatio
-                    }
-                }
-            }
-        }.map { a ->
-            a.key to a.value.toMap()
-        }.toMap()
-    }
-    val enableHighResolution by lazy {
-        context.resources.getBoolean(context, R.bool.config_enableHighResolution)
-    }
+    val overlayConfiguration = OverlayConfiguration(context)
 
     private val cameras: List<Camera>
         get() = cameraProvider.availableCameraInfos.map {
@@ -113,7 +37,8 @@ class CameraManager(context: Context) {
 
     // We expect device cameras to never change
     private val internalCameras = cameras.filter {
-        it.cameraType == CameraType.INTERNAL && !ignoredAuxCameraIds.contains(it.cameraId)
+        it.cameraType == CameraType.INTERNAL
+                && !overlayConfiguration.ignoredAuxCameraIds.contains(it.cameraId)
     }
 
     private val backCameras = prepareDeviceCamerasList(CameraFacing.BACK)
@@ -151,10 +76,10 @@ class CameraManager(context: Context) {
         get() = availableCameras.filter { it.supportsVideoRecording }
 
     fun getAdditionalVideoFrameRates(cameraId: String, quality: Quality) =
-        additionalVideoConfigurations[cameraId]?.get(quality) ?: setOf()
+        overlayConfiguration.additionalVideoConfigurations[cameraId]?.get(quality) ?: setOf()
 
     fun getLogicalZoomRatios(cameraId: String) = mutableMapOf(1.0f to 1.0f).apply {
-        logicalZoomRatios[cameraId]?.let {
+        overlayConfiguration.logicalZoomRatios[cameraId]?.let {
             putAll(it)
         }
     }.toSortedMap()
@@ -253,7 +178,7 @@ class CameraManager(context: Context) {
 
         val mainCamera = facingCameras.first()
 
-        if (!enableAuxCameras) {
+        if (!overlayConfiguration.enableAuxCameras) {
             // Return only the main camera
             return listOf(mainCamera)
         }
@@ -261,7 +186,7 @@ class CameraManager(context: Context) {
         // Get the list of aux cameras
         val auxCameras = facingCameras
             .drop(1)
-            .filter { !ignoreLogicalAuxCameras || !it.isLogical }
+            .filter { !overlayConfiguration.ignoreLogicalAuxCameras || !it.isLogical }
 
         return listOf(mainCamera) + auxCameras
     }
