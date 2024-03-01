@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29139b60_8ea8c6fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-03-01T08:39:34Z",
+      "side": 1,
+      "message": "looks good, we may want to have a little lineage common library with query and flow bits we\u0027ve been writing to avoid duplication, but who cares...",
+      "revId": "4d02cf1cc65ecf42bf9dc07e24d2fff3ff7d0544",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0028338e_3c7b14a6",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-03-01T08:39:34Z",
+      "side": 1,
+      "message": "don\u0027t need the explicit lifecycleScope here, there should be a kt extension that lets you call launch directly",
+      "revId": "4d02cf1cc65ecf42bf9dc07e24d2fff3ff7d0544",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
