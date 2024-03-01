@@ -71,6 +71,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e5e507e_97cc326d",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-03-01T00:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "134a31d6_613261eb",
+      "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0426b1b3_6689be63",
@@ -88,6 +106,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "15c8044f_8ce4a41e",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 2378,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-03-01T00:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0426b1b3_6689be63",
+      "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "735dd58d_1851cf57",
@@ -101,6 +137,24 @@
       "writtenOn": "2024-02-29T18:14:36Z",
       "side": 1,
       "message": "Remove support for this",
+      "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9b406bce_fccb90b0",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 9
+      },
+      "lineNbr": 2633,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-03-01T00:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "735dd58d_1851cf57",
       "revId": "aaa44eea06b83688d95ef0f1b320f782fc403077",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
