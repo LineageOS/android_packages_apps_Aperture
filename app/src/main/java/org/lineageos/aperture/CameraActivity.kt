@@ -1524,7 +1524,7 @@ open class CameraActivity : AppCompatActivity() {
                         )
                     )
                     .setAllowedResolutionMode(
-                        if (cameraManager.enableHighResolution) {
+                        if (cameraManager.overlayConfiguration.enableHighResolution) {
                             ResolutionSelector.PREFER_HIGHER_RESOLUTION_OVER_CAPTURE_RATE
                         } else {
                             ResolutionSelector.PREFER_CAPTURE_RATE_OVER_HIGHER_RESOLUTION
