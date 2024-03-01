@@ -53,6 +53,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "75e77dbd_53962726",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 11
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-03-01T11:26:00Z",
+      "side": 1,
+      "message": "Acknowledged\nI confused it",
+      "parentUuid": "a29d8113_2b2003e4",
+      "revId": "4d02cf1cc65ecf42bf9dc07e24d2fff3ff7d0544",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1c21cd41_0f01f871",
