@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4a35e4d_687da817",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-03-01T13:34:35Z",
+      "side": 1,
+      "message": "we could pick and make a specific androidx build, but when we actually get a new build with those included in we can easily remove this impl",
+      "revId": "5b6e86976d9c7de5a0b5d08111f5aad13ac83379",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
