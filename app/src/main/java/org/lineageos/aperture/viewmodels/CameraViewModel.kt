@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.camera
+package org.lineageos.aperture.viewmodels
 
 import android.app.Application
 import android.net.Uri
@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
+import org.lineageos.aperture.camera.Camera
 import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.CameraState
