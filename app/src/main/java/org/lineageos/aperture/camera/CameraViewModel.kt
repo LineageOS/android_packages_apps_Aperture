@@ -58,7 +58,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
     /**
      * Current screen rotation.
      */
-    val screenRotation = MutableLiveData<Rotation>()
+    val screenRotation = MutableLiveData(Rotation.ROTATION_0)
 
     /**
      * Captured media [Uri]s
