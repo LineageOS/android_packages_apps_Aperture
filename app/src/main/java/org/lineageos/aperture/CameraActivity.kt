@@ -98,7 +98,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
-import org.lineageos.aperture.camera.CameraManager
 import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.models.AssistantIntent
 import org.lineageos.aperture.models.CameraFacing
@@ -147,7 +146,6 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 import java.io.InputStream
-import java.util.concurrent.ExecutorService
 import kotlin.math.abs
 import kotlin.reflect.safeCast
 import androidx.camera.core.CameraState as CameraXCameraState
@@ -155,6 +153,9 @@ import androidx.camera.core.CameraState as CameraXCameraState
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalZeroShutterLag
 open class CameraActivity : AppCompatActivity() {
+    // View models
+    private val model: CameraViewModel by viewModels()
+
     // Views
     private val aspectRatioButton by lazy { findViewById<Button>(R.id.aspectRatioButton) }
     private val cameraModeSelectorLayout by lazy { findViewById<CameraModeSelectorLayout>(R.id.cameraModeSelectorLayout) }
@@ -198,19 +199,12 @@ open class CameraActivity : AppCompatActivity() {
     private val powerManager by lazy { getSystemService(PowerManager::class.java) }
 
     // Core camera utils
-    private lateinit var cameraManager: CameraManager
-    private val cameraController: LifecycleCameraController
-        get() = cameraManager.cameraController
-    private val cameraExecutor: ExecutorService
-        get() = cameraManager.cameraExecutor
+    private lateinit var cameraController: LifecycleCameraController
     private lateinit var cameraSoundsUtils: CameraSoundsUtils
     private val sharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(this)
     }
     private val permissionsUtils by lazy { PermissionsUtils(this) }
-
-    // Current camera state
-    private val model: CameraViewModel by viewModels()
 
     private var camera by nonNullablePropertyDelegate { model.camera }
     private var cameraMode by nonNullablePropertyDelegate { model.cameraMode }
@@ -563,8 +557,8 @@ open class CameraActivity : AppCompatActivity() {
         // Register shortcuts
         ShortcutsUtils.registerShortcuts(this)
 
-        // Initialize camera manager
-        cameraManager = CameraManager(this)
+        // Initialize the camera controller
+        cameraController = LifecycleCameraController(this)
 
         // Initialize sounds utils
         cameraSoundsUtils = CameraSoundsUtils(sharedPreferences)
@@ -604,7 +598,7 @@ open class CameraActivity : AppCompatActivity() {
             }
         }
 
-        if (cameraMode == CameraMode.VIDEO && !cameraManager.videoRecordingAvailable()) {
+        if (cameraMode == CameraMode.VIDEO && !model.videoRecordingAvailable()) {
             // If an app asked for a video we have to bail out
             if (singleCaptureMode) {
                 Toast.makeText(
@@ -618,7 +612,7 @@ open class CameraActivity : AppCompatActivity() {
         }
 
         // Select a camera
-        camera = cameraManager.getCameraOfFacingOrFirstAvailable(
+        camera = model.getCameraOfFacingOrFirstAvailable(
             initialCameraFacing, cameraMode
         ) ?: run {
             noCamera()
@@ -1174,8 +1168,9 @@ open class CameraActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        model.shutdown()
+
         super.onDestroy()
-        cameraManager.shutdown()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -1416,7 +1411,7 @@ open class CameraActivity : AppCompatActivity() {
             videoRecording = cameraController.startRecording(
                 outputOptions,
                 videoAudioConfig,
-                cameraExecutor
+                model.cameraExecutor
             ) {
                 when (it) {
                     is VideoRecordEvent.Start -> runOnUiThread {
@@ -1483,7 +1478,7 @@ open class CameraActivity : AppCompatActivity() {
 
         // Get the desired camera
         camera = when (cameraMode) {
-            CameraMode.QR -> cameraManager.getCameraOfFacingOrFirstAvailable(
+            CameraMode.QR -> model.getCameraOfFacingOrFirstAvailable(
                 CameraFacing.BACK, cameraMode
             )
 
@@ -1496,7 +1491,7 @@ open class CameraActivity : AppCompatActivity() {
         // If the current camera doesn't support the selected camera mode
         // pick a different one, giving priority to camera facing
         if (!camera.supportsCameraMode(cameraMode)) {
-            camera = cameraManager.getCameraOfFacingOrFirstAvailable(
+            camera = model.getCameraOfFacingOrFirstAvailable(
                 camera.cameraFacing, cameraMode
             ) ?: run {
                 noCamera()
@@ -1512,7 +1507,7 @@ open class CameraActivity : AppCompatActivity() {
         // Initialize the use case we want and set its properties
         val cameraUseCases = when (cameraMode) {
             CameraMode.QR -> {
-                cameraController.setImageAnalysisAnalyzer(cameraExecutor, imageAnalyzer)
+                cameraController.setImageAnalysisAnalyzer(model.cameraExecutor, imageAnalyzer)
                 CameraController.IMAGE_ANALYSIS
             }
 
@@ -1524,7 +1519,7 @@ open class CameraActivity : AppCompatActivity() {
                         )
                     )
                     .setAllowedResolutionMode(
-                        if (cameraManager.overlayConfiguration.enableHighResolution) {
+                        if (model.overlayConfiguration.enableHighResolution) {
                             ResolutionSelector.PREFER_HIGHER_RESOLUTION_OVER_CAPTURE_RATE
                         } else {
                             ResolutionSelector.PREFER_CAPTURE_RATE_OVER_HIGHER_RESOLUTION
@@ -1576,7 +1571,7 @@ open class CameraActivity : AppCompatActivity() {
             cameraMode == CameraMode.PHOTO &&
             photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG
         ) {
-            cameraManager.extensionsManager.getExtensionEnabledCameraSelector(
+            model.extensionsManager.getExtensionEnabledCameraSelector(
                 camera.cameraSelector, photoEffect
             )
         } else {
@@ -1799,7 +1794,7 @@ open class CameraActivity : AppCompatActivity() {
 
         // Update lens selector
         lensSelectorLayout.setCamera(
-            camera, cameraManager.getCameras(cameraMode, camera.cameraFacing)
+            camera, model.getCameras(cameraMode, camera.cameraFacing)
         )
     }
 
@@ -1825,7 +1820,7 @@ open class CameraActivity : AppCompatActivity() {
             }
 
             CameraMode.VIDEO -> {
-                if (!cameraManager.videoRecordingAvailable()) {
+                if (!model.videoRecordingAvailable()) {
                     Snackbar.make(
                         cameraModeSelectorLayout,
                         R.string.camcorder_unsupported_toast,
@@ -1869,7 +1864,7 @@ open class CameraActivity : AppCompatActivity() {
 
         (flipCameraButton.drawable as AnimatedVectorDrawable).start()
 
-        camera = cameraManager.getNextCamera(camera, cameraMode) ?: run {
+        camera = model.getNextCamera(camera, cameraMode) ?: run {
             noCamera()
             return
         }
