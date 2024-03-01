@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -52,6 +52,7 @@ class LensSelectorLayout @JvmOverloads constructor(
 
     var onCameraChangeCallback: (camera: Camera) -> Unit = {}
     var onZoomRatioChangeCallback: (zoomRatio: Float) -> Unit = {}
+    var onResetZoomRatioCallback: () -> Unit = {}
 
     internal var cameraViewModel: CameraViewModel? = null
         set(value) {
@@ -84,7 +85,11 @@ class LensSelectorLayout @JvmOverloads constructor(
             for ((approximateZoomRatio, exactZoomRatio) in activeCamera.logicalZoomRatios) {
                 val button = inflateButton().apply {
                     setOnClickListener {
-                        buttonToZoomRatio[it]?.let(onZoomRatioChangeCallback)
+                        if (!isSelected) {
+                            buttonToZoomRatio[it]?.let(onZoomRatioChangeCallback)
+                        } else {
+                            onResetZoomRatioCallback()
+                        }
                     }
                     text = formatZoomRatio(approximateZoomRatio)
                 }
@@ -97,7 +102,11 @@ class LensSelectorLayout @JvmOverloads constructor(
             for (camera in availableCameras.sortedBy { it.intrinsicZoomRatio }) {
                 val button = inflateButton().apply {
                     setOnClickListener {
-                        buttonToCamera[it]?.let(onCameraChangeCallback)
+                        if (!isSelected) {
+                            buttonToCamera[it]?.let(onCameraChangeCallback)
+                        } else {
+                            onResetZoomRatioCallback()
+                        }
                     }
                     text = formatZoomRatio(camera.intrinsicZoomRatio)
                 }
@@ -156,7 +165,7 @@ class LensSelectorLayout @JvmOverloads constructor(
 
     @Suppress("SetTextI18n")
     private fun updateButtonAttributes(button: Button, currentCamera: Boolean) {
-        button.isEnabled = !currentCamera
+        button.isSelected = currentCamera
         val formattedZoomRatio = formatZoomRatio(buttonToApproximateZoomRatio[button]!!)
         button.text = if (currentCamera) {
             "${formattedZoomRatio}×"

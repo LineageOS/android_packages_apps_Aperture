@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -839,6 +839,9 @@ open class CameraActivity : AppCompatActivity() {
         }
         lensSelectorLayout.onZoomRatioChangeCallback = {
             cameraController.setZoomRatio(it)
+        }
+        lensSelectorLayout.onResetZoomRatioCallback = {
+            cameraController.setZoomRatio(1f)
         }
 
         // Set capture preview callback
