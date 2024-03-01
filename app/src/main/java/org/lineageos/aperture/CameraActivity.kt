@@ -2063,6 +2063,7 @@ open class CameraActivity : AppCompatActivity() {
                 FlashMode.TORCH -> sharedPreferences.photoFlashMode.takeIf {
                     supportedFlashModes.contains(it)
                 } ?: FlashMode.OFF
+
                 else -> FlashMode.TORCH
             }
 
