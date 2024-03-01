@@ -852,6 +852,9 @@ open class CameraActivity : AppCompatActivity() {
         lensSelectorLayout.onZoomRatioChangeCallback = {
             cameraController.setZoomRatio(it)
         }
+        lensSelectorLayout.onResetZoomRatioCallback = {
+            cameraController.setZoomRatio(1f)
+        }
 
         // Set capture preview callback
         capturePreviewLayout.onChoiceCallback = { input ->
