@@ -154,7 +154,7 @@
     <string name="thermal_status_critical">Critiche limitazion termiche in vore, al è pussibil che la aplicazion e vegni sierade ca di pôc.</string>
     <string name="thermal_status_emergency">Limitazion termiche di emergjence in vore, la aplicazion si sierarà cumò.</string>
     <string name="thermal_status_shutdown">Limitazion termiche di distudament in vore, il dispositîf si distudarà.</string>
-    <string name="force_torch_help">In modalitât foto, tu puedis tignî fracât il boton dal lamp par ativâ par passâ ae modalitât torce.</string>
+    <string name="force_torch_help">In modalitât foto, ten fracât il boton dal lamp par passâ ae modalitât torce.</string>
     <string name="camera_mode_photo">Foto</string>
     <string name="camera_mode_video">Video</string>
     <string name="camera_mode_qr">Scansion</string>
