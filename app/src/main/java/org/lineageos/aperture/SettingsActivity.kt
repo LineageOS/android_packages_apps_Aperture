@@ -27,7 +27,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.PermissionsUtils
 
-class SettingsActivity : AppCompatActivity(R.layout.settings_activity) {
+class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
