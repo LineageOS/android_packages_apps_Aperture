@@ -76,7 +76,6 @@ import androidx.core.location.LocationManagerCompat
 import androidx.core.location.LocationRequestCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowCompat.getInsetsController
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.children
@@ -537,9 +536,14 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        hideStatusBars()
-
+        // Setup edge-to-edge
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        // Hide the status bars
+        window.updateBarsVisibility(
+            WindowInsetsControllerCompat.BEHAVIOR_DEFAULT,
+            statusBars = true,
+        )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
             && keyguardManager.isKeyguardLocked
@@ -2367,15 +2371,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     private fun openSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
-    }
-
-    private fun hideStatusBars() {
-        val windowInsetsController = getInsetsController(window, window.decorView)
-        // Configure the behavior of the hidden system bars
-        windowInsetsController.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        // Hide the status bar
-        windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
     }
 
     private fun startTimerAndRun(runnable: () -> Unit) {
