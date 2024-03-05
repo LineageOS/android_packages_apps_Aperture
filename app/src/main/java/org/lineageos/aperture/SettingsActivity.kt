@@ -27,13 +27,12 @@ import com.google.android.material.appbar.MaterialToolbar
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.PermissionsUtils
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : AppCompatActivity(R.layout.settings_activity) {
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.settings_activity)
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
