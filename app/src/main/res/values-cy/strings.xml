@@ -38,6 +38,8 @@
     <string name="qr_icon_description">Eicon</string>
     <string name="qr_share_description">Rhannu</string>
     <string name="qr_dpp_description">Ffurfweddu\'r ddyfais hon</string>
+    <string name="qr_tel_title">Galw rhif ffôn</string>
+    <string name="qr_tel_content_description">Galw\u2019r rhif ffôn</string>
     <string name="qr_text">Testun</string>
     <string name="qr_wifi_title">Cysylltu â\'r rhwydwaith Wi-Fi hwn</string>
     <string name="title_activity_settings">Gosodiadau</string>

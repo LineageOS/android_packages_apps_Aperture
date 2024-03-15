@@ -75,11 +75,11 @@
     <string name="save_location_summary">Includi la posizione GPS nei metadati</string>
     <string name="save_location_toast">Accesso sulla posizione negato dall\'utente.</string>
     <string name="shutter_sound_title">Suono otturatore</string>
-    <string name="shutter_sound_summary">Riproduci un suono durante la cattura</string>
+    <string name="shutter_sound_summary">Riproduci un suono all\'acquisizione</string>
     <string name="leveler_title">Livella</string>
     <string name="leveler_summary">Indicatore che mostra l\'inclinazione del dispositivo</string>
     <string name="volume_buttons_action_title">Azione pulsanti volume</string>
-    <string name="photo_capture_mode_title">Modalità di cattura</string>
+    <string name="photo_capture_mode_title">Modalità di acquisizione</string>
     <string name="photo_capture_mode_maximize_quality">Massimizza qualità</string>
     <string name="photo_capture_mode_minimize_latency">Minimizza latenza</string>
     <string name="enable_zsl_title">Abilita ZSL quando disponibile</string>
