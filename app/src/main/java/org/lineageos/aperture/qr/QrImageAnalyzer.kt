@@ -6,6 +6,8 @@
 package org.lineageos.aperture.qr
 
 import android.app.Activity
+import android.app.ActivityOptions
+import android.app.ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
 import android.app.KeyguardManager
 import android.app.PendingIntent
 import android.content.ClipData
@@ -124,7 +126,16 @@ class QrImageAnalyzer(private val activity: Activity, private val scope: Corouti
                 with(textClassification.actions[0]) {
                     bottomSheetDialogCardView.setOnClickListener {
                         try {
-                            actionIntent.send()
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                                actionIntent.send(
+                                    ActivityOptions.makeBasic()
+                                        .setPendingIntentBackgroundActivityStartMode(
+                                            MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+                                        ).toBundle()
+                                )
+                            } else {
+                                actionIntent.send()
+                            }
                         } catch (e: PendingIntent.CanceledException) {
                             Toast.makeText(
                                 activity,
@@ -142,7 +153,16 @@ class QrImageAnalyzer(private val activity: Activity, private val scope: Corouti
                     bottomSheetDialogActionsLayout.addView(inflateButton().apply {
                         setOnClickListener {
                             try {
-                                action.actionIntent.send()
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                                    action.actionIntent.send(
+                                        ActivityOptions.makeBasic()
+                                            .setPendingIntentBackgroundActivityStartMode(
+                                                MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+                                            ).toBundle()
+                                    )
+                                } else {
+                                    action.actionIntent.send()
+                                }
                             } catch (e: PendingIntent.CanceledException) {
                                 Toast.makeText(
                                     activity,
