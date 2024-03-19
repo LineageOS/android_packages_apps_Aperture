@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Settings activity theme. -->
+    <style name="Theme.SettingsLib" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:listPreferredItemPaddingLeft">24dp</item>
+        <item name="android:listPreferredItemPaddingStart">24dp</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:switchStyle">@style/Theme.SettingsLib.Switch</item>
+        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
+        <item name="alertDialogTheme">@style/Theme.SettingsLib.AlertDialog</item>
+        <item name="materialAlertDialogTheme">@style/Theme.SettingsLib.AlertDialog</item>
+        <item name="preferenceTheme">@style/Theme.SettingsLib.PreferenceTheme</item>
+    </style>
+
+    <!-- Settings alert dialog theme. -->
+    <style name="Theme.SettingsLib.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:background">@drawable/dialog_preference_background</item>
+        <item name="dialogCornerRadius">28dp</item>
+    </style>
+
+    <!-- Settings switch theme. -->
+    <style name="Theme.SettingsLib.Switch" parent="@android:style/Widget.Material.CompoundButton.Switch">
+        <item name="android:switchMinWidth">52dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:track">@drawable/settingslib_switch_track</item>
+        <item name="android:thumb">@drawable/settingslib_switch_thumb</item>
+    </style>
+
+    <!-- Settings collapsing toolbar style -->
+    <style name="Theme.SettingsLib.ToolbarCollapsedTextAppearance" parent="TextAppearance.Material3.ActionBar.Title" />
+
+    <style name="Theme.SettingsLib.ToolbarExpandedTextAppearance" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:textSize">36sp</item>
+    </style>
+
+    <!-- Settings preference style. -->
+    <style name="Theme.SettingsLib.PreferenceTheme" parent="PreferenceThemeOverlay">
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">0dp</item>
+        <item name="android:listPreferredItemPaddingLeft">32dp</item>
+        <item name="android:listPreferredItemPaddingStart">32dp</item>
+        <item name="android:tint">?attr/colorOnSurface</item>
+    </style>
+</resources>

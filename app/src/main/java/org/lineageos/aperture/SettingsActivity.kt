@@ -5,8 +5,6 @@
 
 package org.lineageos.aperture
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -14,24 +12,36 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.CallSuper
+import androidx.annotation.Px
+import androidx.annotation.XmlRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
+import org.lineageos.aperture.ext.setOffset
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.PermissionsUtils
+import kotlin.reflect.safeCast
 
 class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
+    private val appBarLayout by lazy { findViewById<AppBarLayout>(R.id.appBarLayout) }
+    private val coordinatorLayout by lazy { findViewById<CoordinatorLayout>(R.id.coordinatorLayout) }
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Setup edge-to-edge
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         if (savedInstanceState == null) {
             supportFragmentManager
@@ -39,8 +49,6 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
                 .replace(R.id.settings, RootSettingsFragment())
                 .commit()
         }
-
-        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
@@ -60,38 +68,76 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         }
     }
 
-    abstract class SettingsFragment : PreferenceFragmentCompat() {
+    abstract class SettingsFragment(
+        @XmlRes private val preferencesResId: Int,
+    ) : PreferenceFragmentCompat() {
+        private val settingsActivity
+            get() = SettingsActivity::class.safeCast(activity)
+
+        @Px
+        private var appBarOffset = -1
+
+        private val offsetChangedListener = AppBarLayout.OnOffsetChangedListener { _, i ->
+            appBarOffset = -i
+        }
+
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
-            setDivider(ColorDrawable(Color.TRANSPARENT))
-            setDividerHeight(0)
+            settingsActivity?.let { settingsActivity ->
+                val appBarLayout = settingsActivity.appBarLayout
 
-            listView?.let {
-                ViewCompat.setOnApplyWindowInsetsListener(it) { _, windowInsets ->
-                    val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-                    it.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                        bottomMargin = insets.bottom
-                        leftMargin = insets.left
-                        rightMargin = insets.right
-                    }
-
-                    windowInsets
+                if (appBarOffset != -1) {
+                    appBarLayout.setOffset(appBarOffset, settingsActivity.coordinatorLayout)
+                } else {
+                    appBarLayout.setExpanded(true, false)
                 }
+
+                appBarLayout.setLiftOnScrollTargetView(listView)
+
+                appBarLayout.addOnOffsetChangedListener(offsetChangedListener)
             }
         }
 
+        override fun onDestroyView() {
+            settingsActivity?.appBarLayout?.apply {
+                removeOnOffsetChangedListener(offsetChangedListener)
+
+                setLiftOnScrollTargetView(null)
+            }
+
+            super.onDestroyView()
+        }
+
+        @CallSuper
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(preferencesResId, rootKey)
+        }
+
+        @CallSuper
         override fun onCreateRecyclerView(
             inflater: LayoutInflater,
             parent: ViewGroup,
             savedInstanceState: Bundle?
-        ) = super.onCreateRecyclerView(inflater, parent, savedInstanceState).also {
-            it.clipToPadding = false
+        ) = super.onCreateRecyclerView(inflater, parent, savedInstanceState).apply {
+            clipToPadding = false
+            isVerticalScrollBarEnabled = false
+
+            ViewCompat.setOnApplyWindowInsetsListener(this) { _, windowInsets ->
+                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+                updatePadding(
+                    bottom = insets.bottom,
+                    left = insets.left,
+                    right = insets.right,
+                )
+
+                windowInsets
+            }
         }
     }
 
-    class RootSettingsFragment : SettingsFragment() {
+    class RootSettingsFragment : SettingsFragment(R.xml.root_preferences) {
         private val enableZsl by lazy { findPreference<SwitchPreference>("enable_zsl")!! }
         private val photoCaptureMode by lazy {
             findPreference<ListPreference>("photo_capture_mode")!!
@@ -129,7 +175,8 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
         @Suppress("UnsafeOptInUsageError")
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey)
+            super.onCreatePreferences(savedInstanceState, rootKey)
+
             saveLocation?.let {
                 // Reset location back to off if permissions aren't granted
                 it.isChecked = it.isChecked && permissionsUtils.locationPermissionsGranted()
@@ -149,9 +196,5 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         }
     }
 
-    class ProcessingSettingsFragment : SettingsFragment() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.processing_preferences, rootKey)
-        }
-    }
+    class ProcessingSettingsFragment : SettingsFragment(R.xml.processing_preferences)
 }

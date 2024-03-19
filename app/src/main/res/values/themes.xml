@@ -23,45 +23,6 @@
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
     </style>
 
-    <!-- Settings activity theme. -->
-    <style name="Theme.Aperture.Settings">
-        <item name="android:switchStyle">@style/Theme.Aperture.Settings.Switch</item>
-        <item name="alertDialogTheme">@style/Theme.Aperture.Settings.AlertDialog</item>
-        <item name="materialAlertDialogTheme">@style/Theme.Aperture.Settings.AlertDialog</item>
-        <item name="preferenceTheme">@style/Theme.Aperture.Settings.Preference</item>
-    </style>
-
-    <!-- Settings alert dialog theme. -->
-    <style name="Theme.Aperture.Settings.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="alertDialogStyle">@style/Theme.Aperture.Settings.AlertDialogStyle</item>
-        <item name="dialogCornerRadius">28dp</item>
-        <item name="android:background">@drawable/dialog_preference_background</item>
-    </style>
-
-    <!-- Settings alert dialog style. -->
-    <style name="Theme.Aperture.Settings.AlertDialogStyle" parent="MaterialAlertDialog.Material3">
-        <item name="shapeAppearance">@style/ShapeAppearance.Material3.MediumComponent</item>
-        <item name="shapeAppearanceOverlay">@null</item>
-    </style>
-
-    <!-- Settings message box -->
-    <style name="Theme.Aperture.Settings.MessageBox">
-        <item name="selectable">false</item>
-    </style>
-
-    <!-- Settings preference style. -->
-    <style name="Theme.Aperture.Settings.Preference" parent="PreferenceThemeOverlay">
-        <item name="android:tint">?attr/colorOnSurface</item>
-    </style>
-
-    <!-- Settings switch theme. -->
-    <style name="Theme.Aperture.Settings.Switch" parent="@android:style/Widget.Material.CompoundButton.Switch">
-        <item name="android:switchMinWidth">52dp</item>
-        <item name="android:minHeight">48dp</item>
-        <item name="android:track">@drawable/settingslib_switch_track</item>
-        <item name="android:thumb">@drawable/settingslib_switch_thumb</item>
-    </style>
-
     <!-- Secondary bar icons base theme -->
     <style name="Theme.Aperture.Camera.SecondaryBarButton">
         <item name="tint">@color/secondary_bar_button_icon</item>
@@ -88,17 +49,6 @@
     <style name="Theme.Aperture.Camera.SecondaryBottomBarButton" parent="Theme.Aperture.Camera.SecondaryBarButton">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>
-    </style>
-
-    <!-- Collapsing toolbar style -->
-    <style name="Theme.Aperture.Camera.ToolbarCollapsed" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="Theme.Aperture.Camera.ToolbarExpanded" parent="Theme.Aperture.Camera.ToolbarCollapsed">
-        <item name="android:textSize">36sp</item>
-        <item name="android:drawablePadding">10dp</item>
     </style>
 
     <!-- Info chip -->

@@ -10,8 +10,8 @@
         app:title="@string/processing_title">
 
         <Preference
-            style="@style/Theme.Aperture.Settings.MessageBox"
             app:icon="@drawable/ic_info"
+            app:selectable="false"
             app:summary="@string/processing_info" />
 
         <ListPreference
