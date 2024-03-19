@@ -35,10 +35,12 @@
 
     <application
         android:name=".ApertureApplication"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Aperture">
+        android:theme="@style/Theme.Aperture"
+        tools:targetApi="tiramisu">
 
         <uses-library
             android:name="androidx.camera.extensions.impl"
