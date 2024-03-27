@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="qr_no_app_available_for_action">Nissuna aplicatzione a disponimentu pro gestire custa atzione</string>
+    <string name="qr_address_title">Agiunghe cuntatu</string>
+    <string name="qr_address_content_description">Agiunghe cuntatu</string>
+    <string name="qr_calendar_title">Agiunghe s\'eventu a su calendàriu</string>
+    <string name="qr_calendar_content_description">Agiunghe custu eventu a su calendàriu</string>
+    <string name="qr_email_title">Imbia unu messàgiu eletrònicu nou</string>
+    <string name="qr_email_content_description">Iscrie unu messàgiu eletrònicu nou a is indiritzos ispetzificados</string>
+    <string name="qr_fido_title">Imprea una crae de intrada</string>
+    <string name="qr_fido_content_description">Gesti custu còdighe FIDO QR</string>
+    <string name="qr_geo_title">Aberi custa positzione</string>
+    <string name="qr_geo_content_description">Aberi custa positzione</string>
+    <string name="qr_isbn_title">Chirca custu ISBN</string>
+    <string name="qr_isbn_content_description">Chirca custu ISBN in isbnsearch.org</string>
+    <string name="qr_product_title">Chirca su produtu</string>
+    <string name="qr_product_content_description">Chirca su còdighe de barra de custu produtu</string>
+    <string name="qr_sms_title">Imbia un\'SMS nou</string>
+    <string name="qr_sms_content_description">Imbia un\'SMS nou a is cuntatos ispetzificados</string>
+    <string name="qr_tel_title">Muti su nùmeru de telèfonu</string>
+    <string name="qr_tel_content_description">Muti su nùmeru de telèfonu</string>
+    <string name="qr_uri_title">Aberi s\'URL</string>
+    <string name="qr_uri_content_description">Aberi custu URL cun s\'aplicatzione adeguada si est cumpatìbile</string>
+    <string name="qr_vin_title">Chirca su VIN</string>
+    <string name="qr_vin_content_description">Chirca custu nùmeru de identificatzione de vetura (VIN)</string>
+    <string name="qr_wifi_content_description">Agiunghe custa rete Wi-Fi a sa lista de retes connotas e connete su dispositivu</string>
+</resources>
