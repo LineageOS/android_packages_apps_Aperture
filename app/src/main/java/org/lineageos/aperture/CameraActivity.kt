@@ -34,7 +34,6 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.MotionEvent
-import android.view.OrientationEventListener
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
@@ -93,7 +92,10 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
@@ -400,21 +402,15 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
     }
 
-    private val orientationEventListener by lazy {
-        object : OrientationEventListener(this) {
-            override fun onOrientationChanged(orientation: Int) {
-                if (orientation == ORIENTATION_UNKNOWN) {
-                    return
-                }
-
-                val rotation = Rotation.fromDegreesInAperture(orientation)
-
-                if (screenRotation != rotation) {
-                    screenRotation = rotation
-                }
-            }
+    /**
+     * The orientation of the display relative to the current display rotation.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val relativeRotationFlow = relativeRotationFlow()
+        .mapLatest {
+            Rotation.fromDegreesInAperture(it)
         }
-    }
+        .flowOn(Dispatchers.IO)
 
     @get:RequiresApi(Build.VERSION_CODES.Q)
     private val onThermalStatusChangedListener by lazy {
@@ -1121,6 +1117,17 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             updateSecondaryTopBarButtons()
         }
 
+        // Observe relative rotation
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                relativeRotationFlow.collectLatest {
+                    if (it != screenRotation) {
+                        screenRotation = it
+                    }
+                }
+            }
+        }
+
         // Request camera permissions
         permissionsGatedCallbackOnStart.runAfterPermissionsCheck()
     }
@@ -1137,9 +1144,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         // Register location updates
         locationListener.register()
 
-        // Enable orientation listener
-        orientationEventListener.enable()
-
         // Start observing thermal status
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             powerManager.addThermalStatusListener(onThermalStatusChangedListener)
@@ -1155,9 +1159,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     override fun onPause() {
         // Remove location and location updates
         locationListener.unregister()
-
-        // Disable orientation listener
-        orientationEventListener.disable()
 
         // Remove thermal status observer
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
