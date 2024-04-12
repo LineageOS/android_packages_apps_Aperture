@@ -541,6 +541,11 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             statusBars = false,
         )
 
+        // Enable seamless rotation
+        window.attributes = window.attributes.apply {
+            rotationAnimation = WindowManager.LayoutParams.ROTATION_ANIMATION_SEAMLESS
+        }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
             && keyguardManager.isKeyguardLocked
         ) {
