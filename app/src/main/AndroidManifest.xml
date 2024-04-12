@@ -52,7 +52,7 @@
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
             android:exported="true"
             android:launchMode="singleTask"
-            android:screenOrientation="nosensor"
+            android:screenOrientation="user"
             android:taskAffinity=".CameraActivity"
             android:theme="@style/Theme.Aperture.Camera"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
@@ -85,7 +85,7 @@
             android:name=".CaptureActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
             android:exported="true"
-            android:screenOrientation="nosensor"
+            android:screenOrientation="user"
             android:theme="@style/Theme.Aperture.Camera"
             android:visibleToInstantApps="true"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
@@ -101,7 +101,7 @@
             android:name=".QrScannerActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
             android:exported="true"
-            android:screenOrientation="nosensor"
+            android:screenOrientation="user"
             android:theme="@style/Theme.Aperture.Camera"
             android:visibleToInstantApps="true"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
