@@ -69,7 +69,9 @@
     <string name="photos_header">写真</string>
     <string name="video_header">ビデオ</string>
     <string name="advanced_header">詳細設定</string>
+    <string name="bright_screen_title">画面を明るくする</string>
     <string name="bright_screen_summary" formatted="false">明るさを100%に固定</string>
+    <string name="shutter_sound_summary">撮影j時に音を鳴らします</string>
     <string name="volume_buttons_action_title">音量ボタンの動作</string>
     <string name="enable_zsl_title">利用可能な場合は ZSL を有効にする</string>
     <string name="enable_zsl_summary">カメラが対応している場合、ゼロシャッターラグモードを使用します。このモードでは写真のエフェクトは無効になります。このモードは実験的であることに注意してください。</string>
