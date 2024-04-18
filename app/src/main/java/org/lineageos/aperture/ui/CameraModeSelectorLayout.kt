@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -124,6 +124,7 @@ class CameraModeSelectorLayout @JvmOverloads constructor(
         val inSingleCaptureMode = cameraViewModel?.inSingleCaptureMode?.value ?: return
         val cameraState = cameraViewModel?.cameraState?.value ?: return
 
+        cameraModeHighlightButton.isInvisible = cameraState.isRecordingVideo || inSingleCaptureMode
         cameraToButton.forEach {
             it.value.isInvisible = cameraState.isRecordingVideo || inSingleCaptureMode
         }
