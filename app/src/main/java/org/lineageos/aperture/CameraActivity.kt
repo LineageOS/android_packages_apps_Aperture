@@ -554,6 +554,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         }
 
+        // Force initialize view model
+        model
+
         // Register shortcuts
         ShortcutsUtils.registerShortcuts(this)
 
