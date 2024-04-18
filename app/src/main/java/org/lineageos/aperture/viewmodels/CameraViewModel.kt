@@ -45,6 +45,11 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
     // Base
 
     /**
+     * Overlay configuration.
+     */
+    val overlayConfiguration = OverlayConfiguration(context)
+
+    /**
      * CameraX's [ProcessCameraProvider].
      */
     private val cameraProvider = ProcessCameraProvider.getInstance(context).get()
@@ -59,11 +64,6 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
      * [ExecutorService] for camera related operations.
      */
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
-
-    /**
-     * Overlay configuration.
-     */
-    val overlayConfiguration = OverlayConfiguration(context)
 
     /**
      * The available [Camera]s.
