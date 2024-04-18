@@ -38,6 +38,13 @@ class OverlayConfiguration(context: Context) {
     )
 
     /**
+     * @see R.array.config_backwardCompatibleCameraIds
+     */
+    val backwardCompatibleCameraIds = resources.getStringArray(
+        context, R.array.config_backwardCompatibleCameraIds
+    ).asList()
+
+    /**
      * @see R.array.config_additionalVideoConfigurations
      */
     val additionalVideoConfigurations =
