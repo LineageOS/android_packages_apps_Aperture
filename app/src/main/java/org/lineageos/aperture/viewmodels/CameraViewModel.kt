@@ -5,8 +5,10 @@
 
 package org.lineageos.aperture.viewmodels
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.net.Uri
+import androidx.camera.camera2.internal.CameraIdUtil
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.Quality
@@ -40,9 +42,22 @@ import java.util.concurrent.Executors
  * [ViewModel] representing a camera session. This data is used to receive
  * live data regarding the setting currently enabled.
  */
+@SuppressLint("RestrictedApi")
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 class CameraViewModel(application: Application) : AndroidViewModel(application) {
     // Base
+
+    /**
+     * Overlay configuration.
+     */
+    val overlayConfiguration = OverlayConfiguration(context)
+
+    init {
+        // We need to set the backward compatible camera IDs initializing CameraX
+        CameraIdUtil.setBackwardCompatibleCameraIds(
+            overlayConfiguration.backwardCompatibleCameraIds
+        )
+    }
 
     /**
      * CameraX's [ProcessCameraProvider].
@@ -59,11 +74,6 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
      * [ExecutorService] for camera related operations.
      */
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
-
-    /**
-     * Overlay configuration.
-     */
-    val overlayConfiguration = OverlayConfiguration(context)
 
     /**
      * The available [Camera]s.
