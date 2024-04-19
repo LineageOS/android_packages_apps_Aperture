@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -85,6 +85,8 @@
     <string name="qr_tel_title">Call phone number</string>
     <string name="qr_tel_content_description">Call the phone number</string>
     <string name="qr_text">Text</string>
+    <string name="qr_upi_title">Open UPI</string>
+    <string name="qr_upi_content_description">Open this UPI with the appropriate app if supported</string>
     <string name="qr_uri_title">Open URL</string>
     <string name="qr_uri_content_description">Open this URL with the appropriate app if supported</string>
     <string name="qr_vin_title">Lookup VIN</string>
