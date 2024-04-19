@@ -85,6 +85,8 @@
     <string name="qr_tel_title">Call phone number</string>
     <string name="qr_tel_content_description">Call the phone number</string>
     <string name="qr_text">Text</string>
+    <string name="qr_upi_title">Open UPI</string>
+    <string name="qr_upi_content_description">Open this UPI with the appropriate app if supported</string>
     <string name="qr_uri_title">Open URL</string>
     <string name="qr_uri_content_description">Open this URL with the appropriate app if supported</string>
     <string name="qr_vin_title">Lookup VIN</string>

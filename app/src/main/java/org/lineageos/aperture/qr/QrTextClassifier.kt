@@ -83,6 +83,26 @@ class QrTextClassifier(
                         }
                     }
                     .build()
+
+                SCHEME_UPI -> return TextClassification.Builder()
+                    .setText(context.getString(R.string.qr_upi_content_description))
+                    .setEntityType(TextClassifier.TYPE_OTHER, 1.0f)
+                    .apply {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                            addAction(
+                                RemoteAction::class.build(
+                                    context,
+                                    R.drawable.ic_payments,
+                                    R.string.qr_upi_title,
+                                    R.string.qr_upi_content_description,
+                                    Intent(Intent.ACTION_VIEW).apply {
+                                        data = uri
+                                    }
+                                )
+                            )
+                        }
+                    }
+                    .build()
             }
         }
 
@@ -96,5 +116,6 @@ class QrTextClassifier(
     companion object {
         private const val SCHEME_DPP = "dpp"
         private const val SCHEME_FIDO = "fido"
+        private const val SCHEME_UPI = "upi"
     }
 }
