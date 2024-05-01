@@ -101,6 +101,7 @@
     <string name="noise_reduction_mode_fast">빠르게</string>
     <string name="noise_reduction_mode_high_quality">고품질</string>
     <string name="noise_reduction_mode_minimal">최소</string>
+    <string name="shading_mode_title">비네트 보정</string>
     <string name="shading_mode_default">기본값</string>
     <string name="shading_mode_off">끔</string>
     <string name="shading_mode_fast">빠름</string>
