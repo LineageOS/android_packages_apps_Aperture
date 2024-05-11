@@ -19,6 +19,8 @@ android_app {
     sdk_version: "34",
     product_specific: true,
 
+    use_embedded_native_libs: true,
+
     required: [
         "ApertureFrameworksBaseOverlay",
         "ApertureLensLauncher",
