@@ -68,6 +68,7 @@ android_library_import {
         "kotlin-stdlib",
         "kotlinx-coroutines-android",
     ],
+    extract_jni: true,
 }
 
 android_library {
