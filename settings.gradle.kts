@@ -13,7 +13,7 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        maven("https://raw.githubusercontent.com/lineage-next/camerax-aperture/2f3d84611740152a503b606584c93d64dba4ebcd/.m2")
+        maven("https://raw.githubusercontent.com/lineage-next/camerax-aperture/ce86503dd62a0f952b3338f4d6c45ad44b428188/.m2")
         google()
         mavenCentral()
     }
