@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -58,6 +58,8 @@
     <string name="qr_tel_title">Zadzwoń pod numer telefonu</string>
     <string name="qr_tel_content_description">Zadzwoń pod ten numer telefonu</string>
     <string name="qr_text">Tekst</string>
+    <string name="qr_upi_title">Wybierz aplikację do wykonania płatności</string>
+    <string name="qr_upi_content_description">Otwórz ten adres UPI za pomocą odpowiedniej aplikacji, jeśli jest obsługiwany</string>
     <string name="qr_uri_title">Otwórz adres URL</string>
     <string name="qr_uri_content_description">Otwórz ten adres URL za pomocą odpowiedniej aplikacji, jeśli jest obsługiwany</string>
     <string name="qr_vin_title">Wyszukaj VIN</string>

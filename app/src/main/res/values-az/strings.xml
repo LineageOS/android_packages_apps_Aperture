@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -58,6 +58,8 @@
     <string name="qr_tel_title">Telefon nömrəsinə zəng et</string>
     <string name="qr_tel_content_description">Telefon nömrəsinə zəng et</string>
     <string name="qr_text">Mətn</string>
+    <string name="qr_upi_title">Ödəniş ediləcək tətbiqi seçin</string>
+    <string name="qr_upi_content_description">Dəstəklənirsə bu UPI keçidini uyğun tətbiqlə aç</string>
     <string name="qr_uri_title">URL-ni aç</string>
     <string name="qr_uri_content_description">Dəstəklənirsə bu URL-ni uyğun tətbiqlə aç</string>
     <string name="qr_vin_title">VIN axtar</string>

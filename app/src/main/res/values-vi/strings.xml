@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -58,6 +58,8 @@
     <string name="qr_tel_title">Gọi số điện thoại</string>
     <string name="qr_tel_content_description">Gọi số điện thoại</string>
     <string name="qr_text">Văn bản</string>
+    <string name="qr_upi_title">Chọn ứng dụng để thanh toán</string>
+    <string name="qr_upi_content_description">Mở liên kết UPI này bằng ứng dụng thích hợp nếu được hỗ trợ</string>
     <string name="qr_uri_title">Mở URL</string>
     <string name="qr_uri_content_description">Mở URL này bằng ứng dụng thích hợp nếu được hỗ trợ</string>
     <string name="qr_vin_title">Tra cứu số VIN</string>

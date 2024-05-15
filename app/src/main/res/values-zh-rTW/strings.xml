@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -44,13 +44,26 @@
     <string name="qr_calendar_content_description">將此活動新增至日曆</string>
     <string name="qr_dpp_description">設定此裝置</string>
     <string name="qr_email_title">傳送新電子郵件</string>
+    <string name="qr_email_content_description">撰寫一封新郵件給指定的電子郵件地址</string>
+    <string name="qr_fido_title">使用通行金鑰</string>
+    <string name="qr_fido_content_description">處理此 FIDO QR code</string>
+    <string name="qr_geo_title">開啟此位置</string>
+    <string name="qr_geo_content_description">開啟此位置</string>
+    <string name="qr_isbn_title">搜尋此 ISBN</string>
+    <string name="qr_isbn_content_description">在 isbnsearch.org 上搜尋此 ISBN</string>
+    <string name="qr_product_title">搜尋產品</string>
+    <string name="qr_product_content_description">搜尋此產品 ID 條碼</string>
     <string name="qr_sms_title">傳送新簡訊</string>
     <string name="qr_sms_content_description">傳送新簡訊至指定收件者</string>
     <string name="qr_tel_title">撥打電話號碼</string>
     <string name="qr_tel_content_description">撥打電話號碼</string>
     <string name="qr_text">文字</string>
+    <string name="qr_upi_title">選擇應用程式進行付款</string>
+    <string name="qr_upi_content_description">使用適當的應用程式（若支援）開啟此 UPI 連結</string>
     <string name="qr_uri_title">開啟 URL</string>
     <string name="qr_uri_content_description">使用適當的應用程式（若支援）開啟此 URL</string>
+    <string name="qr_vin_title">搜尋 VIN</string>
+    <string name="qr_vin_content_description">搜尋此車輛識別號碼 (VIN)</string>
     <string name="qr_wifi_title">連線至此 Wi-Fi 網路</string>
     <string name="qr_wifi_content_description">新增此 Wi-Fi 網路至已知網路清單並將裝置連線至該網路</string>
     <string name="title_activity_settings">設定</string>

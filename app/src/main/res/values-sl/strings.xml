@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -58,6 +58,8 @@
     <string name="qr_tel_title">Kliči telefonsko številko</string>
     <string name="qr_tel_content_description">Kličite telefonsko številko</string>
     <string name="qr_text">Besedilo</string>
+    <string name="qr_upi_title">Izberite aplikacijo za plačilo</string>
+    <string name="qr_upi_content_description">Odpri to UPI povezavo s primerno aplikacijo, če je podprto</string>
     <string name="qr_uri_title">Odpri URL</string>
     <string name="qr_uri_content_description">Odprite ta URL s primerno aplikacijo, če je podprto</string>
     <string name="qr_vin_title">Išči VIN</string>

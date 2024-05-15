@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -58,6 +58,8 @@
     <string name="qr_tel_title">電話番号に発信</string>
     <string name="qr_tel_content_description">電話番号に発信します</string>
     <string name="qr_text">テキスト</string>
+    <string name="qr_upi_title">決済アプリを選択</string>
+    <string name="qr_upi_content_description">対応している場合は、この UPI リンクを適切なアプリで開きます</string>
     <string name="qr_uri_title">URL を開く</string>
     <string name="qr_uri_content_description">対応しているアプリでこの URL を開きます</string>
     <string name="qr_vin_title">VIN 検索</string>

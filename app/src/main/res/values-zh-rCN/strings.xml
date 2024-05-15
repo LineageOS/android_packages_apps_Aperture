@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -58,6 +58,8 @@
     <string name="qr_tel_title">拨打电话号码</string>
     <string name="qr_tel_content_description">拨打电话号码</string>
     <string name="qr_text">文本</string>
+    <string name="qr_upi_title">选择用于支付的应用</string>
+    <string name="qr_upi_content_description">在可用的情况下，使用支持的应用打开UPI链接</string>
     <string name="qr_uri_title">打开网址</string>
     <string name="qr_uri_content_description">如果支持的话，用适当的应用程序打开此网址</string>
     <string name="qr_vin_title">查找 VIN</string>
