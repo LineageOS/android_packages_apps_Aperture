@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -8,9 +8,7 @@ package org.lineageos.aperture.camera
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraMetadata
 import android.os.Build
-import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.core.CameraInfo
-import androidx.camera.core.CameraSelector
 import androidx.camera.video.Recorder
 import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.models.CameraFacing
@@ -27,7 +25,6 @@ import org.lineageos.aperture.models.VideoDynamicRange
 import org.lineageos.aperture.models.VideoQualityInfo
 import org.lineageos.aperture.models.VideoStabilizationMode
 import org.lineageos.aperture.viewmodels.CameraViewModel
-import kotlin.reflect.safeCast
 
 /**
  * Class representing a device camera
@@ -35,26 +32,16 @@ import kotlin.reflect.safeCast
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalLensFacing
 @androidx.camera.core.ExperimentalZeroShutterLag
-class Camera(cameraInfo: CameraInfo, model: CameraViewModel) {
-    val cameraSelector = cameraInfo.cameraSelector
-
-    private val camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
-    val cameraId = camera2CameraInfo.cameraId
-
-    val cameraFacing = when (cameraInfo.lensFacing) {
-        CameraSelector.LENS_FACING_UNKNOWN -> CameraFacing.UNKNOWN
-        CameraSelector.LENS_FACING_FRONT -> CameraFacing.FRONT
-        CameraSelector.LENS_FACING_BACK -> CameraFacing.BACK
-        CameraSelector.LENS_FACING_EXTERNAL -> CameraFacing.EXTERNAL
-        else -> throw Exception("Unknown lens facing value")
-    }
-
-    val cameraType = cameraFacing.cameraType
+class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(cameraInfo, model) {
+    override val cameraSelector = cameraInfo.cameraSelector
 
     val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
     private val hasFlashUnit = cameraInfo.hasFlashUnit()
 
-    val isLogical = camera2CameraInfo.physicalCameraIds.size > 1
+    private val physicalCameras = cameraInfo.physicalCameraInfos.map {
+        PhysicalCamera(it, model, this)
+    }
+    val isLogical = physicalCameras.size > 1
 
     val intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
     val logicalZoomRatios = model.getLogicalZoomRatios(cameraId)
@@ -252,15 +239,6 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) {
         if (cameraFacing == CameraFacing.FRONT) {
             add(FlashMode.SCREEN)
         }
-    }
-
-    override fun equals(other: Any?): Boolean {
-        val camera = this::class.safeCast(other) ?: return false
-        return this.cameraId == camera.cameraId
-    }
-
-    override fun hashCode(): Int {
-        return this::class.qualifiedName.hashCode() + cameraId.hashCode()
     }
 
     fun supportsExtensionMode(extensionMode: Int): Boolean {
