@@ -108,6 +108,13 @@
             app:iconSpaceReserved="false"
             app:title="@string/processing_title" />
 
+        <SwitchPreference
+            app:defaultValue="false"
+            app:iconSpaceReserved="false"
+            app:key="split_logical_cameras"
+            app:summary="@string/split_logical_cameras_summary"
+            app:title="@string/split_logical_cameras_title" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>
