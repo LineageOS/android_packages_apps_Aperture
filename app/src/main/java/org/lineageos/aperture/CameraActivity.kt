@@ -288,15 +288,26 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         })
     }
     private val zoomGestureDetector by lazy {
-        ZoomGestureDetector(this) { type, detector ->
-            if (type == ZoomGestureDetector.ZOOM_GESTURE_MOVE) {
-                cameraController.onPinchToZoom(detector.scaleFactor)
-                handler.removeMessages(MSG_ON_PINCH_TO_ZOOM)
-                handler.sendMessageDelayed(handler.obtainMessage(MSG_ON_PINCH_TO_ZOOM), 500)
+        ZoomGestureDetector(this) {
+            when (it) {
+                is ZoomGestureDetector.ZoomEvent.Begin -> {
+                    zoomGestureDetectorInProgress = true
+                }
+
+                is ZoomGestureDetector.ZoomEvent.Move -> {
+                    cameraController.onPinchToZoom(it.scaleFactor)
+                    handler.removeMessages(MSG_ON_PINCH_TO_ZOOM)
+                    handler.sendMessageDelayed(handler.obtainMessage(MSG_ON_PINCH_TO_ZOOM), 500)
+                }
+
+                is ZoomGestureDetector.ZoomEvent.End -> {
+                    zoomGestureDetectorInProgress = false
+                }
             }
             true
         }
     }
+    private var zoomGestureDetectorInProgress = false
 
     private val handler = object : Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
@@ -696,7 +707,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         // Observe manual focus
         viewFinder.setOnTouchListener { _, event ->
-            if (zoomGestureDetector.onTouchEvent(event) && zoomGestureDetector.isInProgress) {
+            if (zoomGestureDetector.onTouchEvent(event) && zoomGestureDetectorInProgress) {
                 return@setOnTouchListener true
             }
             return@setOnTouchListener gestureDetector.onTouchEvent(event)
