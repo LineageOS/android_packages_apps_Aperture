@@ -97,6 +97,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
+import org.lineageos.aperture.camera.Camera
+import org.lineageos.aperture.camera.PhysicalCamera
 import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.models.AssistantIntent
 import org.lineageos.aperture.models.CameraFacing
@@ -146,6 +148,7 @@ import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
 import java.io.InputStream
 import kotlin.math.abs
+import kotlin.reflect.cast
 import kotlin.reflect.safeCast
 import androidx.camera.core.CameraState as CameraXCameraState
 
@@ -206,6 +209,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     private val permissionsUtils by lazy { PermissionsUtils(this) }
 
     private var camera by nonNullablePropertyDelegate { model.camera }
+    private var physicalCamera by nullablePropertyDelegate { model.physicalCamera }
     private var cameraMode by nonNullablePropertyDelegate { model.cameraMode }
     private var singleCaptureMode by nonNullablePropertyDelegate { model.inSingleCaptureMode }
     private var cameraState by nonNullablePropertyDelegate { model.cameraState }
@@ -833,7 +837,16 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         // Set lens switching callback
         lensSelectorLayout.onCameraChangeCallback = {
             if (canRestartCamera()) {
-                camera = it
+                PhysicalCamera::class.safeCast(it)?.also { physicalCamera ->
+                    Log.i("SSSS", "phycam ${physicalCamera.cameraId}")
+                    camera = physicalCamera.logicalCamera
+                    this.physicalCamera = physicalCamera
+                } ?: run {
+                    Log.i("SSSS", "cam ${it.cameraId}")
+                    camera = Camera::class.cast(it)
+                    this.physicalCamera = null
+                }
+
                 bindCameraUseCases()
             }
         }
@@ -1569,16 +1582,17 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             it != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG || camera.supportsZsl
         } ?: ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY
 
-        // Only photo mode supports vendor extensions for now
-        val cameraSelector = if (
-            cameraMode == CameraMode.PHOTO &&
-            photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG
-        ) {
-            model.extensionsManager.getExtensionEnabledCameraSelector(
-                camera.cameraSelector, photoEffect
-            )
-        } else {
-            camera.cameraSelector
+        val cameraSelector = (physicalCamera?.cameraSelector ?: camera.cameraSelector).let {
+            Log.i("SSSS", "camsel ${it.physicalCameraId}")
+            // Only photo mode supports vendor extensions for now
+            if (
+                cameraMode == CameraMode.PHOTO &&
+                photoCaptureMode != ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG
+            ) {
+                model.extensionsManager.getExtensionEnabledCameraSelector(it, photoEffect)
+            } else {
+                it
+            }
         }
 
         // Bind use cases to camera
@@ -1797,7 +1811,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         // Update lens selector
         lensSelectorLayout.setCamera(
-            camera, model.getCameras(cameraMode, camera.cameraFacing)
+            physicalCamera ?: camera, model.getCameras(cameraMode, camera.cameraFacing)
         )
     }
 

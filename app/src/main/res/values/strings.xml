@@ -131,6 +131,8 @@
 
     <!-- Advanced Preferences -->
     <string name="processing_title">Processing</string>
+    <string name="split_logical_cameras_title">Add physical cameras from logical cameras</string>
+    <string name="split_logical_cameras_summary">Add camera buttons for logical cameras\' physical sensors. When selecting those cameras, seamless transition between lenses won\'t be available</string>
 
     <!-- Processing Preferences -->
     <string name="processing_info">On photo mode, when ZSL mode is used, only default and off values will be taken into consideration. For video mode, only default, off and fast values will be taken into consideration.</string>

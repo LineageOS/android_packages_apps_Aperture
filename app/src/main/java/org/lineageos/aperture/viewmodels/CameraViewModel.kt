@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import org.lineageos.aperture.camera.Camera
+import org.lineageos.aperture.camera.PhysicalCamera
 import org.lineageos.aperture.ext.*
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
@@ -162,6 +163,11 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
      * The camera currently in use.
      */
     val camera = MutableLiveData<Camera>()
+
+    /**
+     * The physical camera currently in use.
+     */
+    val physicalCamera = MutableLiveData<PhysicalCamera?>()
 
     /**
      * Current camera mode.

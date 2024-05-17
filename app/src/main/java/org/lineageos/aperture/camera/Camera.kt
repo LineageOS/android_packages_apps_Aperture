@@ -38,7 +38,7 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
     val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
     private val hasFlashUnit = cameraInfo.hasFlashUnit()
 
-    private val physicalCameras = cameraInfo.physicalCameraInfos.map {
+    val physicalCameras = cameraInfo.physicalCameraInfos.map {
         PhysicalCamera(it, model, this)
     }
     val isLogical = physicalCameras.size > 1
