@@ -17,10 +17,10 @@ import org.lineageos.aperture.viewmodels.CameraViewModel
 class PhysicalCamera(
     cameraInfo: CameraInfo,
     model: CameraViewModel,
-    logicalCamera: Camera,
+    val logicalCamera: Camera,
 ) : BaseCamera(cameraInfo, model) {
     @Suppress("RestrictedApi")
-    override val cameraSelector = CameraSelector.Builder.fromSelector(logicalCamera.cameraSelector)
+    override val cameraSelector = CameraSelector.Builder()
         .setPhysicalCameraId(cameraId)
         .build()
 }

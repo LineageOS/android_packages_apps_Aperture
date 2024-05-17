@@ -475,3 +475,12 @@ internal val SharedPreferences.videoMirrorMode: VideoMirrorMode
         // Default to off
         else -> VideoMirrorMode.OFF
     }
+
+// Split logical cameras
+private const val SPLIT_LOGICAL_CAMERAS_KEY = "split_logical_cameras"
+private const val SPLIT_LOGICAL_CAMERAS_DEFAULT = false
+internal var SharedPreferences.splitLogicalCameras: Boolean
+    get() = getBoolean(SPLIT_LOGICAL_CAMERAS_KEY, SPLIT_LOGICAL_CAMERAS_DEFAULT)
+    set(value) = edit {
+        putBoolean(SPLIT_LOGICAL_CAMERAS_KEY, value)
+    }
