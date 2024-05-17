@@ -94,6 +94,8 @@ dependencies {
     implementation("androidx.camera:camera-video:${cameraxVersion}")
     // If you want to additionally use the CameraX View class
     implementation("androidx.camera:camera-view:${cameraxVersion}")
+    // If you want to additionally use the CameraX Viewfinder class
+    implementation("androidx.camera:camera-viewfinder:1.4.0-alpha06")
     // If you want to additionally use the CameraX Extensions library
     implementation("androidx.camera:camera-extensions:${cameraxVersion}")
 
