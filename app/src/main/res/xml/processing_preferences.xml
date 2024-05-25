@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -15,7 +15,7 @@
             app:summary="@string/processing_info" />
 
         <ListPreference
-            app:defaultValue="default"
+            app:defaultValue="@string/config_processingEdge"
             app:entries="@array/edge_mode_entries"
             app:entryValues="@array/edge_mode_values"
             app:iconSpaceReserved="false"
@@ -24,7 +24,7 @@
             app:title="@string/edge_mode_title" />
 
         <ListPreference
-            app:defaultValue="default"
+            app:defaultValue="@string/config_processingNoiseReduction"
             app:entries="@array/noise_reduction_mode_entries"
             app:entryValues="@array/noise_reduction_mode_values"
             app:iconSpaceReserved="false"
@@ -33,7 +33,7 @@
             app:title="@string/noise_reduction_mode_title" />
 
         <ListPreference
-            app:defaultValue="default"
+            app:defaultValue="@string/config_processingShading"
             app:entries="@array/shading_mode_entries"
             app:entryValues="@array/shading_mode_values"
             app:iconSpaceReserved="false"
@@ -42,7 +42,7 @@
             app:title="@string/shading_mode_title" />
 
         <ListPreference
-            app:defaultValue="default"
+            app:defaultValue="@string/config_processingColorCorrectionAberration"
             app:entries="@array/color_correction_aberration_mode_entries"
             app:entryValues="@array/color_correction_aberration_mode_values"
             app:iconSpaceReserved="false"
@@ -51,7 +51,7 @@
             app:title="@string/color_correction_aberration_mode_title" />
 
         <ListPreference
-            app:defaultValue="default"
+            app:defaultValue="@string/config_processingDistortionCorrection"
             app:entries="@array/distortion_correction_mode_entries"
             app:entryValues="@array/distortion_correction_mode_values"
             app:iconSpaceReserved="false"
@@ -60,7 +60,7 @@
             app:title="@string/distortion_correction_mode_title" />
 
         <ListPreference
-            app:defaultValue="default"
+            app:defaultValue="@string/config_processingHotPixel"
             app:entries="@array/hot_pixel_mode_entries"
             app:entryValues="@array/hot_pixel_mode_values"
             app:iconSpaceReserved="false"
