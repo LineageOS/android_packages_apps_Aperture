@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
@@ -84,4 +84,19 @@
     <!-- Whether we should use high resolution output size or not.
          See: StreamConfigurationMap.getHighResolutionOutputSizes() for more info. -->
     <bool name="config_enableHighResolution">true</bool>
+
+    <!-- Default values for image processing settings
+         Valid values are:
+          - "default"
+          - "off"
+          - "fast"
+          - "high_quality"
+          - "minimal" (Only for config_processingNoiseReduction)
+        -->
+    <string name="config_processingEdge" translatable="false">default</string>
+    <string name="config_processingNoiseReduction" translatable="false">default</string>
+    <string name="config_processingShading" translatable="false">default</string>
+    <string name="config_processingColorCorrectionAberration" translatable="false">default</string>
+    <string name="config_processingDistortionCorrection" translatable="false">default</string>
+    <string name="config_processingHotPixel" translatable="false">default</string>
 </resources>
