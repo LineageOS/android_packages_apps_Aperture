@@ -84,4 +84,19 @@
     <!-- Whether we should use high resolution output size or not.
          See: StreamConfigurationMap.getHighResolutionOutputSizes() for more info. -->
     <bool name="config_enableHighResolution">true</bool>
+
+    <!-- Default values for image processing settings
+    Options are:
+        - default
+        - off
+        - fast
+        - high_quality
+        - minimal (Only for config_processingNoiseReduction)
+        -->
+    <string name="config_processingEdge" translatable="false">default</string>
+    <string name="config_processingNoiseReduction" translatable="false">default</string>
+    <string name="config_processingShading" translatable="false">default</string>
+    <string name="config_processingColorCorrectionAberration" translatable="false">default</string>
+    <string name="config_processingDistortionCorrection" translatable="false">default</string>
+    <string name="config_processingHotPixel" translatable="false">default</string>
 </resources>
