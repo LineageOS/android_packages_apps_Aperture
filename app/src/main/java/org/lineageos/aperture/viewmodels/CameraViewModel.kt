@@ -369,4 +369,20 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
 
         return listOf(mainCamera) + auxCameras
     }
+
+    // Overlay configuration
+    val defaultProcessingEdge = overlayConfiguration.defaultProcessingEdge
+
+    val defaultProcessingNoiseReduction = overlayConfiguration.defaultProcessingNoiseReduction
+
+    val defaultProcessingShading = overlayConfiguration.defaultProcessingShading
+
+    val defaultProcessingColorCorrectionAberration =
+        overlayConfiguration.defaultProcessingColorCorrectionAberration
+
+    val defaultProcessingDistortionCorrection =
+        overlayConfiguration.defaultProcessingDistortionCorrection
+
+    val defaultProcessingHotPixel =
+        overlayConfiguration.defaultProcessingHotPixel
 }

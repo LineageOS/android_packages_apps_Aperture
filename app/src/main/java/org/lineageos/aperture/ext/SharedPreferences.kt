@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -338,9 +338,8 @@ internal val SharedPreferences.videoStabilization: Boolean
 
 // Edge mode
 private const val EDGE_MODE_KEY = "edge_mode"
-private const val EDGE_MODE_DEFAULT = "default"
-internal val SharedPreferences.edgeMode: EdgeMode?
-    get() = when (getString(EDGE_MODE_KEY, EDGE_MODE_DEFAULT)) {
+internal fun SharedPreferences.edgeMode(default: String) =
+    when (getString(EDGE_MODE_KEY, default)) {
         "default" -> null
         "off" -> EdgeMode.OFF
         "fast" -> EdgeMode.FAST
@@ -351,9 +350,8 @@ internal val SharedPreferences.edgeMode: EdgeMode?
 
 // Noise reduction mode
 private const val NOISE_REDUCTION_MODE_KEY = "noise_reduction_mode"
-private const val NOISE_REDUCTION_MODE_DEFAULT = "default"
-internal val SharedPreferences.noiseReductionMode: NoiseReductionMode?
-    get() = when (getString(NOISE_REDUCTION_MODE_KEY, NOISE_REDUCTION_MODE_DEFAULT)) {
+internal fun SharedPreferences.noiseReductionMode(default: String) =
+    when (getString(NOISE_REDUCTION_MODE_KEY, default)) {
         "default" -> null
         "off" -> NoiseReductionMode.OFF
         "fast" -> NoiseReductionMode.FAST
@@ -365,9 +363,8 @@ internal val SharedPreferences.noiseReductionMode: NoiseReductionMode?
 
 // Shading mode
 private const val SHADING_MODE_KEY = "shading_mode"
-private const val SHADING_MODE_DEFAULT = "default"
-internal val SharedPreferences.shadingMode: ShadingMode?
-    get() = when (getString(SHADING_MODE_KEY, SHADING_MODE_DEFAULT)) {
+internal fun SharedPreferences.shadingMode(default: String) =
+    when (getString(SHADING_MODE_KEY, default)) {
         "default" -> null
         "off" -> ShadingMode.OFF
         "fast" -> ShadingMode.FAST
@@ -378,11 +375,8 @@ internal val SharedPreferences.shadingMode: ShadingMode?
 
 // Color correction aberration mode
 private const val COLOR_CORRECTION_ABERRATION_MODE_KEY = "color_correction_aberration_mode"
-private const val COLOR_CORRECTION_ABERRATION_MODE_DEFAULT = "default"
-internal val SharedPreferences.colorCorrectionAberrationMode: ColorCorrectionAberrationMode?
-    get() = when (getString(
-        COLOR_CORRECTION_ABERRATION_MODE_KEY, COLOR_CORRECTION_ABERRATION_MODE_DEFAULT
-    )) {
+internal fun SharedPreferences.colorCorrectionAberrationMode(default: String) =
+    when (getString(COLOR_CORRECTION_ABERRATION_MODE_KEY, default)) {
         "default" -> null
         "off" -> ColorCorrectionAberrationMode.OFF
         "fast" -> ColorCorrectionAberrationMode.FAST
@@ -393,9 +387,8 @@ internal val SharedPreferences.colorCorrectionAberrationMode: ColorCorrectionAbe
 
 // Distortion correction mode
 private const val DISTORTION_CORRECTION_MODE_KEY = "distortion_correction_mode"
-private const val DISTORTION_CORRECTION_MODE_DEFAULT = "default"
-internal val SharedPreferences.distortionCorrectionMode: DistortionCorrectionMode?
-    get() = when (getString(DISTORTION_CORRECTION_MODE_KEY, DISTORTION_CORRECTION_MODE_DEFAULT)) {
+internal fun SharedPreferences.distortionCorrectionMode(default: String) =
+    when (getString(DISTORTION_CORRECTION_MODE_KEY, default)) {
         "default" -> null
         "off" -> DistortionCorrectionMode.OFF
         "fast" -> DistortionCorrectionMode.FAST
@@ -406,9 +399,8 @@ internal val SharedPreferences.distortionCorrectionMode: DistortionCorrectionMod
 
 // Hot pixel mode
 private const val HOT_PIXEL_MODE_KEY = "hot_pixel_mode"
-private const val HOT_PIXEL_MODE_DEFAULT = "default"
-internal val SharedPreferences.hotPixelMode: HotPixelMode?
-    get() = when (getString(HOT_PIXEL_MODE_KEY, HOT_PIXEL_MODE_DEFAULT)) {
+internal fun SharedPreferences.hotPixelMode(default: String) =
+    when (getString(HOT_PIXEL_MODE_KEY, default)) {
         "default" -> null
         "off" -> HotPixelMode.OFF
         "fast" -> HotPixelMode.FAST
