@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -20,6 +20,9 @@ class RROResources private constructor(val context: Context, private val package
 
     fun getBoolean(id: Int): Boolean =
         resources.getBoolean(getIdentifier(id))
+
+    fun getString(id: Int): String =
+        resources.getString(getIdentifier(id))
 
     fun getStringArray(id: Int): Array<String> =
         resources.getStringArray(getIdentifier(id))

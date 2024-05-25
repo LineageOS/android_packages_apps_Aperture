@@ -1667,7 +1667,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     }
                 )
                 .setEdgeMode(
-                    sharedPreferences.edgeMode?.takeIf {
+                    sharedPreferences.edgeMode(viewModel.defaultProcessingEdge)?.takeIf {
                         camera.supportedEdgeModes.contains(it) && when (cameraMode) {
                             CameraMode.PHOTO -> photoCaptureMode !=
                                     ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
@@ -1680,7 +1680,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     }
                 )
                 .setNoiseReductionMode(
-                    sharedPreferences.noiseReductionMode?.takeIf {
+                    sharedPreferences.noiseReductionMode(
+                        viewModel.defaultProcessingNoiseReduction
+                    )?.takeIf {
                         camera.supportedNoiseReductionModes.contains(it) && when (cameraMode) {
                             CameraMode.PHOTO -> photoCaptureMode !=
                                     ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
@@ -1694,7 +1696,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     }
                 )
                 .setShadingMode(
-                    sharedPreferences.shadingMode?.takeIf {
+                    sharedPreferences.shadingMode(viewModel.defaultProcessingShading)?.takeIf {
                         camera.supportedShadingModes.contains(it) && when (cameraMode) {
                             CameraMode.PHOTO -> photoCaptureMode !=
                                     ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
@@ -1708,7 +1710,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     }
                 )
                 .setColorCorrectionAberrationMode(
-                    sharedPreferences.colorCorrectionAberrationMode?.takeIf {
+                    sharedPreferences.colorCorrectionAberrationMode(
+                        viewModel.defaultProcessingColorCorrectionAberration
+                    )?.takeIf {
                         camera.supportedColorCorrectionAberrationModes.contains(it) && when (cameraMode) {
                             CameraMode.PHOTO -> photoCaptureMode !=
                                     ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
@@ -1726,7 +1730,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     }
                 )
                 .setDistortionCorrectionMode(
-                    sharedPreferences.distortionCorrectionMode?.takeIf {
+                    sharedPreferences.distortionCorrectionMode(
+                        viewModel.defaultProcessingDistortionCorrection
+                    )?.takeIf {
                         camera.supportedDistortionCorrectionModes.contains(it) && when (cameraMode) {
                             CameraMode.PHOTO -> photoCaptureMode !=
                                     ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
@@ -1740,7 +1746,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     }
                 )
                 .setHotPixelMode(
-                    sharedPreferences.hotPixelMode?.takeIf {
+                    sharedPreferences.hotPixelMode(viewModel.defaultProcessingHotPixel)?.takeIf {
                         camera.supportedHotPixelModes.contains(it) && when (cameraMode) {
                             CameraMode.PHOTO -> photoCaptureMode !=
                                     ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||

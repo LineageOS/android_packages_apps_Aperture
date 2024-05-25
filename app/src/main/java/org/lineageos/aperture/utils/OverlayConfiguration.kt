@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2024-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -10,6 +10,7 @@ import androidx.camera.video.Quality
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.getBoolean
 import org.lineageos.aperture.ext.getOrCreate
+import org.lineageos.aperture.ext.getString
 import org.lineageos.aperture.ext.getStringArray
 import org.lineageos.aperture.models.FrameRate
 import kotlin.math.absoluteValue
@@ -108,4 +109,39 @@ class OverlayConfiguration(context: Context) {
      * @see R.bool.config_enableHighResolution
      */
     val enableHighResolution = resources.getBoolean(context, R.bool.config_enableHighResolution)
+
+    /**
+     * @see R.string.config_defaultProcessingEdge
+     */
+    val defaultProcessingEdge = resources.getString(context, R.string.config_defaultProcessingEdge)
+
+    /**
+     * @see R.string.config_defaultProcessingNoiseReduction
+     */
+    val defaultProcessingNoiseReduction =
+        resources.getString(context, R.string.config_defaultProcessingNoiseReduction)
+
+    /**
+     * @see R.string.config_defaultProcessingShading
+     */
+    val defaultProcessingShading =
+        resources.getString(context, R.string.config_defaultProcessingShading)
+
+    /**
+     * @see R.string.config_defaultProcessingColorCorrectionAberration
+     */
+    val defaultProcessingColorCorrectionAberration =
+        resources.getString(context, R.string.config_defaultProcessingColorCorrectionAberration)
+
+    /**
+     * @see R.string.config_defaultProcessingDistortionCorrection
+     */
+    val defaultProcessingDistortionCorrection =
+        resources.getString(context, R.string.config_defaultProcessingDistortionCorrection)
+
+    /**
+     * @see R.string.config_defaultProcessingHotPixel
+     */
+    val defaultProcessingHotPixel =
+        resources.getString(context, R.string.config_defaultProcessingHotPixel)
 }
