@@ -1596,6 +1596,19 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             }
         }
 
+        val defaultEdgeMode = ContextCompat.getString(this,
+            R.string.config_processingEdge)
+        val defaultNoiseReductionMode = ContextCompat.getString(this,
+            R.string.config_processingNoiseReduction)
+        val defaultShadingMode = ContextCompat.getString(this,
+            R.string.config_processingShading)
+        val defaultColorCorrectionAberrationMode = ContextCompat.getString(this,
+            R.string.config_processingColorCorrectionAberration)
+        val defaultDistortionCorrectionMode = ContextCompat.getString(this,
+            R.string.config_processingDistortionCorrection)
+        val defaultHotPixelMode = ContextCompat.getString(this,
+            R.string.config_processingHotPixel)
+
         // Wait for camera to be ready
         cameraController.initializationFuture.addListener({
             // Set Camera2 CaptureRequest options
@@ -1618,7 +1631,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                                 VideoStabilizationMode.OFF
                             }
                         )
-                        sharedPreferences.edgeMode?.takeIf {
+                        sharedPreferences.edgeMode(defaultEdgeMode)?.takeIf {
                             camera.supportedEdgeModes.contains(it) && when (cameraMode) {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
@@ -1632,7 +1645,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                         }?.let {
                             setEdgeMode(it)
                         }
-                        sharedPreferences.noiseReductionMode?.takeIf {
+                        sharedPreferences.noiseReductionMode(defaultNoiseReductionMode)?.takeIf {
                             camera.supportedNoiseReductionModes.contains(it) && when (cameraMode) {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
@@ -1646,7 +1659,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                         }?.let {
                             setNoiseReductionMode(it)
                         }
-                        sharedPreferences.shadingMode?.takeIf {
+                        sharedPreferences.shadingMode(defaultShadingMode)?.takeIf {
                             camera.supportedShadingModes.contains(it) && when (cameraMode) {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
@@ -1660,7 +1673,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                         }?.let {
                             setShadingMode(it)
                         }
-                        sharedPreferences.colorCorrectionAberrationMode?.takeIf {
+                        sharedPreferences.colorCorrectionAberrationMode(defaultColorCorrectionAberrationMode)?.takeIf {
                             camera.supportedColorCorrectionAberrationModes.contains(it) && when (cameraMode) {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
@@ -1678,7 +1691,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                         }?.let {
                             setColorCorrectionAberrationMode(it)
                         }
-                        sharedPreferences.distortionCorrectionMode?.takeIf {
+                        sharedPreferences.distortionCorrectionMode(defaultDistortionCorrectionMode)?.takeIf {
                             camera.supportedDistortionCorrectionModes.contains(it) && when (cameraMode) {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
@@ -1694,7 +1707,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                                 setDistortionCorrectionMode(it)
                             }
                         }
-                        sharedPreferences.hotPixelMode?.takeIf {
+                        sharedPreferences.hotPixelMode(defaultHotPixelMode)?.takeIf {
                             camera.supportedHotPixelModes.contains(it) && when (cameraMode) {
                                 CameraMode.PHOTO -> photoCaptureMode !=
                                         ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
