@@ -107,7 +107,7 @@ dependencies {
     implementation("androidx.media3:media3-ui:$media3Version")
 
     // ZXing
-    implementation("com.google.zxing:core:3.5.2")
+    implementation("com.google.zxing:core:3.5.3")
 
     // Coil
     implementation("io.coil-kt:coil:2.4.0")
