@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -28,10 +28,8 @@ import androidx.cardview.widget.CardView
 import androidx.core.graphics.drawable.DrawableCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
-import com.google.zxing.BinaryBitmap
-import com.google.zxing.MultiFormatReader
 import com.google.zxing.Result
-import com.google.zxing.common.HybridBinarizer
+import io.github.zxingcpp.BarcodeReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -78,7 +76,7 @@ class QrImageAnalyzer(private val activity: Activity, private val scope: Corouti
     }
 
     // QR
-    private val reader by lazy { MultiFormatReader() }
+    private val reader by lazy { BarcodeReader() }
 
     private val qrTextClassifier by lazy {
         QrTextClassifier(activity, textClassificationManager.textClassifier)
@@ -86,34 +84,23 @@ class QrImageAnalyzer(private val activity: Activity, private val scope: Corouti
 
     override fun analyze(image: ImageProxy) {
         image.use {
-            val source = image.planarYUVLuminanceSource
-
-            val result = runCatching {
-                reader.decodeWithState(BinaryBitmap(HybridBinarizer(source)))
-            }.getOrNull() ?: runCatching {
-                reader.decodeWithState(BinaryBitmap(HybridBinarizer(source.invert())))
-            }.getOrNull()
-
-            result?.let {
-                showQrDialog(it)
-            }
-
-            reader.reset()
+            showQrDialog(reader.read(image))
         }
     }
 
-    private fun showQrDialog(result: Result) {
+    private fun showQrDialog(results: List<BarcodeReader.Result>) {
         scope.launch(Dispatchers.Main) {
             if (bottomSheetDialog.isShowing) {
                 return@launch
             }
 
+            val result = results.firstOrNull() ?: return@launch
             val text = result.text ?: return@launch
             bottomSheetDialogData.text = text
 
             // Classify message
             val textClassification = withContext(Dispatchers.IO) {
-                qrTextClassifier.classifyText(result)
+                qrTextClassifier.classifyText(Result(text, result.bytes, null, null))
             }
 
             bottomSheetDialogData.text = textClassification.text
@@ -201,7 +188,7 @@ class QrImageAnalyzer(private val activity: Activity, private val scope: Corouti
                             action = Intent.ACTION_SEND
                             type = ClipDescription.MIMETYPE_TEXT_PLAIN
                             putExtra(
-                                Intent.EXTRA_TEXT, result.text
+                                Intent.EXTRA_TEXT, text
                             )
                         },
                         activity.getString(androidx.transition.R.string.abc_shareactionprovider_share_with)
