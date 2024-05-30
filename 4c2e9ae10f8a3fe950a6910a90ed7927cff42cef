@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "09eb3ed4_2871770d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2024-05-30T12:54:20Z",
+      "side": 1,
+      "message": "Fixes https://gitlab.com/CalyxOS/calyxos/-/issues/2410",
+      "revId": "4c2e9ae10f8a3fe950a6910a90ed7927cff42cef",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
