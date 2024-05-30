@@ -946,3 +946,36 @@ android_library {
     ],
     java_version: "1.7",
 }
+
+android_library_import {
+    name: "Aperture_io.github.zxing-cpp_android-nodeps",
+    aars: ["io/github/zxing-cpp/android/2.2.0/android-2.2.0.aar"],
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Aperture_androidx.camera_camera-core",
+        "kotlin-stdlib-jdk8",
+    ],
+    extract_jni: true,
+}
+
+android_library {
+    name: "Aperture_io.github.zxing-cpp_android",
+    sdk_version: "34",
+    min_sdk_version: "14",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    manifest: "io/github/zxing-cpp/android/2.2.0/AndroidManifest.xml",
+    static_libs: [
+        "Aperture_io.github.zxing-cpp_android-nodeps",
+        "Aperture_androidx.camera_camera-core",
+        "kotlin-stdlib-jdk8",
+    ],
+    java_version: "1.7",
+}

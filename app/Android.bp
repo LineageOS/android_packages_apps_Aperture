@@ -46,6 +46,7 @@ android_app {
         "Aperture_androidx.media3_media3-exoplayer",
         "Aperture_androidx.media3_media3-ui",
         "Aperture_com.google.zxing_core",
+        "Aperture_io.github.zxing-cpp_android",
         "Aperture_io.coil-kt_coil",
         "Aperture_io.coil-kt_coil-video",
     ],
