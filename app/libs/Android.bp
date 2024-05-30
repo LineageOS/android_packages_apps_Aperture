@@ -740,7 +740,7 @@ android_library {
 
 java_import {
     name: "Aperture_com.google.zxing_core-nodeps",
-    jars: ["com/google/zxing/core/3.5.2/core-3.5.2.jar"],
+    jars: ["com/google/zxing/core/3.5.3/core-3.5.3.jar"],
     sdk_version: "34",
     min_sdk_version: "14",
     apex_available: [
