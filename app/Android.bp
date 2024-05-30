@@ -24,6 +24,7 @@ android_app {
     required: [
         "ApertureFrameworksBaseOverlay",
         "ApertureLensLauncher",
+        "initial-package-stopped-states-org.lineageos.aperture",
         "preinstalled-packages-org.lineageos.aperture",
     ],
 
@@ -59,6 +60,14 @@ android_app {
     optimize: {
         proguard_flags_files: ["proguard-rules.pro"],
     },
+}
+
+prebuilt_etc {
+    name: "initial-package-stopped-states-org.lineageos.aperture",
+    product_specific: true,
+    sub_dir: "sysconfig",
+    src: "initial-package-stopped-states-org.lineageos.aperture.xml",
+    filename_from_src: true,
 }
 
 prebuilt_etc {
