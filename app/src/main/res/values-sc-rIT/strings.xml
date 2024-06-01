@@ -23,6 +23,8 @@
     <string name="qr_sms_content_description">Imbia un\'SMS nou a is cuntatos ispetzificados</string>
     <string name="qr_tel_title">Muti su nùmeru de telèfonu</string>
     <string name="qr_tel_content_description">Muti su nùmeru de telèfonu</string>
+    <string name="qr_upi_title">Sèbera un\'aplicatzione pro is pagamentos</string>
+    <string name="qr_upi_content_description">Aberi custu ligòngiu UPI cun s\'aplicatzione adeguada si est cumpatìbile</string>
     <string name="qr_uri_title">Aberi s\'URL</string>
     <string name="qr_uri_content_description">Aberi custu URL cun s\'aplicatzione adeguada si est cumpatìbile</string>
     <string name="qr_vin_title">Chirca su VIN</string>

@@ -58,6 +58,8 @@
     <string name="qr_tel_title">Chiama numero di telefono</string>
     <string name="qr_tel_content_description">Chiama il numero di telefono</string>
     <string name="qr_text">Testo</string>
+    <string name="qr_upi_title">Scegli l\'app con cui pagare</string>
+    <string name="qr_upi_content_description">Apri questo collegamento UPI con l\'app appropriata, se supportato</string>
     <string name="qr_uri_title">Apri URL</string>
     <string name="qr_uri_content_description">Apri questo URL con l\'app appropriata se supportato</string>
     <string name="qr_vin_title">Ricerca VIN</string>

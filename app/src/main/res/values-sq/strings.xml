@@ -58,6 +58,8 @@
     <string name="qr_tel_title">Telefononi numrin e telefonit</string>
     <string name="qr_tel_content_description">Telefononi numrin e telefonit</string>
     <string name="qr_text">Tekst</string>
+    <string name="qr_upi_title">Zgjidh aplikacionin për të paguar</string>
+    <string name="qr_upi_content_description">Hapni këtë lidhje UPI me aplikacionin e duhur nëse mbështetet</string>
     <string name="qr_uri_title">Hap URL</string>
     <string name="qr_uri_content_description">Hapeni këtë URL me aplikacionin e duhur nëse mbështetet</string>
     <string name="qr_vin_title">Kërko VIN</string>
