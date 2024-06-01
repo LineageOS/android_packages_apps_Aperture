@@ -58,6 +58,8 @@
     <string name="qr_tel_title">Telefonnummer anrufen</string>
     <string name="qr_tel_content_description">Diese Telefonnummer anrufen</string>
     <string name="qr_text">Text</string>
+    <string name="qr_upi_title">App zum Bezahlen auswählen</string>
+    <string name="qr_upi_content_description">UPI-Link mit der entsprechenden App öffnen, falls dies unterstützt wird</string>
     <string name="qr_uri_title">URL öffnen</string>
     <string name="qr_uri_content_description">Diese URL mit der entsprechenden App öffnen, wenn dies unterstützt wird</string>
     <string name="qr_vin_title">VIN suchen</string>
