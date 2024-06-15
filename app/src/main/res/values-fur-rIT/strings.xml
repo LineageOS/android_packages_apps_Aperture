@@ -58,6 +58,8 @@
     <string name="qr_tel_title">Clame numar di telefon</string>
     <string name="qr_tel_content_description">Clame il numar di telefon</string>
     <string name="qr_text">Test</string>
+    <string name="qr_upi_title">Sielç la aplicazion par paiâ</string>
+    <string name="qr_upi_content_description">Vierç chest colegament UPI cu la aplicazion adate se supuartât</string>
     <string name="qr_uri_title">Vierç URL</string>
     <string name="qr_uri_content_description">Vierç chest URL cu la aplicazion adate se supuartât</string>
     <string name="qr_vin_title">Cîr VIN</string>
