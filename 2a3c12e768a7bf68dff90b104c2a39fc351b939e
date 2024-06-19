@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0a76efa_72f07843",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33871
+      },
+      "writtenOn": "2024-06-19T23:00:37Z",
+      "side": 1,
+      "message": "LineageOS/android_packages_apps_Aperture",
+      "revId": "2a3c12e768a7bf68dff90b104c2a39fc351b939e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
