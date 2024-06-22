@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,6 +13,7 @@ import android.os.BatteryManager
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
+import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
@@ -24,6 +25,7 @@ import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.viewmodels.CameraViewModel
 import kotlin.math.roundToInt
 
+@ExperimentalCamera2Interop
 class InfoChipView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
