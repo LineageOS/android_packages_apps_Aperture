@@ -74,14 +74,14 @@ dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.9.0"))
 
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.activity:activity-ktx:1.7.2")
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.activity:activity-ktx:1.9.0")
+    implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.exifinterface:exifinterface:1.3.7")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-    implementation("androidx.preference:preference:1.2.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.2")
+    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation("com.google.android.material:material:1.12.0")
 
     // CameraX core library using the camera2 implementation
     val cameraxVersion = "1.4.0-beta02"
@@ -100,7 +100,7 @@ dependencies {
     implementation("androidx.camera:camera-extensions:${cameraxVersion}")
 
     // Media3
-    val media3Version = "1.1.1"
+    val media3Version = "1.3.1"
     // For media playback using ExoPlayer
     implementation("androidx.media3:media3-exoplayer:$media3Version")
     // For building media playback UIs
@@ -110,9 +110,9 @@ dependencies {
     implementation("com.google.zxing:core:3.5.3")
     implementation("io.github.zxing-cpp:android:2.2.0")
 
-    // Coil
-    implementation("io.coil-kt:coil:2.4.0")
-    implementation("io.coil-kt:coil-video:2.4.0")
+    // Coil, We properly want to update to 3.x soon https://coil-kt.github.io/coil/upgrading_to_coil3/
+    implementation("io.coil-kt:coil:2.6.0")
+    implementation("io.coil-kt:coil-video:2.6.0")
 }
 
 configure<GenerateBpPluginExtension> {
