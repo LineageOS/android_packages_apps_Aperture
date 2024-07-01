@@ -4,6 +4,8 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="qr_upi_title">Valitse maksusovellus</string>
+    <string name="qr_upi_content_description">Avaa UPI-linkki oikeaan maksusovellukseen, jos tuettu.</string>
     <string name="photo_ffc_mirror_title">Peilaa etukamera</string>
     <string name="photo_ffc_mirror_summary">Tallenna etukameran kuvat kuten ne näkyvät esikatselussa.</string>
     <string name="video_mirror_mode_title">Käytä videon peilausta</string>

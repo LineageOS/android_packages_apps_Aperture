@@ -51,6 +51,7 @@
     <string name="shutter_sound_summary">Reproduz un soníu al capturar</string>
     <string name="leveler_title">Nivelador</string>
     <string name="leveler_summary">Un indicador qu\'amuesa la orientación del preséu</string>
+    <string name="volume_buttons_action_title">Aicón colos botones del volume</string>
     <string name="photo_capture_mode_title">Mou de captura</string>
     <string name="photo_capture_mode_maximize_quality">Maximizar la calidá</string>
     <string name="enable_zsl_title">Activar el mou ZSL cuando tea disponible</string>
@@ -59,8 +60,12 @@
     <string name="photo_ffc_mirror_summary">Guarda les semeyes de la cámara d\'alantre tal cuál apaecen na previsualización</string>
     <string name="video_stabilization_title">Activar la estabilización del videu</string>
     <string name="video_stabilization_summary">Cuando esta opción ta disponible, actívase la función qu\'amenorga\'l cimblíu demientres la grabación de vídeos</string>
+    <string name="processing_title">Procesamientu</string>
     <string name="edge_mode_high_quality">Calidá alta</string>
+    <string name="noise_reduction_mode_high_quality">Calidá alta</string>
+    <string name="shading_mode_high_quality">Calidá alta</string>
     <string name="color_correction_aberration_mode_high_quality">Calidá alta</string>
+    <string name="distortion_correction_mode_title">Correición de la distorsión</string>
     <string name="distortion_correction_mode_high_quality">Calidá alta</string>
     <string name="hot_pixel_mode_high_quality">Calidá alta</string>
     <string name="shortcut_selfie">Facer un autorretratu</string>
@@ -71,9 +76,17 @@
     <string name="location_permission_dialog_later">Dempués</string>
     <string name="location_permission_dialog_turn_on">Activar</string>
     <string name="error_camera_fatal_error">Atopóse un error fatal. Prueba a reaniciar el preséu.</string>
+    <string name="error_unknown_recoverable">Atopóse un error desconocíu que se pue recuperar. Informa d\'esti error a los desendolcadores.</string>
+    <string name="error_unknown_critical">Atopóse un error desconocíu que ye críticu. Informa d\'esti error a los desendolcadores.</string>
     <string name="error_no_cameras_available">Nun s\'atopó nenguna cámara nel preséu y nun se pue aniciar l\'aplicación.</string>
     <string name="gesture_action_shutter">Obturador</string>
     <string name="gesture_action_zoom">Zoom</string>
     <string name="gesture_action_volume">Volume</string>
     <string name="gesture_action_nothing">Nada</string>
+    <string name="camera_mode_photo">Semeya</string>
+    <string name="camera_mode_video">Videu</string>
+    <string name="camera_mode_qr">Escanéu</string>
+    <string name="video_mirror_mode_off">Non</string>
+    <string name="video_mirror_mode_on">Sí</string>
+    <string name="video_mirror_mode_on_ffc_only">Namás la cámara d\'alantre</string>
 </resources>
