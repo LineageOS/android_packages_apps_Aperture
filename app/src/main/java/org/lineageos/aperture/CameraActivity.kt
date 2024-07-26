@@ -1518,6 +1518,11 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             photoEffect = ExtensionMode.NONE
         }
 
+        // Fallback to FlashMode.OFF if necessary
+        if (!camera.supportedFlashModes.contains(flashMode)) {
+            changeFlashMode(FlashMode.OFF)
+        }
+
         // Initialize the use case we want and set its properties
         val cameraUseCases = when (cameraMode) {
             CameraMode.QR -> {
