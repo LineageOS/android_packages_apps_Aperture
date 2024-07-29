@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "49208eba_09545d7d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 17257
+      },
+      "writtenOn": "2024-07-29T00:13:26Z",
+      "side": 1,
+      "message": "Doesn\u0027t work because you\u0027d still be in the old camera usecase and the flash mode would be invalid for it.",
+      "parentUuid": "aac1ce7e_a2e21b24",
+      "revId": "6fe43b2a6aa82d8e475b956c5d6770001e2c9af2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "1a7c78d8_27571ff3",
         "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
         "patchSetId": 1
