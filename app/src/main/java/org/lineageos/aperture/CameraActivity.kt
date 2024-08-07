@@ -295,7 +295,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 }
 
                 is ZoomGestureDetector.ZoomEvent.Move -> {
-                    cameraController.onPinchToZoom(it.scaleFactor)
+                    cameraController.onPinchToZoom(it.incrementalScaleFactor)
                     handler.removeMessages(MSG_ON_PINCH_TO_ZOOM)
                     handler.sendMessageDelayed(handler.obtainMessage(MSG_ON_PINCH_TO_ZOOM), 500)
                 }
