@@ -9,6 +9,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.camera.camera2.interop.ExperimentalCamera2Interop
@@ -115,6 +116,7 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
         when (mediaType) {
             MediaType.PHOTO -> {
                 if (uri != null) {
+                    imageView.scaleX = 1f
                     imageView.rotation = 0f
                     imageView.setImageURI(uri)
                 } else {
@@ -123,8 +125,14 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
                     inputStream.mark(Int.MAX_VALUE)
                     val bitmap = BitmapFactory.decodeStream(inputStream)
                     inputStream.reset()
+                    Log.d(LOG_TAG, "Preview transform=$transform screenRotation=$screenRotation")
                     imageView.rotation =
                         transform.rotation.offset.toFloat() - screenRotation.offset
+                    imageView.scaleX = if (transform.mirror) {
+                        -1f
+                    } else {
+                        1f
+                    }
                     imageView.setImageBitmap(bitmap)
                 }
             }
@@ -160,5 +168,9 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
 
         cancelButton.smoothRotate(compensationValue)
         confirmButton.smoothRotate(compensationValue)
+    }
+
+    companion object {
+        private const val LOG_TAG = "Aperture"
     }
 }
