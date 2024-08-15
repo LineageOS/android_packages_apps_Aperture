@@ -58,6 +58,8 @@
     <string name="qr_tel_title">Κλήση αριθμού τηλεφώνου</string>
     <string name="qr_tel_content_description">Καλέστε τον αριθμό τηλεφώνου</string>
     <string name="qr_text">Κείμενο</string>
+    <string name="qr_upi_title">Επιλέξτε εφαρμογή για πληρωμή</string>
+    <string name="qr_upi_content_description">Άνοιγμα συνδέσμου UPI με την κατάλληλη εφαρμογή εφόσον υποστηρίζεται</string>
     <string name="qr_uri_title">Άνοιγμα URL</string>
     <string name="qr_uri_content_description">Άνοιγμα αυτής της διεύθυνσης URL με την κατάλληλη εφαρμογή εάν υποστηρίζεται</string>
     <string name="qr_vin_title">Αναζήτηση VIN</string>
