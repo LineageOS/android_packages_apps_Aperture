@@ -16,6 +16,23 @@
       "message": "bump",
       "revId": "f417d386fbdcfdd7603053a28b78a8fafaaa34ee",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5585687_5fc0ddf9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-08-21T08:13:43Z",
+      "side": 1,
+      "message": "Seems to work fine, tried photo/video in different combos",
+      "revId": "f417d386fbdcfdd7603053a28b78a8fafaaa34ee",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
