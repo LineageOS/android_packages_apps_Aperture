@@ -46,6 +46,30 @@
       },
       "revId": "18d0f441ed081b36c2917e4c4921baef385f8b20",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9c7a093_f335af22",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/CapturePreviewLayout.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-08-21T11:18:56Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0e22c8c0_f9e4397f",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 97
+      },
+      "revId": "18d0f441ed081b36c2917e4c4921baef385f8b20",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
