@@ -22,6 +22,30 @@
       },
       "revId": "18d0f441ed081b36c2917e4c4921baef385f8b20",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e22c8c0_f9e4397f",
+        "filename": "app/src/main/java/org/lineageos/aperture/ui/CapturePreviewLayout.kt",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2024-08-21T11:01:41Z",
+      "side": 1,
+      "message": "Let\u0027s just say that debugging this issue was so time-consuming for me without it (and to a lesser extent, even with it) that I couldn\u0027t bring myself to remove it.\n\nIt may also come in handy with some of the other rotation changes that are up.",
+      "parentUuid": "0e3e2658_cebd7743",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 97
+      },
+      "revId": "18d0f441ed081b36c2917e4c4921baef385f8b20",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
