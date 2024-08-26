@@ -30,6 +30,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
+import org.lineageos.aperture.ext.gestureActionToString
 import org.lineageos.aperture.ext.setOffset
 import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.utils.CameraSoundsUtils
@@ -223,6 +224,60 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             super.onCreatePreferences(savedInstanceState, rootKey)
+
+            val context = requireContext()
+
+            for (hardwareKey in HardwareKey.entries) {
+                val actionPreference = ListPreference(context, null).apply {
+                    key = "${hardwareKey.sharedPreferencesKeyPrefix}_action"
+                    setTitle(hardwareKey.actionPreferenceTitleStringResId)
+                    setDialogTitle(hardwareKey.actionPreferenceTitleStringResId)
+                    when {
+                        hardwareKey.supportsDefault && hardwareKey.isTwoWayKey -> {
+                            setEntries(R.array.gesture_actions_entries)
+                            setEntryValues(R.array.gesture_actions_values)
+                        }
+                        hardwareKey.supportsDefault && !hardwareKey.isTwoWayKey -> {
+                            setEntries(R.array.gesture_actions_no_two_way_entries)
+                            setEntryValues(R.array.gesture_actions_no_two_way_values)
+                        }
+                        !hardwareKey.supportsDefault && hardwareKey.isTwoWayKey -> {
+                            setEntries(R.array.gesture_actions_no_two_way_entries)
+                            setEntryValues(R.array.gesture_actions_no_two_way_values)
+                        }
+                        else -> {
+                            setEntries(R.array.gesture_actions_no_default_no_two_way_entries)
+                            setEntryValues(R.array.gesture_actions_no_default_no_two_way_values)
+                        }
+                    }
+                    setDefaultValue(gestureActionToString(hardwareKey.defaultAction))
+                    isIconSpaceReserved = false
+                    summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
+                }
+
+                if (!hardwareKey.isTwoWayKey) {
+                    singleButtonsPreferenceCategory?.addPreference(actionPreference)
+                } else {
+                    val invertPreference = SwitchPreference(context, null).apply {
+                        key = "${hardwareKey.sharedPreferencesKeyPrefix}_invert"
+                        setTitle(hardwareKey.invertPreferenceTitleStringResId!!)
+                        setSummary(hardwareKey.invertPreferenceSummaryStringResId!!)
+                        setDefaultValue(false)
+                        isIconSpaceReserved = false
+                    }
+
+                    val keyCategory = PreferenceCategory(context, null).apply {
+                        key = hardwareKey.sharedPreferencesKeyPrefix
+                        setTitle(hardwareKey.preferenceCategoryTitleStringResId!!)
+                        isIconSpaceReserved = false
+                    }
+
+                    preferenceScreen.addPreference(keyCategory)
+
+                    keyCategory.addPreference(actionPreference)
+                    keyCategory.addPreference(invertPreference)
+                }
+            }
 
             recheckKeys()
         }
