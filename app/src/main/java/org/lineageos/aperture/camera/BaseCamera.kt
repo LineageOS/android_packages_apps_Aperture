@@ -20,7 +20,7 @@ import kotlin.reflect.safeCast
  */
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalLensFacing
-abstract class BaseCamera(cameraInfo: CameraInfo, model: CameraViewModel) {
+abstract class BaseCamera(cameraInfo: CameraInfo) {
     /**
      * The [CameraSelector] for this camera.
      */

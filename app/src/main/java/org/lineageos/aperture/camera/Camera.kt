@@ -32,14 +32,14 @@ import org.lineageos.aperture.viewmodels.CameraViewModel
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 @androidx.camera.core.ExperimentalLensFacing
 @androidx.camera.core.ExperimentalZeroShutterLag
-class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(cameraInfo, model) {
+class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(cameraInfo) {
     override val cameraSelector = cameraInfo.cameraSelector
 
     val exposureCompensationRange = cameraInfo.exposureState.exposureCompensationRange
     private val hasFlashUnit = cameraInfo.hasFlashUnit()
 
     private val physicalCameras = cameraInfo.physicalCameraInfos.map {
-        PhysicalCamera(it, model, this)
+        PhysicalCamera(it)
     }
     val isLogical = physicalCameras.size > 1
 
