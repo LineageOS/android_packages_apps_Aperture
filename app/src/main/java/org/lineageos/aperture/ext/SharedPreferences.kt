@@ -481,3 +481,11 @@ internal fun SharedPreferences.getHardwareKeyInvert(
 ) = hardwareKey.isTwoWayKey && getBoolean(
     "${hardwareKey.sharedPreferencesKeyPrefix}_invert", false
 )
+
+internal fun gestureActionToString(gestureAction: GestureAction) = when (gestureAction) {
+    GestureAction.SHUTTER -> "shutter"
+    GestureAction.FOCUS -> "focus"
+    GestureAction.ZOOM -> "zoom"
+    GestureAction.DEFAULT -> "default"
+    GestureAction.NOTHING -> "nothing"
+}

@@ -7,6 +7,8 @@ package org.lineageos.aperture.models
 
 import android.content.SharedPreferences
 import android.view.KeyEvent
+import androidx.annotation.StringRes
+import org.lineageos.aperture.R
 
 /**
  * Collection of keys that can be used to do things.
@@ -24,6 +26,10 @@ enum class HardwareKey(
     val sharedPreferencesKeyPrefix: String,
     val supportsDefault: Boolean,
     val defaultAction: GestureAction,
+    @StringRes val actionPreferenceTitleStringResId: Int,
+    @StringRes val preferenceCategoryTitleStringResId: Int? = null,
+    @StringRes val invertPreferenceTitleStringResId: Int? = null,
+    @StringRes val invertPreferenceSummaryStringResId: Int? = null,
 ) {
     CAMERA(
         KeyEvent.KEYCODE_CAMERA,
@@ -31,6 +37,7 @@ enum class HardwareKey(
         "camera_button",
         false,
         GestureAction.SHUTTER,
+        R.string.camera_button_action_title,
     ),
     FOCUS(
         KeyEvent.KEYCODE_FOCUS,
@@ -38,6 +45,7 @@ enum class HardwareKey(
         "focus_button",
         false,
         GestureAction.FOCUS,
+        R.string.focus_button_action_title,
     ),
     VOLUME(
         KeyEvent.KEYCODE_VOLUME_UP,
@@ -45,6 +53,10 @@ enum class HardwareKey(
         "volume_buttons",
         true,
         GestureAction.SHUTTER,
+        R.string.volume_buttons_action_title,
+        R.string.volume_buttons_title,
+        R.string.volume_buttons_invert_title,
+        R.string.volume_buttons_invert_summary,
     ),
     ZOOM(
         KeyEvent.KEYCODE_ZOOM_IN,
@@ -52,9 +64,22 @@ enum class HardwareKey(
         "zoom_buttons",
         false,
         GestureAction.ZOOM,
+        R.string.zoom_buttons_action_title,
+        R.string.zoom_buttons_title,
+        R.string.zoom_buttons_invert_title,
+        R.string.zoom_buttons_invert_summary,
     );
 
     val isTwoWayKey = secondKeycode != null
+
+    init {
+        require(
+            !isTwoWayKey
+                    || preferenceCategoryTitleStringResId != null
+                    || invertPreferenceTitleStringResId != null
+                    || invertPreferenceSummaryStringResId != null
+        )
+    }
 
     companion object {
         /**
