@@ -7,7 +7,6 @@ package org.lineageos.aperture.camera
 
 import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
-import org.lineageos.aperture.viewmodels.CameraViewModel
 
 /**
  * A logical camera's backing physical camera.

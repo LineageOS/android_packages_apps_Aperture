@@ -10,7 +10,6 @@ import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraType
-import org.lineageos.aperture.viewmodels.CameraViewModel
 import kotlin.reflect.safeCast
 
 /**
