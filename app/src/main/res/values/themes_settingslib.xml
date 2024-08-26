@@ -19,8 +19,8 @@
 
     <!-- Settings alert dialog theme. -->
     <style name="Theme.SettingsLib.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-        <item name="android:background">@drawable/dialog_preference_background</item>
-        <item name="dialogCornerRadius">28dp</item>
+        <item name="android:colorBackground">?attr/colorSurface</item>
+        <item name="dialogCornerRadius">16dp</item>
     </style>
 
     <!-- Settings switch theme. -->
