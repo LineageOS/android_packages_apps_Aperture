@@ -1,21 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
-    <!-- Volume buttons actions -->
-    <string-array name="volume_buttons_action_entries" translatable="false">
+    <!-- Generic gesture actions, w/ default, w/ two-way -->
+    <string-array name="gesture_actions_entries" translatable="false">
         <item>@string/gesture_action_shutter</item>
+        <item>@string/gesture_action_focus</item>
         <item>@string/gesture_action_zoom</item>
-        <item>@string/gesture_action_volume</item>
+        <item>@string/gesture_action_default</item>
         <item>@string/gesture_action_nothing</item>
     </string-array>
 
-    <string-array name="volume_buttons_action_values" translatable="false">
+    <string-array name="gesture_actions_values" translatable="false">
         <item>shutter</item>
+        <item>focus</item>
         <item>zoom</item>
-        <item>volume</item>
+        <item>default</item>
+        <item>nothing</item>
+    </string-array>
+
+    <!-- Generic gesture actions, w/ default, w/o two-way -->
+    <string-array name="gesture_actions_no_two_way_entries" translatable="false">
+        <item>@string/gesture_action_shutter</item>
+        <item>@string/gesture_action_focus</item>
+        <item>@string/gesture_action_default</item>
+        <item>@string/gesture_action_nothing</item>
+    </string-array>
+
+    <string-array name="gesture_actions_no_two_way_values" translatable="false">
+        <item>shutter</item>
+        <item>focus</item>
+        <item>default</item>
+        <item>nothing</item>
+    </string-array>
+
+    <!-- Generic gesture actions, w/o default, w/ two-way -->
+    <string-array name="gesture_actions_no_default_entries" translatable="false">
+        <item>@string/gesture_action_shutter</item>
+        <item>@string/gesture_action_focus</item>
+        <item>@string/gesture_action_zoom</item>
+        <item>@string/gesture_action_nothing</item>
+    </string-array>
+
+    <string-array name="gesture_actions_no_default_values" translatable="false">
+        <item>shutter</item>
+        <item>focus</item>
+        <item>zoom</item>
+        <item>nothing</item>
+    </string-array>
+
+    <!-- Generic gesture actions, w/o default, w/o two-way -->
+    <string-array name="gesture_actions_no_default_no_two_way_entries" translatable="false">
+        <item>@string/gesture_action_shutter</item>
+        <item>@string/gesture_action_focus</item>
+        <item>@string/gesture_action_nothing</item>
+    </string-array>
+
+    <string-array name="gesture_actions_no_default_no_two_way_values" translatable="false">
+        <item>shutter</item>
+        <item>focus</item>
         <item>nothing</item>
     </string-array>
 

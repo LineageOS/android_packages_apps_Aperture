@@ -113,7 +113,20 @@
     <string name="shutter_sound_summary">Play a sound on capture</string>
     <string name="leveler_title">Leveler</string>
     <string name="leveler_summary">Indicator that shows device orientation</string>
+    <string name="gestures_title">Gestures</string>
+
+    <!-- Gestures preferences -->
+    <string name="single_buttons_title">Single buttons</string>
+    <string name="camera_button_action_title">Camera button action</string>
+    <string name="focus_button_action_title">Focus button action</string>
+    <string name="volume_buttons_title">Volume buttons</string>
     <string name="volume_buttons_action_title">Volume buttons action</string>
+    <string name="volume_buttons_invert_title">Invert volume buttons</string>
+    <string name="volume_buttons_invert_summary">Invert volume up and down behavior</string>
+    <string name="zoom_buttons_title">Zoom buttons</string>
+    <string name="zoom_buttons_action_title">Zoom buttons action</string>
+    <string name="zoom_buttons_invert_title">Invert zoom buttons</string>
+    <string name="zoom_buttons_invert_summary">Invert zoom in and out behavior</string>
 
     <!-- Photo Preferences -->
     <string name="photo_capture_mode_title">Capture mode</string>
@@ -197,8 +210,9 @@
 
     <!-- Gesture actions -->
     <string name="gesture_action_shutter">Shutter</string>
+    <string name="gesture_action_focus">Focus</string>
     <string name="gesture_action_zoom">Zoom</string>
-    <string name="gesture_action_volume">Volume</string>
+    <string name="gesture_action_default">Android\'s default</string>
     <string name="gesture_action_nothing">Nothing</string>
 
     <!-- Thermal status -->

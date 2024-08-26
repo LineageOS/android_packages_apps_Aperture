@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -18,8 +18,9 @@ import org.lineageos.aperture.models.DistortionCorrectionMode
 import org.lineageos.aperture.models.EdgeMode
 import org.lineageos.aperture.models.FlashMode
 import org.lineageos.aperture.models.FrameRate
-import org.lineageos.aperture.models.GestureActions
+import org.lineageos.aperture.models.GestureAction
 import org.lineageos.aperture.models.GridMode
+import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.models.HotPixelMode
 import org.lineageos.aperture.models.NoiseReductionMode
 import org.lineageos.aperture.models.ShadingMode
@@ -334,19 +335,6 @@ private const val VIDEO_STABILIZATION_DEFAULT = true
 internal val SharedPreferences.videoStabilization: Boolean
     get() = getBoolean(VIDEO_STABILIZATION_KEY, VIDEO_STABILIZATION_DEFAULT)
 
-// Volume buttons action
-private const val VOLUME_BUTTONS_ACTION_KEY = "volume_buttons_action"
-private const val VOLUME_BUTTONS_ACTION_DEFAULT = "shutter"
-internal val SharedPreferences.volumeButtonsAction: GestureActions
-    get() = when (getString(VOLUME_BUTTONS_ACTION_KEY, VOLUME_BUTTONS_ACTION_DEFAULT)) {
-        "shutter" -> GestureActions.SHUTTER
-        "zoom" -> GestureActions.ZOOM
-        "volume" -> GestureActions.VOLUME
-        "nothing" -> GestureActions.NOTHING
-        // Default to shutter
-        else -> GestureActions.SHUTTER
-    }
-
 // Edge mode
 private const val EDGE_MODE_KEY = "edge_mode"
 private const val EDGE_MODE_DEFAULT = "default"
@@ -475,3 +463,21 @@ internal val SharedPreferences.videoMirrorMode: VideoMirrorMode
         // Default to off
         else -> VideoMirrorMode.OFF
     }
+
+// Hardware key preferences
+internal fun SharedPreferences.getHardwareKeyAction(
+    hardwareKey: HardwareKey
+) = when (getString("${hardwareKey.sharedPreferencesKeyPrefix}_action", null)) {
+    "shutter" -> GestureAction.SHUTTER
+    "focus" -> GestureAction.FOCUS
+    "zoom" -> GestureAction.ZOOM
+    "volume", "default" -> GestureAction.DEFAULT // volume for compat
+    "nothing" -> GestureAction.NOTHING
+    else -> hardwareKey.defaultAction
+}
+
+internal fun SharedPreferences.getHardwareKeyInvert(
+    hardwareKey: HardwareKey
+) = hardwareKey.isTwoWayKey && getBoolean(
+    "${hardwareKey.sharedPreferencesKeyPrefix}_invert", false
+)

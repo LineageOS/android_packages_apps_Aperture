@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -37,14 +37,10 @@
             app:summary="@string/leveler_summary"
             app:title="@string/leveler_title" />
 
-        <ListPreference
-            app:defaultValue="shutter"
-            app:entries="@array/volume_buttons_action_entries"
-            app:entryValues="@array/volume_buttons_action_values"
+        <Preference
+            app:fragment="org.lineageos.aperture.SettingsActivity$GesturesSettingsFragment"
             app:iconSpaceReserved="false"
-            app:key="volume_buttons_action"
-            app:title="@string/volume_buttons_action_title"
-            app:useSimpleSummaryProvider="true" />
+            app:title="@string/gestures_title" />
 
     </PreferenceCategory>
 
