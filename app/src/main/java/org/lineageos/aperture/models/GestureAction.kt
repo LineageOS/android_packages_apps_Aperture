@@ -23,6 +23,11 @@ enum class GestureAction(
     FOCUS(false),
 
     /**
+     * Microphone mute during video recording.
+     */
+    MIC_MUTE(false),
+
+    /**
      * Zoom in or out.
      */
     ZOOM(true),
