@@ -470,6 +470,7 @@ internal fun SharedPreferences.getHardwareKeyAction(
 ) = when (getString("${hardwareKey.sharedPreferencesKeyPrefix}_action", null)) {
     "shutter" -> GestureAction.SHUTTER
     "focus" -> GestureAction.FOCUS
+    "mic_mute" -> GestureAction.MIC_MUTE
     "zoom" -> GestureAction.ZOOM
     "volume", "default" -> GestureAction.DEFAULT // volume for compat
     "nothing" -> GestureAction.NOTHING
@@ -485,6 +486,7 @@ internal fun SharedPreferences.getHardwareKeyInvert(
 internal fun gestureActionToString(gestureAction: GestureAction) = when (gestureAction) {
     GestureAction.SHUTTER -> "shutter"
     GestureAction.FOCUS -> "focus"
+    GestureAction.MIC_MUTE -> "mic_mute"
     GestureAction.ZOOM -> "zoom"
     GestureAction.DEFAULT -> "default"
     GestureAction.NOTHING -> "nothing"
