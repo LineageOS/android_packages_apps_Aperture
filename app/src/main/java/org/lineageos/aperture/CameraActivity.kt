@@ -2493,6 +2493,13 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 true
             }
 
+            GestureAction.MIC_MUTE -> {
+                if (event?.repeatCount == 0 && micButton.isEnabled) {
+                    toggleMicrophoneMode()
+                }
+                true
+            }
+
             GestureAction.ZOOM -> {
                 when (increase) {
                     true -> zoomIn()
@@ -2542,6 +2549,10 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             }
 
             GestureAction.FOCUS -> {
+                true
+            }
+
+            GestureAction.MIC_MUTE -> {
                 true
             }
 

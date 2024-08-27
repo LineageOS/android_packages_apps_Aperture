@@ -47,6 +47,14 @@ enum class HardwareKey(
         GestureAction.FOCUS,
         R.string.focus_button_action_title,
     ),
+    MUTE(
+        KeyEvent.KEYCODE_MUTE,
+        null,
+        "mute_button",
+        false,
+        GestureAction.MIC_MUTE,
+        R.string.mute_button_action_title,
+    ),
     VOLUME(
         KeyEvent.KEYCODE_VOLUME_UP,
         KeyEvent.KEYCODE_VOLUME_DOWN,

@@ -119,6 +119,7 @@
     <string name="single_buttons_title">Single buttons</string>
     <string name="camera_button_action_title">Camera button action</string>
     <string name="focus_button_action_title">Focus button action</string>
+    <string name="mute_button_action_title">Mute button action</string>
     <string name="volume_buttons_title">Volume buttons</string>
     <string name="volume_buttons_action_title">Volume buttons action</string>
     <string name="volume_buttons_invert_title">Invert volume buttons</string>
@@ -211,6 +212,7 @@
     <!-- Gesture actions -->
     <string name="gesture_action_shutter">Shutter</string>
     <string name="gesture_action_focus">Focus</string>
+    <string name="gesture_action_mic_mute">Microphone mute</string>
     <string name="gesture_action_zoom">Zoom</string>
     <string name="gesture_action_default">Android\'s default</string>
     <string name="gesture_action_nothing">Nothing</string>
