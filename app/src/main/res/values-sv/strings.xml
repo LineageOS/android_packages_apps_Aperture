@@ -85,6 +85,5 @@
     <string name="error_do_not_disturb_mode_enabled">Stör ej-läget är aktiverat. Inaktivera det och öppna appen igen.</string>
     <string name="gesture_action_shutter">Slutare</string>
     <string name="gesture_action_zoom">Zooma</string>
-    <string name="gesture_action_volume">Volym</string>
     <string name="gesture_action_nothing">Ingenting</string>
 </resources>

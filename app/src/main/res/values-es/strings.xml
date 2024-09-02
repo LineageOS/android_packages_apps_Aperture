@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="gestures_title">Gestos</string>
+    <string name="single_buttons_title">Botones individuales</string>
+    <string name="camera_button_action_title">Acción del botón de la cámara</string>
+    <string name="focus_button_action_title">Acción del botón de enfoque</string>
+    <string name="mute_button_action_title">Acción del botón de silencio</string>
+    <string name="volume_buttons_title">Botones de volumen</string>
+    <string name="volume_buttons_invert_title">Invertir botones de volumen</string>
+    <string name="volume_buttons_invert_summary">Invertir el comportamiento de subir y bajar el volumen</string>
+    <string name="zoom_buttons_title">Botones de acercar y alejar</string>
+    <string name="zoom_buttons_action_title">Acción de los botones de acercar y alejar</string>
+    <string name="zoom_buttons_invert_title">Invertir botones de acercar y alejar</string>
+    <string name="zoom_buttons_invert_summary">Invertir el comportamiento de acercar y alejar</string>
+    <string name="gesture_action_focus">Enfocar</string>
+    <string name="gesture_action_mic_mute">Silenciar micrófono</string>
+    <string name="gesture_action_default">Por defecto de Android</string>
+</resources>

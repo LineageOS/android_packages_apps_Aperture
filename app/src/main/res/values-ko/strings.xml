@@ -138,7 +138,6 @@
     <string name="error_no_cameras_available">기기에 카메라가 없습니다. 앱을 실행할 수 없습니다.</string>
     <string name="gesture_action_shutter">셔터</string>
     <string name="gesture_action_zoom">확대/축소</string>
-    <string name="gesture_action_volume">볼륨</string>
     <string name="gesture_action_nothing">없음</string>
     <string name="force_torch_help">사진 모드에서 플래시 버튼을 길게 눌러 손전등 모드로 전환할 수 있습니다.</string>
     <string name="camera_mode_photo">사진</string>

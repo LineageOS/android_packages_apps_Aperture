@@ -147,7 +147,6 @@
     <string name="error_no_cameras_available">Na zařízení nebyly nalezeny žádné fotoaparáty, nelze spustit aplikaci.</string>
     <string name="gesture_action_shutter">Závěrka</string>
     <string name="gesture_action_zoom">Přiblížení</string>
-    <string name="gesture_action_volume">Hlasitost</string>
     <string name="gesture_action_nothing">Žádná akce</string>
     <string name="thermal_status_moderate">Mírné tepelné omezení, ujistěte se, že zařízení není na přímém slunečním světle.</string>
     <string name="thermal_status_severe">Silné tepelné omezení, doporučuje se nechat zařízení trochu vychladnout.</string>

@@ -149,7 +149,6 @@
     <string name="error_no_cameras_available">No je stade cjatade nissune fotocjamare sul dispositîf, impussibil inviâ la aplicazion.</string>
     <string name="gesture_action_shutter">Oturadôr</string>
     <string name="gesture_action_zoom">Zoom</string>
-    <string name="gesture_action_volume">Volum</string>
     <string name="gesture_action_nothing">Nuie</string>
     <string name="thermal_status_moderate">Moderade limitazion termiche in vore, controle che il dispositîf nol sedi sot de lûs solâr direte.</string>
     <string name="thermal_status_severe">Grivie limitazion termiche in vore, al è conseât lassâ che il dispositîf si sfredi un pôc.</string>

@@ -68,7 +68,6 @@
     <string name="location_permission_dialog_later">Nanti</string>
     <string name="location_permission_dialog_turn_on">Hidupkan</string>
     <string name="gesture_action_zoom">Zoom</string>
-    <string name="gesture_action_volume">Volume</string>
     <string name="gesture_action_nothing">Tidak ada</string>
     <string name="camera_mode_photo">Foto</string>
     <string name="camera_mode_video">Video</string>

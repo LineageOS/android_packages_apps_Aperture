@@ -149,7 +149,6 @@
     <string name="error_no_cameras_available">Nenhuma câmera foi encontrada no dispositivo, não é possível iniciar o app.</string>
     <string name="gesture_action_shutter">Obturador</string>
     <string name="gesture_action_zoom">Zoom</string>
-    <string name="gesture_action_volume">Volume</string>
     <string name="gesture_action_nothing">Nada</string>
     <string name="thermal_status_moderate">Limitação térmica moderada, certifique-se de que o dispositivo não está sob a luz solar direta.</string>
     <string name="thermal_status_severe">Limitação térmica severa, é recomendado deixar o aparelho esfriar um pouco.</string>
