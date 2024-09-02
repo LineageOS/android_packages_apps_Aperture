@@ -149,7 +149,6 @@
     <string name="error_no_cameras_available">Es wurden keine Kameras in dem Gerät gefunden, die App kann nicht gestartet werden.</string>
     <string name="gesture_action_shutter">Auslöser</string>
     <string name="gesture_action_zoom">Zoom</string>
-    <string name="gesture_action_volume">Lautstärke</string>
     <string name="gesture_action_nothing">Keine Aktion</string>
     <string name="thermal_status_moderate">Mäßige thermische Drosselung; achte darauf, dass das Gerät nicht direkter Sonneneinstrahlung ausgesetzt ist.</string>
     <string name="thermal_status_severe">Starke thermische Drosselung; es wird empfohlen, das Gerät etwas abkühlen zu lassen.</string>

@@ -149,7 +149,6 @@
     <string name="error_no_cameras_available">未在設備上找到相機，無法啟動應用程式。</string>
     <string name="gesture_action_shutter">快門</string>
     <string name="gesture_action_zoom">縮放</string>
-    <string name="gesture_action_volume">音量</string>
     <string name="gesture_action_nothing">無</string>
     <string name="thermal_status_moderate">溫度調節中，請確保裝置未置於直接陽光下。</string>
     <string name="thermal_status_severe">嚴重的溫度調節，建議讓裝置稍微冷卻一下。</string>

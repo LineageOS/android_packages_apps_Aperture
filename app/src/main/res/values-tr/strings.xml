@@ -123,7 +123,6 @@
     <string name="error_no_cameras_available">Cihazda kamera bulunamadı, uygulama başlatılamıyor.</string>
     <string name="gesture_action_shutter">Deklanşör</string>
     <string name="gesture_action_zoom">Yakınlaştır</string>
-    <string name="gesture_action_volume">Ses</string>
     <string name="gesture_action_nothing">Hiçbir şey</string>
     <string name="thermal_status_moderate">Orta düzeyde ısınma, cihazın doğrudan güneş ışığı altında olmadığından emin olun.</string>
     <string name="thermal_status_severe">Yüksek düzeyde ısınma, cihazın bir miktar soğumasını sağlamak iyi olabilir.</string>
