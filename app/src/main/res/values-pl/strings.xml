@@ -78,7 +78,7 @@
     <string name="shutter_sound_summary">Odtwarza dźwięk przy przechwytywaniu</string>
     <string name="leveler_title">Poziomica</string>
     <string name="leveler_summary">Wskaźnik pokazujący orientację urządzenia</string>
-    <string name="volume_buttons_action_title">Akcja przycisków głośności</string>
+    <string name="volume_buttons_action_title">Funkcja przycisków głośności</string>
     <string name="photo_capture_mode_title">Tryb fotografowania</string>
     <string name="photo_capture_mode_maximize_quality">Maksymalizuj jakość</string>
     <string name="photo_capture_mode_minimize_latency">Minimalizuj opóźnienie</string>
