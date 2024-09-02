@@ -149,7 +149,6 @@
     <string name="error_no_cameras_available">Nessuna fotocamera trovata sul dispositivo, impossibile avviare l\'app.</string>
     <string name="gesture_action_shutter">Scatto</string>
     <string name="gesture_action_zoom">Zoom</string>
-    <string name="gesture_action_volume">Regolazione volume</string>
     <string name="gesture_action_nothing">Niente</string>
     <string name="thermal_status_moderate">Moderata limitazione termica in atto, assicurarsi che il dispositivo non sia sotto la luce solare diretta.</string>
     <string name="thermal_status_severe">Intensa limitazione termica in atto, si consiglia di lasciare che il dispositivo si raffreddi un po\'.</string>
