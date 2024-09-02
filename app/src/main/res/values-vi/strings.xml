@@ -149,7 +149,6 @@
     <string name="error_no_cameras_available">Không có camera nào được tìm thấy trên thiết bị, không thể khởi động ứng dụng.</string>
     <string name="gesture_action_shutter">Màn trập</string>
     <string name="gesture_action_zoom">Thu phóng</string>
-    <string name="gesture_action_volume">Âm lượng</string>
     <string name="gesture_action_nothing">Không có</string>
     <string name="thermal_status_moderate">Giảm xung nhịp vừa phải, đảm bảo thiết bị ở dưới ánh nắng trực tiếp.</string>
     <string name="thermal_status_severe">Giảm xung nhịp nghiêm trọng, nên để thiết bị nguội bớt.</string>

@@ -149,7 +149,6 @@
     <string name="error_no_cameras_available">Nuk u gjet asnjë kamera në pajisje, aplikacioni nuk mund të niset</string>
     <string name="gesture_action_shutter">Shkrepësi</string>
     <string name="gesture_action_zoom">Zmadho</string>
-    <string name="gesture_action_volume">Volumi</string>
     <string name="gesture_action_nothing">Asgjë</string>
     <string name="thermal_status_moderate">Mbytje termike e moderuar, sigurohuni që pajisja të mos jetë nën rrezet e diellit direkte.</string>
     <string name="thermal_status_severe">Mbytje e fortë termike, rekomandohet ta lini pajisjen të ftohet pak.</string>

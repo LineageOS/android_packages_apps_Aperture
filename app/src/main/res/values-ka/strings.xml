@@ -147,7 +147,6 @@
     <string name="error_no_cameras_available">კამერა ვერ მოიძებნა მოწყობილობაზე, პროგრამა ვერ გაეშვება.</string>
     <string name="gesture_action_shutter">ფოტოჩამკეტი</string>
     <string name="gesture_action_zoom">მოახლოება</string>
-    <string name="gesture_action_volume">ხმოვანება</string>
     <string name="gesture_action_nothing">არცერთი</string>
     <string name="thermal_status_moderate">საშუალო გადახურების არიდება, დარწმუნდით, რომ მოწყობილობა მზის სხვების ქვეშ არაა.</string>
     <string name="thermal_status_severe">ძლიერი გადახურების არიდება, სასურველია, ცოტა გააგრილოთ მოწყობილობა.</string>

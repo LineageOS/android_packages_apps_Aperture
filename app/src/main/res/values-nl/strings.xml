@@ -80,7 +80,20 @@
     <string name="shutter_sound_summary">Een geluid afspelen bij afdrukken</string>
     <string name="leveler_title">Leveler</string>
     <string name="leveler_summary">Indicator die apparaatoriëntatie toont</string>
+    <string name="gestures_title">Gestures</string>
+    <string name="single_buttons_title">Enkele knoppen</string>
+    <string name="camera_button_action_title">Camera knop actie</string>
+    <string name="focus_button_action_title">Focus knop actie</string>
+    <string name="mute_button_action_title">Demp knop actie</string>
+    <string name="volume_buttons_title">Volumeknoppen</string>
     <string name="volume_buttons_action_title">Volumeknoppen functie</string>
+    <string name="volume_buttons_invert_title">Volumeknoppen omkeren</string>
+    <string name="volume_buttons_invert_summary">Gedrag 
+Gedrag van volume omhoog en omlaag omkeren</string>
+    <string name="zoom_buttons_title">Zoomknoppen</string>
+    <string name="zoom_buttons_action_title">Zoom knoppen actie</string>
+    <string name="zoom_buttons_invert_title">Zoomknoppen omkeren</string>
+    <string name="zoom_buttons_invert_summary">Gedrag in- en uitzoomen omkeren</string>
     <string name="photo_capture_mode_title">Opnamemodus</string>
     <string name="photo_capture_mode_maximize_quality">Kwaliteit maximaliseren</string>
     <string name="photo_capture_mode_minimize_latency">Minimaliseer latentie</string>
@@ -148,8 +161,10 @@
     <string name="error_unknown_critical">Er is een kritieke onbekende fout gevonden. Rapporteer dit aan de ontwikkelaars.</string>
     <string name="error_no_cameras_available">Er zijn geen camera\'s gevonden op het apparaat, de app kan niet worden gestart.</string>
     <string name="gesture_action_shutter">Sluiter</string>
+    <string name="gesture_action_focus">Focus</string>
+    <string name="gesture_action_mic_mute">Microfoon dempen</string>
     <string name="gesture_action_zoom">Zoomen</string>
-    <string name="gesture_action_volume">Volume</string>
+    <string name="gesture_action_default">Android\'s standaard</string>
     <string name="gesture_action_nothing">Niets</string>
     <string name="thermal_status_moderate">Matige warmtebeperking; zorg ervoor dat het apparaat niet in direct zonlicht is.</string>
     <string name="thermal_status_severe">Ernstige thermische beperking; het wordt aangeraden om het apparaat af te koelen.</string>
