@@ -43,7 +43,7 @@ android_app {
         "Aperture_androidx.camera_camera-lifecycle",
         "Aperture_androidx.camera_camera-video",
         "Aperture_androidx.camera_camera-view",
-        "Aperture_androidx.camera_camera-viewfinder",
+        "Aperture_androidx.camera.viewfinder_viewfinder-core",
         "Aperture_androidx.camera_camera-extensions",
         "Aperture_androidx.media3_media3-exoplayer",
         "Aperture_androidx.media3_media3-ui",
