@@ -7,6 +7,7 @@ package org.lineageos.aperture
 
 import android.hardware.input.InputManager
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyCharacterMap
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -32,6 +33,7 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import org.lineageos.aperture.ext.gestureActionToString
 import org.lineageos.aperture.ext.setOffset
+import org.lineageos.aperture.ext.stringToGestureAction
 import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.PermissionsUtils
@@ -276,6 +278,26 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
                     keyCategory.addPreference(actionPreference)
                     keyCategory.addPreference(invertPreference)
+
+                    actionPreference.setOnPreferenceChangeListener { _, newValue ->
+                        val value = newValue as String
+                        val gestureAction = stringToGestureAction(value) ?: run {
+                            Log.wtf(LOG_TAG, "Got invalid gesture action $value")
+                            null
+                        }
+
+                        val enableInvert = gestureAction?.isTwoWayAction ?: true
+
+                        invertPreference.isEnabled = enableInvert
+                        if (!enableInvert) {
+                            invertPreference.isChecked = false
+                        }
+
+                        true
+                    }
+                    actionPreference.onPreferenceChangeListener!!.onPreferenceChange(
+                        actionPreference, actionPreference.value
+                    )
                 }
             }
 
@@ -340,4 +362,8 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
     }
 
     class ProcessingSettingsFragment : SettingsFragment(R.xml.processing_preferences)
+
+    companion object {
+        private val LOG_TAG = SettingsActivity::class.simpleName!!
+    }
 }
