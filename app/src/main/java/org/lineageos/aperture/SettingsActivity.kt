@@ -229,7 +229,7 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
             for (hardwareKey in HardwareKey.entries) {
                 val actionPreference = ListPreference(context, null).apply {
-                    key = "${hardwareKey.sharedPreferencesKeyPrefix}_action"
+                    key = hardwareKey.actionSharedPreferenceKey
                     setTitle(hardwareKey.actionPreferenceTitleStringResId)
                     setDialogTitle(hardwareKey.actionPreferenceTitleStringResId)
                     when {
@@ -259,7 +259,7 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
                     singleButtonsPreferenceCategory?.addPreference(actionPreference)
                 } else {
                     val invertPreference = SwitchPreference(context, null).apply {
-                        key = "${hardwareKey.sharedPreferencesKeyPrefix}_invert"
+                        key = hardwareKey.invertSharedPreferenceKey
                         setTitle(hardwareKey.invertPreferenceTitleStringResId!!)
                         setSummary(hardwareKey.invertPreferenceSummaryStringResId!!)
                         setDefaultValue(false)
@@ -320,7 +320,7 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
                     keyCategory?.isVisible = present
                 } else {
                     val actionPreference = findPreference<ListPreference>(
-                        "${hardwareKey.sharedPreferencesKeyPrefix}_action"
+                        hardwareKey.actionSharedPreferenceKey
                     )
 
                     actionPreference?.isVisible = present
@@ -331,6 +331,12 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
             singleButtonsPreferenceCategory?.isVisible = singleKeysPresent
         }
+
+        private val HardwareKey.actionSharedPreferenceKey: String
+            get() = "${sharedPreferencesKeyPrefix}_action"
+
+        private val HardwareKey.invertSharedPreferenceKey: String
+            get() = "${sharedPreferencesKeyPrefix}_invert"
     }
 
     class ProcessingSettingsFragment : SettingsFragment(R.xml.processing_preferences)
