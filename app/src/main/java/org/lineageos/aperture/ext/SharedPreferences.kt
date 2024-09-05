@@ -465,17 +465,21 @@ internal val SharedPreferences.videoMirrorMode: VideoMirrorMode
     }
 
 // Hardware key preferences
-internal fun SharedPreferences.getHardwareKeyAction(
-    hardwareKey: HardwareKey
-) = when (getString("${hardwareKey.sharedPreferencesKeyPrefix}_action", null)) {
+internal fun stringToGestureAction(string: String?) = when (string) {
     "shutter" -> GestureAction.SHUTTER
     "focus" -> GestureAction.FOCUS
     "mic_mute" -> GestureAction.MIC_MUTE
     "zoom" -> GestureAction.ZOOM
     "volume", "default" -> GestureAction.DEFAULT // volume for compat
     "nothing" -> GestureAction.NOTHING
-    else -> hardwareKey.defaultAction
+    else -> null
 }
+
+internal fun SharedPreferences.getHardwareKeyAction(
+    hardwareKey: HardwareKey
+) = stringToGestureAction(
+    getString("${hardwareKey.sharedPreferencesKeyPrefix}_action", null)
+) ?: hardwareKey.defaultAction
 
 internal fun SharedPreferences.getHardwareKeyInvert(
     hardwareKey: HardwareKey
