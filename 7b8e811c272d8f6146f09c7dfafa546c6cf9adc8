@@ -16,6 +16,24 @@
       "message": "`!!`?",
       "revId": "7b8e811c272d8f6146f09c7dfafa546c6cf9adc8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "76306ab8_58cd2b34",
+        "filename": "app/src/main/java/org/lineageos/aperture/SettingsActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2024-09-07T14:50:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df3b72d6_d0160bc8",
+      "revId": "7b8e811c272d8f6146f09c7dfafa546c6cf9adc8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
