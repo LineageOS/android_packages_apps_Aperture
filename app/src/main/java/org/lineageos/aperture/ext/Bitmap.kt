@@ -45,7 +45,7 @@ internal fun Bitmap.stackBlur(radius: Int): Bitmap {
         return this
     }
 
-    val bitmap = copy(config, true)
+    val bitmap = copy(config!!, true)
 
     val width = bitmap.width
     val height = bitmap.height
