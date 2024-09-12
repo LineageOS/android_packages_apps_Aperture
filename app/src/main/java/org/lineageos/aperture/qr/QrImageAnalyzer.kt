@@ -79,6 +79,7 @@ class QrImageAnalyzer(private val activity: Activity, private val scope: Corouti
     // QR
     private val reader by lazy {
         BarcodeReader().apply {
+            options.tryInvert = true
             options.tryRotate = true
         }
     }
