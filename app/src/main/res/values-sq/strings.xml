@@ -80,6 +80,12 @@
     <string name="shutter_sound_summary">Luaj nje muzikë kur shkrep</string>
     <string name="leveler_title">Nivelues</string>
     <string name="leveler_summary">Tregues i cili shfaq orientimin e paisjes.</string>
+    <string name="gestures_title">Gjestet</string>
+    <string name="single_buttons_title">Buton i vetëm</string>
+    <string name="camera_button_action_title">Veprimi i butonit të kamerës</string>
+    <string name="focus_button_action_title">Veprimi i butonit të fokusimit</string>
+    <string name="mute_button_action_title">Veprimi i butonit të heshtjes</string>
+    <string name="volume_buttons_title">Butonat e volumit</string>
     <string name="volume_buttons_action_title">Veprimi i butonave të volumit</string>
     <string name="photo_capture_mode_title">Metoda e kapjes</string>
     <string name="photo_capture_mode_maximize_quality">Maksimizo kualitetin</string>

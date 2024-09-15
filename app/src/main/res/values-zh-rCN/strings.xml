@@ -103,7 +103,7 @@
     <string name="video_stabilization_title">启用视频防抖</string>
     <string name="video_stabilization_summary">如果可用，启用视频防抖以减少录制时的抖动</string>
     <string name="video_mirror_mode_title">启用视频镜像</string>
-    <string name="processing_title">处理中</string>
+    <string name="processing_title">图像处理</string>
     <string name="processing_info">在照片模式下，当使用 ZSL 模式时，仅考虑默认和关闭。  对于视频模式，仅考虑默认、关闭和快速。</string>
     <string name="edge_mode_title">锐化</string>
     <string name="edge_mode_summary">边缘增强可提高捕获图像的清晰度和细节。</string>
