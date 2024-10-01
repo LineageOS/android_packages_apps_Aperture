@@ -87,6 +87,12 @@
     <string name="mute_button_action_title">Veprimi i butonit të heshtjes</string>
     <string name="volume_buttons_title">Butonat e volumit</string>
     <string name="volume_buttons_action_title">Veprimi i butonave të volumit</string>
+    <string name="volume_buttons_invert_title">Përmbys butonat e volumit</string>
+    <string name="volume_buttons_invert_summary">Përmbys sjelljen e volumit lart e poshtë</string>
+    <string name="zoom_buttons_title">Zmadhimi i butonave</string>
+    <string name="zoom_buttons_action_title">Veprimi i zmadhimit të butonave</string>
+    <string name="zoom_buttons_invert_title">Përmbys butonat e zmadhimit</string>
+    <string name="zoom_buttons_invert_summary">Përmbys sjelljen e zmadhimit dhe zvogëlimit</string>
     <string name="photo_capture_mode_title">Metoda e kapjes</string>
     <string name="photo_capture_mode_maximize_quality">Maksimizo kualitetin</string>
     <string name="photo_capture_mode_minimize_latency">Minimizo vonesën</string>
@@ -154,7 +160,10 @@
     <string name="error_unknown_critical">Është gjetur një gabim kritik i panjohur.  Ju lutemi raportoni këtë te zhvilluesit.</string>
     <string name="error_no_cameras_available">Nuk u gjet asnjë kamera në pajisje, aplikacioni nuk mund të niset</string>
     <string name="gesture_action_shutter">Shkrepësi</string>
+    <string name="gesture_action_focus">Fokusi</string>
+    <string name="gesture_action_mic_mute">Heqja e zërit të mikrofonit</string>
     <string name="gesture_action_zoom">Zmadho</string>
+    <string name="gesture_action_default">Parazgjedhja e Android</string>
     <string name="gesture_action_nothing">Asgjë</string>
     <string name="thermal_status_moderate">Mbytje termike e moderuar, sigurohuni që pajisja të mos jetë nën rrezet e diellit direkte.</string>
     <string name="thermal_status_severe">Mbytje e fortë termike, rekomandohet ta lini pajisjen të ftohet pak.</string>
