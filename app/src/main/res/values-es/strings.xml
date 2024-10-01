@@ -26,8 +26,6 @@
     <string name="effect_face_retouch">RETOQUE FACIAL</string>
     <string name="effect_auto">AUTOMÁTICO</string>
     <string name="grid_off">SIN CUADRÍCULA</string>
-    <string name="grid_on_3">CUADRÍCULA DE 3x3</string>
-    <string name="grid_on_4">CUADRÍCULA DE 4x4</string>
     <string name="grid_on_goldenratio">CUADRÍCULA φ</string>
     <string name="mic_off">SIN MIC.</string>
     <string name="mic_on">CON MIC.</string>
