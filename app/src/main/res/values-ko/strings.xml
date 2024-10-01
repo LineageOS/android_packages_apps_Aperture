@@ -78,7 +78,13 @@
     <string name="shutter_sound_summary">촬영을 시작할 때 소리 재생</string>
     <string name="leveler_title">레벨러</string>
     <string name="leveler_summary">기기 회전을 보여주는 인디케이터</string>
+    <string name="gestures_title">제스처</string>
+    <string name="camera_button_action_title">카메라 버튼 동작</string>
+    <string name="mute_button_action_title">음소거 버튼 동작</string>
+    <string name="volume_buttons_title">볼륨 버튼</string>
     <string name="volume_buttons_action_title">볼륨 버튼 동작</string>
+    <string name="volume_buttons_invert_title">볼륨 버튼 반전</string>
+    <string name="volume_buttons_invert_summary">볼륨 위 버튼과 아래 버튼 동작 반전</string>
     <string name="photo_capture_mode_title">캡처 모드</string>
     <string name="photo_capture_mode_maximize_quality">최고 품질</string>
     <string name="photo_capture_mode_minimize_latency">반응 속도 최대화</string>
@@ -138,6 +144,7 @@
     <string name="error_no_cameras_available">기기에 카메라가 없습니다. 앱을 실행할 수 없습니다.</string>
     <string name="gesture_action_shutter">셔터</string>
     <string name="gesture_action_zoom">확대/축소</string>
+    <string name="gesture_action_default">Android 기본값</string>
     <string name="gesture_action_nothing">없음</string>
     <string name="force_torch_help">사진 모드에서 플래시 버튼을 길게 눌러 손전등 모드로 전환할 수 있습니다.</string>
     <string name="camera_mode_photo">사진</string>

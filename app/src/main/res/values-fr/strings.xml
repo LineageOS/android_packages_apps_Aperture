@@ -148,6 +148,7 @@
     <string name="error_unknown_critical">Une erreur critique inconnue a été trouvée. Veuillez la signaler aux développeurs.</string>
     <string name="error_no_cameras_available">Aucune caméra n\'a été trouvée sur l\'appareil, impossible de démarrer l\'application.</string>
     <string name="gesture_action_shutter">Obturateur</string>
+    <string name="gesture_action_mic_mute">Désactiver le microphone</string>
     <string name="gesture_action_zoom">Agrandir</string>
     <string name="gesture_action_nothing">Aucune</string>
     <string name="thermal_status_moderate">Régulation thermique modérée, assurez-vous que l\'appareil n\'est pas sous la lumière directe du soleil.</string>
