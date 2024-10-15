@@ -16,9 +16,9 @@
     <string name="pro_button_description">Ajustes Pro</string>
     <string name="shutter_button_description">Obturador</string>
     <string name="video_recording_state_button_description">Pausar/reanudar grabación de vídeo</string>
-    <string name="timer_off">TEMPORIZADOR DESACTIVADO</string>
-    <string name="timer_3">TEMPORIZADOR DE 3 seg.</string>
-    <string name="timer_10">TEMPORIZADOR DE 10 seg.</string>
+    <string name="timer_off">SIN TEMP.</string>
+    <string name="timer_3">TEMP. 3s</string>
+    <string name="timer_10">TEMP. 10s</string>
     <string name="video_framerate_auto">FPS AUTO</string>
     <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">NINGUNO</string>
@@ -26,6 +26,8 @@
     <string name="effect_face_retouch">RETOQUE FACIAL</string>
     <string name="effect_auto">AUTOMÁTICO</string>
     <string name="grid_off">SIN CUADRÍCULA</string>
+    <string name="grid_on_3">CUADRÍCULA 3x3</string>
+    <string name="grid_on_4">CUADRÍCULA 4x4</string>
     <string name="grid_on_goldenratio">CUADRÍCULA φ</string>
     <string name="mic_off">SIN MIC.</string>
     <string name="mic_on">CON MIC.</string>
@@ -87,9 +89,9 @@
     <string name="video_stabilization_title">Habilitar estabilización de vídeo</string>
     <string name="video_stabilization_summary">Si está disponible, activa la estabilización de vídeo para reducir las vibraciones de la cámara durante la grabación</string>
     <string name="video_mirror_mode_title">Habilitar duplicación de vídeo</string>
-    <string name="processing_title">Procesando</string>
+    <string name="processing_title">Procesado</string>
     <string name="processing_info">En modo foto, cuando se use el modo ZSL, solo se tendrán en cuenta los valores predeterminado y desactivado. Para el modo de vídeo, solo se tendrán en cuenta los valores predeterminado, desactivado y rápido.</string>
-    <string name="edge_mode_title">Enfocando</string>
+    <string name="edge_mode_title">Nitidez</string>
     <string name="edge_mode_summary">La mejora de bordes mejora la nitidez y los detalles en la imagen capturada.</string>
     <string name="edge_mode_default">Predeterminado</string>
     <string name="edge_mode_off">Desactivado</string>
@@ -116,19 +118,19 @@
     <string name="color_correction_aberration_mode_high_quality">Alta calidad</string>
     <string name="distortion_correction_mode_title">Corrección de distorsión</string>
     <string name="distortion_correction_mode_summary">Modo de funcionamiento del bloque de corrección de la distorsión del objetivo.</string>
-    <string name="distortion_correction_mode_default">Por defecto</string>
-    <string name="distortion_correction_mode_off">Desactivada</string>
+    <string name="distortion_correction_mode_default">Predeterminado</string>
+    <string name="distortion_correction_mode_off">Desactivado</string>
     <string name="distortion_correction_mode_fast">Rápida</string>
     <string name="distortion_correction_mode_high_quality">Alta calidad</string>
     <string name="hot_pixel_mode_title">Corrección de píxeles calientes</string>
     <string name="hot_pixel_mode_summary">La corrección de píxeles calientes interpola, o si no puede elimina, píxeles que no miden con precisión la luz entrante (es decir, píxeles que están fijos en un valor arbitrario o son excesivamente hipersensibles).</string>
-    <string name="hot_pixel_mode_default">Por defecto</string>
+    <string name="hot_pixel_mode_default">Predeterminado</string>
     <string name="hot_pixel_mode_off">Desactivado</string>
     <string name="hot_pixel_mode_fast">Rápido</string>
     <string name="hot_pixel_mode_high_quality">Alta calidad</string>
     <string name="shortcut_selfie">Tomar una selfie</string>
     <string name="shortcut_video">Grabar un vídeo</string>
-    <string name="shortcut_qr">Escanear código de barras</string>
+    <string name="shortcut_qr">Escanear</string>
     <string name="location_permission_dialog_title">Añadir ubicaciones de fotos y vídeos</string>
     <string name="location_permission_dialog_description">Mapea tus recuerdos incluyendo metadatos de ubicación en cada captura.</string>
     <string name="location_permission_dialog_later">Más tarde</string>
@@ -155,8 +157,8 @@
     <string name="force_torch_help">En el modo foto, puedes mantener pulsado el botón de flash para cambiar al modo de linterna.</string>
     <string name="camera_mode_photo">Foto</string>
     <string name="camera_mode_video">Vídeo</string>
-    <string name="camera_mode_qr">Escáner</string>
-    <string name="video_mirror_mode_off">Apagado</string>
+    <string name="camera_mode_qr">Escanear</string>
+    <string name="video_mirror_mode_off">Desactivado</string>
     <string name="video_mirror_mode_on">Encendido</string>
     <string name="video_mirror_mode_on_ffc_only">Solo cámara frontal</string>
 </resources>
