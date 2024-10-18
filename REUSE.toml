@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+# SPDX-License-Identifier: Apache-2.0
+
+version = 1
+SPDX-PackageName = "Aperture"
+SPDX-PackageSupplier = "The LineageOS Project"
+SPDX-PackageDownloadLocation = "https://github.com/LineageOS/android_packages_apps_Aperture"
+
+[[annotations]]
+path = [".github/workflows/**", ".gitignore", "app/.gitignore", "lens_launcher/.gitignore"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2023 The LineageOS Project"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = "gradle/wrapper/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2007-2023 Gradle, Inc."
+SPDX-License-Identifier = "Apache-2.0"
