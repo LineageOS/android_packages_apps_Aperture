@@ -61,6 +61,7 @@
     <string name="qr_copy_description">Copy to clipboard</string>
     <string name="qr_icon_description">Icon</string>
     <string name="qr_share_description">Share</string>
+    <string name="qr_share_with_action">Share with</string>
     <string name="qr_no_app_available_for_action">No app available to handle this action</string>
 
     <!-- QR types -->
