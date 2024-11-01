@@ -124,13 +124,13 @@ configure<GenerateBpPluginExtension> {
     availableInAOSP.set { module: Module ->
         when {
             module.group.startsWith("androidx") -> {
-                // We provide our own androidx.{camera,media3} & lifecycle-common
+                // We provide our own androidx.{camera,media3}
                 !module.group.startsWith("androidx.camera") &&
-                        !module.group.startsWith("androidx.media3") &&
-                        module.name != "lifecycle-common"
+                        !module.group.startsWith("androidx.media3")
             }
 
             module.group.startsWith("org.jetbrains") -> true
+            module.group == "com.google.android.material" -> true
             module.group == "com.google.auto.value" -> true
             module.group == "com.google.errorprone" -> true
             module.group == "com.google.guava" -> true
