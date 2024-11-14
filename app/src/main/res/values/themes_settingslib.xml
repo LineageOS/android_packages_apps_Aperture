@@ -8,10 +8,7 @@
     <style name="Theme.SettingsLib" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:listPreferredItemPaddingLeft">24dp</item>
         <item name="android:listPreferredItemPaddingStart">24dp</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:switchStyle">@style/Theme.SettingsLib.Switch</item>
-        <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
         <item name="alertDialogTheme">@style/Theme.SettingsLib.AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/Theme.SettingsLib.AlertDialog</item>
         <item name="preferenceTheme">@style/Theme.SettingsLib.PreferenceTheme</item>
