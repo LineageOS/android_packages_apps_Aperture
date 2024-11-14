@@ -19,14 +19,6 @@
         <item name="dialogCornerRadius">16dp</item>
     </style>
 
-    <!-- Settings collapsing toolbar style -->
-    <style name="Theme.SettingsLib.ToolbarCollapsedTextAppearance" parent="TextAppearance.Material3.ActionBar.Title" />
-
-    <style name="Theme.SettingsLib.ToolbarExpandedTextAppearance" parent="TextAppearance.Material3.HeadlineMedium">
-        <item name="android:drawablePadding">10dp</item>
-        <item name="android:textSize">36sp</item>
-    </style>
-
     <!-- Settings preference style. -->
     <style name="Theme.SettingsLib.PreferenceTheme" parent="PreferenceThemeOverlay">
         <item name="android:divider">@android:color/transparent</item>
