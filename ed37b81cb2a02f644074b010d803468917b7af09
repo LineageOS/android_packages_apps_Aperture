@@ -16,6 +16,24 @@
       "message": "actually, we are still using aosp material here, so I\u0027ll revert that one.",
       "revId": "ed37b81cb2a02f644074b010d803468917b7af09",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44f3bbfd_b560888e",
+        "filename": "app/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-11-14T08:29:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72c5516a_6042b481",
+      "revId": "ed37b81cb2a02f644074b010d803468917b7af09",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
