@@ -8,7 +8,6 @@
     <style name="Theme.SettingsLib" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:listPreferredItemPaddingLeft">24dp</item>
         <item name="android:listPreferredItemPaddingStart">24dp</item>
-        <item name="android:switchStyle">@style/Theme.SettingsLib.Switch</item>
         <item name="alertDialogTheme">@style/Theme.SettingsLib.AlertDialog</item>
         <item name="materialAlertDialogTheme">@style/Theme.SettingsLib.AlertDialog</item>
         <item name="preferenceTheme">@style/Theme.SettingsLib.PreferenceTheme</item>
@@ -18,14 +17,6 @@
     <style name="Theme.SettingsLib.AlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="android:colorBackground">?attr/colorSurface</item>
         <item name="dialogCornerRadius">16dp</item>
-    </style>
-
-    <!-- Settings switch theme. -->
-    <style name="Theme.SettingsLib.Switch" parent="@android:style/Widget.Material.CompoundButton.Switch">
-        <item name="android:switchMinWidth">52dp</item>
-        <item name="android:minHeight">48dp</item>
-        <item name="android:track">@drawable/settingslib_switch_track</item>
-        <item name="android:thumb">@drawable/settingslib_switch_thumb</item>
     </style>
 
     <!-- Settings collapsing toolbar style -->
@@ -43,5 +34,15 @@
         <item name="android:listPreferredItemPaddingLeft">32dp</item>
         <item name="android:listPreferredItemPaddingStart">32dp</item>
         <item name="android:tint">?attr/colorOnSurface</item>
+        <item name="switchPreferenceCompatStyle">@style/Theme.SettingsLib.SwitchPreferenceCompat</item>
+        <item name="switchPreferenceStyle">@style/Theme.SettingsLib.SwitchPreference</item>
+    </style>
+
+    <style name="Theme.SettingsLib.SwitchPreference" parent="@style/Preference.SwitchPreference.Material">
+        <item name="widgetLayout">@layout/settingslib_switch</item>
+    </style>
+
+    <style name="Theme.SettingsLib.SwitchPreferenceCompat" parent="@style/Preference.SwitchPreferenceCompat.Material">
+        <item name="widgetLayout">@layout/settingslib_switch_compat</item>
     </style>
 </resources>
