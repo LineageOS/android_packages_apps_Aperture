@@ -5,7 +5,7 @@ runs:
 
     steps:
     - name: Setup JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
         java-version: 17
@@ -24,7 +24,7 @@ runs:
           exit -1
         fi
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: app-debug.apk
         path: app/build/outputs/apk/debug/app-debug.apk
