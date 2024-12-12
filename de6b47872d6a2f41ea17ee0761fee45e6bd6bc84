@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "550576d1_593e8f69",
+        "filename": "app/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-12-12T08:59:00Z",
+      "side": 1,
+      "message": "1.16 is the latest",
+      "revId": "de6b47872d6a2f41ea17ee0761fee45e6bd6bc84",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
