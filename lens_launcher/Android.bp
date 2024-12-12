@@ -16,6 +16,12 @@ android_app {
     sdk_version: "35",
     product_specific: true,
 
+    static_libs: [
+        // DO NOT EDIT THIS SECTION MANUALLY
+        "androidx.appcompat_appcompat",
+        "kotlin-stdlib-jdk8",
+    ],
+
     optimize: {
         optimize: true,
         proguard_flags_files: ["proguard-rules.pro"],

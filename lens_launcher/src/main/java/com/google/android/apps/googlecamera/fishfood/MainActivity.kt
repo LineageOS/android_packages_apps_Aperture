@@ -5,23 +5,27 @@
 
 package com.google.android.apps.googlecamera.fishfood
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
+    private val lensActivityResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { _ ->
+        finish()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        startActivityForResult(
+        lensActivityResult.launch(
             Intent()
                 .setAction(Intent.ACTION_VIEW)
                 .setData(Uri.parse("googleapp://lens"))
-                .setPackage("com.google.android.googlequicksearchbox"),
-            0
+                .setPackage("com.google.android.googlequicksearchbox")
         )
-
-        finish()
     }
 }
