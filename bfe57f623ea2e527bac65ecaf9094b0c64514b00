@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c4d3d01b_0e71d96d",
+        "filename": "lens_launcher/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2024-12-12T17:11:26Z",
+      "side": 0,
+      "message": "really?",
+      "revId": "bfe57f623ea2e527bac65ecaf9094b0c64514b00",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
