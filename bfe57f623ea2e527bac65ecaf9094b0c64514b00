@@ -16,6 +16,24 @@
       "message": "really?",
       "revId": "bfe57f623ea2e527bac65ecaf9094b0c64514b00",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d5a2c7fa_1727951b",
+        "filename": "lens_launcher/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2024-12-12T17:12:49Z",
+      "side": 0,
+      "message": "Just copied from main Aperture, lol, we have no resources anyways\n\nI don\u0027t think with optimize to false the flag has any effect anyways",
+      "parentUuid": "c4d3d01b_0e71d96d",
+      "revId": "bfe57f623ea2e527bac65ecaf9094b0c64514b00",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
