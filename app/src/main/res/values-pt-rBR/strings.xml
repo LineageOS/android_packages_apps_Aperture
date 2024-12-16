@@ -75,7 +75,7 @@
     <string name="bright_screen_title">Tela brilhante</string>
     <string name="bright_screen_summary" formatted="false">Bloqueia o brilho em 100%</string>
     <string name="save_location_title">Guardar dados de localização</string>
-    <string name="save_location_summary">Incluir localização por GPS nos metadados</string>
+    <string name="save_location_summary">Incluir localização de GPS nos metadados</string>
     <string name="save_location_toast">Permissões de localização não concedidas pelo usuário.</string>
     <string name="shutter_sound_title">Som do obturador</string>
     <string name="shutter_sound_summary">Tocar um som ao capturar</string>
@@ -102,7 +102,7 @@
     <string name="photo_ffc_mirror_title">Espelhar câmera frontal</string>
     <string name="photo_ffc_mirror_summary">Salvar as fotos da câmera frontal como elas aparecem na pré-visualização</string>
     <string name="video_stabilization_title">Ativar estabilização de vídeo</string>
-    <string name="video_stabilization_summary">Quando disponível, habilitar a estabilização de vídeo para reduzir vibrações da câmera durante a gravação</string>
+    <string name="video_stabilization_summary">Quando disponível, ativa a estabilização de vídeo para reduzir vibrações da câmera durante a gravação</string>
     <string name="video_mirror_mode_title">Ativar espelhamento de vídeo</string>
     <string name="processing_title">Processando</string>
     <string name="processing_info">No modo foto, quando o modo ZSL é utilizado, apenas os valores padrão e desligado serão considerados. Para o modo vídeo, apenas os valores padrão, desligado e rápido serão considerados.</string>
