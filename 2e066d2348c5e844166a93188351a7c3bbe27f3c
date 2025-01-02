@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb9d2e22_08316e70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-01-02T15:47:57Z",
+      "side": 1,
+      "message": "```-rw-r--r-- 1 luca luca 8,1M  2 gen 16.33 out/target/product/generic_arm64/system/product/app/Aperture/Aperture.apk\n-\u003e\n-rw-r--r-- 1 luca luca 7,9M  2 gen 16.47 out/target/product/generic_arm64/system/product/app/Aperture/Aperture.apk\n```\n\nMore savings!",
+      "revId": "2e066d2348c5e844166a93188351a7c3bbe27f3c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
