@@ -23,8 +23,14 @@
     <string name="qr_copy_description">Salin ke papan klip</string>
     <string name="qr_icon_description">Ikon</string>
     <string name="qr_share_description">Bagikan</string>
+    <string name="qr_address_title">Tambahkan kontak</string>
+    <string name="qr_address_content_description">Tambahkan kontak</string>
+    <string name="qr_calendar_title">Tambahkan kegiatan ke kalender</string>
+    <string name="qr_calendar_content_description">Tambahkan kegiatan ini ke kalender</string>
     <string name="qr_dpp_description">Konfigurasikan perangkat ini</string>
+    <string name="qr_email_title">Kirim email baru</string>
     <string name="qr_geo_title">Buka lokasi ini</string>
+    <string name="qr_geo_content_description">Buka lokasi ini</string>
     <string name="qr_text">Teks</string>
     <string name="qr_uri_title">Buka URL</string>
     <string name="qr_wifi_title">Sambungkan ke jaringan Wi-Fi ini</string>
@@ -36,6 +42,8 @@
     <string name="bright_screen_summary" formatted="false">Kunci kecerahan ke 100%</string>
     <string name="save_location_title">Lokasi penyimpanan data</string>
     <string name="shutter_sound_title">Suara rana</string>
+    <string name="volume_buttons_title">Tombol volume</string>
+    <string name="zoom_buttons_title">Tombol zoom</string>
     <string name="photo_capture_mode_maximize_quality">Maksimalkan kualitas</string>
     <string name="photo_capture_mode_minimize_latency">Minimalkan latensi</string>
     <string name="video_stabilization_title">Aktifkan stabilisasi video</string>
@@ -67,6 +75,7 @@
     <string name="location_permission_dialog_description">Petakan kenangan Anda dengan menyertakan metadata lokasi pada setiap pengambilan.</string>
     <string name="location_permission_dialog_later">Nanti</string>
     <string name="location_permission_dialog_turn_on">Hidupkan</string>
+    <string name="gesture_action_focus">Fokus</string>
     <string name="gesture_action_zoom">Zoom</string>
     <string name="gesture_action_nothing">Tidak ada</string>
     <string name="camera_mode_photo">Foto</string>

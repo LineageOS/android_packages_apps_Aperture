@@ -5,8 +5,16 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">படமி</string>
+    <string name="cancel_button_description">விலக்குக</string>
+    <string name="confirm_button_description">உறுதிசெய்க</string>
     <string name="gallery_button_description">படத்தொகுப்பு</string>
+    <string name="qr_share_description">பகிர்க</string>
     <string name="qr_text">உரை</string>
     <string name="qr_uri_title">உரலியைத் திறக்க</string>
     <string name="title_activity_settings">அமைப்புகள்</string>
+    <string name="photos_header">ஒளிப்படங்கள்</string>
+    <string name="video_header">காணொளி</string>
+    <string name="camera_mode_photo">ஒளிப்படம்</string>
+    <string name="camera_mode_video">காணொளி</string>
+    <string name="camera_mode_qr">படிமம்</string>
 </resources>
