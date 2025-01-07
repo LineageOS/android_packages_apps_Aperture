@@ -100,6 +100,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "54fe65fe_4afa67d8",
+        "filename": "app/src/main/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-01-07T11:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd3ef963_6a3d3df3",
+      "range": {
+        "startLine": 3,
+        "startChar": 34,
+        "endLine": 3,
+        "endChar": 38
+      },
+      "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f0dedfd_38898456",
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "Fix applied.",
       "parentUuid": "e4735b68_f4cd4938",
+      "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7ac69d37_81cc3fca",
+        "filename": "app/src/main/res/xml/processing_preferences.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-01-07T11:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0dedfd_38898456",
+      "range": {
+        "startLine": 3,
+        "startChar": 34,
+        "endLine": 3,
+        "endChar": 38
+      },
       "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
