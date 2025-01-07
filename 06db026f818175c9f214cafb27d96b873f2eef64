@@ -58,6 +58,48 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2857df8e_7b15dd1d",
+        "filename": "app/src/main/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-01-07T11:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd3ef963_6a3d3df3",
+      "range": {
+        "startLine": 3,
+        "startChar": 34,
+        "endLine": 3,
+        "endChar": 38
+      },
+      "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f7910d55_f99db7de",
+        "filename": "app/src/main/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-01-07T11:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f60c3c2_5c874b3a",
+      "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8f0dedfd_38898456",
@@ -94,6 +136,48 @@
       "writtenOn": "2025-01-07T11:14:02Z",
       "side": 1,
       "message": "```suggestion\n     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project\n```",
+      "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "35906c22_3444fc0a",
+        "filename": "app/src/main/res/xml/processing_preferences.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-01-07T11:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f0dedfd_38898456",
+      "range": {
+        "startLine": 3,
+        "startChar": 34,
+        "endLine": 3,
+        "endChar": 38
+      },
+      "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1bf16888_a3faa4fb",
+        "filename": "app/src/main/res/xml/processing_preferences.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-01-07T11:14:42Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "e4735b68_f4cd4938",
       "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
