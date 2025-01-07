@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4507d3bf_df593813",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-01-07T11:19:37Z",
+      "side": 1,
+      "message": "does this actually work? it only changes the default in prefs xml, not in code?",
+      "revId": "8e8bc927aa40f564b1eebdbd0bbf4853e4e92818",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
