@@ -43,6 +43,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8f60c3c2_5c874b3a",
+        "filename": "app/src/main/res/values/config.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-01-07T11:14:02Z",
+      "side": 1,
+      "message": "```suggestion\n     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project\n```",
+      "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "8f0dedfd_38898456",
         "filename": "app/src/main/res/xml/processing_preferences.xml",
         "patchSetId": 8
@@ -60,6 +77,23 @@
         "endLine": 3,
         "endChar": 38
       },
+      "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4735b68_f4cd4938",
+        "filename": "app/src/main/res/xml/processing_preferences.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-01-07T11:14:02Z",
+      "side": 1,
+      "message": "```suggestion\n     SPDX-FileCopyrightText: 2023-2025 The LineageOS Project\n```",
       "revId": "06db026f818175c9f214cafb27d96b873f2eef64",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
