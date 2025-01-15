@@ -89,6 +89,7 @@
     <string name="volume_buttons_title">Boutons de volume</string>
     <string name="volume_buttons_action_title">Action des boutons de volume</string>
     <string name="volume_buttons_invert_title">Inverser les boutons de volume</string>
+    <string name="volume_buttons_invert_summary">Inverser le comportement augmentation et diminution du volume</string>
     <string name="zoom_buttons_title">Boutons de zoom</string>
     <string name="zoom_buttons_action_title">Action des boutons de zoom</string>
     <string name="zoom_buttons_invert_title">Inverser les boutons de zoom</string>

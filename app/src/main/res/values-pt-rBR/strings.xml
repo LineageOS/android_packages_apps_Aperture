@@ -13,14 +13,14 @@
     <string name="gallery_button_description">Galeria</string>
     <string name="google_lens_button_description">Abrir Google Lens</string>
     <string name="image_view_description">Pré-visualização da imagem</string>
-    <string name="pro_button_description">Modo Pro</string>
+    <string name="pro_button_description">Configurações Pro</string>
     <string name="shutter_button_description">Obturador</string>
     <string name="video_recording_state_button_description">Pausar/retomar gravação </string>
-    <string name="timer_off">Temporizador desativado</string>
-    <string name="timer_3">Temporizador 3s</string>
-    <string name="timer_10">Temporizador 10s</string>
-    <string name="video_framerate_auto">QPS automático</string>
-    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> QPS</string>
+    <string name="timer_off">TIMER DESLIGADO</string>
+    <string name="timer_3">TIMER DE 3s</string>
+    <string name="timer_10">TIMER DE 10s</string>
+    <string name="video_framerate_auto">FPS AUTOMÁTICO</string>
+    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">NENHUM</string>
     <string name="effect_night">NOITE</string>
     <string name="effect_face_retouch">RETOQUE FACIAL</string>
@@ -72,9 +72,9 @@
     <string name="photos_header">Fotos</string>
     <string name="video_header">Vídeo</string>
     <string name="advanced_header">Avançado</string>
-    <string name="bright_screen_title">Tela brilhante</string>
-    <string name="bright_screen_summary" formatted="false">Bloqueia o brilho em 100%</string>
-    <string name="save_location_title">Guardar dados de localização</string>
+    <string name="bright_screen_title">Tela luminosa</string>
+    <string name="bright_screen_summary" formatted="false">Mantém o brilho em 100%</string>
+    <string name="save_location_title">Salvar dados de localização</string>
     <string name="save_location_summary">Incluir localização de GPS nos metadados</string>
     <string name="save_location_toast">Permissões de localização não concedidas pelo usuário.</string>
     <string name="shutter_sound_title">Som do obturador</string>
@@ -145,7 +145,7 @@
     <string name="hot_pixel_mode_high_quality">Alta qualidade</string>
     <string name="shortcut_selfie">Tirar uma selfie</string>
     <string name="shortcut_video">Gravar um vídeo</string>
-    <string name="shortcut_qr">Escanear código de barras</string>
+    <string name="shortcut_qr">Fazer scan do código de barras</string>
     <string name="location_permission_dialog_title">Adicionar a localização em fotos e vídeos</string>
     <string name="location_permission_dialog_description">Mapeie suas memórias ao incluir metadados de localização em cada captura.</string>
     <string name="location_permission_dialog_later">Mais tarde</string>
@@ -174,7 +174,7 @@
     <string name="force_torch_help">No modo foto, você pode manter pressionado o botão do flash para alternar para o modo lanterna.</string>
     <string name="camera_mode_photo">Foto</string>
     <string name="camera_mode_video">Vídeo</string>
-    <string name="camera_mode_qr">Escanear</string>
+    <string name="camera_mode_qr">Scan</string>
     <string name="video_mirror_mode_off">Desativado</string>
     <string name="video_mirror_mode_on">Ativado</string>
     <string name="video_mirror_mode_on_ffc_only">Somente câmera frontal</string>
