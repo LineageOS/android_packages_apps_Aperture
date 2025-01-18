@@ -434,7 +434,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     @get:RequiresApi(Build.VERSION_CODES.Q)
     private val onThermalStatusChangedListener by lazy {
         OnThermalStatusChangedListener {
-            val showSnackBar = { stringId: @receiver:StringRes Int ->
+            val showSnackBar = { stringId: Int ->
                 Snackbar.make(secondaryBottomBarLayout, stringId, Snackbar.LENGTH_INDEFINITE)
                     .setAnchorView(secondaryBottomBarLayout)
                     .setAction(android.R.string.ok) {
@@ -1533,7 +1533,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 // Log the error
                 Log.e(LOG_TAG, "Error: code: ${it.code}, type: ${it.type}", it.cause)
 
-                val showToast = { stringId: @receiver:StringRes Int ->
+                val showToast = { stringId:Int ->
                     Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show()
                 }
 
