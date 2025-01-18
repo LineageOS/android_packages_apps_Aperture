@@ -50,6 +50,23 @@
       "message": "I will have to re-check again.",
       "revId": "8e8bc927aa40f564b1eebdbd0bbf4853e4e92818",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc286b4e_5e0e3e0d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 18796
+      },
+      "writtenOn": "2025-01-18T13:37:29Z",
+      "side": 1,
+      "message": "It seems to be working. No need to change in code part.",
+      "revId": "8e8bc927aa40f564b1eebdbd0bbf4853e4e92818",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
