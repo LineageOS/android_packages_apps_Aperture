@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f702a13_b72b8ac6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-01-18T15:36:38Z",
+      "side": 1,
+      "message": "aosp is moving to 2 by default, also aperture has lots of nullable warnings with it, probably kotlinc got smarter",
+      "revId": "79e900c6c864b1eaa93f5c1df785cd5218c2dd24",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
