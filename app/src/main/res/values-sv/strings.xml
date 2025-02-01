@@ -37,7 +37,15 @@
     <string name="qr_copy_description">Kopiera till urklipp</string>
     <string name="qr_icon_description">Ikon</string>
     <string name="qr_share_description">Dela</string>
+    <string name="qr_address_title">Lägg till kontakt</string>
+    <string name="qr_address_content_description">Lägg till kontakt</string>
+    <string name="qr_calendar_title">Lägg till händelse i kalendern</string>
+    <string name="qr_calendar_content_description">Lägg till denna händelse i kalendern</string>
     <string name="qr_dpp_description">Konfigurera denna enheten</string>
+    <string name="qr_email_title">Skicka ett nytt e-postmeddelande</string>
+    <string name="qr_sms_title">Skicka ett nytt SMS</string>
+    <string name="qr_sms_content_description">Skicka ett nytt SMS till de angivna mottagarna</string>
+    <string name="qr_tel_title">Ring telefonnummer</string>
     <string name="qr_text">Text</string>
     <string name="qr_wifi_title">Anslut till detta Wi\u2011Fi\u2011nätverk</string>
     <string name="title_activity_settings">Inställningar</string>
@@ -50,6 +58,10 @@
     <string name="save_location_title">Spara platsdata</string>
     <string name="shutter_sound_title">Slutarljud</string>
     <string name="leveler_title">Nivåer</string>
+    <string name="gestures_title">Gester</string>
+    <string name="photo_capture_mode_maximize_quality">Maximera kvalitet</string>
+    <string name="photo_capture_mode_minimize_latency">Minimera fördröjning</string>
+    <string name="edge_mode_default">Standard</string>
     <string name="edge_mode_off">Av</string>
     <string name="edge_mode_fast">Snabb</string>
     <string name="edge_mode_high_quality">Hög kvalitet</string>
@@ -86,4 +98,8 @@
     <string name="gesture_action_shutter">Slutare</string>
     <string name="gesture_action_zoom">Zooma</string>
     <string name="gesture_action_nothing">Ingenting</string>
+    <string name="camera_mode_photo">Foto</string>
+    <string name="camera_mode_video">Video</string>
+    <string name="camera_mode_qr">Skanna</string>
+    <string name="video_mirror_mode_off">Av</string>
 </resources>

@@ -97,14 +97,14 @@
     <string name="photo_capture_mode_title">Modo de captura</string>
     <string name="photo_capture_mode_maximize_quality">Maximizar qualidade</string>
     <string name="photo_capture_mode_minimize_latency">Minimizar latência</string>
-    <string name="enable_zsl_title">Ativar ZSL quando disponível</string>
+    <string name="enable_zsl_title">Ativar o ZSL quando disponível</string>
     <string name="enable_zsl_summary">Usar o modo Zero-Shutter Lag quando a câmera suportar. Neste modo os efeitos das fotos são desativados. Note que este modo é experimental.</string>
     <string name="photo_ffc_mirror_title">Espelhar câmera frontal</string>
     <string name="photo_ffc_mirror_summary">Salvar as fotos da câmera frontal como elas aparecem na pré-visualização</string>
     <string name="video_stabilization_title">Ativar estabilização de vídeo</string>
     <string name="video_stabilization_summary">Quando disponível, ativa a estabilização de vídeo para reduzir vibrações da câmera durante a gravação</string>
     <string name="video_mirror_mode_title">Ativar espelhamento de vídeo</string>
-    <string name="processing_title">Processando</string>
+    <string name="processing_title">Processamento</string>
     <string name="processing_info">No modo foto, quando o modo ZSL é utilizado, apenas os valores padrão e desligado serão considerados. Para o modo vídeo, apenas os valores padrão, desligado e rápido serão considerados.</string>
     <string name="edge_mode_title">Nitidez</string>
     <string name="edge_mode_summary">O aprimoramento de bordas melhora a nitidez e os detalhes da imagem capturada.</string>
