@@ -16,6 +16,24 @@
       "message": "exclude this dependency in gradle, it\u0027s compile only",
       "revId": "c58ec83dc95dffcd8da7edd6e2542df55df52f0d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b78d0978_105411be",
+        "filename": "app/libs/Android.bp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-02-05T15:18:55Z",
+      "side": 0,
+      "message": "Acknowledged",
+      "parentUuid": "b2b6b9ae_8f92ddb7",
+      "revId": "c58ec83dc95dffcd8da7edd6e2542df55df52f0d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
