@@ -421,7 +421,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_io.github.zxing-cpp_android",
-    aars: ["io/github/zxing-cpp/android/2.2.0/android-2.2.0.aar"],
+    aars: ["io/github/zxing-cpp/android/2.3.0/android-2.3.0.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
