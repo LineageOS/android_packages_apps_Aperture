@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -30,13 +30,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.Result
-import io.github.zxingcpp.BarcodeReader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.*
+import zxingcpp.BarcodeReader
 import kotlin.reflect.cast
 
 class QrImageAnalyzer(private val activity: Activity, private val scope: CoroutineScope) :
