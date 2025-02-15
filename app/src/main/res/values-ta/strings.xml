@@ -13,12 +13,12 @@
     <string name="gallery_button_description">படத்தொகுப்பு</string>
     <string name="google_lens_button_description">கூகிள் லென்ஸைத் திறக்க</string>
     <string name="image_view_description">பட முற்பார்வை</string>
-    <string name="pro_button_description">துணை அமைப்புகள்</string>
+    <string name="pro_button_description">மேன்மை அமைப்புகள்</string>
     <string name="shutter_button_description">தடுப்பான்</string>
-    <string name="video_recording_state_button_description">இடைநிறுத்துக/மீண்டுந்தொடர்க காணொளிப் பதிவை</string>
-    <string name="timer_off">நாழிகை இலது</string>
-    <string name="timer_3">நாழிகை 3நு</string>
-    <string name="timer_10">நாழிகை 10நு</string>
+    <string name="video_recording_state_button_description">இடைநிறுத்துக/மீண்டுந்தொடர்க நிகழ்படப் பதிவை</string>
+    <string name="timer_off">நேரமி இலது</string>
+    <string name="timer_3">நேரமி 3நு</string>
+    <string name="timer_10">நேரமி 10நு</string>
     <string name="video_framerate_auto">தன் FPS</string>
     <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">ஏதுமில</string>
