@@ -236,6 +236,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
     /**
      * Medias captured from secure activity will be stored here
+     * NOTE: Order is important, the first element is the newest one.
      */
     private val secureMediaUris = mutableListOf<Uri>()
 
@@ -2443,7 +2444,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             secureMediaUris.clear()
         } else {
             item?.let {
-                secureMediaUris.add(it)
+                secureMediaUris.add(0, it)
             }
         }
     }
