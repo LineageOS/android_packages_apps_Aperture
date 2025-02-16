@@ -236,8 +236,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
     /**
      * Medias captured from secure activity will be stored here
+     * NOTE: Order is important, the first element is the newest one.
      */
-    private val secureMediaUris = mutableListOf<Uri>()
+    private val secureMediaUris = ArrayDeque<Uri>()
 
     private var zoomGestureMutex = Mutex()
 
@@ -2443,7 +2444,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             secureMediaUris.clear()
         } else {
             item?.let {
-                secureMediaUris.add(it)
+                secureMediaUris.addFirst(it)
             }
         }
     }
