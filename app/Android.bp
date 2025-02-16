@@ -53,7 +53,7 @@ android_app {
         "Aperture_io.coil-kt.coil3_coil-core-android",
         "Aperture_io.coil-kt.coil3_coil-video",
         "Aperture_io.github.zxing-cpp_android",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
 
     optional_uses_libs: [

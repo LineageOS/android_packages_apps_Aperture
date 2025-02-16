@@ -327,7 +327,7 @@ java_library_static {
 
 java_import {
     name: "Aperture_com.squareup.okio_okio-jvm",
-    jars: ["com/squareup/okio/okio-jvm/3.9.1/okio-jvm-3.9.1.jar"],
+    jars: ["com/squareup/okio/okio-jvm/3.10.2/okio-jvm-3.10.2.jar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -354,7 +354,7 @@ java_library_static {
 
 android_library_import {
     name: "Aperture_io.coil-kt.coil3_coil-android",
-    aars: ["io/coil-kt/coil3/coil-android/3.0.4/coil-release.aar"],
+    aars: ["io/coil-kt/coil3/coil-android/3.1.0/coil-release.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -382,7 +382,7 @@ java_library_static {
 
 android_library_import {
     name: "Aperture_io.coil-kt.coil3_coil-core-android",
-    aars: ["io/coil-kt/coil3/coil-core-android/3.0.4/coil-core-release.aar"],
+    aars: ["io/coil-kt/coil3/coil-core-android/3.1.0/coil-core-release.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -405,7 +405,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_io.coil-kt.coil3_coil-video",
-    aars: ["io/coil-kt/coil3/coil-video/3.0.4/coil-video-3.0.4.aar"],
+    aars: ["io/coil-kt/coil3/coil-video/3.1.0/coil-video-3.1.0.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
