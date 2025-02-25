@@ -7,6 +7,7 @@ package org.lineageos.aperture.ext
 
 import android.content.SharedPreferences
 import androidx.camera.core.AspectRatio
+import androidx.camera.core.ExperimentalZeroShutterLag
 import androidx.camera.core.ImageCapture
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
@@ -129,7 +130,7 @@ private const val ENABLE_ZSL_KEY = "enable_zsl"
 private const val ENABLE_ZSL_DEFAULT = false
 
 internal val SharedPreferences.photoCaptureMode: Int
-    @androidx.camera.core.ExperimentalZeroShutterLag
+    @androidx.annotation.OptIn(ExperimentalZeroShutterLag::class)
     get() = when (getString(PHOTO_CAPTURE_MODE_KEY, PHOTO_CAPTURE_MODE_DEFAULT)) {
         "maximize_quality" -> ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY
         "minimize_latency" ->

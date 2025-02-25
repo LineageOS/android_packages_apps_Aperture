@@ -11,8 +11,6 @@ import androidx.camera.core.CameraSelector
 /**
  * A logical camera's backing physical camera.
  */
-@androidx.camera.camera2.interop.ExperimentalCamera2Interop
-@androidx.camera.core.ExperimentalLensFacing
 class PhysicalCamera(
     cameraInfo: CameraInfo
 ) : BaseCamera(cameraInfo) {
