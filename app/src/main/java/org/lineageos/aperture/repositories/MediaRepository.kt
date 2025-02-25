@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.repository
+package org.lineageos.aperture.repositories
 
 import android.content.Context
 import org.lineageos.aperture.flow.CapturedMediaFlow

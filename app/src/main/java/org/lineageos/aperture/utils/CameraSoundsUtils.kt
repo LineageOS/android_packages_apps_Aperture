@@ -1,17 +1,16 @@
 /*
- * SPDX-FileCopyrightText: 2022 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.lineageos.aperture.utils
 
-import android.content.SharedPreferences
 import android.content.res.Resources
 import android.media.MediaActionSound
 import android.os.Build
-import org.lineageos.aperture.ext.shutterSound
+import org.lineageos.aperture.repositories.PreferencesRepository
 
-class CameraSoundsUtils(private val sharedPreferences: SharedPreferences) {
+class CameraSoundsUtils(private val preferencesRepository: PreferencesRepository) {
     private val mediaActionSound = MediaActionSound().apply {
         // Preload all sounds to reduce latency
         load(MediaActionSound.SHUTTER_CLICK)
@@ -20,13 +19,13 @@ class CameraSoundsUtils(private val sharedPreferences: SharedPreferences) {
     }
 
     fun playShutterClick() {
-        if (sharedPreferences.shutterSound || mustPlaySounds) {
+        if (preferencesRepository.shutterSound.value || mustPlaySounds) {
             mediaActionSound.play(MediaActionSound.SHUTTER_CLICK)
         }
     }
 
     fun playStartVideoRecording(): Boolean {
-        if (sharedPreferences.shutterSound || mustPlaySounds) {
+        if (preferencesRepository.shutterSound.value || mustPlaySounds) {
             mediaActionSound.play(MediaActionSound.START_VIDEO_RECORDING)
             return true
         }
@@ -34,10 +33,12 @@ class CameraSoundsUtils(private val sharedPreferences: SharedPreferences) {
     }
 
     fun playStopVideoRecording() {
-        if (sharedPreferences.shutterSound || mustPlaySounds) {
+        if (preferencesRepository.shutterSound.value || mustPlaySounds) {
             mediaActionSound.play(MediaActionSound.STOP_VIDEO_RECORDING)
         }
     }
+
+    fun release() = mediaActionSound.release()
 
     companion object {
         val mustPlaySounds: Boolean
