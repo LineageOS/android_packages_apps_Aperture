@@ -16,6 +16,24 @@
       "message": "bump java and kt JVM?",
       "revId": "0d1066cc253b5d4ff2734e5f7fd189c6bb2e56a8",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a0ec455a_fe1e5062",
+        "filename": "app/build.gradle.kts",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-02-25T21:51:38Z",
+      "side": 1,
+      "message": "Done in a followup change",
+      "parentUuid": "dc2564eb_cbaf3d3d",
+      "revId": "0d1066cc253b5d4ff2734e5f7fd189c6bb2e56a8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
