@@ -18,8 +18,6 @@ object ShortcutsUtils {
     const val SHORTCUT_ID_VIDEO = "shortcut_video"
     const val SHORTCUT_ID_QR = "shortcut_qr"
 
-    @androidx.camera.camera2.interop.ExperimentalCamera2Interop
-    @androidx.camera.core.ExperimentalZeroShutterLag
     fun registerShortcuts(context: Context) {
         val shortcutManager = context.getSystemService(ShortcutManager::class.java)
         shortcutManager.dynamicShortcuts = listOf(

@@ -11,7 +11,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.core.view.doOnLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
@@ -26,7 +25,6 @@ import org.lineageos.aperture.utils.TimeUtils
 import org.lineageos.aperture.viewmodels.CameraViewModel
 import kotlin.reflect.cast
 
-@ExperimentalCamera2Interop
 class CameraModeSelectorLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {

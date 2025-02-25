@@ -6,8 +6,10 @@
 package org.lineageos.aperture.camera
 
 import androidx.camera.camera2.interop.Camera2CameraInfo
+import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ExperimentalLensFacing
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraType
 import kotlin.reflect.safeCast
@@ -17,8 +19,7 @@ import kotlin.reflect.safeCast
  * The only contract in place is that the camera ID must be unique also between different
  * implementations (guaranteed by Android).
  */
-@androidx.camera.camera2.interop.ExperimentalCamera2Interop
-@androidx.camera.core.ExperimentalLensFacing
+@androidx.annotation.OptIn(ExperimentalCamera2Interop::class, ExperimentalLensFacing::class)
 abstract class BaseCamera(cameraInfo: CameraInfo) {
     /**
      * The [CameraSelector] for this camera.
