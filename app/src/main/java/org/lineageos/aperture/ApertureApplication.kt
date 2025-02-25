@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -9,9 +9,16 @@ import android.annotation.SuppressLint
 import android.app.Application
 import androidx.camera.camera2.internal.CameraIdUtil
 import com.google.android.material.color.DynamicColors
-import org.lineageos.aperture.ext.getStringArray
+import kotlinx.coroutines.MainScope
+import org.lineageos.aperture.repository.OverlaysRepository
+import org.lineageos.aperture.repository.PreferencesRepository
 
 class ApertureApplication : Application() {
+    private val coroutineScope = MainScope()
+
+    val overlaysRepository by lazy { OverlaysRepository(this) }
+    val preferencesRepository by lazy { PreferencesRepository(this, coroutineScope) }
+
     @SuppressLint("RestrictedApi")
     override fun onCreate() {
         super.onCreate()
@@ -21,7 +28,7 @@ class ApertureApplication : Application() {
 
         // Set backward compatible camera ids
         CameraIdUtil.setBackwardCompatibleCameraIds(
-            resources.getStringArray(this, R.array.config_backwardCompatibleCameraIds).asList()
+            overlaysRepository.backwardCompatibleCameraIds.asList()
         )
     }
 }
