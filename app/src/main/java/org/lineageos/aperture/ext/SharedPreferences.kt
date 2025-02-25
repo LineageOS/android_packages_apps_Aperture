@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -12,6 +12,8 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.core.content.edit
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.ColorCorrectionAberrationMode
@@ -28,6 +30,29 @@ import org.lineageos.aperture.models.ShadingMode
 import org.lineageos.aperture.models.TimerMode
 import org.lineageos.aperture.models.VideoDynamicRange
 import org.lineageos.aperture.models.VideoMirrorMode
+
+fun <T> SharedPreferences.preferenceFlow(
+    vararg keys: String,
+    getter: SharedPreferences.() -> T,
+) = callbackFlow {
+    val update = {
+        trySend(getter())
+    }
+
+    val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, changedKey ->
+        if (changedKey in keys) {
+            update()
+        }
+    }
+
+    registerOnSharedPreferenceChangeListener(listener)
+
+    update()
+
+    awaitClose {
+        unregisterOnSharedPreferenceChangeListener(listener)
+    }
+}
 
 // Helpers
 internal fun SharedPreferences.getBoolean(key: String): Boolean? {
@@ -91,7 +116,7 @@ internal var SharedPreferences.lastCameraMode: CameraMode
         )
     }
 
-private const val LAST_GRID_MODE_KEY = "last_grid_mode"
+const val LAST_GRID_MODE_KEY = "last_grid_mode"
 private const val LAST_GRID_MODE_DEFAULT = "off"
 
 internal var SharedPreferences.lastGridMode: GridMode
@@ -198,7 +223,7 @@ internal var SharedPreferences.videoFlashMode: FlashMode
         )
     }
 
-private const val PHOTO_EFFECT_KEY = "photo_effect"
+const val PHOTO_EFFECT_KEY = "photo_effect"
 private const val PHOTO_EFFECT_DEFAULT = "none"
 
 internal var SharedPreferences.photoEffect: Int
@@ -262,7 +287,7 @@ internal var SharedPreferences.videoQuality: Quality
     }
 
 // Timer mode
-private const val TIMER_MODE_KEY = "timer_mode"
+const val TIMER_MODE_KEY = "timer_mode"
 private const val TIMER_MODE_DEFAULT = 0
 
 internal var SharedPreferences.timerMode: TimerMode
@@ -272,7 +297,7 @@ internal var SharedPreferences.timerMode: TimerMode
     }
 
 // Aspect ratio
-private const val ASPECT_RATIO_KEY = "aspect_ratio"
+const val ASPECT_RATIO_KEY = "aspect_ratio"
 private const val ASPECT_RATIO_DEFAULT = "4_3"
 
 internal var SharedPreferences.aspectRatio: Int
@@ -293,7 +318,7 @@ internal var SharedPreferences.aspectRatio: Int
     }
 
 // Bright screen
-private const val BRIGHT_SCREEN_KEY = "bright_screen"
+const val BRIGHT_SCREEN_KEY = "bright_screen"
 private const val BRIGHT_SCREEN_DEFAULT = false
 
 internal var SharedPreferences.brightScreen: Boolean
@@ -321,7 +346,7 @@ internal var SharedPreferences.shutterSound: Boolean
     }
 
 // Leveler
-private const val LEVELER_KEY = "leveler"
+const val LEVELER_KEY = "leveler"
 private const val LEVELER_DEFAULT = false
 
 internal var SharedPreferences.leveler: Boolean
