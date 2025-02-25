@@ -29,9 +29,6 @@ import org.lineageos.aperture.viewmodels.CameraViewModel
 /**
  * Class representing a device camera
  */
-@androidx.camera.camera2.interop.ExperimentalCamera2Interop
-@androidx.camera.core.ExperimentalLensFacing
-@androidx.camera.core.ExperimentalZeroShutterLag
 class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(cameraInfo) {
     override val cameraSelector = cameraInfo.cameraSelector
 

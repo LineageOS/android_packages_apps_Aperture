@@ -12,7 +12,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.widget.ImageButton
 import android.widget.ImageView
-import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -31,7 +30,6 @@ import java.io.InputStream
 /**
  * Image/video preview fragment
  */
-@ExperimentalCamera2Interop
 class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(
     context, attrs
 ) {

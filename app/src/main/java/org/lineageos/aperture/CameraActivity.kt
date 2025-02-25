@@ -204,8 +204,6 @@ import kotlin.math.abs
 import kotlin.reflect.safeCast
 import androidx.camera.core.CameraState as CameraXCameraState
 
-@androidx.camera.camera2.interop.ExperimentalCamera2Interop
-@androidx.camera.core.ExperimentalZeroShutterLag
 open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     // View models
     private val model: CameraViewModel by viewModels()
