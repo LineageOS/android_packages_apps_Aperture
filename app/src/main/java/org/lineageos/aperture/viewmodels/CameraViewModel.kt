@@ -6,22 +6,74 @@
 package org.lineageos.aperture.viewmodels
 
 import android.app.Application
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.SharedPreferences
+import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
+import android.os.PowerManager
+import android.util.Range
+import android.view.OrientationEventListener
+import androidx.annotation.RequiresApi
+import androidx.camera.core.AspectRatio
+import androidx.camera.core.ImageCapture
+import androidx.camera.extensions.ExtensionMode
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.Quality
 import androidx.camera.video.Recording
 import androidx.camera.view.LifecycleCameraController
+import androidx.core.location.LocationRequestCompat
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
+import androidx.preference.PreferenceManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.lineageos.aperture.camera.Camera
+import org.lineageos.aperture.ext.ASPECT_RATIO_KEY
+import org.lineageos.aperture.ext.BRIGHT_SCREEN_KEY
+import org.lineageos.aperture.ext.LAST_GRID_MODE_KEY
+import org.lineageos.aperture.ext.LEVELER_KEY
+import org.lineageos.aperture.ext.PHOTO_FLASH_MODE_KEY
+import org.lineageos.aperture.ext.TIMER_MODE_KEY
+import org.lineageos.aperture.ext.VIDEO_FLASH_MODE_KEY
 import org.lineageos.aperture.ext.applicationContext
+import org.lineageos.aperture.ext.aspectRatio
+import org.lineageos.aperture.ext.brightScreen
+import org.lineageos.aperture.ext.broadcastReceiverFlow
+import org.lineageos.aperture.ext.flashMode
+import org.lineageos.aperture.ext.lastCameraMode
+import org.lineageos.aperture.ext.lastGridMode
+import org.lineageos.aperture.ext.lastMicMode
+import org.lineageos.aperture.ext.leveler
+import org.lineageos.aperture.ext.locationFlow
+import org.lineageos.aperture.ext.mapToRange
+import org.lineageos.aperture.ext.next
+import org.lineageos.aperture.ext.photoFlashMode
+import org.lineageos.aperture.ext.preferenceFlow
+import org.lineageos.aperture.ext.thermalStatusFlow
+import org.lineageos.aperture.ext.timerMode
+import org.lineageos.aperture.ext.videoDynamicRange
+import org.lineageos.aperture.ext.videoFlashMode
+import org.lineageos.aperture.ext.videoFrameRate
+import org.lineageos.aperture.ext.videoQuality
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.CameraState
@@ -32,6 +84,7 @@ import org.lineageos.aperture.models.GridMode
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.models.TimerMode
 import org.lineageos.aperture.models.VideoDynamicRange
+import org.lineageos.aperture.models.VideoQualityInfo
 import org.lineageos.aperture.repository.MediaRepository
 import org.lineageos.aperture.utils.OverlayConfiguration
 import java.util.concurrent.ExecutorService
@@ -42,7 +95,35 @@ import java.util.concurrent.Executors
  * live data regarding the setting currently enabled.
  */
 class CameraViewModel(application: Application) : AndroidViewModel(application) {
-    // Base
+    // System services
+    private val locationManager = applicationContext.getSystemService(LocationManager::class.java)
+    private val powerManager = applicationContext.getSystemService(PowerManager::class.java)
+
+    // Shared preferences
+    private val sharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(applicationContext)
+    }
+
+    // Orientation
+    private val orientation = callbackFlow {
+        val orientationEventListener = object : OrientationEventListener(applicationContext) {
+            override fun onOrientationChanged(orientation: Int) {
+                trySend(orientation)
+            }
+        }
+
+        orientationEventListener.enable()
+
+        awaitClose {
+            orientationEventListener.disable()
+        }
+    }
+        .flowOn(Dispatchers.IO)
+        .shareIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            replay = 1
+        )
 
     /**
      * CameraX's [ProcessCameraProvider].
@@ -166,104 +247,387 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
     /**
      * The camera currently in use.
      */
-    val camera = MutableLiveData<Camera>()
+    val camera = MutableStateFlow<Camera?>(null)
+
+    /**
+     * CameraX's state of the current camera.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val cameraXCameraState = camera
+        .flatMapLatest { camera ->
+            camera?.cameraState?.asFlow() ?: flowOf(null)
+        }
+        .flowOn(Dispatchers.IO)
+        .shareIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            replay = 1
+        )
 
     /**
      * Current camera mode.
      */
-    val cameraMode = MutableLiveData<CameraMode>()
+    val cameraMode = MutableStateFlow(sharedPreferences.lastCameraMode)
 
     /**
      * Whether the current session is in single capture mode.
      */
-    val inSingleCaptureMode = MutableLiveData(false)
+    val inSingleCaptureMode = MutableStateFlow(false)
 
     /**
      * Current camera state.
      */
-    val cameraState = MutableLiveData<CameraState>()
+    val cameraState = MutableStateFlow(CameraState.IDLE)
 
     /**
      * Current screen rotation.
      */
-    val screenRotation = MutableLiveData(Rotation.ROTATION_0)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val screenRotation = orientation
+        .filter { it != OrientationEventListener.ORIENTATION_UNKNOWN }
+        .mapLatest { orientation ->
+            Rotation.fromDegreesInAperture(orientation)
+        }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = Rotation.ROTATION_0
+        )
 
     /**
      * Captured media [Uri]s
      */
-    val capturedMedia = MediaRepository.capturedMedia(applicationContext).flowOn(
-        Dispatchers.IO
-    ).stateIn(
-        viewModelScope,
-        started = SharingStarted.WhileSubscribed(),
-        initialValue = listOf(),
-    )
-
-    // General
+    val capturedMedia = MediaRepository.capturedMedia(applicationContext)
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = listOf(),
+        )
 
     /**
-     * Flash mode.
+     * The current list of supported [FlashMode]s.
      */
-    val flashMode = MutableLiveData(FlashMode.AUTO)
+    private val supportedFlashModes = combine(cameraMode, camera) { cameraMode, camera ->
+        cameraMode.supportedFlashModes.intersect(camera?.supportedFlashModes.orEmpty())
+    }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = setOf()
+        )
+
+    /**
+     * Whether force torch mode should be enabled.
+     */
+    private val forceTorch = MutableStateFlow(false)
+
+    /**
+     * The user selected flash mode.
+     */
+    private val wantedFlashMode = combine(
+        cameraMode,
+        sharedPreferences.preferenceFlow(
+            PHOTO_FLASH_MODE_KEY, getter = SharedPreferences::photoFlashMode
+        ),
+        sharedPreferences.preferenceFlow(
+            VIDEO_FLASH_MODE_KEY, getter = SharedPreferences::videoFlashMode
+        ),
+    ) { cameraMode, photoFlashMode, videoFlashMode ->
+        when (cameraMode) {
+            CameraMode.PHOTO -> photoFlashMode
+            CameraMode.VIDEO -> videoFlashMode
+            CameraMode.QR -> FlashMode.OFF
+        }
+    }
+        .flowOn(Dispatchers.IO)
+        .shareIn(
+            viewModelScope,
+            started = SharingStarted.Eagerly,
+            replay = 1
+        )
+
+    /**
+     * The flash mode that will actually be used.
+     */
+    val flashMode = combine(
+        supportedFlashModes,
+        wantedFlashMode,
+        forceTorch,
+        cameraMode,
+        camera,
+    ) { supportedFlashModes, wantedFlashMode, forceTorch, cameraMode, camera ->
+        val flashMode = wantedFlashMode.takeIf { it in supportedFlashModes } ?: FlashMode.OFF
+
+        val shouldForceTorch = forceTorch
+                && cameraMode == CameraMode.PHOTO
+                && FlashMode.TORCH in camera?.supportedFlashModes.orEmpty()
+
+        when (shouldForceTorch) {
+            true -> FlashMode.TORCH
+            false -> flashMode
+        }
+    }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = FlashMode.OFF
+        )
 
     /**
      * Grid mode.
      */
-    val gridMode = MutableLiveData<GridMode>()
+    val gridMode = combine(
+        sharedPreferences.preferenceFlow(
+            LAST_GRID_MODE_KEY, getter = SharedPreferences::lastGridMode
+        ),
+        cameraMode,
+    ) { gridMode, cameraMode ->
+        gridMode.takeIf { cameraMode != CameraMode.QR } ?: GridMode.OFF
+    }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = GridMode.OFF
+        )
 
     /**
      * Timer mode.
      */
-    val timerMode = MutableLiveData<TimerMode>()
+    val timerMode = sharedPreferences.preferenceFlow(
+        TIMER_MODE_KEY, getter = SharedPreferences::timerMode
+    )
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = TimerMode.OFF
+        )
+
+    /**
+     * Whether the leveler is enabled.
+     */
+    val levelerEnabled = sharedPreferences.preferenceFlow(
+        LEVELER_KEY, getter = SharedPreferences::leveler
+    )
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = false
+        )
+
+    /**
+     * Whether screen brightness should be forced to full.
+     */
+    val fullScreenBrightness = sharedPreferences.preferenceFlow(
+        BRIGHT_SCREEN_KEY, getter = SharedPreferences::brightScreen
+    )
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = false
+        )
+
+    @RequiresApi(Build.VERSION_CODES.Q)
+    val thermalStatus = powerManager.thermalStatusFlow()
+        .flowOn(Dispatchers.IO)
+        .shareIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            replay = 1
+        )
+
+    /**
+     * The current zoom state.
+     */
+    val zoomState = cameraController.zoomState.asFlow()
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = null
+        )
+
+    val tapToFocusInfoState = cameraController.tapToFocusInfoState.asFlow()
+        .flowOn(Dispatchers.IO)
+        .shareIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            replay = 1
+        )
+
+    @Suppress("MissingPermission")
+    val location = locationManager.locationFlow(
+        LocationRequestCompat.Builder(1000)
+            .setMinUpdateDistanceMeters(1f)
+            .setQuality(LocationRequestCompat.QUALITY_BALANCED_POWER_ACCURACY)
+            .build()
+    )
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = null
+        )
+
+    val batteryIntent = applicationContext.broadcastReceiverFlow(
+        IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+    )
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = null
+        )
+
+    /**
+     * The current, exposure compensation level, from 0 to 1
+     */
+    private val exposureCompensationLevel = MutableStateFlow(0.5f)
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val exposureCompensationRange = camera
+        .mapLatest { it?.exposureCompensationRange ?: Range(0, 0) }
+        .flowOn(Dispatchers.IO)
+        .shareIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            replay = 1
+        )
+
+    val exposureCompensationRangeToLevel = combine(
+        exposureCompensationLevel,
+        exposureCompensationRange,
+    ) { exposureCompensationLevel, exposureCompensationRange ->
+        exposureCompensationRange to exposureCompensationLevel
+    }
+        .flowOn(Dispatchers.IO)
+        .shareIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            replay = 1
+        )
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val exposureCompensationIndex = exposureCompensationRangeToLevel
+        .mapLatest { (exposureCompensationLevel, exposureCompensationRange) ->
+            Int.mapToRange(exposureCompensationLevel, exposureCompensationRange)
+        }
+        .flowOn(Dispatchers.IO)
+        .shareIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            replay = 1
+        )
 
     // Photo
 
     /**
      * Photo capture mode.
+     * @see ImageCapture.CaptureMode
      */
-    val photoCaptureMode = MutableLiveData<Int>()
+    val photoCaptureMode = MutableStateFlow(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
 
     /**
      * Photo aspect ratio.
+     * @see AspectRatio.Ratio
      */
-    val photoAspectRatio = MutableLiveData<Int>()
+    val photoAspectRatio = sharedPreferences.preferenceFlow(
+        ASPECT_RATIO_KEY, getter = SharedPreferences::aspectRatio
+    )
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = AspectRatio.RATIO_4_3
+        )
 
     /**
      * Photo effect.
+     * @see ExtensionMode.Mode
      */
-    val photoEffect = MutableLiveData<Int>()
+    val photoEffect = MutableStateFlow(ExtensionMode.NONE)
 
     // Video
 
     /**
      * Video quality.
      */
-    val videoQuality = MutableLiveData<Quality>()
+    val videoQuality = MutableStateFlow(sharedPreferences.videoQuality)
 
     /**
      * Video frame rate.
      */
-    val videoFrameRate = MutableLiveData<FrameRate?>()
+    val videoFrameRate = MutableStateFlow(sharedPreferences.videoFrameRate)
 
     /**
      * Video dynamic range.
      */
-    val videoDynamicRange = MutableLiveData<VideoDynamicRange>()
+    val videoDynamicRange = MutableStateFlow(sharedPreferences.videoDynamicRange)
 
     /**
      * Video mic mode.
      */
-    val videoMicMode = MutableLiveData<Boolean>()
+    val videoMicMode = MutableStateFlow(sharedPreferences.lastMicMode)
 
     /**
      * Video [Recording].
      */
-    val videoRecording = MutableLiveData<Recording?>()
+    val videoRecording = MutableStateFlow<Recording?>(null)
 
     /**
      * Video recording duration.
      */
-    val videoRecordingDuration = MutableLiveData<Long>()
+    val videoRecordingDuration = MutableStateFlow(0L)
+
+    /**
+     * Whether the camera can be flipped.
+     */
+    val canFlipCamera = combine(cameraMode, cameraState) { cameraMode, cameraState ->
+        cameraMode != CameraMode.QR && !cameraState.isRecordingVideo
+    }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = false
+        )
+
+    val supportedVideoQualities: Set<Quality>
+        get() = camera.value?.supportedVideoQualities?.keys.orEmpty()
+
+    private val videoQualityInfo: VideoQualityInfo?
+        get() = camera.value?.supportedVideoQualities?.get(videoQuality.value)
+
+    val supportedVideoFrameRates: Set<FrameRate>
+        get() = videoQualityInfo?.supportedFrameRates.orEmpty()
+
+    val supportedVideoDynamicRanges: Set<VideoDynamicRange>
+        get() = videoQualityInfo?.supportedDynamicRanges.orEmpty()
+
+    init {
+        viewModelScope.launch {
+            launch {
+                flashMode.collectLatest { flashMode ->
+                    cameraController.flashMode = flashMode
+                }
+            }
+
+            launch {
+                exposureCompensationIndex.collectLatest { exposureCompensationIndex ->
+                    cameraController.cameraControl?.setExposureCompensationIndex(
+                        exposureCompensationIndex
+                    )
+                }
+            }
+        }
+    }
 
     override fun onCleared() {
         cameraController.unbind()
@@ -299,37 +663,32 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     /**
-     * Get a suitable [Camera] for the provided [CameraFacing] and [CameraMode].
+     * Get a suitable [Camera] for the provided [CameraFacing] and the current [CameraMode].
      * @param cameraFacing The requested [CameraFacing]
-     * @param cameraMode The requested [CameraMode]
      * @return A [Camera] that is compatible with the provided configuration or null
      */
-    fun getCameraOfFacingOrFirstAvailable(
-        cameraFacing: CameraFacing, cameraMode: CameraMode
-    ) = when (cameraFacing) {
+    fun getCameraOfFacingOrFirstAvailable(cameraFacing: CameraFacing) = when (cameraFacing) {
         CameraFacing.BACK -> mainBackCamera
         CameraFacing.FRONT -> mainFrontCamera
         CameraFacing.EXTERNAL -> externalCameras.firstOrNull()
         else -> throw Exception("Unknown facing")
     }?.let {
-        if (cameraMode == CameraMode.VIDEO && !it.supportsVideoRecording) {
+        if (cameraMode.value == CameraMode.VIDEO && !it.supportsVideoRecording) {
             availableCamerasSupportingVideoRecording.firstOrNull()
         } else {
             it
         }
-    } ?: when (cameraMode) {
+    } ?: when (cameraMode.value) {
         CameraMode.VIDEO -> availableCamerasSupportingVideoRecording.firstOrNull()
         else -> availableCameras.firstOrNull()
     }
 
     /**
      * Return the next camera, used for flip camera.
-     * @param camera The current [Camera] used
-     * @param cameraMode The current [CameraMode]
      * @return The next camera, may return null if all the cameras disappeared
      */
-    fun getNextCamera(camera: Camera, cameraMode: CameraMode): Camera? {
-        val cameras = when (cameraMode) {
+    fun getNextCamera(): Camera? {
+        val cameras = when (cameraMode.value) {
             CameraMode.VIDEO -> availableCamerasSupportingVideoRecording
             else -> availableCameras
         }
@@ -337,10 +696,10 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
         // If value is -1 it will just pick the first available camera
         // This should only happen when an external camera is disconnected
         val newCameraIndex = cameras.indexOf(
-            when (camera.cameraFacing) {
+            when (camera.value?.cameraFacing) {
                 CameraFacing.BACK -> mainBackCamera
                 CameraFacing.FRONT -> mainFrontCamera
-                CameraFacing.EXTERNAL -> camera
+                CameraFacing.EXTERNAL -> camera.value
                 else -> throw Exception("Unknown facing")
             }
         ) + 1
@@ -353,6 +712,81 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun videoRecordingAvailable() = availableCamerasSupportingVideoRecording.isNotEmpty()
+
+    /**
+     * Cycle flash mode
+     * @param forceTorch Whether force torch mode should be toggled
+     * @return true if the flash mode was changed, false otherwise
+     */
+    fun cycleFlashMode(forceTorch: Boolean): Boolean {
+        // Long-press is supported only on photo mode and if torch mode is available
+        val forceTorchAvailable = cameraMode.value == CameraMode.PHOTO
+                && camera.value?.supportedFlashModes.orEmpty().contains(FlashMode.TORCH)
+        if (forceTorch && !forceTorchAvailable) {
+            this.forceTorch.value = false
+
+            return false
+        }
+
+        when (forceTorch) {
+            true -> {
+                this.forceTorch.value = this.forceTorch.value.not()
+            }
+
+            else -> when (this.forceTorch.value) {
+                true -> {
+                    // Just disable torch mode
+                    this.forceTorch.value = false
+                }
+
+                false -> supportedFlashModes.value.toList().next(flashMode.value)?.let {
+                    when (cameraMode.value) {
+                        CameraMode.PHOTO -> sharedPreferences.photoFlashMode = it
+                        CameraMode.VIDEO -> sharedPreferences.videoFlashMode = it
+                        CameraMode.QR -> {
+                            // Do nothing
+                        }
+                    }
+                }
+            }
+        }
+
+        return true
+    }
+
+    /**
+     * Cycle to the next grid mode.
+     */
+    fun cycleGridMode() {
+        gridMode.value.next()?.let {
+            sharedPreferences.lastGridMode = it
+        }
+    }
+
+    /**
+     * Toggle the timer mode.
+     */
+    fun toggleTimerMode() {
+        timerMode.value.next()?.let {
+            sharedPreferences.timerMode = it
+        }
+    }
+
+    fun cyclePhotoAspectRatio() {
+        sharedPreferences.aspectRatio = when (photoAspectRatio.value) {
+            AspectRatio.RATIO_4_3 -> AspectRatio.RATIO_16_9
+            AspectRatio.RATIO_16_9 -> AspectRatio.RATIO_4_3
+            else -> AspectRatio.RATIO_4_3
+        }
+    }
+
+    /**
+     * Set the desired exposure compensation range.
+     * @param exposureCompensationLevel A value between 0 and 1, with 0.5 being 0 EV
+     */
+    fun setExposureCompensationLevel(exposureCompensationLevel: Float) {
+        this.exposureCompensationLevel.value = exposureCompensationLevel
+    }
 
     private fun prepareDeviceCamerasList(cameraFacing: CameraFacing): List<Camera> {
         val facingCameras = internalCameras.filter {
