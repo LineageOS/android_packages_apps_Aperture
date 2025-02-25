@@ -1,33 +1,54 @@
 /*
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.lineageos.aperture.ext
 
 import android.content.SharedPreferences
-import androidx.camera.core.AspectRatio
 import androidx.camera.core.ExperimentalZeroShutterLag
 import androidx.camera.core.ImageCapture
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.core.content.edit
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.ColorCorrectionAberrationMode
 import org.lineageos.aperture.models.DistortionCorrectionMode
 import org.lineageos.aperture.models.EdgeMode
-import org.lineageos.aperture.models.FlashMode
 import org.lineageos.aperture.models.FrameRate
 import org.lineageos.aperture.models.GestureAction
-import org.lineageos.aperture.models.GridMode
 import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.models.HotPixelMode
 import org.lineageos.aperture.models.NoiseReductionMode
 import org.lineageos.aperture.models.ShadingMode
-import org.lineageos.aperture.models.TimerMode
 import org.lineageos.aperture.models.VideoDynamicRange
 import org.lineageos.aperture.models.VideoMirrorMode
+
+fun <T> SharedPreferences.preferenceFlow(
+    vararg keys: String,
+    getter: SharedPreferences.() -> T,
+) = callbackFlow {
+    val update = {
+        trySend(getter())
+    }
+
+    val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, changedKey ->
+        if (changedKey in keys) {
+            update()
+        }
+    }
+
+    registerOnSharedPreferenceChangeListener(listener)
+
+    update()
+
+    awaitClose {
+        unregisterOnSharedPreferenceChangeListener(listener)
+    }
+}
 
 // Helpers
 internal fun SharedPreferences.getBoolean(key: String): Boolean? {
@@ -91,29 +112,6 @@ internal var SharedPreferences.lastCameraMode: CameraMode
         )
     }
 
-private const val LAST_GRID_MODE_KEY = "last_grid_mode"
-private const val LAST_GRID_MODE_DEFAULT = "off"
-
-internal var SharedPreferences.lastGridMode: GridMode
-    get() = when (getString(LAST_GRID_MODE_KEY, LAST_GRID_MODE_DEFAULT)) {
-        "off" -> GridMode.OFF
-        "on_3" -> GridMode.ON_3
-        "on_4" -> GridMode.ON_4
-        "on_goldenratio" -> GridMode.ON_GOLDEN_RATIO
-        // Default to off
-        else -> GridMode.OFF
-    }
-    set(value) = edit {
-        putString(
-            LAST_GRID_MODE_KEY, when (value) {
-                GridMode.OFF -> "off"
-                GridMode.ON_3 -> "on_3"
-                GridMode.ON_4 -> "on_4"
-                GridMode.ON_GOLDEN_RATIO -> "on_goldenratio"
-            }
-        )
-    }
-
 private const val LAST_MIC_MODE_KEY = "last_mic_mode"
 private const val LAST_MIC_MODE_DEFAULT = true
 
@@ -152,53 +150,7 @@ internal var SharedPreferences.photoFfcMirror: Boolean
         putBoolean(PHOTO_FFC_MIRROR, value)
     }
 
-private const val PHOTO_FLASH_MODE_KEY = "photo_flash_mode"
-private const val PHOTO_FLASH_MODE_DEFAULT = "auto"
-
-internal var SharedPreferences.photoFlashMode: FlashMode
-    get() = when (getString(PHOTO_FLASH_MODE_KEY, PHOTO_FLASH_MODE_DEFAULT)) {
-        "off" -> FlashMode.OFF
-        "auto" -> FlashMode.AUTO
-        "on" -> FlashMode.ON
-        "torch" -> FlashMode.TORCH
-        "screen" -> FlashMode.SCREEN
-        // Default to auto
-        else -> FlashMode.AUTO
-    }
-    set(value) = edit {
-        putString(
-            PHOTO_FLASH_MODE_KEY, when (value) {
-                FlashMode.OFF -> "off"
-                FlashMode.AUTO -> "auto"
-                FlashMode.ON -> "on"
-                FlashMode.TORCH -> "torch"
-                FlashMode.SCREEN -> "screen"
-            }
-        )
-    }
-
-private const val VIDEO_FLASH_MODE_KEY = "video_flash_mode"
-private const val VIDEO_FLASH_MODE_DEFAULT = "off"
-
-internal var SharedPreferences.videoFlashMode: FlashMode
-    get() = when (getString(VIDEO_FLASH_MODE_KEY, VIDEO_FLASH_MODE_DEFAULT)) {
-        "off" -> FlashMode.OFF
-        "torch" -> FlashMode.TORCH
-        // Default to off
-        else -> FlashMode.OFF
-    }
-    set(value) = edit {
-        putString(
-            VIDEO_FLASH_MODE_KEY, when (value) {
-                FlashMode.OFF -> "off"
-                FlashMode.TORCH -> "torch"
-                // Default to off
-                else -> VIDEO_FLASH_MODE_DEFAULT
-            }
-        )
-    }
-
-private const val PHOTO_EFFECT_KEY = "photo_effect"
+const val PHOTO_EFFECT_KEY = "photo_effect"
 private const val PHOTO_EFFECT_DEFAULT = "none"
 
 internal var SharedPreferences.photoEffect: Int
@@ -261,47 +213,6 @@ internal var SharedPreferences.videoQuality: Quality
         )
     }
 
-// Timer mode
-private const val TIMER_MODE_KEY = "timer_mode"
-private const val TIMER_MODE_DEFAULT = 0
-
-internal var SharedPreferences.timerMode: TimerMode
-    get() = TimerMode.fromSeconds(getInt(TIMER_MODE_KEY, TIMER_MODE_DEFAULT)) ?: TimerMode.OFF
-    set(value) = edit {
-        putInt(TIMER_MODE_KEY, value.seconds)
-    }
-
-// Aspect ratio
-private const val ASPECT_RATIO_KEY = "aspect_ratio"
-private const val ASPECT_RATIO_DEFAULT = "4_3"
-
-internal var SharedPreferences.aspectRatio: Int
-    get() = when (getString(ASPECT_RATIO_KEY, ASPECT_RATIO_DEFAULT)) {
-        "4_3" -> AspectRatio.RATIO_4_3
-        "16_9" -> AspectRatio.RATIO_16_9
-        else -> AspectRatio.RATIO_4_3
-    }
-    set(value) = edit {
-        putString(
-            ASPECT_RATIO_KEY, when (value) {
-                AspectRatio.RATIO_4_3 -> "4_3"
-                AspectRatio.RATIO_16_9 -> "16_9"
-                // Default to 4:3
-                else -> ASPECT_RATIO_DEFAULT
-            }
-        )
-    }
-
-// Bright screen
-private const val BRIGHT_SCREEN_KEY = "bright_screen"
-private const val BRIGHT_SCREEN_DEFAULT = false
-
-internal var SharedPreferences.brightScreen: Boolean
-    get() = getBoolean(BRIGHT_SCREEN_KEY, BRIGHT_SCREEN_DEFAULT)
-    set(value) = edit {
-        putBoolean(BRIGHT_SCREEN_KEY, value)
-    }
-
 // Save location
 private const val SAVE_LOCATION = "save_location"
 internal var SharedPreferences.saveLocation: Boolean?
@@ -318,16 +229,6 @@ internal var SharedPreferences.shutterSound: Boolean
     get() = getBoolean(SHUTTER_SOUND_KEY, SHUTTER_SOUND_DEFAULT)
     set(value) = edit {
         putBoolean(SHUTTER_SOUND_KEY, value)
-    }
-
-// Leveler
-private const val LEVELER_KEY = "leveler"
-private const val LEVELER_DEFAULT = false
-
-internal var SharedPreferences.leveler: Boolean
-    get() = getBoolean(LEVELER_KEY, LEVELER_DEFAULT)
-    set(value) = edit {
-        putBoolean(LEVELER_KEY, value)
     }
 
 // Video stabilization

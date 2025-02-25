@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -14,23 +14,20 @@ import android.widget.LinearLayout
 import androidx.core.view.doOnLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.google.android.material.button.MaterialButton
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.CameraState
 import org.lineageos.aperture.utils.TimeUtils
-import org.lineageos.aperture.viewmodels.CameraViewModel
 import kotlin.reflect.cast
 
 class CameraModeSelectorLayout @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
     // Views
-    private val cameraModeHighlightButton by lazy { findViewById<MaterialButton>(R.id.cameraModeHighlightButton) }
     private val cameraModeButtonsLinearLayout by lazy { findViewById<LinearLayout>(R.id.cameraModeButtonsLinearLayout) }
+    private val cameraModeHighlightButton by lazy { findViewById<MaterialButton>(R.id.cameraModeHighlightButton) }
     private val videoDurationButton by lazy { findViewById<MaterialButton>(R.id.videoDurationButton) }
 
     // System services
@@ -38,7 +35,29 @@ class CameraModeSelectorLayout @JvmOverloads constructor(
 
     private val cameraToButton = mutableMapOf<CameraMode, MaterialButton>()
 
-    private val cameraModeObserver = Observer { cameraMode: CameraMode ->
+    private var inSingleCaptureMode = false
+    private var cameraState = CameraState.IDLE
+
+    var onModeSelectedCallback: (cameraMode: CameraMode) -> Unit = {}
+
+    init {
+        inflate(context, R.layout.camera_mode_selector_layout, this)
+
+        for (cameraMode in CameraMode.entries) {
+            cameraToButton[cameraMode] = MaterialButton::class.cast(
+                layoutInflater.inflate(
+                    R.layout.camera_mode_button, this, false
+                )
+            ).apply {
+                setText(cameraMode.title)
+                setOnClickListener { onModeSelectedCallback(cameraMode) }
+            }.also {
+                cameraModeButtonsLinearLayout.addView(it)
+            }
+        }
+    }
+
+    fun setCurrentCameraMode(cameraMode: CameraMode) {
         val currentCameraModeButton =
             cameraToButton[cameraMode] ?: throw Exception("No button for $cameraMode")
 
@@ -68,62 +87,26 @@ class CameraModeSelectorLayout @JvmOverloads constructor(
         }
     }
 
-    private val inSingleCaptureModeObserver = Observer { _: Boolean ->
+    fun setInSingleCaptureMode(inSingleCaptureMode: Boolean) {
+        this.inSingleCaptureMode = inSingleCaptureMode
+
         updateButtons()
     }
 
-    private val cameraStateObserver = Observer { cameraState: CameraState ->
-        updateButtons()
+    fun setCameraState(cameraState: CameraState) {
+        this.cameraState = cameraState
 
         // Update video duration button
         videoDurationButton.isVisible = cameraState.isRecordingVideo
+
+        updateButtons()
     }
 
-    private val videoDurationObserver = Observer { videoDuration: Long ->
-        videoDurationButton.text = TimeUtils.convertNanosToString(videoDuration)
-    }
-
-    internal var cameraViewModel: CameraViewModel? = null
-        set(value) {
-            // Unregister
-            field?.cameraMode?.removeObserver(cameraModeObserver)
-            field?.inSingleCaptureMode?.removeObserver(inSingleCaptureModeObserver)
-            field?.cameraState?.removeObserver(cameraStateObserver)
-            field?.videoRecordingDuration?.removeObserver(videoDurationObserver)
-
-            field = value
-
-            val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
-
-            value?.cameraMode?.observe(lifecycleOwner, cameraModeObserver)
-            value?.inSingleCaptureMode?.observe(lifecycleOwner, inSingleCaptureModeObserver)
-            value?.cameraState?.observe(lifecycleOwner, cameraStateObserver)
-            value?.videoRecordingDuration?.observe(lifecycleOwner, videoDurationObserver)
-        }
-
-    var onModeSelectedCallback: (cameraMode: CameraMode) -> Unit = {}
-
-    init {
-        inflate(context, R.layout.camera_mode_selector_layout, this)
-
-        for (cameraMode in CameraMode.entries) {
-            cameraToButton[cameraMode] = MaterialButton::class.cast(
-                layoutInflater.inflate(
-                    R.layout.camera_mode_button, this, false
-                )
-            ).apply {
-                setText(cameraMode.title)
-                setOnClickListener { onModeSelectedCallback(cameraMode) }
-            }.also {
-                cameraModeButtonsLinearLayout.addView(it)
-            }
-        }
+    fun setVideoRecordingDuration(duration: Long) {
+        videoDurationButton.text = TimeUtils.convertNanosToString(duration)
     }
 
     private fun updateButtons() {
-        val inSingleCaptureMode = cameraViewModel?.inSingleCaptureMode?.value ?: return
-        val cameraState = cameraViewModel?.cameraState?.value ?: return
-
         cameraModeHighlightButton.isInvisible = cameraState.isRecordingVideo || inSingleCaptureMode
         cameraToButton.forEach {
             it.value.isInvisible = cameraState.isRecordingVideo || inSingleCaptureMode
