@@ -189,17 +189,19 @@ class QrImageAnalyzer(private val activity: Activity, private val scope: Corouti
             } else {
                 bottomSheetDialogCardView.setOnClickListener {}
                 bottomSheetDialogTitle.text = activity.resources.getText(R.string.qr_text)
-                bottomSheetDialogIcon.setImageDrawable(AppCompatResources.getDrawable(
-                    activity, R.drawable.ic_text_snippet
-                )?.let {
-                    DrawableCompat.wrap(it.mutate()).apply {
-                        DrawableCompat.setTint(
-                            this, activity.getThemeColor(
-                                com.google.android.material.R.attr.colorOnBackground
+                bottomSheetDialogIcon.setImageDrawable(
+                    AppCompatResources.getDrawable(
+                        activity, R.drawable.ic_text_snippet
+                    )?.let {
+                        DrawableCompat.wrap(it.mutate()).apply {
+                            DrawableCompat.setTint(
+                                this, activity.getThemeColor(
+                                    com.google.android.material.R.attr.colorOnBackground
+                                )
                             )
-                        )
+                        }
                     }
-                })
+                )
             }
 
             // Make links clickable if not on locked keyguard

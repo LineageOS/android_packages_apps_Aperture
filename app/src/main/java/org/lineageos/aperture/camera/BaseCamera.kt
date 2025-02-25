@@ -11,7 +11,6 @@ import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalLensFacing
 import org.lineageos.aperture.models.CameraFacing
-import org.lineageos.aperture.models.CameraType
 import kotlin.reflect.safeCast
 
 /**
@@ -46,11 +45,6 @@ abstract class BaseCamera(cameraInfo: CameraInfo) {
         CameraSelector.LENS_FACING_EXTERNAL -> CameraFacing.EXTERNAL
         else -> throw Exception("Unknown lens facing value")
     }
-
-    /**
-     * The [CameraType] of this camera.
-     */
-    val cameraType = cameraFacing.cameraType
 
     override fun equals(other: Any?) = this::class.safeCast(other)?.let {
         this.cameraId == it.cameraId
