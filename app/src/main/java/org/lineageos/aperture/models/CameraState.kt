@@ -9,6 +9,7 @@ enum class CameraState(
     val isRecordingVideo: Boolean = false,
 ) {
     IDLE,
+    COUNTDOWN,
     TAKING_PHOTO,
     PRE_RECORDING_VIDEO,
     RECORDING_VIDEO(true),
