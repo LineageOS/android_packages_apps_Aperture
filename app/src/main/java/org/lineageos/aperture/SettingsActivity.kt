@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -15,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CallSuper
 import androidx.annotation.Px
 import androidx.annotation.XmlRes
@@ -24,6 +23,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
@@ -31,18 +31,25 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
-import org.lineageos.aperture.ext.gestureActionToString
+import kotlinx.coroutines.launch
 import org.lineageos.aperture.ext.setOffset
-import org.lineageos.aperture.ext.stringToGestureAction
 import org.lineageos.aperture.models.HardwareKey
+import org.lineageos.aperture.models.Permission
+import org.lineageos.aperture.models.PermissionState
+import org.lineageos.aperture.repositories.PreferencesRepository.Companion.preferenceStringToGestureAction
+import org.lineageos.aperture.repositories.PreferencesRepository.Companion.sharedPreferencesKeyPrefix
+import org.lineageos.aperture.repositories.PreferencesRepository.Companion.toPreferenceString
 import org.lineageos.aperture.utils.CameraSoundsUtils
-import org.lineageos.aperture.utils.PermissionsUtils
-import kotlin.reflect.safeCast
+import org.lineageos.aperture.utils.PermissionsManager
 
 class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
+    // Views
     private val appBarLayout by lazy { findViewById<AppBarLayout>(R.id.appBarLayout) }
     private val coordinatorLayout by lazy { findViewById<CoordinatorLayout>(R.id.coordinatorLayout) }
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
+
+    // Permissions manager
+    private val permissionsManager = PermissionsManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,7 +86,10 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         @XmlRes private val preferencesResId: Int,
     ) : PreferenceFragmentCompat() {
         private val settingsActivity
-            get() = SettingsActivity::class.safeCast(activity)
+            get() = activity as SettingsActivity
+
+        protected val permissionsManager
+            get() = settingsActivity.permissionsManager
 
         @Px
         private var appBarOffset = -1
@@ -91,23 +101,21 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
-            settingsActivity?.let { settingsActivity ->
-                val appBarLayout = settingsActivity.appBarLayout
-
+            settingsActivity.appBarLayout.apply {
                 if (appBarOffset != -1) {
-                    appBarLayout.setOffset(appBarOffset, settingsActivity.coordinatorLayout)
+                    setOffset(appBarOffset, settingsActivity.coordinatorLayout)
                 } else {
-                    appBarLayout.setExpanded(true, false)
+                    setExpanded(true, false)
                 }
 
-                appBarLayout.setLiftOnScrollTargetView(listView)
+                setLiftOnScrollTargetView(listView)
 
-                appBarLayout.addOnOffsetChangedListener(offsetChangedListener)
+                addOnOffsetChangedListener(offsetChangedListener)
             }
         }
 
         override fun onDestroyView() {
-            settingsActivity?.appBarLayout?.apply {
+            settingsActivity.appBarLayout?.apply {
                 removeOnOffsetChangedListener(offsetChangedListener)
 
                 setLiftOnScrollTargetView(null)
@@ -152,19 +160,6 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         private val saveLocation by lazy { findPreference<SwitchPreference>("save_location") }
         private val shutterSound by lazy { findPreference<SwitchPreference>("shutter_sound") }
 
-        private val permissionsUtils by lazy { PermissionsUtils(requireContext()) }
-
-        private val requestLocationPermissions = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) {
-            if (!permissionsUtils.locationPermissionsGranted()) {
-                saveLocation?.isChecked = false
-                Toast.makeText(
-                    requireContext(), getString(R.string.save_location_toast), Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
         private val photoCaptureModePreferenceChangeListener =
             Preference.OnPreferenceChangeListener { preference, newValue ->
                 val currentPhotoCaptureMode = if (preference == photoCaptureMode) {
@@ -186,11 +181,26 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
             saveLocation?.let {
                 // Reset location back to off if permissions aren't granted
-                it.isChecked = it.isChecked && permissionsUtils.locationPermissionsGranted()
+                it.isChecked = it.isChecked && permissionsManager.permissionState(
+                    Permission.LOCATION
+                ) == PermissionState.GRANTED
                 it.onPreferenceChangeListener =
                     Preference.OnPreferenceChangeListener { _, newValue ->
                         if (newValue as Boolean) {
-                            requestLocationPermissions.launch(PermissionsUtils.locationPermissions)
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                val result = permissionsManager.requestPermission(
+                                    Permission.LOCATION
+                                )
+
+                                if (result != PermissionState.GRANTED) {
+                                    saveLocation?.isChecked = false
+                                    Toast.makeText(
+                                        requireContext(),
+                                        getString(R.string.save_location_toast),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
                         }
                         true
                     }
@@ -255,7 +265,7 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
                             setEntryValues(R.array.gesture_actions_no_default_no_two_way_values)
                         }
                     }
-                    setDefaultValue(gestureActionToString(hardwareKey.defaultAction))
+                    setDefaultValue(hardwareKey.defaultAction.toPreferenceString())
                     isIconSpaceReserved = false
                     summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
                 }
@@ -284,7 +294,7 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
                     actionPreference.setOnPreferenceChangeListener { _, newValue ->
                         val value = newValue as String
-                        val gestureAction = stringToGestureAction(value) ?: run {
+                        val gestureAction = preferenceStringToGestureAction(value) ?: run {
                             Log.wtf(LOG_TAG, "Got invalid gesture action $value")
                             null
                         }

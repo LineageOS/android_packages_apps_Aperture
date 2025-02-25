@@ -3,50 +3,71 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.utils
+package org.lineageos.aperture.repositories
 
 import android.content.Context
 import androidx.camera.video.Quality
 import org.lineageos.aperture.R
-import org.lineageos.aperture.ext.getBoolean
 import org.lineageos.aperture.ext.getOrCreate
-import org.lineageos.aperture.ext.getStringArray
 import org.lineageos.aperture.models.FrameRate
 import kotlin.math.absoluteValue
 
 /**
- * Overlay configuration manager.
+ * Overlays repository.
  */
-class OverlayConfiguration(context: Context) {
-    private val resources = context.resources
+class OverlaysRepository(private val context: Context) {
+    private inner class RROResources(private val packageName: String) {
+        private val resources = context.packageManager.getResourcesForApplication(packageName)
+
+        fun getBoolean(id: Int): Boolean = resources.getBoolean(getIdentifier(id))
+
+        fun getStringArray(id: Int): Array<String> = resources.getStringArray(getIdentifier(id))
+
+        @Suppress("DiscouragedApi")
+        private fun getIdentifier(id: Int) = resources.getIdentifier(
+            context.resources.getResourceEntryName(id),
+            context.resources.getResourceTypeName(id),
+            packageName,
+        )
+    }
+
+    private val rroResources = listOf(
+        "org.lineageos.aperture.auto_generated_rro_product__",
+        "org.lineageos.aperture.auto_generated_rro_vendor__",
+    ).mapNotNull {
+        runCatching { RROResources(it) }.getOrNull()
+    }
 
     /**
      * @see R.bool.config_enableAuxCameras
      */
-    val enableAuxCameras = resources.getBoolean(context, R.bool.config_enableAuxCameras)
+    val enableAuxCameras = getBoolean(R.bool.config_enableAuxCameras)
 
     /**
      * @see R.array.config_ignoredAuxCameraIds
      */
-    val ignoredAuxCameraIds = resources.getStringArray(context, R.array.config_ignoredAuxCameraIds)
+    val ignoredAuxCameraIds = getStringArray(R.array.config_ignoredAuxCameraIds)
 
     /**
      * @see R.bool.config_ignoreLogicalAuxCameras
      */
-    val ignoreLogicalAuxCameras = resources.getBoolean(
-        context, R.bool.config_ignoreLogicalAuxCameras
-    )
+    val ignoreLogicalAuxCameras = getBoolean(R.bool.config_ignoreLogicalAuxCameras)
+
+    /**
+     * @see R.array.config_backwardCompatibleCameraIds
+     */
+    val backwardCompatibleCameraIds = getStringArray(R.array.config_backwardCompatibleCameraIds)
 
     /**
      * @see R.array.config_additionalVideoConfigurations
      */
     val additionalVideoConfigurations =
-        mutableMapOf<String, MutableMap<Quality, MutableMap<FrameRate, Boolean>>>().apply {
-            resources.getStringArray(context, R.array.config_additionalVideoConfigurations)
+        buildMap<String, MutableMap<Quality, MutableMap<FrameRate, Boolean>>> {
+            getStringArray(R.array.config_additionalVideoConfigurations)
                 .let {
                     if (it.size % 3 != 0) {
                         // Invalid configuration
-                        return@apply
+                        return@buildMap
                     }
 
                     for (i in it.indices step 3) {
@@ -76,18 +97,18 @@ class OverlayConfiguration(context: Context) {
                 }
         }.map { a ->
             a.key to a.value.map { b ->
-                b.key to b.value.toList()
+                b.key to b.value.toMap()
             }.toMap()
         }.toMap()
 
     /**
      * @see R.array.config_logicalZoomRatios
      */
-    val logicalZoomRatios = mutableMapOf<String, MutableMap<Float, Float>>().apply {
-        resources.getStringArray(context, R.array.config_logicalZoomRatios).let {
+    val logicalZoomRatios = buildMap<String, MutableMap<Float, Float>> {
+        getStringArray(R.array.config_logicalZoomRatios).let {
             if (it.size % 3 != 0) {
                 // Invalid configuration
-                return@apply
+                return@buildMap
             }
 
             for (i in it.indices step 3) {
@@ -107,5 +128,17 @@ class OverlayConfiguration(context: Context) {
     /**
      * @see R.bool.config_enableHighResolution
      */
-    val enableHighResolution = resources.getBoolean(context, R.bool.config_enableHighResolution)
+    val enableHighResolution = getBoolean(R.bool.config_enableHighResolution)
+
+    private fun getBoolean(id: Int) = rroResources.firstNotNullOfOrNull {
+        runCatching {
+            it.getBoolean(id)
+        }.getOrNull()
+    } ?: context.resources.getBoolean(id)
+
+    private fun getStringArray(id: Int) = rroResources.firstNotNullOfOrNull {
+        runCatching {
+            it.getStringArray(id)
+        }.getOrNull()
+    } ?: context.resources.getStringArray(id)
 }
