@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1043631_6b679c28",
+        "filename": "app/src/main/java/org/lineageos/aperture/viewmodels/CameraViewModel.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-02-25T20:50:09Z",
+      "side": 1,
+      "message": "shall we emit current orientation first?",
+      "revId": "15e3265c7e4c70558650832e3124f4e5ca3d1bec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "beeebca4_26a6a2d7",
+        "filename": "app/src/main/java/org/lineageos/aperture/viewmodels/CameraViewModel.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-02-25T20:50:09Z",
+      "side": 1,
+      "message": "filter \u0026 then map",
+      "revId": "15e3265c7e4c70558650832e3124f4e5ca3d1bec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e1f6f16_a3900a92",
+        "filename": "app/src/main/java/org/lineageos/aperture/viewmodels/CameraViewModel.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-02-25T20:50:09Z",
+      "side": 1,
+      "message": "use builder not .apply{}",
+      "revId": "15e3265c7e4c70558650832e3124f4e5ca3d1bec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
