@@ -8,9 +8,5 @@ package org.lineageos.aperture.models
 enum class TimerMode(val seconds: Int) {
     OFF(0),
     ON_3S(3),
-    ON_10S(10);
-
-    companion object {
-        fun fromSeconds(seconds: Int) = entries.firstOrNull { it.seconds == seconds }
-    }
+    ON_10S(10),
 }
