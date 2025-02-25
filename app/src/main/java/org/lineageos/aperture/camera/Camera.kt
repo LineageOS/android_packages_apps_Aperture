@@ -9,10 +9,13 @@ import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraMetadata
 import android.os.Build
 import android.util.Range
+import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalZeroShutterLag
+import androidx.camera.extensions.ExtensionsManager
+import androidx.camera.video.Quality
 import androidx.camera.video.Recorder
 import androidx.lifecycle.LiveData
 import org.lineageos.aperture.ext.getSupportedModes
@@ -29,13 +32,19 @@ import org.lineageos.aperture.models.ShadingMode
 import org.lineageos.aperture.models.VideoDynamicRange
 import org.lineageos.aperture.models.VideoQualityInfo
 import org.lineageos.aperture.models.VideoStabilizationMode
-import org.lineageos.aperture.viewmodels.CameraViewModel
+import org.lineageos.aperture.repositories.OverlaysRepository
+import java.util.SortedMap
 
 /**
- * Class representing a device camera
+ * Class representing a device camera.
  */
 @androidx.annotation.OptIn(ExperimentalCamera2Interop::class, ExperimentalZeroShutterLag::class)
-class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(cameraInfo) {
+class Camera private constructor(
+    cameraInfo: CameraInfo,
+    val logicalZoomRatios: SortedMap<Float, Float>,
+    additionalVideoFrameRates: Map<Quality, List<Pair<FrameRate, Boolean>>>,
+    val supportedExtensionModes: Set<Int>,
+) : BaseCamera(cameraInfo) {
     override val cameraSelector: CameraSelector = cameraInfo.cameraSelector
 
     val exposureCompensationRange: Range<Int> = cameraInfo.exposureState.exposureCompensationRange
@@ -47,7 +56,6 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
     val isLogical = physicalCameras.size > 1
 
     val intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
-    val logicalZoomRatios = model.getLogicalZoomRatios(cameraId)
 
     private val supportedVideoFrameRates = cameraInfo.supportedFrameRateRanges.mapNotNull {
         FrameRate.fromRange(it)
@@ -68,9 +76,7 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
             VideoQualityInfo(
                 it,
                 supportedVideoFrameRates.toMutableSet().apply {
-                    for ((frameRate, remove) in model.getAdditionalVideoFrameRates(
-                        cameraId, it
-                    )) {
+                    additionalVideoFrameRates[it].orEmpty().forEach { (frameRate, remove) ->
                         if (remove) {
                             remove(frameRate)
                         } else {
@@ -86,9 +92,9 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
 
     val supportsVideoRecording = supportedVideoQualities.isNotEmpty()
 
-    val supportedExtensionModes = model.extensionsManager.getSupportedModes(cameraSelector)
+    val supportedVideoStabilizationModes = buildList {
+        add(VideoStabilizationMode.OFF)
 
-    val supportedVideoStabilizationModes = mutableListOf(VideoStabilizationMode.OFF).apply {
         val availableVideoStabilizationModes = camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.CONTROL_AVAILABLE_VIDEO_STABILIZATION_MODES
         ) ?: IntArray(0)
@@ -108,13 +114,13 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
         ) {
             add(VideoStabilizationMode.ON_PREVIEW)
         }
-    }.toList()
+    }
 
     val supportsZsl = cameraInfo.isZslSupported
 
     val cameraState: LiveData<androidx.camera.core.CameraState> = cameraInfo.cameraState
 
-    val supportedEdgeModes = mutableSetOf<EdgeMode>().apply {
+    val supportedEdgeModes = buildSet {
         val availableEdgeModes = camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES
         ) ?: IntArray(0)
@@ -128,9 +134,9 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
                 else -> null
             }
         }
-    }.toSet()
+    }
 
-    val supportedNoiseReductionModes = mutableSetOf<NoiseReductionMode>().apply {
+    val supportedNoiseReductionModes = buildSet {
         val availableNoiseReductionModes = camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.NOISE_REDUCTION_AVAILABLE_NOISE_REDUCTION_MODES
         ) ?: IntArray(0)
@@ -149,9 +155,9 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
                 else -> null
             }
         }
-    }.toSet()
+    }
 
-    val supportedShadingModes = mutableSetOf<ShadingMode>().apply {
+    val supportedShadingModes = buildSet {
         val availableShadingModes = camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.SHADING_AVAILABLE_MODES
         ) ?: IntArray(0)
@@ -164,31 +170,30 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
                 else -> null
             }
         }
-    }.toSet()
+    }
 
-    val supportedColorCorrectionAberrationModes =
-        mutableSetOf<ColorCorrectionAberrationMode>().apply {
-            val availableColorCorrectionAberrationModes = camera2CameraInfo.getCameraCharacteristic(
-                CameraCharacteristics.COLOR_CORRECTION_AVAILABLE_ABERRATION_MODES
-            ) ?: IntArray(0)
+    val supportedColorCorrectionAberrationModes = buildSet {
+        val availableColorCorrectionAberrationModes = camera2CameraInfo.getCameraCharacteristic(
+            CameraCharacteristics.COLOR_CORRECTION_AVAILABLE_ABERRATION_MODES
+        ) ?: IntArray(0)
 
-            availableColorCorrectionAberrationModes.toSet().mapNotNullTo(this) {
-                when (it) {
-                    CameraCharacteristics.COLOR_CORRECTION_ABERRATION_MODE_OFF ->
-                        ColorCorrectionAberrationMode.OFF
+        availableColorCorrectionAberrationModes.toSet().mapNotNullTo(this) {
+            when (it) {
+                CameraCharacteristics.COLOR_CORRECTION_ABERRATION_MODE_OFF ->
+                    ColorCorrectionAberrationMode.OFF
 
-                    CameraCharacteristics.COLOR_CORRECTION_ABERRATION_MODE_FAST ->
-                        ColorCorrectionAberrationMode.FAST
+                CameraCharacteristics.COLOR_CORRECTION_ABERRATION_MODE_FAST ->
+                    ColorCorrectionAberrationMode.FAST
 
-                    CameraCharacteristics.COLOR_CORRECTION_ABERRATION_MODE_HIGH_QUALITY ->
-                        ColorCorrectionAberrationMode.HIGH_QUALITY
+                CameraCharacteristics.COLOR_CORRECTION_ABERRATION_MODE_HIGH_QUALITY ->
+                    ColorCorrectionAberrationMode.HIGH_QUALITY
 
-                    else -> null
-                }
+                else -> null
             }
-        }.toSet()
+        }
+    }
 
-    val supportedDistortionCorrectionModes = mutableSetOf<DistortionCorrectionMode>().apply {
+    val supportedDistortionCorrectionModes = buildSet {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val availableDistortionCorrectionModes = camera2CameraInfo.getCameraCharacteristic(
                 CameraCharacteristics.DISTORTION_CORRECTION_AVAILABLE_MODES
@@ -209,9 +214,9 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
                 }
             }
         }
-    }.toSet()
+    }
 
-    val supportedHotPixelModes = mutableSetOf<HotPixelMode>().apply {
+    val supportedHotPixelModes = buildSet {
         val availableHotPixelModes = camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.HOT_PIXEL_AVAILABLE_HOT_PIXEL_MODES
         ) ?: IntArray(0)
@@ -224,15 +229,15 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
                 else -> null
             }
         }
-    }.toSet()
+    }
 
     /**
      * The supported flash modes of this camera.
      * Keep in mind that support also depends on the camera mode used.
      */
-    val supportedFlashModes = mutableSetOf(
-        FlashMode.OFF,
-    ).apply {
+    val supportedFlashModes = buildSet {
+        add(FlashMode.OFF)
+
         if (hasFlashUnit) {
             add(FlashMode.AUTO)
             add(FlashMode.ON)
@@ -252,6 +257,35 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
         return when (cameraMode) {
             CameraMode.VIDEO -> supportsVideoRecording
             else -> true
+        }
+    }
+
+    companion object {
+        fun fromCameraX(
+            cameraXCameraInfo: CameraInfo,
+            extensionsManager: ExtensionsManager,
+            overlaysRepository: OverlaysRepository,
+        ): Camera {
+            val cameraId = Camera2CameraInfo.from(cameraXCameraInfo).cameraId
+
+            val logicalZoomRatios = buildMap {
+                put(1f, 1f)
+                overlaysRepository.logicalZoomRatios[cameraId]?.let {
+                    putAll(it)
+                }
+            }.toSortedMap()
+            val additionalVideoFrameRates =
+                overlaysRepository.additionalVideoConfigurations[cameraId].orEmpty()
+            val supportedExtensionModes = extensionsManager.getSupportedModes(
+                cameraXCameraInfo.cameraSelector
+            )
+
+            return Camera(
+                cameraXCameraInfo,
+                logicalZoomRatios,
+                additionalVideoFrameRates,
+                supportedExtensionModes,
+            )
         }
     }
 }
