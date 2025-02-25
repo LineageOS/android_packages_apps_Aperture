@@ -11,6 +11,6 @@ enum class TimerMode(val seconds: Int) {
     ON_10S(10);
 
     companion object {
-        fun fromSeconds(seconds: Int) = values().firstOrNull { it.seconds == seconds }
+        fun fromSeconds(seconds: Int) = entries.firstOrNull { it.seconds == seconds }
     }
 }
