@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -13,12 +13,10 @@ object GoogleLensUtils {
     private const val LAUNCHER_PACKAGE_NAME = "com.google.android.apps.googlecamera.fishfood"
 
     private fun isGsaAvailable(context: Context) = runCatching {
-        @Suppress("DEPRECATION")
         context.packageManager.getApplicationInfo(GSA_PACKAGE_NAME, 0).enabled
     }.getOrDefault(false)
 
     private fun isLensLauncherAvailable(context: Context) = runCatching {
-        @Suppress("DEPRECATION")
         context.packageManager.getApplicationInfo(LAUNCHER_PACKAGE_NAME, 0).enabled
     }.getOrDefault(false)
 
