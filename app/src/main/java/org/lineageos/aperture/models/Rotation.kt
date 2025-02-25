@@ -43,7 +43,7 @@ enum class Rotation(val offset: Int) {
         /**
          * Get the rotation where the value is in [rotation - 45°, rotation + 45°]
          */
-        fun fromDegreesInAperture(degrees: Int) = values().first {
+        fun fromDegreesInAperture(degrees: Int) = entries.first {
             it.apertureRanges.any { range -> degrees in range }
         }
 
