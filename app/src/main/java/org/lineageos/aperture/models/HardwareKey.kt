@@ -1,11 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2024-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
 package org.lineageos.aperture.models
 
-import android.content.SharedPreferences
 import android.view.KeyEvent
 import androidx.annotation.StringRes
 import org.lineageos.aperture.R
@@ -15,7 +14,6 @@ import org.lineageos.aperture.R
  * @param firstKeycode The main [KeyEvent] for this key. If [secondKeycode] is defined, this keycode
  *   will be treated as the increase (or up) keycode
  * @param secondKeycode The [KeyEvent] keycode for decrease (or down)
- * @param sharedPreferencesKeyPrefix The key prefix for [SharedPreferences] settings
  * @param supportsDefault Whether it makes sense to let Android handle these keycodes (e.g. volume
  *   control for [HardwareKey.VOLUME])
  * @param defaultAction The default [GestureAction] if the user didn't specify any
@@ -23,7 +21,6 @@ import org.lineageos.aperture.R
 enum class HardwareKey(
     val firstKeycode: Int,
     val secondKeycode: Int?,
-    val sharedPreferencesKeyPrefix: String,
     val supportsDefault: Boolean,
     val defaultAction: GestureAction,
     @StringRes val actionPreferenceTitleStringResId: Int,
@@ -34,7 +31,6 @@ enum class HardwareKey(
     CAMERA(
         KeyEvent.KEYCODE_CAMERA,
         null,
-        "camera_button",
         false,
         GestureAction.SHUTTER,
         R.string.camera_button_action_title,
@@ -42,7 +38,6 @@ enum class HardwareKey(
     FOCUS(
         KeyEvent.KEYCODE_FOCUS,
         null,
-        "focus_button",
         false,
         GestureAction.FOCUS,
         R.string.focus_button_action_title,
@@ -50,7 +45,6 @@ enum class HardwareKey(
     MUTE(
         KeyEvent.KEYCODE_MUTE,
         null,
-        "mute_button",
         false,
         GestureAction.MIC_MUTE,
         R.string.mute_button_action_title,
@@ -58,7 +52,6 @@ enum class HardwareKey(
     VOLUME(
         KeyEvent.KEYCODE_VOLUME_UP,
         KeyEvent.KEYCODE_VOLUME_DOWN,
-        "volume_buttons",
         true,
         GestureAction.SHUTTER,
         R.string.volume_buttons_action_title,
@@ -69,7 +62,6 @@ enum class HardwareKey(
     ZOOM(
         KeyEvent.KEYCODE_ZOOM_IN,
         KeyEvent.KEYCODE_ZOOM_OUT,
-        "zoom_buttons",
         false,
         GestureAction.ZOOM,
         R.string.zoom_buttons_action_title,
