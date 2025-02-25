@@ -9,10 +9,13 @@ import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraMetadata
 import android.os.Build
 import android.util.Range
+import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalZeroShutterLag
+import androidx.camera.extensions.ExtensionsManager
+import androidx.camera.video.Quality
 import androidx.camera.video.Recorder
 import androidx.lifecycle.LiveData
 import org.lineageos.aperture.ext.getSupportedModes
@@ -29,13 +32,18 @@ import org.lineageos.aperture.models.ShadingMode
 import org.lineageos.aperture.models.VideoDynamicRange
 import org.lineageos.aperture.models.VideoQualityInfo
 import org.lineageos.aperture.models.VideoStabilizationMode
-import org.lineageos.aperture.viewmodels.CameraViewModel
+import org.lineageos.aperture.repositories.OverlaysRepository
 
 /**
- * Class representing a device camera
+ * Class representing a device camera.
  */
 @androidx.annotation.OptIn(ExperimentalCamera2Interop::class, ExperimentalZeroShutterLag::class)
-class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(cameraInfo) {
+class Camera private constructor(
+    cameraInfo: CameraInfo,
+    val logicalZoomRatios: Map<Float, Float>,
+    additionalVideoFrameRates: Map<Quality, List<Pair<FrameRate, Boolean>>>,
+    val supportedExtensionModes: Set<Int>,
+) : BaseCamera(cameraInfo) {
     override val cameraSelector: CameraSelector = cameraInfo.cameraSelector
 
     val exposureCompensationRange: Range<Int> = cameraInfo.exposureState.exposureCompensationRange
@@ -47,7 +55,6 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
     val isLogical = physicalCameras.size > 1
 
     val intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
-    val logicalZoomRatios = model.getLogicalZoomRatios(cameraId)
 
     private val supportedVideoFrameRates = cameraInfo.supportedFrameRateRanges.mapNotNull {
         FrameRate.fromRange(it)
@@ -68,9 +75,7 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
             VideoQualityInfo(
                 it,
                 supportedVideoFrameRates.toMutableSet().apply {
-                    for ((frameRate, remove) in model.getAdditionalVideoFrameRates(
-                        cameraId, it
-                    )) {
+                    additionalVideoFrameRates[it].orEmpty().forEach { (frameRate, remove) ->
                         if (remove) {
                             remove(frameRate)
                         } else {
@@ -85,8 +90,6 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
         }
 
     val supportsVideoRecording = supportedVideoQualities.isNotEmpty()
-
-    val supportedExtensionModes = model.extensionsManager.getSupportedModes(cameraSelector)
 
     val supportedVideoStabilizationModes = mutableListOf(VideoStabilizationMode.OFF).apply {
         val availableVideoStabilizationModes = camera2CameraInfo.getCameraCharacteristic(
@@ -252,6 +255,30 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
         return when (cameraMode) {
             CameraMode.VIDEO -> supportsVideoRecording
             else -> true
+        }
+    }
+
+    companion object {
+        fun fromCameraX(
+            cameraXCameraInfo: CameraInfo,
+            extensionsManager: ExtensionsManager,
+            overlaysRepository: OverlaysRepository,
+        ): Camera {
+            val cameraId = Camera2CameraInfo.from(cameraXCameraInfo).cameraId
+
+            val logicalZoomRatios = overlaysRepository.logicalZoomRatios[cameraId].orEmpty()
+            val additionalVideoFrameRates =
+                overlaysRepository.additionalVideoConfigurations[cameraId].orEmpty()
+            val supportedExtensionModes = extensionsManager.getSupportedModes(
+                cameraXCameraInfo.cameraSelector
+            )
+
+            return Camera(
+                cameraXCameraInfo,
+                logicalZoomRatios,
+                additionalVideoFrameRates,
+                supportedExtensionModes,
+            )
         }
     }
 }
