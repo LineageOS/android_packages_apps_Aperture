@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -14,8 +14,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
@@ -24,7 +22,6 @@ import org.lineageos.aperture.ext.smoothRotate
 import org.lineageos.aperture.models.MediaType
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.utils.ExifUtils
-import org.lineageos.aperture.viewmodels.CameraViewModel
 import java.io.InputStream
 
 /**
@@ -44,29 +41,13 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
     private val imageView by lazy { findViewById<ImageView>(R.id.imageView) }
     private val videoView by lazy { findViewById<PlayerView>(R.id.videoView) }
 
-    private val screenRotationObserver = Observer { screenRotation: Rotation ->
-        updateViewsRotation(screenRotation)
-    }
-
     /**
      * input is null == canceled
      * input is not null == confirmed
      */
     internal var onChoiceCallback: (input: Any?) -> Unit = {}
 
-    internal var cameraViewModel: CameraViewModel? = null
-        set(value) {
-            // Unregister
-            field?.screenRotation?.removeObserver(screenRotationObserver)
-
-            field = value
-
-            val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
-
-            value?.screenRotation?.observe(lifecycleOwner, screenRotationObserver)
-        }
-    private val screenRotation
-        get() = cameraViewModel?.screenRotation?.value ?: Rotation.ROTATION_0
+    private var screenRotation = Rotation.ROTATION_0
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
@@ -105,6 +86,15 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
         videoView.isVisible = false
 
         startPreview()
+    }
+
+    fun setScreenRotation(screenRotation: Rotation) {
+        this.screenRotation = screenRotation
+
+        val compensationValue = screenRotation.compensationValue.toFloat()
+
+        cancelButton.smoothRotate(compensationValue)
+        confirmButton.smoothRotate(compensationValue)
     }
 
     private fun startPreview() {
@@ -159,13 +149,6 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
                 exoPlayer = null
             }
         }
-    }
-
-    private fun updateViewsRotation(screenRotation: Rotation) {
-        val compensationValue = screenRotation.compensationValue.toFloat()
-
-        cancelButton.smoothRotate(compensationValue)
-        confirmButton.smoothRotate(compensationValue)
     }
 
     companion object {
