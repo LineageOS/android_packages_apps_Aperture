@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f7c12eb4_9f593638",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-02-25T20:54:41Z",
+      "side": 1,
+      "message": "uh, double check?",
+      "revId": "15e3265c7e4c70558650832e3124f4e5ca3d1bec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e1043631_6b679c28",
         "filename": "app/src/main/java/org/lineageos/aperture/viewmodels/CameraViewModel.kt",
         "patchSetId": 5
