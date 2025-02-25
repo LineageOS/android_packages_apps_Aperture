@@ -32,9 +32,11 @@ import androidx.preference.SwitchPreference
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.MaterialToolbar
 import org.lineageos.aperture.ext.gestureActionToString
+import org.lineageos.aperture.ext.permissionsGranted
 import org.lineageos.aperture.ext.setOffset
 import org.lineageos.aperture.ext.stringToGestureAction
 import org.lineageos.aperture.models.HardwareKey
+import org.lineageos.aperture.repository.PreferencesRepository.Companion.sharedPreferencesKeyPrefix
 import org.lineageos.aperture.utils.CameraSoundsUtils
 import org.lineageos.aperture.utils.PermissionsUtils
 import kotlin.reflect.safeCast
@@ -152,12 +154,10 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         private val saveLocation by lazy { findPreference<SwitchPreference>("save_location") }
         private val shutterSound by lazy { findPreference<SwitchPreference>("shutter_sound") }
 
-        private val permissionsUtils by lazy { PermissionsUtils(requireContext()) }
-
         private val requestLocationPermissions = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) {
-            if (!permissionsUtils.locationPermissionsGranted()) {
+            if (!requireContext().permissionsGranted(PermissionsUtils.locationPermissions)) {
                 saveLocation?.isChecked = false
                 Toast.makeText(
                     requireContext(), getString(R.string.save_location_toast), Toast.LENGTH_SHORT
@@ -186,7 +186,9 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
             saveLocation?.let {
                 // Reset location back to off if permissions aren't granted
-                it.isChecked = it.isChecked && permissionsUtils.locationPermissionsGranted()
+                it.isChecked = it.isChecked && requireContext().permissionsGranted(
+                    PermissionsUtils.locationPermissions
+                )
                 it.onPreferenceChangeListener =
                     Preference.OnPreferenceChangeListener { _, newValue ->
                         if (newValue as Boolean) {
