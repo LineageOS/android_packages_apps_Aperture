@@ -35,7 +35,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.lineageos.aperture.R
-import org.lineageos.aperture.ext.*
+import org.lineageos.aperture.ext.getThemeColor
+import org.lineageos.aperture.ext.px
+import org.lineageos.aperture.ext.sendWithBalAllowed
 import zxingcpp.BarcodeReader
 import kotlin.reflect.cast
 

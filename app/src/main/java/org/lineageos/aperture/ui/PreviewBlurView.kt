@@ -12,7 +12,7 @@ import android.os.Build
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.camera.view.PreviewView
-import org.lineageos.aperture.ext.*
+import org.lineageos.aperture.ext.stackBlur
 
 /**
  * Display a blurred viewfinder snapshot during camera rebind.

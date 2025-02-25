@@ -1,6 +1,6 @@
 /*
  * SPDX-FileCopyrightText: 2014 The Android Open Source Project
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -19,12 +19,9 @@ import androidx.annotation.IntRange
 import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
-import androidx.lifecycle.findViewTreeLifecycleOwner
 import org.lineageos.aperture.R
-import org.lineageos.aperture.ext.*
+import org.lineageos.aperture.ext.smoothRotate
 import org.lineageos.aperture.models.Rotation
-import org.lineageos.aperture.viewmodels.CameraViewModel
 
 /**
  * This class manages the looks of the countdown.
@@ -54,27 +51,11 @@ class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
         }
     }
 
-    private val screenRotationObserver = Observer { screenRotation: Rotation ->
-        updateViewsRotation(screenRotation)
-    }
-
     /**
      * Returns whether countdown is on-going.
      */
     private val isCountingDown: Boolean
         get() = remainingSeconds > 0
-
-    internal var cameraViewModel: CameraViewModel? = null
-        set(value) {
-            // Unregister
-            field?.screenRotation?.removeObserver(screenRotationObserver)
-
-            field = value
-
-            val lifecycleOwner = findViewTreeLifecycleOwner() ?: return
-
-            value?.screenRotation?.observe(lifecycleOwner, screenRotationObserver)
-        }
 
     init {
         layoutInflater.inflate(R.layout.count_down_view, this)
@@ -150,7 +131,7 @@ class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
         return false
     }
 
-    private fun updateViewsRotation(screenRotation: Rotation) {
+    fun setScreenRotation(screenRotation: Rotation) {
         val compensationValue = screenRotation.compensationValue.toFloat()
 
         remainingSecondsView.smoothRotate(compensationValue)
