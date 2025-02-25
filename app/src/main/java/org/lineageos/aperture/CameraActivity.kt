@@ -47,7 +47,9 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.camera2.interop.CaptureRequestOptions
+import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.camera.core.AspectRatio
+import androidx.camera.core.ExperimentalZeroShutterLag
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.MirrorMode
@@ -204,8 +206,7 @@ import kotlin.math.abs
 import kotlin.reflect.safeCast
 import androidx.camera.core.CameraState as CameraXCameraState
 
-@androidx.camera.camera2.interop.ExperimentalCamera2Interop
-@androidx.camera.core.ExperimentalZeroShutterLag
+@androidx.annotation.OptIn(ExperimentalCamera2Interop::class, ExperimentalZeroShutterLag::class)
 open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     // View models
     private val model: CameraViewModel by viewModels()

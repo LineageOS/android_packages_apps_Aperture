@@ -40,7 +40,6 @@ import java.util.concurrent.Executors
  * [ViewModel] representing a camera session. This data is used to receive
  * live data regarding the setting currently enabled.
  */
-@androidx.camera.camera2.interop.ExperimentalCamera2Interop
 class CameraViewModel(application: Application) : AndroidViewModel(application) {
     // Base
 
