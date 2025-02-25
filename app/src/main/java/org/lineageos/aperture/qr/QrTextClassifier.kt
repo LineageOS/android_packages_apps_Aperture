@@ -20,7 +20,8 @@ import com.google.zxing.Result
 import com.google.zxing.client.result.ResultParser
 import com.google.zxing.client.result.URIParsedResult
 import org.lineageos.aperture.R
-import org.lineageos.aperture.ext.*
+import org.lineageos.aperture.ext.build
+import org.lineageos.aperture.ext.createTextClassification
 import kotlin.reflect.safeCast
 
 class QrTextClassifier(

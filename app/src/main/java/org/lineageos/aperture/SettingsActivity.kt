@@ -239,14 +239,17 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
                             setEntries(R.array.gesture_actions_entries)
                             setEntryValues(R.array.gesture_actions_values)
                         }
+
                         hardwareKey.supportsDefault && !hardwareKey.isTwoWayKey -> {
                             setEntries(R.array.gesture_actions_no_two_way_entries)
                             setEntryValues(R.array.gesture_actions_no_two_way_values)
                         }
+
                         !hardwareKey.supportsDefault && hardwareKey.isTwoWayKey -> {
                             setEntries(R.array.gesture_actions_no_two_way_entries)
                             setEntryValues(R.array.gesture_actions_no_two_way_values)
                         }
+
                         else -> {
                             setEntries(R.array.gesture_actions_no_default_no_two_way_entries)
                             setEntryValues(R.array.gesture_actions_no_default_no_two_way_values)

@@ -10,7 +10,7 @@ import android.hardware.camera2.CameraMetadata
 import android.os.Build
 import androidx.camera.core.CameraInfo
 import androidx.camera.video.Recorder
-import org.lineageos.aperture.ext.*
+import org.lineageos.aperture.ext.getSupportedModes
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.ColorCorrectionAberrationMode

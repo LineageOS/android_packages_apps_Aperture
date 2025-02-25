@@ -12,8 +12,13 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import androidx.core.os.bundleOf
-import org.lineageos.aperture.ext.*
-import org.lineageos.aperture.query.*
+import org.lineageos.aperture.ext.mapEachRow
+import org.lineageos.aperture.ext.queryFlow
+import org.lineageos.aperture.query.Query
+import org.lineageos.aperture.query.and
+import org.lineageos.aperture.query.eq
+import org.lineageos.aperture.query.`in`
+import org.lineageos.aperture.query.join
 
 class CapturedMediaFlow(private val context: Context) : QueryFlow<Uri> {
     override fun flowCursor() = context.contentResolver.queryFlow(

@@ -10,7 +10,7 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.util.Range
 import android.view.MotionEvent
-import org.lineageos.aperture.ext.*
+import org.lineageos.aperture.ext.mapToRange
 
 class VerticalSlider @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

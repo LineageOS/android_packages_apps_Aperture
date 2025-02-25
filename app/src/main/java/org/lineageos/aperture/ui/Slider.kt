@@ -18,7 +18,7 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.View
 import org.lineageos.aperture.R
-import org.lineageos.aperture.ext.*
+import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.models.Rotation
 
 @Suppress("PrivateResource")
