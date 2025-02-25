@@ -53,7 +53,7 @@ enum class VideoDynamicRange(
     );
 
     companion object {
-        fun fromDynamicRange(dynamicRange: DynamicRange) = values().first {
+        fun fromDynamicRange(dynamicRange: DynamicRange) = entries.first {
             it.dynamicRange == dynamicRange
         }
     }

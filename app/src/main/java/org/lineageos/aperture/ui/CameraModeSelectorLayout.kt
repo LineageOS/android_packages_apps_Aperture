@@ -106,7 +106,7 @@ class CameraModeSelectorLayout @JvmOverloads constructor(
     init {
         inflate(context, R.layout.camera_mode_selector_layout, this)
 
-        for (cameraMode in CameraMode.values()) {
+        for (cameraMode in CameraMode.entries) {
             cameraToButton[cameraMode] = MaterialButton::class.cast(
                 layoutInflater.inflate(
                     R.layout.camera_mode_button, this, false

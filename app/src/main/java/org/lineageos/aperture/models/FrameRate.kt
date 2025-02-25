@@ -27,7 +27,7 @@ enum class FrameRate(val value: Int) {
     }
 
     companion object {
-        fun fromValue(value: Int) = values().firstOrNull { it.value == value }
+        fun fromValue(value: Int) = entries.firstOrNull { it.value == value }
         fun fromRange(range: Range<Int>) = if (range.lower == range.upper) {
             fromValue(range.upper)
         } else {
