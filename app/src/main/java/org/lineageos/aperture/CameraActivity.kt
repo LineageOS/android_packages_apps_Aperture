@@ -737,8 +737,8 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         // Observe focus state
-        cameraController.tapToFocusState.observe(this) {
-            when (it) {
+        cameraController.tapToFocusInfoState.observe(this) {
+            when (it.focusState) {
                 CameraController.TAP_TO_FOCUS_STARTED -> {
                     viewFinderFocus.isVisible = true
                     handler.removeMessages(MSG_HIDE_FOCUS_RING)
