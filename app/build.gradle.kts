@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.coil)
     implementation(libs.coil.video)
+    implementation(libs.kotlinx.coroutines.guava)
     implementation(libs.zxing.core)
     implementation(libs.zxing.cpp.android)
 }
