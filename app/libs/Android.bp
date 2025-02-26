@@ -300,6 +300,19 @@ android_library_import {
 }
 
 java_import {
+    name: "Aperture_com.google.j2objc_j2objc-annotations",
+    jars: ["com/google/j2objc/j2objc-annotations/3.0.0/j2objc-annotations-3.0.0.jar"],
+    sdk_version: "35",
+    min_sdk_version: "26",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+    ],
+}
+
+java_import {
     name: "Aperture_com.google.zxing_core",
     jars: ["com/google/zxing/core/3.5.3/core-3.5.3.jar"],
     sdk_version: "35",
@@ -433,6 +446,19 @@ android_library_import {
         "kotlin-stdlib-jdk8",
     ],
     extract_jni: true,
+}
+
+java_import {
+    name: "Aperture_org.checkerframework_checker-qual",
+    jars: ["org/checkerframework/checker-qual/3.43.0/checker-qual-3.43.0.jar"],
+    sdk_version: "35",
+    min_sdk_version: "26",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+    ],
 }
 
 java_import {

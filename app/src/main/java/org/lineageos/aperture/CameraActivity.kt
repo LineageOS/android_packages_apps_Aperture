@@ -98,6 +98,7 @@ import coil3.video.VideoFrameDecoder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
@@ -136,7 +137,7 @@ import org.lineageos.aperture.ext.setColorCorrectionAberrationMode
 import org.lineageos.aperture.ext.setDistortionCorrectionMode
 import org.lineageos.aperture.ext.setEdgeMode
 import org.lineageos.aperture.ext.setFrameRate
-import org.lineageos.aperture.ext.setHotPixel
+import org.lineageos.aperture.ext.setHotPixelMode
 import org.lineageos.aperture.ext.setNoiseReductionMode
 import org.lineageos.aperture.ext.setPadding
 import org.lineageos.aperture.ext.setShadingMode
@@ -1645,121 +1646,121 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         // Wait for camera to be ready
-        cameraController.initializationFuture.addListener({
+        lifecycleScope.launch {
+            cameraController.initializationFuture.await()
+
+            val camera2CameraControl = cameraController.camera2CameraControl ?: run {
+                Log.wtf(LOG_TAG, "Camera2CameraControl not available even with camera ready?")
+                return@launch
+            }
+
             // Set Camera2 CaptureRequest options
-            cameraController.camera2CameraControl?.apply {
-                captureRequestOptions = CaptureRequestOptions.Builder()
-                    .apply {
-                        setFrameRate(
-                            if (cameraMode == CameraMode.VIDEO) {
-                                videoFrameRate
-                            } else {
-                                null
-                            }
-                        )
-                        setVideoStabilizationMode(
-                            if (cameraMode == CameraMode.VIDEO &&
-                                sharedPreferences.videoStabilization
-                            ) {
-                                VideoStabilizationMode.getMode(camera)
-                            } else {
-                                VideoStabilizationMode.OFF
-                            }
-                        )
-                        sharedPreferences.edgeMode?.takeIf {
-                            camera.supportedEdgeModes.contains(it) && when (cameraMode) {
-                                CameraMode.PHOTO -> photoCaptureMode !=
-                                        ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
-                                        EdgeMode.ALLOWED_MODES_ON_ZSL.contains(it)
+            camera2CameraControl.captureRequestOptions = CaptureRequestOptions.Builder()
+                .setFrameRate(
+                    if (cameraMode == CameraMode.VIDEO) {
+                        videoFrameRate
+                    } else {
+                        null
+                    }
+                )
+                .setVideoStabilizationMode(
+                    if (cameraMode == CameraMode.VIDEO &&
+                        sharedPreferences.videoStabilization
+                    ) {
+                        VideoStabilizationMode.getMode(camera)
+                    } else {
+                        VideoStabilizationMode.OFF
+                    }
+                )
+                .setEdgeMode(
+                    sharedPreferences.edgeMode?.takeIf {
+                        camera.supportedEdgeModes.contains(it) && when (cameraMode) {
+                            CameraMode.PHOTO -> photoCaptureMode !=
+                                    ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
+                                    EdgeMode.ALLOWED_MODES_ON_ZSL.contains(it)
 
-                                CameraMode.VIDEO ->
-                                    EdgeMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+                            CameraMode.VIDEO -> EdgeMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
 
-                                CameraMode.QR -> false
-                            }
-                        }?.let {
-                            setEdgeMode(it)
+                            CameraMode.QR -> false
                         }
-                        sharedPreferences.noiseReductionMode?.takeIf {
-                            camera.supportedNoiseReductionModes.contains(it) && when (cameraMode) {
-                                CameraMode.PHOTO -> photoCaptureMode !=
-                                        ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
-                                        NoiseReductionMode.ALLOWED_MODES_ON_ZSL.contains(it)
+                    }
+                )
+                .setNoiseReductionMode(
+                    sharedPreferences.noiseReductionMode?.takeIf {
+                        camera.supportedNoiseReductionModes.contains(it) && when (cameraMode) {
+                            CameraMode.PHOTO -> photoCaptureMode !=
+                                    ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
+                                    NoiseReductionMode.ALLOWED_MODES_ON_ZSL.contains(it)
 
-                                CameraMode.VIDEO ->
-                                    NoiseReductionMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+                            CameraMode.VIDEO ->
+                                NoiseReductionMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
 
-                                CameraMode.QR -> false
-                            }
-                        }?.let {
-                            setNoiseReductionMode(it)
+                            CameraMode.QR -> false
                         }
-                        sharedPreferences.shadingMode?.takeIf {
-                            camera.supportedShadingModes.contains(it) && when (cameraMode) {
-                                CameraMode.PHOTO -> photoCaptureMode !=
-                                        ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
-                                        ShadingMode.ALLOWED_MODES_ON_ZSL.contains(it)
+                    }
+                )
+                .setShadingMode(
+                    sharedPreferences.shadingMode?.takeIf {
+                        camera.supportedShadingModes.contains(it) && when (cameraMode) {
+                            CameraMode.PHOTO -> photoCaptureMode !=
+                                    ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
+                                    ShadingMode.ALLOWED_MODES_ON_ZSL.contains(it)
 
-                                CameraMode.VIDEO ->
-                                    ShadingMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+                            CameraMode.VIDEO ->
+                                ShadingMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
 
-                                CameraMode.QR -> false
-                            }
-                        }?.let {
-                            setShadingMode(it)
+                            CameraMode.QR -> false
                         }
-                        sharedPreferences.colorCorrectionAberrationMode?.takeIf {
-                            camera.supportedColorCorrectionAberrationModes.contains(it) && when (cameraMode) {
-                                CameraMode.PHOTO -> photoCaptureMode !=
-                                        ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
-                                        ColorCorrectionAberrationMode.ALLOWED_MODES_ON_ZSL.contains(
-                                            it
-                                        )
-
-                                CameraMode.VIDEO ->
-                                    ColorCorrectionAberrationMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(
+                    }
+                )
+                .setColorCorrectionAberrationMode(
+                    sharedPreferences.colorCorrectionAberrationMode?.takeIf {
+                        camera.supportedColorCorrectionAberrationModes.contains(it) && when (cameraMode) {
+                            CameraMode.PHOTO -> photoCaptureMode !=
+                                    ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
+                                    ColorCorrectionAberrationMode.ALLOWED_MODES_ON_ZSL.contains(
                                         it
                                     )
 
-                                CameraMode.QR -> false
-                            }
-                        }?.let {
-                            setColorCorrectionAberrationMode(it)
-                        }
-                        sharedPreferences.distortionCorrectionMode?.takeIf {
-                            camera.supportedDistortionCorrectionModes.contains(it) && when (cameraMode) {
-                                CameraMode.PHOTO -> photoCaptureMode !=
-                                        ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
-                                        DistortionCorrectionMode.ALLOWED_MODES_ON_ZSL.contains(it)
+                            CameraMode.VIDEO ->
+                                ColorCorrectionAberrationMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(
+                                    it
+                                )
 
-                                CameraMode.VIDEO ->
-                                    DistortionCorrectionMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
-
-                                CameraMode.QR -> false
-                            }
-                        }?.let {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                                setDistortionCorrectionMode(it)
-                            }
-                        }
-                        sharedPreferences.hotPixelMode?.takeIf {
-                            camera.supportedHotPixelModes.contains(it) && when (cameraMode) {
-                                CameraMode.PHOTO -> photoCaptureMode !=
-                                        ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
-                                        HotPixelMode.ALLOWED_MODES_ON_ZSL.contains(it)
-
-                                CameraMode.VIDEO ->
-                                    HotPixelMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
-
-                                CameraMode.QR -> false
-                            }
-                        }?.let {
-                            setHotPixel(it)
+                            CameraMode.QR -> false
                         }
                     }
-                    .build()
-            } ?: Log.wtf(LOG_TAG, "Camera2CameraControl not available even with camera ready?")
-        }, ContextCompat.getMainExecutor(this))
+                )
+                .setDistortionCorrectionMode(
+                    sharedPreferences.distortionCorrectionMode?.takeIf {
+                        camera.supportedDistortionCorrectionModes.contains(it) && when (cameraMode) {
+                            CameraMode.PHOTO -> photoCaptureMode !=
+                                    ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
+                                    DistortionCorrectionMode.ALLOWED_MODES_ON_ZSL.contains(it)
+
+                            CameraMode.VIDEO ->
+                                DistortionCorrectionMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+
+                            CameraMode.QR -> false
+                        }
+                    }
+                )
+                .setHotPixelMode(
+                    sharedPreferences.hotPixelMode?.takeIf {
+                        camera.supportedHotPixelModes.contains(it) && when (cameraMode) {
+                            CameraMode.PHOTO -> photoCaptureMode !=
+                                    ImageCapture.CAPTURE_MODE_ZERO_SHUTTER_LAG ||
+                                    HotPixelMode.ALLOWED_MODES_ON_ZSL.contains(it)
+
+                            CameraMode.VIDEO ->
+                                HotPixelMode.ALLOWED_MODES_ON_VIDEO_MODE.contains(it)
+
+                            CameraMode.QR -> false
+                        }
+                    }
+                )
+                .build()
+        }
 
         // Restore settings that can be set on the fly
         changeGridMode(

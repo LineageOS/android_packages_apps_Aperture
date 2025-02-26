@@ -54,6 +54,7 @@ android_app {
         "Aperture_io.coil-kt.coil3_coil-video",
         "Aperture_io.github.zxing-cpp_android",
         "kotlin-stdlib",
+        "kotlinx_coroutines_guava",
     ],
 
     optional_uses_libs: [
