@@ -63,7 +63,6 @@ import androidx.camera.video.VideoRecordEvent
 import androidx.camera.video.isAudioSourceConfigured
 import androidx.camera.video.muted
 import androidx.camera.view.CameraController
-import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.camera.view.ScreenFlashView
 import androidx.camera.view.onPinchToZoom
@@ -255,7 +254,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     private val powerManager by lazy { getSystemService(PowerManager::class.java) }
 
     // Core camera utils
-    private lateinit var cameraController: LifecycleCameraController
     private lateinit var cameraSoundsUtils: CameraSoundsUtils
     private val sharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(this)
@@ -353,7 +351,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 }
 
                 is ZoomGestureDetector.ZoomEvent.Move -> {
-                    cameraController.onPinchToZoom(it.incrementalScaleFactor)
+                    viewModel.cameraController.onPinchToZoom(it.incrementalScaleFactor)
                     handler.removeMessages(MSG_ON_PINCH_TO_ZOOM)
                     handler.sendMessageDelayed(handler.obtainMessage(MSG_ON_PINCH_TO_ZOOM), 500)
                 }
@@ -626,9 +624,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         // Register shortcuts
         ShortcutsUtils.registerShortcuts(this)
 
-        // Initialize the camera controller
-        cameraController = LifecycleCameraController(this)
-
         // Initialize sounds utils
         cameraSoundsUtils = CameraSoundsUtils(sharedPreferences)
 
@@ -726,19 +721,19 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         flashButton.setOnLongClickListener { cycleFlashMode(true) }
 
         // Attach CameraController to PreviewView
-        viewFinder.controller = cameraController
+        viewFinder.controller = viewModel.cameraController
 
         // Attach CameraController to ScreenFlashView
-        screenFlashView.setController(cameraController)
+        screenFlashView.setController(viewModel.cameraController)
         screenFlashView.setScreenFlashWindow(window)
 
         // Observe torch state
-        cameraController.torchState.observe(this) {
-            flashMode = cameraController.flashMode
+        viewModel.cameraController.torchState.observe(this) {
+            flashMode = viewModel.cameraController.flashMode
         }
 
         // Observe focus state
-        cameraController.tapToFocusInfoState.observe(this) {
+        viewModel.cameraController.tapToFocusInfoState.observe(this) {
             when (it.focusState) {
                 CameraController.TAP_TO_FOCUS_STARTED -> {
                     viewFinderFocus.x = it.tapPoint!!.x - (viewFinderFocus.width / 2)
@@ -774,7 +769,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
         viewFinder.setOnClickListener {
             // Reset exposure level to 0 EV
-            cameraController.cameraControl?.setExposureCompensationIndex(0)
+            viewModel.cameraController.cameraControl?.setExposureCompensationIndex(0)
             exposureLevel.progress = 0.5f
 
             exposureLevel.isVisible = true
@@ -808,7 +803,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         // Observe zoom state
-        cameraController.zoomState.observe(this) {
+        viewModel.cameraController.zoomState.observe(this) {
             if (it.minZoomRatio == it.maxZoomRatio) {
                 return@observe
             }
@@ -823,15 +818,15 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         zoomLevel.onProgressChangedByUser = {
-            cameraController.setLinearZoom(it)
+            viewModel.cameraController.setLinearZoom(it)
         }
         zoomLevel.textFormatter = {
-            "%.1fx".format(cameraController.zoomState.value?.zoomRatio)
+            "%.1fx".format(viewModel.cameraController.zoomState.value?.zoomRatio)
         }
 
         // Set expose level callback & text formatter
         exposureLevel.onProgressChangedByUser = {
-            cameraController.cameraControl?.setExposureCompensationIndex(
+            viewModel.cameraController.cameraControl?.setExposureCompensationIndex(
                 Int.mapToRange(camera.exposureCompensationRange, it)
             )
 
@@ -1234,6 +1229,16 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         super.onPause()
     }
 
+    override fun onDestroy() {
+        // Detach CameraController from ScreenFlashView
+        screenFlashView.setController(null)
+
+        // Detach CameraController from PreviewView
+        viewFinder.controller = null
+
+        super.onDestroy()
+    }
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent?) = when (capturePreviewLayout.isVisible) {
         true -> super.onKeyDown(keyCode, event)
         false -> handleHardwareKeyDown(keyCode, event) ?: super.onKeyDown(keyCode, event)
@@ -1315,7 +1320,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         // Set up image capture listener, which is triggered after photo has
         // been taken
-        cameraController.takePicture(
+        viewModel.cameraController.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
@@ -1361,7 +1366,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
     private fun captureVideo() {
         if (cameraState != CameraState.IDLE) {
-            if (cameraController.isRecording) {
+            if (viewModel.cameraController.isRecording) {
                 // Stop the current recording session.
                 videoRecording?.stop()
             }
@@ -1385,7 +1390,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         handler.postDelayed({
             // Start recording
-            videoRecording = cameraController.startRecording(
+            videoRecording = viewModel.cameraController.startRecording(
                 outputOptions,
                 videoAudioConfig,
                 viewModel.cameraExecutor
@@ -1446,7 +1451,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         previewBlurView.isVisible = true
 
         // Unbind previous use cases
-        cameraController.unbind()
+        viewModel.cameraController.unbind()
 
         cameraState = CameraState.IDLE
 
@@ -1489,25 +1494,28 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         // Initialize the use case we want and set its properties
         val cameraUseCases = when (cameraMode) {
             CameraMode.QR -> {
-                cameraController.setImageAnalysisAnalyzer(viewModel.cameraExecutor, imageAnalyzer)
+                viewModel.cameraController.setImageAnalysisAnalyzer(
+                    viewModel.cameraExecutor, imageAnalyzer
+                )
                 CameraController.IMAGE_ANALYSIS
             }
 
             CameraMode.PHOTO -> {
-                cameraController.imageCaptureResolutionSelector = ResolutionSelector.Builder()
-                    .setAspectRatioStrategy(
-                        AspectRatioStrategy(
-                            photoAspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO
+                viewModel.cameraController.imageCaptureResolutionSelector =
+                    ResolutionSelector.Builder()
+                        .setAspectRatioStrategy(
+                            AspectRatioStrategy(
+                                photoAspectRatio, AspectRatioStrategy.FALLBACK_RULE_AUTO
+                            )
                         )
-                    )
-                    .setAllowedResolutionMode(
-                        if (viewModel.overlayConfiguration.enableHighResolution) {
-                            ResolutionSelector.PREFER_HIGHER_RESOLUTION_OVER_CAPTURE_RATE
-                        } else {
-                            ResolutionSelector.PREFER_CAPTURE_RATE_OVER_HIGHER_RESOLUTION
-                        }
-                    )
-                    .build()
+                        .setAllowedResolutionMode(
+                            if (viewModel.overlayConfiguration.enableHighResolution) {
+                                ResolutionSelector.PREFER_HIGHER_RESOLUTION_OVER_CAPTURE_RATE
+                            } else {
+                                ResolutionSelector.PREFER_CAPTURE_RATE_OVER_HIGHER_RESOLUTION
+                            }
+                        )
+                        .build()
                 CameraController.IMAGE_CAPTURE
             }
 
@@ -1516,7 +1524,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 if (!supportedVideoQualities.contains(videoQuality)) {
                     videoQuality = supportedVideoQualities.first()
                 }
-                cameraController.videoCaptureQualitySelector =
+                viewModel.cameraController.videoCaptureQualitySelector =
                     QualitySelector.from(videoQuality)
 
                 // Set proper video frame rate
@@ -1528,17 +1536,18 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 videoDynamicRange = videoDynamicRange.takeIf {
                     supportedVideoDynamicRanges.contains(it)
                 } ?: supportedVideoDynamicRanges.first()
-                cameraController.videoCaptureDynamicRange = videoDynamicRange.dynamicRange
+                viewModel.cameraController.videoCaptureDynamicRange = videoDynamicRange.dynamicRange
 
                 // Set video mirror mode
-                cameraController.videoCaptureMirrorMode = when (sharedPreferences.videoMirrorMode) {
-                    VideoMirrorMode.OFF -> MirrorMode.MIRROR_MODE_OFF
-                    VideoMirrorMode.ON -> MirrorMode.MIRROR_MODE_ON
-                    VideoMirrorMode.ON_FFC_ONLY -> when (camera.cameraFacing) {
-                        CameraFacing.FRONT -> MirrorMode.MIRROR_MODE_ON
-                        else -> MirrorMode.MIRROR_MODE_OFF
+                viewModel.cameraController.videoCaptureMirrorMode =
+                    when (sharedPreferences.videoMirrorMode) {
+                        VideoMirrorMode.OFF -> MirrorMode.MIRROR_MODE_OFF
+                        VideoMirrorMode.ON -> MirrorMode.MIRROR_MODE_ON
+                        VideoMirrorMode.ON_FFC_ONLY -> when (camera.cameraFacing) {
+                            CameraFacing.FRONT -> MirrorMode.MIRROR_MODE_ON
+                            else -> MirrorMode.MIRROR_MODE_OFF
+                        }
                     }
-                }
 
                 CameraController.VIDEO_CAPTURE
             }
@@ -1561,14 +1570,14 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         // Bind use cases to camera
-        cameraController.cameraSelector = cameraSelector
-        cameraController.setEnabledUseCases(cameraUseCases)
+        viewModel.cameraController.cameraSelector = cameraSelector
+        viewModel.cameraController.setEnabledUseCases(cameraUseCases)
 
         // Restore settings that needs a rebind
-        cameraController.imageCaptureMode = photoCaptureMode
+        viewModel.cameraController.imageCaptureMode = photoCaptureMode
 
         // Bind camera controller to lifecycle
-        cameraController.bindToLifecycle(this)
+        viewModel.cameraController.bindToLifecycle(this)
 
         // Observe camera state
         camera.cameraState.observe(this) { cameraState ->
@@ -1641,9 +1650,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         // Wait for camera to be ready
         lifecycleScope.launch {
-            cameraController.initializationFuture.await()
+            viewModel.cameraController.initializationFuture.await()
 
-            val camera2CameraControl = cameraController.camera2CameraControl ?: run {
+            val camera2CameraControl = viewModel.cameraController.camera2CameraControl ?: run {
                 Log.wtf(LOG_TAG, "Camera2CameraControl not available even with camera ready?")
                 return@launch
             }
@@ -2020,7 +2029,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
      * Set the specified flash mode, saving the value to shared prefs and updating the icon
      */
     private fun changeFlashMode(flashMode: FlashMode) {
-        cameraController.flashMode = flashMode
+        viewModel.cameraController.flashMode = flashMode
 
         this.flashMode = flashMode
     }
@@ -2437,14 +2446,14 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             return
         }
 
-        val zoomState = cameraController.zoomState.value ?: return
+        val zoomState = viewModel.cameraController.zoomState.value ?: return
 
         ValueAnimator.ofFloat(
             zoomState.zoomRatio,
             zoomRatio.coerceIn(zoomState.minZoomRatio, zoomState.maxZoomRatio)
         ).apply {
             addUpdateListener {
-                cameraController.setZoomRatio(it.animatedValue as Float)
+                viewModel.cameraController.setZoomRatio(it.animatedValue as Float)
             }
             addListener(
                 onEnd = {
@@ -2462,14 +2471,14 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     /**
      * Zoom in by a power of 2.
      */
-    private fun zoomIn() = cameraController.zoomState.value?.zoomRatio?.let {
+    private fun zoomIn() = viewModel.cameraController.zoomState.value?.zoomRatio?.let {
         smoothZoom(it.nextPowerOfTwo())
     }
 
     /**
      * Zoom out by a power of 2.
      */
-    private fun zoomOut() = cameraController.zoomState.value?.zoomRatio?.let {
+    private fun zoomOut() = viewModel.cameraController.zoomState.value?.zoomRatio?.let {
         smoothZoom(it.previousPowerOfTwo())
     }
 
