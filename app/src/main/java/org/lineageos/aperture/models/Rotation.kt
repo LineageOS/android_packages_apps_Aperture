@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -21,7 +21,7 @@ enum class Rotation(val offset: Int) {
      */
     val compensationValue = 360 - if (offset > 180) offset - 360 else offset
 
-    private val apertureRanges = mutableListOf<IntRange>().apply {
+    private val apertureRanges = buildList {
         // Left side
         if (offset < 45) {
             add(360 - offset - 45 until 360)

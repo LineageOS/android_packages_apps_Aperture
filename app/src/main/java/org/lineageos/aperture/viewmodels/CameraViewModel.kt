@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -138,7 +138,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
      * Expected to change, do not store this anywhere.
      */
     private val availableCameras: List<Camera>
-        get() = mutableListOf<Camera>().apply {
+        get() = buildList {
             mainBackCamera?.let {
                 add(it)
             }

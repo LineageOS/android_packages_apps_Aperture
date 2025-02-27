@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -88,7 +88,8 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
 
     val supportedExtensionModes = model.extensionsManager.getSupportedModes(cameraSelector)
 
-    val supportedVideoStabilizationModes = mutableListOf(VideoStabilizationMode.OFF).apply {
+    val supportedVideoStabilizationModes = buildList {
+        add(VideoStabilizationMode.OFF)
         val availableVideoStabilizationModes = camera2CameraInfo.getCameraCharacteristic(
             CameraCharacteristics.CONTROL_AVAILABLE_VIDEO_STABILIZATION_MODES
         ) ?: IntArray(0)
@@ -108,7 +109,7 @@ class Camera(cameraInfo: CameraInfo, model: CameraViewModel) : BaseCamera(camera
         ) {
             add(VideoStabilizationMode.ON_PREVIEW)
         }
-    }.toList()
+    }
 
     val supportsZsl = cameraInfo.isZslSupported
 

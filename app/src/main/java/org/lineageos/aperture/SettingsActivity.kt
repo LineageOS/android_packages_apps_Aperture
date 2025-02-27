@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -329,13 +329,14 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
             var singleKeysPresent = false
 
             for (hardwareKey in HardwareKey.entries) {
-                val present = KeyCharacterMap.deviceHasKeys(
-                    mutableListOf(hardwareKey.firstKeycode).apply {
-                        hardwareKey.secondKeycode?.let {
-                            add(it)
-                        }
-                    }.toIntArray()
-                ).all { it }
+                val present = buildList {
+                    add(hardwareKey.firstKeycode)
+                    hardwareKey.secondKeycode?.let {
+                        add(it)
+                    }
+                }.all {
+                    KeyCharacterMap.deviceHasKey(it)
+                }
 
                 if (hardwareKey.isTwoWayKey) {
                     val keyCategory = findPreference<PreferenceCategory>(

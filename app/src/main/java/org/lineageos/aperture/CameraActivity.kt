@@ -2250,7 +2250,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             galleryButtonUri?.also { uri ->
                 // Try to open the Uri in the non secure gallery
                 dismissKeyguardAndRun {
-                    mutableListOf<String>().apply {
+                    buildList {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                             add(MediaStore.ACTION_REVIEW)
                         }
