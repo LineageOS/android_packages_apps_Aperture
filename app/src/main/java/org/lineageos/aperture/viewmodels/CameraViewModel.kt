@@ -11,6 +11,7 @@ import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.Quality
 import androidx.camera.video.Recording
+import androidx.camera.view.LifecycleCameraController
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -58,6 +59,11 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
      * [ExecutorService] for camera related operations.
      */
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
+
+    /**
+     * CameraX's [LifecycleCameraController].
+     */
+    val cameraController = LifecycleCameraController(applicationContext)
 
     /**
      * Overlay configuration.
@@ -260,6 +266,8 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
     val videoRecordingDuration = MutableLiveData<Long>()
 
     override fun onCleared() {
+        cameraController.unbind()
+
         cameraExecutor.shutdown()
     }
 
