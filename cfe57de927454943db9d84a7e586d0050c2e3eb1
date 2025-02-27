@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc87b5ad_e2219ed1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-02-27T10:22:03Z",
+      "side": 1,
+      "message": "We\u0027re doing something wrong with libs filtering when we use the AOSP version of it, gonna fix later",
+      "revId": "cfe57de927454943db9d84a7e586d0050c2e3eb1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
