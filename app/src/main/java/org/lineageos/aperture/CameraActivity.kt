@@ -96,6 +96,7 @@ import coil3.size.Scale
 import coil3.video.VideoFrameDecoder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
@@ -1388,7 +1389,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         // Play shutter sound
         val delayTime = if (cameraSoundsUtils.playStartVideoRecording()) 500L else 0L
 
-        handler.postDelayed({
+        lifecycleScope.launch {
+            delay(delayTime)
+
             // Start recording
             videoRecording = viewModel.cameraController.startRecording(
                 outputOptions,
@@ -1424,7 +1427,10 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                             Log.d(LOG_TAG, "Video capture succeeded: ${it.outputResults.outputUri}")
                             if (!singleCaptureMode) {
                                 onCapturedMedia(it.outputResults.outputUri)
-                                BroadcastUtils.broadcastNewVideo(this, it.outputResults.outputUri)
+                                BroadcastUtils.broadcastNewVideo(
+                                    this@CameraActivity,
+                                    it.outputResults.outputUri
+                                )
                             } else {
                                 openCapturePreview(it.outputResults.outputUri, MediaType.VIDEO)
                             }
@@ -1434,7 +1440,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     }
                 }
             }
-        }, delayTime)
+        }
     }
 
     /**
