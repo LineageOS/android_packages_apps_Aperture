@@ -37,6 +37,7 @@
     <string name="qr_copy_description">Copie intes notis</string>
     <string name="qr_icon_description">Icone</string>
     <string name="qr_share_description">Condivît</string>
+    <string name="qr_share_with_action">Condivît cun</string>
     <string name="qr_no_app_available_for_action">Nissune aplicazion disponibile par gjestî cheste azion</string>
     <string name="qr_address_title">Zonte contat</string>
     <string name="qr_address_content_description">Zonte contat</string>

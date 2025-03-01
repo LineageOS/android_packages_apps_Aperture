@@ -37,6 +37,7 @@
     <string name="qr_copy_description">رونوشت به بریده‌دان</string>
     <string name="qr_icon_description">نماد</string>
     <string name="qr_share_description">هم‌رسانی</string>
+    <string name="qr_share_with_action">هم‌رسانی با</string>
     <string name="qr_no_app_available_for_action">هیچ برنامه ای برای انجام این عمل در دسترس نیست</string>
     <string name="qr_address_title">افزودن مخاطب</string>
     <string name="qr_address_content_description">افزودن مخاطب</string>
