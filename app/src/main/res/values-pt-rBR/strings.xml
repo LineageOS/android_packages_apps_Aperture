@@ -147,7 +147,7 @@
     <string name="shortcut_video">Gravar um vídeo</string>
     <string name="shortcut_qr">Fazer scan do código de barras</string>
     <string name="location_permission_dialog_title">Adicionar a localização em fotos e vídeos</string>
-    <string name="location_permission_dialog_description">Mapeie suas memórias ao incluir metadados de localização em cada captura.</string>
+    <string name="location_permission_dialog_description">Mapeie suas memórias, incluindo metadados de localização em cada captura.</string>
     <string name="location_permission_dialog_later">Mais tarde</string>
     <string name="location_permission_dialog_turn_on">Ativar</string>
     <string name="error_max_cameras_in_use">O número máximo de câmeras abertas foi atingido, tente fechar outros apps usando as câmeras do dispositivo.</string>
