@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ed1bb4c_f22d5d26",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-03-17T14:14:10Z",
+      "side": 1,
+      "message": "Move overlay values to OverlayConfiguration, although I\u0027d like to see this:\n- In 22.2 branch\n- After flow changes are merged",
+      "revId": "b900b069475c7614a87931d8720df5a5d27b9e44",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
