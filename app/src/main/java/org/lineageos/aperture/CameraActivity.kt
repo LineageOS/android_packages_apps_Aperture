@@ -448,7 +448,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     }
 
     private val permissionsGatedCallback = PermissionsGatedCallback(this) {
-        bindCameraUseCases()
+        bindCameraUseCases(resetCameraController = false)
     }
 
     private val locationPermissionsRequestLauncher = registerForActivityResult(
@@ -626,8 +626,8 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         // Register shortcuts
         ShortcutsUtils.registerShortcuts(this)
 
-        // Initialize the camera controller
-        cameraController = LifecycleCameraController(this)
+        // Initialize camera controller and set callbacks and associations
+        prepareCameraController()
 
         // Initialize sounds utils
         cameraSoundsUtils = CameraSoundsUtils(sharedPreferences)
@@ -725,46 +725,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         flashButton.setOnClickListener { cycleFlashMode(false) }
         flashButton.setOnLongClickListener { cycleFlashMode(true) }
 
-        // Attach CameraController to PreviewView
-        viewFinder.controller = cameraController
-
-        // Attach CameraController to ScreenFlashView
-        screenFlashView.setController(cameraController)
-        screenFlashView.setScreenFlashWindow(window)
-
-        // Observe torch state
-        cameraController.torchState.observe(this) {
-            flashMode = cameraController.flashMode
-        }
-
-        // Observe focus state
-        cameraController.tapToFocusInfoState.observe(this) {
-            when (it.focusState) {
-                CameraController.TAP_TO_FOCUS_STARTED -> {
-                    viewFinderFocus.x = it.tapPoint!!.x - (viewFinderFocus.width / 2)
-                    viewFinderFocus.y = it.tapPoint!!.y - (viewFinderFocus.height / 2)
-                    viewFinderFocus.isVisible = true
-                    handler.removeMessages(MSG_HIDE_FOCUS_RING)
-                    ValueAnimator.ofInt(0.px, 8.px).apply {
-                        addUpdateListener { anim ->
-                            viewFinderFocus.setPadding(anim.animatedValue as Int)
-                        }
-                    }.start()
-                }
-
-                else -> {
-                    handler.removeMessages(MSG_HIDE_FOCUS_RING)
-                    ValueAnimator.ofInt(8.px, 0.px).apply {
-                        addUpdateListener { anim ->
-                            viewFinderFocus.setPadding(anim.animatedValue as Int)
-                        }
-                    }.start()
-
-                    handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_FOCUS_RING), 500)
-                }
-            }
-        }
-
         // Observe manual focus
         viewFinder.setOnTouchListener { _, event ->
             if (zoomGestureDetector.onTouchEvent(event) && zoomGestureDetectorIsInProgress) {
@@ -805,21 +765,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
                 else -> {}
             }
-        }
-
-        // Observe zoom state
-        cameraController.zoomState.observe(this) {
-            if (it.minZoomRatio == it.maxZoomRatio) {
-                return@observe
-            }
-
-            zoomLevel.progress = it.linearZoom
-            zoomLevel.isVisible = true
-
-            handler.removeMessages(MSG_HIDE_ZOOM_SLIDER)
-            handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_ZOOM_SLIDER), 2000)
-
-            lensSelectorLayout.onZoomRatioChanged(it.zoomRatio)
         }
 
         zoomLevel.onProgressChangedByUser = {
@@ -1250,6 +1195,66 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
      */
     protected open fun overrideInitialCameraMode(): CameraMode? = null
 
+    private fun prepareCameraController() {
+        // Initialize the camera controller
+        cameraController = LifecycleCameraController(this)
+
+        // Attach CameraController to PreviewView
+        viewFinder.controller = cameraController
+
+        // Attach CameraController to ScreenFlashView
+        screenFlashView.setController(cameraController)
+        screenFlashView.setScreenFlashWindow(window)
+
+        // Observe torch state
+        cameraController.torchState.observe(this) {
+            flashMode = cameraController.flashMode
+        }
+
+        // Observe focus state
+        cameraController.tapToFocusInfoState.observe(this) {
+            when (it.focusState) {
+                CameraController.TAP_TO_FOCUS_STARTED -> {
+                    viewFinderFocus.x = it.tapPoint!!.x - (viewFinderFocus.width / 2)
+                    viewFinderFocus.y = it.tapPoint!!.y - (viewFinderFocus.height / 2)
+                    viewFinderFocus.isVisible = true
+                    handler.removeMessages(MSG_HIDE_FOCUS_RING)
+                    ValueAnimator.ofInt(0.px, 8.px).apply {
+                        addUpdateListener { anim ->
+                            viewFinderFocus.setPadding(anim.animatedValue as Int)
+                        }
+                    }.start()
+                }
+
+                else -> {
+                    handler.removeMessages(MSG_HIDE_FOCUS_RING)
+                    ValueAnimator.ofInt(8.px, 0.px).apply {
+                        addUpdateListener { anim ->
+                            viewFinderFocus.setPadding(anim.animatedValue as Int)
+                        }
+                    }.start()
+
+                    handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_FOCUS_RING), 500)
+                }
+            }
+        }
+
+        // Observe zoom state
+        cameraController.zoomState.observe(this) {
+            if (it.minZoomRatio == it.maxZoomRatio) {
+                return@observe
+            }
+
+            zoomLevel.progress = it.linearZoom
+            zoomLevel.isVisible = true
+
+            handler.removeMessages(MSG_HIDE_ZOOM_SLIDER)
+            handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_ZOOM_SLIDER), 2000)
+
+            lensSelectorLayout.onZoomRatioChanged(it.zoomRatio)
+        }
+    }
+
     private fun startShutterAnimation(shutterAnimation: ShutterAnimation) {
         // Get appropriate drawable
         val drawable = ContextCompat.getDrawable(
@@ -1440,13 +1445,15 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     /**
      * Rebind cameraProvider use cases
      */
-    private fun bindCameraUseCases() {
+    private fun bindCameraUseCases(resetCameraController: Boolean = true) {
         // Show blurred preview
         previewBlurView.freeze()
         previewBlurView.isVisible = true
 
-        // Unbind previous use cases
-        cameraController.unbind()
+        if (resetCameraController) {
+            cameraController.unbind()
+            prepareCameraController()
+        }
 
         cameraState = CameraState.IDLE
 
