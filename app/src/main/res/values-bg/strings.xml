@@ -55,8 +55,8 @@
     <string name="qr_product_content_description">Потърси баркодът на продукта</string>
     <string name="qr_sms_title">Изпрати нов SMS</string>
     <string name="qr_sms_content_description">изпрати нов SMS на избраните получатели</string>
-    <string name="qr_tel_title">Обади се на номерът</string>
-    <string name="qr_tel_content_description">Обади се на номерът</string>
+    <string name="qr_tel_title">Обади се на номера</string>
+    <string name="qr_tel_content_description">Обади се на номера</string>
     <string name="qr_text">Текст</string>
     <string name="qr_upi_title">Избери приложение за плащане</string>
     <string name="qr_upi_content_description">Отвори UPI линк, ако е налично приложение</string>
