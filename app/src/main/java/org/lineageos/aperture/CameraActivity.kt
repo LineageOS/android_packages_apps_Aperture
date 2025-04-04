@@ -183,6 +183,7 @@ import org.lineageos.aperture.ui.CapturePreviewLayout
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
 import org.lineageos.aperture.ui.HorizontalSlider
+import org.lineageos.aperture.ui.InactivityDialog
 import org.lineageos.aperture.ui.InfoChipView
 import org.lineageos.aperture.ui.LensSelectorLayout
 import org.lineageos.aperture.ui.LevelerView
@@ -382,6 +383,18 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 MSG_HIDE_EXPOSURE_SLIDER -> {
                     exposureLevel.isVisible = false
                 }
+
+                MSG_UPDATE_INACTIVITY_COUNTDOWN -> {
+                    Log.e("XXX", "MSG_UPDATE_INACTIVITY_COUNTDOWN")
+                    if (!inactivityDialog.isShowing) {
+                        Log.e("XXX", "MSG_UPDATE_INACTIVITY_COUNTDOWN - show")
+                        inactivityDialog.show()
+                    } else {
+                        Log.e("XXX", "MSG_UPDATE_INACTIVITY_COUNTDOWN - update")
+                        inactivityDialog.updateCountdown()
+                    }
+                    sendEmptyMessageDelayed(MSG_UPDATE_INACTIVITY_COUNTDOWN, 1000)
+                }
             }
         }
     }
@@ -465,6 +478,22 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 } else {
                     sharedPreferences.saveLocation = false
                 }
+            }
+        }
+    }
+
+    private val inactivityDialog by lazy {
+        InactivityDialog(this).also {
+            it.onResultCallback = { result ->
+                Log.e("XXX", "inactivityDialog - result -> $result")
+                if (result) {
+                    it.dismiss()
+                    finish()
+                }
+            }
+            it.setOnDismissListener {
+                Log.e("XXX", "inactivityDialog - dismiss")
+                startScreenTimeout()
             }
         }
     }
@@ -1214,6 +1243,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         // Check again for permissions and re-bind the use cases
         permissionsGatedCallback.runAfterPermissionsCheck()
+
+        // Start inactivity countdown, in case user is opening the app without interacting once
+        startScreenTimeout()
     }
 
     override fun onPause() {
@@ -1231,6 +1263,12 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         // Remove battery status receiver
         unregisterReceiver(batteryBroadcastReceiver)
 
+        // Remove inactivity dialogs and stop countdown
+        if (inactivityDialog.isShowing) {
+            inactivityDialog.dismiss()
+        }
+        handler.removeMessages(MSG_UPDATE_INACTIVITY_COUNTDOWN)
+
         super.onPause()
     }
 
@@ -1242,6 +1280,13 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     override fun onKeyUp(keyCode: Int, event: KeyEvent?) = when (capturePreviewLayout.isVisible) {
         true -> super.onKeyUp(keyCode, event)
         false -> handleHardwareKeyUp(keyCode, event) ?: super.onKeyUp(keyCode, event)
+    }
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        if (!isFinishing) {
+            startScreenTimeout()
+        }
     }
 
     /**
@@ -2627,6 +2672,16 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
     }
 
+    private fun startScreenTimeout() {
+        Log.e("XXX", "startScreenTimeout()")
+        if (inactivityDialog.isShowing) {
+            inactivityDialog.dismiss()
+        }
+
+        handler.removeMessages(MSG_UPDATE_INACTIVITY_COUNTDOWN)
+        handler.sendEmptyMessageDelayed(MSG_UPDATE_INACTIVITY_COUNTDOWN, INACTIVITY_DURATION)
+    }
+
     companion object {
         private const val LOG_TAG = "Aperture"
 
@@ -2634,6 +2689,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         private const val MSG_HIDE_FOCUS_RING = 1
         private const val MSG_HIDE_EXPOSURE_SLIDER = 2
         private const val MSG_ON_PINCH_TO_ZOOM = 3
+        private const val MSG_UPDATE_INACTIVITY_COUNTDOWN = 4
 
         private const val SINGLE_CAPTURE_PHOTO_BUFFER_INITIAL_SIZE_BYTES = 8 * 1024 * 1024 // 8 MiB
 
@@ -2644,6 +2700,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         // app expects a photo to be returned inline, rather than providing an output URI.)
         // https://developer.android.com/guide/components/activities/parcelables-and-bundles#sdbp
         private const val SINGLE_CAPTURE_INLINE_MAX_SIDE_LEN_PIXELS = 256
+
+        // Inactivity duration after which the app should show a dialog to the user.
+        private const val INACTIVITY_DURATION = 3 * 1000L
 
         private val EXPOSURE_LEVEL_FORMATTER = DecimalFormat("+#;-#")
     }
