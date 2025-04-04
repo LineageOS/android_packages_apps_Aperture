@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8d6acd14_9ea3d55a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 19282
+      },
+      "writtenOn": "2025-04-04T19:15:18Z",
+      "side": 1,
+      "message": "Uploaded in WIP state as I am looking for feedback if this is something we want.",
+      "revId": "cab87a7d2228c5a845074495198837d46879d5f4",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
