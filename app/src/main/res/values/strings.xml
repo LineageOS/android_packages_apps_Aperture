@@ -192,6 +192,10 @@
     <string name="shortcut_video">Take a video</string>
     <string name="shortcut_qr">Scan a barcode</string>
 
+    <!-- Inactivity dialog -->
+    <string name="inactivity_dialog_title">App closing due inactivity</string>
+    <string name="inactivity_dialog_message">Camera has been idle for quite a while and will close soon. Do you wish to exit now?</string>
+
     <!-- Location permissions dialog -->
     <string name="location_permission_dialog_title">Add photo and video locations</string>
     <string name="location_permission_dialog_description">Map your memories by including location metadata with each capture.</string>
