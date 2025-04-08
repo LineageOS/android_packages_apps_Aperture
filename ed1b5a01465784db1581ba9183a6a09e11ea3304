@@ -67,6 +67,24 @@
       "message": "Old CameraController isn\u0027t being free\u0027d up?",
       "revId": "ed1b5a01465784db1581ba9183a6a09e11ea3304",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be290662_4bddc3b5",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 31604
+      },
+      "writtenOn": "2025-04-08T13:56:12Z",
+      "side": 1,
+      "message": "`prepareCameraController` is called from two places:\n- `onCreate`, at which point this value has never been assigned (lateinit var) so there is nothing to free, and we can\u0027t check it either if it was never assigned.\n- `bindCameraUseCases`, which always unbinds the old camera before calling this.",
+      "parentUuid": "fd2bff36_3f3ccd14",
+      "revId": "ed1b5a01465784db1581ba9183a6a09e11ea3304",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
