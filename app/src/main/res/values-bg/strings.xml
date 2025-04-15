@@ -32,11 +32,12 @@
     <string name="mic_off">Микрофон изключен</string>
     <string name="mic_on">Микрофон включен</string>
     <string name="settings">НАСТРОЙКИ</string>
-    <string name="app_permissions_toast">Няма позволение от портебителя.</string>
+    <string name="app_permissions_toast">Няма позволение от потребителя.</string>
     <string name="camcorder_unsupported_toast">Камерата не поддържа видеозапис</string>
     <string name="qr_copy_description">Копиране в клипборда</string>
     <string name="qr_icon_description">Икона</string>
     <string name="qr_share_description">Сподели</string>
+    <string name="qr_share_with_action">Споделяне чрез</string>
     <string name="qr_no_app_available_for_action">Няма налично приложение, което да изпълни действието</string>
     <string name="qr_address_title">Добави контакт</string>
     <string name="qr_address_content_description">Добави контакт</string>

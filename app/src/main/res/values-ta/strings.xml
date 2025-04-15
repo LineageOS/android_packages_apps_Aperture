@@ -81,7 +81,7 @@
     <string name="shutter_sound_summary">படம்பிடிக்கும்போது ஒலியை இயக்குக</string>
     <string name="leveler_title">நிலைமானி</string>
     <string name="leveler_summary">கருவி நோக்குநிலை காண்பிக்கும் காட்டி</string>
-    <string name="gestures_title">சைகைகள்</string>
+    <string name="gestures_title">மெய்ப்பாடுகள்</string>
     <string name="single_buttons_title">ஒற்றைப் பொத்தான்</string>
     <string name="camera_button_action_title">படமிப் பொத்தான் செயல்</string>
     <string name="focus_button_action_title">குவிநிலைப் பொத்தான் செயல்</string>
