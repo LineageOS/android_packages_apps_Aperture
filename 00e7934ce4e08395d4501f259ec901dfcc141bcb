@@ -70,6 +70,24 @@
       "parentUuid": "0afe07ab_3ba54802",
       "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcf49287_36ae5e1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-04-16T16:30:52Z",
+      "side": 1,
+      "message": "Not my problem, find a better SoC vendor to work with\n\nThis also means no 60FPS recording on all the other third party apps like Instagram and Snapchat? Imagine buying such device lol",
+      "parentUuid": "bcb57e77_8f68a78c",
+      "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
