@@ -88,6 +88,24 @@
       "parentUuid": "bcb57e77_8f68a78c",
       "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc06b520_4324b45a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 24442
+      },
+      "writtenOn": "2025-04-16T17:05:05Z",
+      "side": 1,
+      "message": "Yeah that’s how MediaTek works since years sadly and we can’t really do much about it right now. I’m fine with this staying -2 due to the reasons you explained earlier.",
+      "parentUuid": "bcf49287_36ae5e1d",
+      "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
