@@ -16,6 +16,24 @@
       "message": "no.",
       "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b8978e0e_f78b7c70",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 24442
+      },
+      "writtenOn": "2025-04-16T16:09:00Z",
+      "side": 1,
+      "message": "Mind to elaborate instead of just saying no",
+      "parentUuid": "a5d5bf08_28b14bc8",
+      "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
