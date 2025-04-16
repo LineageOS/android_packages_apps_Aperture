@@ -52,6 +52,24 @@
       "parentUuid": "b8978e0e_f78b7c70",
       "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bcb57e77_8f68a78c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 24442
+      },
+      "writtenOn": "2025-04-16T16:21:11Z",
+      "side": 1,
+      "message": "But here’s the thing, MediaTek based devices can’t. The camera stack is proprietary, radically different from what AOSP provides for the camera provider impl and service + OEMs add their own changes over it. That fix wouldn’t exist if we could fix our libraries",
+      "parentUuid": "0afe07ab_3ba54802",
+      "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
