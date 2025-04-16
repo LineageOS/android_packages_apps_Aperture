@@ -34,6 +34,24 @@
       "parentUuid": "a5d5bf08_28b14bc8",
       "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0afe07ab_3ba54802",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-04-16T16:12:53Z",
+      "side": 1,
+      "message": "We\u0027ll never add OEM/ODM/vendor specific params, that\u0027s also why Snap died\n\nFix your camera libraries, not here",
+      "parentUuid": "b8978e0e_f78b7c70",
+      "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
