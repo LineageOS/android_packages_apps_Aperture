@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10e30304_b56074c8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-04-21T18:15:20Z",
+      "side": 1,
+      "message": "Looks fine to me, @seba@sebaubuntu.dev up to you",
+      "revId": "08fb4e0fe28828c6b75526eb3b198092aea86e05",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
