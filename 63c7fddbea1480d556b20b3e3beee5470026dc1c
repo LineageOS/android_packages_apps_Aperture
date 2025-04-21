@@ -16,6 +16,23 @@
       "message": "yep works",
       "revId": "63c7fddbea1480d556b20b3e3beee5470026dc1c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e02ae88_3ba6cff1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2025-04-21T18:28:33Z",
+      "side": 1,
+      "message": "can you not +1 random changes that are already merged?",
+      "revId": "63c7fddbea1480d556b20b3e3beee5470026dc1c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": []
