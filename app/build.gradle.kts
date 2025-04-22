@@ -107,6 +107,7 @@ configure<GenerateBpPluginExtension> {
             module.group == "com.google.code.findbugs" -> true
             module.group == "com.google.errorprone" -> true
             module.group == "com.google.guava" -> true
+            module.group == "org.jspecify" -> true
             module.group == "junit" -> true
             else -> false
         }
