@@ -1121,13 +1121,13 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             effectButton.setCompoundDrawablesWithIntrinsicBounds(
                 0,
                 when (photoEffect) {
-                    ExtensionMode.NONE -> R.drawable.ic_blur_off
+                    ExtensionMode.NONE -> R.drawable.ic_extension_off
                     ExtensionMode.BOKEH -> R.drawable.ic_effect_bokeh
                     ExtensionMode.HDR -> R.drawable.ic_hdr_on
                     ExtensionMode.NIGHT -> R.drawable.ic_clear_night
                     ExtensionMode.FACE_RETOUCH -> R.drawable.ic_face_retouching_natural
                     ExtensionMode.AUTO -> R.drawable.ic_hdr_auto
-                    else -> R.drawable.ic_blur_off
+                    else -> R.drawable.ic_extension_off
                 },
                 0,
                 0
