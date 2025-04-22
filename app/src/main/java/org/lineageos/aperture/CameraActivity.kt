@@ -33,6 +33,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.GestureDetector
 import android.view.KeyEvent
+import android.view.Menu
 import android.view.MotionEvent
 import android.view.OrientationEventListener
 import android.view.ViewGroup
@@ -47,6 +48,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.camera.camera2.interop.CaptureRequestOptions
 import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.camera.core.AspectRatio
@@ -712,7 +714,37 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         videoQualityButton.setOnClickListener { cycleVideoQuality() }
         videoFrameRateButton.setOnClickListener { cycleVideoFrameRate() }
         videoDynamicRangeButton.setOnClickListener { cycleVideoDynamicRange() }
-        effectButton.setOnClickListener { cyclePhotoEffects() }
+        effectButton.setOnClickListener { view ->
+            // If we have NONE and at least one other mode, show a popup menu
+            // Otherwise cycle through the modes
+            if (camera.supportedExtensionModes.size > 1) {
+                cyclePhotoEffects()
+                return@setOnClickListener
+            }
+
+            val popupMenu = PopupMenu(this, view)
+
+            camera.supportedExtensionModes.forEachIndexed { i, mode ->
+                when (mode) {
+                    ExtensionMode.NONE -> R.string.effect_none_dropdown
+                    ExtensionMode.BOKEH -> R.string.effect_bokeh_dropdown
+                    ExtensionMode.HDR -> R.string.effect_hdr_dropdown
+                    ExtensionMode.NIGHT -> R.string.effect_night_dropdown
+                    ExtensionMode.FACE_RETOUCH -> R.string.effect_face_retouch_dropdown
+                    ExtensionMode.AUTO -> R.string.effect_auto_dropdown
+                    else -> null
+                }?.let { stringId ->
+                    popupMenu.menu.add(Menu.NONE, i, Menu.NONE, stringId)
+                }
+            }
+
+            popupMenu.setOnMenuItemClickListener { item ->
+                applyPhotoEffects(camera.supportedExtensionModes[item.itemId])
+                true
+            }
+
+            popupMenu.show()
+        }
         gridButton.setOnClickListener { cycleGridMode() }
         timerButton.setOnClickListener { toggleTimerMode() }
         micButton.setOnClickListener { toggleMicrophoneMode() }
@@ -2109,21 +2141,27 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
      * Cycle between supported photo camera effects
      */
     private fun cyclePhotoEffects() {
+        val currentExtensionMode = photoEffect
+        camera.supportedExtensionModes.next(currentExtensionMode)?.takeUnless {
+            it == currentExtensionMode
+        }?.let {
+            applyPhotoEffects(it)
+        }
+    }
+
+    /**
+     * Apply requested photo effect
+     */
+    private fun applyPhotoEffects(mode: Int) {
         if (!canRestartCamera()) {
             return
         }
 
-        val currentExtensionMode = photoEffect
+        photoEffect = mode
 
-        camera.supportedExtensionModes.next(currentExtensionMode)?.takeUnless {
-            it == currentExtensionMode
-        }?.let {
-            photoEffect = it
+        sharedPreferences.photoEffect = mode
 
-            sharedPreferences.photoEffect = it
-
-            bindCameraUseCases()
-        }
+        bindCameraUseCases()
     }
 
     private fun setBrightScreen(brightScreen: Boolean) {

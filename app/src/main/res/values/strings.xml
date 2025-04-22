@@ -43,6 +43,13 @@
     <string name="effect_face_retouch">FACE RETOUCH</string>
     <string name="effect_auto">AUTO</string>
 
+    <string name="effect_none_dropdown">None</string>
+    <string name="effect_bokeh_dropdown" translatable="true">Bokeh</string>
+    <string name="effect_hdr_dropdown" translatable="true">HDR</string>
+    <string name="effect_night_dropdown">Night</string>
+    <string name="effect_face_retouch_dropdown">Face retouch</string>
+    <string name="effect_auto_dropdown">Auto</string>
+
     <string name="grid_off">GRID OFF</string>
     <string name="grid_on_3">GRID 3x3</string>
     <string name="grid_on_4">GRID 4x4</string>
