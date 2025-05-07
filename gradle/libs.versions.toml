@@ -8,8 +8,7 @@ agp = "8.8.1"
 kotlin = "1.9.23"
 activity = "1.9.2"
 appcompat = "1.7.0"
-camera = "1.5.0-alpha06"
-camera-viewfinder = "1.4.0-alpha13"
+camera = "1.5.0-beta01"
 coil = "3.0.4"
 constraintlayout = "2.1.4"
 core = "1.13.1"
@@ -32,7 +31,7 @@ androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensi
 androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camera" }
 androidx-camera-video = { group = "androidx.camera", name = "camera-video", version.ref = "camera" }
 androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "camera" }
-androidx-camera-viewfinder-core = { group = "androidx.camera.viewfinder", name = "viewfinder-core", version.ref = "camera-viewfinder" }
+androidx-camera-viewfinder-core = { group = "androidx.camera.viewfinder", name = "viewfinder-core", version.ref = "camera" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core" }
 androidx-exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterface" }
