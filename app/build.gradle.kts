@@ -69,7 +69,10 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.video)
     implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.camera.viewfinder.core)
+    implementation(libs.androidx.camera.viewfinder.core) {
+        // Invisible in AOSP, we get it via kotlinx.coroutines anyway
+        exclude("org.jetbrains.kotlinx", "atomicfu")
+    }
     implementation(libs.androidx.camera.extensions)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
