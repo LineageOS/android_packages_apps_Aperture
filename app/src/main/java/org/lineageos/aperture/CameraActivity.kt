@@ -2603,7 +2603,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             return@let true
         }
 
-        when (sharedPreferences.getHardwareKeyAction(hardwareKey)) {
+        when (gestureAction) {
             GestureAction.SHUTTER -> {
                 if (cameraMode != CameraMode.QR && shutterButton.isEnabled) {
                     shutterButton.performClick()
