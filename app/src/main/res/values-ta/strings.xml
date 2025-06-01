@@ -107,7 +107,7 @@
     <string name="processing_title">செயலாக்குதல்</string>
     <string name="processing_info">ஒளிப்படப் பயன்முறையில் ZSL முறை பயன்படுத்தப்படும்போது, ​​இயல்புநிலை மதிப்புகளும், இல்லா மதிப்புகளும் கருத்தில் கொள்ளப்படும். நிகழ்படப் பயன்முறையில் இயல்புநிலை மதிப்புகளும், இல்லா மதிப்புகளும், விரைவு மதிப்புகளும் கருத்தில் கொள்ளப்படும்.</string>
     <string name="edge_mode_title">கூர்மையாக்கல்</string>
-    <string name="edge_mode_summary">விளிம்பு மேம்பாடு பிடிக்கப்பட்ட படத்தில் கூர்மை,  விளக்கம் ஆகியவற்றைப் மேம்படுத்துகிறது.</string>
+    <string name="edge_mode_summary">விளிம்பு மேம்பாடு பிடிக்கப்பட்ட படத்தில் கூர்மை, விளக்கம் ஆகியவற்றை மேம்படுத்துகிறது.</string>
     <string name="edge_mode_default">இயல்புநிலை</string>
     <string name="edge_mode_off">நிறுத்தம்</string>
     <string name="edge_mode_fast">விரைவு</string>
