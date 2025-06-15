@@ -37,6 +37,7 @@
     <string name="qr_copy_description">複製到剪貼簿</string>
     <string name="qr_icon_description">圖示</string>
     <string name="qr_share_description">分享</string>
+    <string name="qr_share_with_action">分享至</string>
     <string name="qr_no_app_available_for_action">沒有應用程式可處理此動作</string>
     <string name="qr_address_title">新增聯絡人</string>
     <string name="qr_address_content_description">新增聯絡人</string>
@@ -81,6 +82,7 @@
     <string name="leveler_title">水平線</string>
     <string name="leveler_summary">顯示裝置方向的指示器</string>
     <string name="gestures_title">手勢</string>
+    <string name="single_buttons_title">單一按鈕</string>
     <string name="camera_button_action_title">相機鍵操作</string>
     <string name="focus_button_action_title">專注模式鍵操作</string>
     <string name="mute_button_action_title">靜音鍵操作</string>
