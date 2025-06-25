@@ -88,6 +88,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "2da4df3b_019a8732",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 27072
+      },
+      "writtenOn": "2025-06-25T18:37:03Z",
+      "side": 1,
+      "message": "Works on onclite (tested by backported this to 21.0), fixed the rotated images/videos issue (couldn\u0027t reproduce the FP4 CalyxOS user issue I linked above no matter what I tried), fixed front camera screen flash issue too (previously I couldn\u0027t take a picture using the front camera if the screen flash was enabled and i went to the camera settings or gallery and then back to the camera).",
+      "revId": "ed1b5a01465784db1581ba9183a6a09e11ea3304",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fd2bff36_3f3ccd14",
         "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
         "patchSetId": 1
