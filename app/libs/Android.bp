@@ -7,7 +7,7 @@
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-camera2",
-    aars: ["androidx/camera/camera-camera2/1.5.0-beta01/camera-camera2-1.5.0-beta01.aar"],
+    aars: ["androidx/camera/camera-camera2/1.5.0-beta02/camera-camera2-1.5.0-beta02.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -15,6 +15,7 @@ android_library_import {
         "//apex_available:anyapex",
     ],
     static_libs: [
+        "Aperture_androidx.camera.featurecombinationquery_featurecombinationquery",
         "Aperture_androidx.camera_camera-core",
         "Aperture_org.jspecify_jspecify",
         "androidx.annotation_annotation",
@@ -32,7 +33,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-core",
-    aars: ["androidx/camera/camera-core/1.5.0-beta01/camera-core-1.5.0-beta01.aar"],
+    aars: ["androidx/camera/camera-core/1.5.0-beta02/camera-core-1.5.0-beta02.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -63,7 +64,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-extensions",
-    aars: ["androidx/camera/camera-extensions/1.5.0-beta01/camera-extensions-1.5.0-beta01.aar"],
+    aars: ["androidx/camera/camera-extensions/1.5.0-beta02/camera-extensions-1.5.0-beta02.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -86,7 +87,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-lifecycle",
-    aars: ["androidx/camera/camera-lifecycle/1.5.0-beta01/camera-lifecycle-1.5.0-beta01.aar"],
+    aars: ["androidx/camera/camera-lifecycle/1.5.0-beta02/camera-lifecycle-1.5.0-beta02.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -111,7 +112,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-video",
-    aars: ["androidx/camera/camera-video/1.5.0-beta01/camera-video-1.5.0-beta01.aar"],
+    aars: ["androidx/camera/camera-video/1.5.0-beta02/camera-video-1.5.0-beta02.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -125,15 +126,17 @@ android_library_import {
         "androidx.annotation_annotation-experimental",
         "androidx.arch.core_core-common",
         "androidx.concurrent_concurrent-futures",
+        "androidx.concurrent_concurrent-futures-ktx",
         "androidx.core_core",
         "auto_value_annotations",
         "guava",
+        "kotlinx-coroutines-android",
     ],
 }
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-view",
-    aars: ["androidx/camera/camera-view/1.5.0-beta01/camera-view-1.5.0-beta01.aar"],
+    aars: ["androidx/camera/camera-view/1.5.0-beta02/camera-view-1.5.0-beta02.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -161,8 +164,24 @@ android_library_import {
 }
 
 android_library_import {
+    name: "Aperture_androidx.camera.featurecombinationquery_featurecombinationquery",
+    aars: ["androidx/camera/featurecombinationquery/featurecombinationquery/1.5.0-beta02/featurecombinationquery-1.5.0-beta02.aar"],
+    sdk_version: "35",
+    min_sdk_version: "26",
+    apex_available: [
+        "//apex_available:platform",
+        "//apex_available:anyapex",
+    ],
+    static_libs: [
+        "Aperture_org.jspecify_jspecify",
+        "androidx.annotation_annotation",
+        "auto_value_annotations",
+    ],
+}
+
+android_library_import {
     name: "Aperture_androidx.camera.viewfinder_viewfinder-core",
-    aars: ["androidx/camera/viewfinder/viewfinder-core/1.5.0-beta01/viewfinder-core-1.5.0-beta01.aar"],
+    aars: ["androidx/camera/viewfinder/viewfinder-core/1.5.0-beta02/viewfinder-core-1.5.0-beta02.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -171,15 +190,9 @@ android_library_import {
     ],
     static_libs: [
         "androidx.annotation_annotation",
-        "androidx.annotation_annotation-experimental",
-        "androidx.appcompat_appcompat",
-        "androidx.concurrent_concurrent-futures",
-        "androidx.concurrent_concurrent-futures-ktx",
         "androidx.core_core",
-        "androidx.test.espresso.idling-resource",
         "androidx.tracing_tracing-ktx",
         "auto_value_annotations",
-        "guava",
         "kotlinx-coroutines-android",
         "kotlinx-coroutines-core",
     ],
