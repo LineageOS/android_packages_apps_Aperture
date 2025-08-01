@@ -74,7 +74,7 @@
     <string name="advanced_header">Qabaqcıl</string>
     <string name="bright_screen_title">Parlaq ekran</string>
     <string name="bright_screen_summary" formatted="false">Parlaqlığı 100%-ə kilidləyir</string>
-    <string name="save_location_title">Yer məlumatını saxla</string>
+    <string name="save_location_title">Yer verilərini saxla</string>
     <string name="save_location_summary">Metadataya GPS yerini daxil et</string>
     <string name="save_location_toast">İstifadəçi tərəfindən verilməyən yerləşmə icazələri.</string>
     <string name="shutter_sound_title">Çəkiliş səsi</string>
@@ -120,7 +120,7 @@
     <string name="noise_reduction_mode_high_quality">Yüksək keyfiyyət</string>
     <string name="noise_reduction_mode_minimal">Minimal</string>
     <string name="shading_mode_title">Vinyet düzəltmə</string>
-    <string name="shading_mode_summary">Təsvir datasına tətbiq edilən linza kölgəsi keyfiyyətinin düzəldilməsi.</string>
+    <string name="shading_mode_summary">Təsvir verisinə tətbiq edilən linza kölgəsi keyfiyyətinin düzəldilməsi.</string>
     <string name="shading_mode_default">İlkin</string>
     <string name="shading_mode_off">Bağlı</string>
     <string name="shading_mode_fast">Sürətli</string>
@@ -147,7 +147,7 @@
     <string name="shortcut_video">Video çək</string>
     <string name="shortcut_qr">Barkod skan et</string>
     <string name="location_permission_dialog_title">Foto və video yeri əlavə et</string>
-    <string name="location_permission_dialog_description">Hər çəkilişə yerləşmənin meta məlumatlarını daxil edərək xatirələrinizi xəritələndirin.</string>
+    <string name="location_permission_dialog_description">Hər çəkilişə yer meta verilərini daxil edərək xatirələrinizi xəritələndirin.</string>
     <string name="location_permission_dialog_later">Daha sonra</string>
     <string name="location_permission_dialog_turn_on">İşə sal</string>
     <string name="error_max_cameras_in_use">Maksimum açıq kamera sayına çatıldı, cihazın kameralarını istifadə edərək digər tətbiqləri bağlamağa çalışın.</string>
