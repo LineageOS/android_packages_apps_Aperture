@@ -104,7 +104,7 @@
     <string name="video_stabilization_title">Bật tính năng ổn định video</string>
     <string name="video_stabilization_summary">Nếu khả dụng, hãy bật tính năng ổn định video để giảm rung máy ảnh trong khi quay</string>
     <string name="video_mirror_mode_title">Bật phản chiếu video</string>
-    <string name="processing_title">Đang xử lý</string>
+    <string name="processing_title">Xử lý ảnh</string>
     <string name="processing_info">Trong chế độ ảnh, khi sử dụng chế độ ZSL, chỉ các giá trị mặc định và tắt sẽ được xem xét. Đối với chế độ video, chỉ các giá trị mặc định, tắt và nhanh sẽ được xem xét.</string>
     <string name="edge_mode_title">Làm sắc nét</string>
     <string name="edge_mode_summary">Mở rộng phần viền giúp tăng độ sắc nét và chi tiết trong hình ảnh đã chụp.</string>
