@@ -36,6 +36,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e8c6861_1b2bb3c2",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T02:01:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8ebcbc2_91e9b4ac",
+      "revId": "15e3265c7e4c70558650832e3124f4e5ca3d1bec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e1043631_6b679c28",
@@ -67,6 +85,24 @@
       "side": 1,
       "message": "There isn\u0027t a method to do that it seems?",
       "parentUuid": "e1043631_6b679c28",
+      "revId": "15e3265c7e4c70558650832e3124f4e5ca3d1bec",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "256c02c9_d2dec849",
+        "filename": "app/src/main/java/org/lineageos/aperture/viewmodels/CameraViewModel.kt",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T02:01:51Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "09cbdff5_e1cf15ae",
       "revId": "15e3265c7e4c70558650832e3124f4e5ca3d1bec",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
