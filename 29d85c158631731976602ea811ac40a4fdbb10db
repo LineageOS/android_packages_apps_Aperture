@@ -24,6 +24,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a02fa98e_a168956f",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/Camera.kt",
+        "patchSetId": 36
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T22:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fb9591d_7913e945",
+      "range": {
+        "startLine": 123,
+        "startChar": 29,
+        "endLine": 123,
+        "endChar": 37
+      },
+      "revId": "29d85c158631731976602ea811ac40a4fdbb10db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9d402f7e_45a1b4f6",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-08-24T19:09:44Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 139,
+        "startChar": 39,
+        "endLine": 139,
+        "endChar": 47
+      },
+      "revId": "29d85c158631731976602ea811ac40a4fdbb10db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de36c053_01236203",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/Camera.kt",
+        "patchSetId": 36
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T22:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d402f7e_45a1b4f6",
       "range": {
         "startLine": 139,
         "startChar": 39,
@@ -70,6 +118,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ddcdddce_cbd562a1",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/Camera.kt",
+        "patchSetId": 36
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T22:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe9a0c67_83ba033e",
+      "range": {
+        "startLine": 160,
+        "startChar": 32,
+        "endLine": 160,
+        "endChar": 40
+      },
+      "revId": "29d85c158631731976602ea811ac40a4fdbb10db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7aa0e3c5_b0823e3a",
@@ -83,6 +155,30 @@
       "writtenOn": "2025-08-24T19:09:44Z",
       "side": 1,
       "message": ".",
+      "range": {
+        "startLine": 175,
+        "startChar": 50,
+        "endLine": 175,
+        "endChar": 58
+      },
+      "revId": "29d85c158631731976602ea811ac40a4fdbb10db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f17018b8_dc96b1f7",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/Camera.kt",
+        "patchSetId": 36
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T22:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aa0e3c5_b0823e3a",
       "range": {
         "startLine": 175,
         "startChar": 50,
@@ -116,6 +212,30 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e828da65_83a1b128",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/Camera.kt",
+        "patchSetId": 36
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T22:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "910daaa4_adf7dacd",
+      "range": {
+        "startLine": 196,
+        "startChar": 45,
+        "endLine": 196,
+        "endChar": 53
+      },
+      "revId": "29d85c158631731976602ea811ac40a4fdbb10db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c810c725_0dabb195",
@@ -129,6 +249,30 @@
       "writtenOn": "2025-08-24T19:09:44Z",
       "side": 1,
       "message": ".",
+      "range": {
+        "startLine": 219,
+        "startChar": 33,
+        "endLine": 219,
+        "endChar": 41
+      },
+      "revId": "29d85c158631731976602ea811ac40a4fdbb10db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6915e19d_049e032b",
+        "filename": "app/src/main/java/org/lineageos/aperture/camera/Camera.kt",
+        "patchSetId": 36
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T22:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c810c725_0dabb195",
       "range": {
         "startLine": 219,
         "startChar": 33,
@@ -173,6 +317,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "598deb7d_0a65dee1",
+        "filename": "app/src/main/java/org/lineageos/aperture/repositories/OverlaysRepository.kt",
+        "patchSetId": 36
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T22:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d563bb8_caff601d",
+      "revId": "29d85c158631731976602ea811ac40a4fdbb10db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "926c66d6_d77e603c",
@@ -186,6 +348,24 @@
       "writtenOn": "2025-08-24T19:09:44Z",
       "side": 1,
       "message": ".",
+      "revId": "29d85c158631731976602ea811ac40a4fdbb10db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "073cced4_8dc1631a",
+        "filename": "app/src/main/java/org/lineageos/aperture/repositories/OverlaysRepository.kt",
+        "patchSetId": 36
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T22:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "926c66d6_d77e603c",
       "revId": "29d85c158631731976602ea811ac40a4fdbb10db",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
