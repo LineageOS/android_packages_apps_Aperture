@@ -300,6 +300,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "96c707c8_52a061e7",
+        "filename": "app/src/main/java/org/lineageos/aperture/ext/LocationManager.kt",
+        "patchSetId": 36
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T22:52:52Z",
+      "side": 1,
+      "message": "Done, I think",
+      "parentUuid": "b0851a4b_567335d5",
+      "revId": "29d85c158631731976602ea811ac40a4fdbb10db",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2d563bb8_caff601d",

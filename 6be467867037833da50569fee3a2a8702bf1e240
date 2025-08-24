@@ -16,6 +16,24 @@
       "message": "Why those changes?",
       "revId": "6be467867037833da50569fee3a2a8702bf1e240",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7c80600b_3eabedea",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 36
+      },
+      "lineNbr": 2173,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-08-24T22:52:52Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "8b8c12a7_aec3777b",
+      "revId": "6be467867037833da50569fee3a2a8702bf1e240",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
