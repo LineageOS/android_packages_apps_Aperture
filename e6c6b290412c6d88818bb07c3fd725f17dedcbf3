@@ -34,6 +34,24 @@
       "parentUuid": "48f55e9b_8cf9dd18",
       "revId": "e6c6b290412c6d88818bb07c3fd725f17dedcbf3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "35eafa04_23ccad5f",
+        "filename": "app/src/main/java/org/lineageos/aperture/qr/QrImageAnalyzer.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-09-02T10:28:59Z",
+      "side": 1,
+      "message": "It\u0027s set to null in `dismissResult()`, which is called once the dialog is dismissed\n\nWe could keep processing frames even when the dialog is open (the dialog won\u0027t accept the new result), but it heats up the phone for me, so it might be worth to halt the processing",
+      "parentUuid": "ed7f4057_e3c7703b",
+      "revId": "e6c6b290412c6d88818bb07c3fd725f17dedcbf3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
