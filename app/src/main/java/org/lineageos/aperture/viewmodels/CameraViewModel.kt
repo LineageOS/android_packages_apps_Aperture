@@ -41,6 +41,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -49,6 +50,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -71,12 +73,12 @@ import org.lineageos.aperture.models.CameraState
 import org.lineageos.aperture.models.ColorCorrectionAberrationMode
 import org.lineageos.aperture.models.DistortionCorrectionMode
 import org.lineageos.aperture.models.EdgeMode
+import org.lineageos.aperture.models.Event
 import org.lineageos.aperture.models.FlashMode
 import org.lineageos.aperture.models.GridMode
 import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.models.HotPixelMode
 import org.lineageos.aperture.models.NoiseReductionMode
-import org.lineageos.aperture.models.PhotoCaptureEvent
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.models.ShadingMode
 import org.lineageos.aperture.models.TimerMode
@@ -146,6 +148,16 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      * QR image analyzer.
      */
     val qrImageAnalyzer = QrImageAnalyzer(applicationContext, viewModelScope)
+
+    /**
+     * Do not emit here directly, use [emitEvent].
+     */
+    private val _event = MutableSharedFlow<Event>()
+
+    /**
+     * Events.
+     */
+    val event = _event.asSharedFlow()
 
     /**
      * The list of [Camera]s to use for cycling.
@@ -245,6 +257,19 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         )
 
     /**
+     * Flow used for camera mode animations.
+     */
+    val cameraModeTransition = cameraMode
+        .runningFold(null as CameraMode? to cameraMode.value) { acc, value ->
+            acc.second to value
+        }
+        .flowOn(Dispatchers.IO)
+        .shareIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+        )
+
+    /**
      * Pair of active camera to the available cameras.
      */
     val lenses = combine(
@@ -334,16 +359,6 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      * Whether force torch mode should be enabled.
      */
     private val forceTorch = MutableStateFlow(false)
-
-    /**
-     * Whether the force torch introduction has already been acknowledged.
-     */
-    val forceTorchHelpShown = preferencesRepository.forceTorchHelpShown
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = preferencesRepository.forceTorchHelpShown.value,
-        )
 
     /**
      * The user selected flash mode.
@@ -653,8 +668,6 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                 cameraConfiguration.camera.supportedExtensionModes.size > 1
     }
 
-    val photoCaptureEvent = MutableSharedFlow<PhotoCaptureEvent>()
-
     // Video
 
     /**
@@ -934,22 +947,18 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             ContextCompat.getMainExecutor(applicationContext),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onCaptureStarted() {
-                    viewModelScope.launch {
-                        photoCaptureEvent.emit(PhotoCaptureEvent.CaptureStarted)
-                    }
+                    emitEvent(Event.PhotoCaptureStatus.CaptureStarted)
 
                     cameraSoundsUtils.playShutterClick()
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    viewModelScope.launch {
-                        photoCaptureEvent.emit(
-                            PhotoCaptureEvent.ImageSaved(
-                                output,
-                                photoOutputStream,
-                            )
+                    emitEvent(
+                        Event.PhotoCaptureStatus.ImageSaved(
+                            output,
+                            photoOutputStream,
                         )
-                    }
+                    )
 
                     Log.d(LOG_TAG, "Photo capture succeeded: ${output.savedUri}")
                     cameraState.value = CameraState.IDLE
@@ -961,9 +970,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                 }
 
                 override fun onError(exc: ImageCaptureException) {
-                    viewModelScope.launch {
-                        photoCaptureEvent.emit(PhotoCaptureEvent.Error(exc))
-                    }
+                    emitEvent(Event.PhotoCaptureStatus.Error(exc))
 
                     Log.e(LOG_TAG, "Photo capture failed", exc)
                     cameraState.value = CameraState.IDLE
@@ -1084,6 +1091,8 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
 
         preferencesRepository.lastCameraFacing.value = camera.cameraFacing
 
+        emitEvent(Event.FlipCameraAnimation)
+
         createInitialCameraConfiguration(
             camera = camera,
             cameraMode = cameraConfiguration.cameraMode,
@@ -1169,6 +1178,16 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                         }
                     }
                 }
+            }
+        }
+
+        // Check if we should show the force torch suggestion
+        if (!preferencesRepository.forceTorchHelpShown.value) {
+            if (forceTorch) {
+                // The user figured it out by themself
+                preferencesRepository.forceTorchHelpShown.value = true
+            } else {
+                emitEvent(Event.ShowForceTorchHelp)
             }
         }
 
@@ -1511,6 +1530,13 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             }
         },
     )
+
+    /**
+     * Emit a new event to let the activity handle it.
+     */
+    private fun emitEvent(event: Event) = viewModelScope.launch {
+        _event.emit(event)
+    }
 
     /**
      * Get a suitable [Camera] for the provided [CameraFacing] and the current [CameraMode].

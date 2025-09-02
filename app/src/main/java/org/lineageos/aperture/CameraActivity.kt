@@ -105,6 +105,7 @@ import org.lineageos.aperture.models.CameraConfiguration
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.CameraState
+import org.lineageos.aperture.models.Event
 import org.lineageos.aperture.models.FlashMode
 import org.lineageos.aperture.models.GestureAction
 import org.lineageos.aperture.models.GridMode
@@ -112,7 +113,6 @@ import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.models.MediaType
 import org.lineageos.aperture.models.Permission
 import org.lineageos.aperture.models.PermissionState
-import org.lineageos.aperture.models.PhotoCaptureEvent
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.models.TimerMode
 import org.lineageos.aperture.models.VideoMirrorMode
@@ -457,8 +457,8 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         proButton.setOnClickListener {
             secondaryTopBarLayout.slide()
         }
-        flashButton.setOnClickListener { cycleFlashMode(false) }
-        flashButton.setOnLongClickListener { cycleFlashMode(true) }
+        flashButton.setOnClickListener { viewModel.cycleFlashMode(false) }
+        flashButton.setOnLongClickListener { viewModel.cycleFlashMode(true) }
 
         // Attach CameraController to PreviewView
         viewFinder.controller = viewModel.cameraController
@@ -524,7 +524,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         // Set primary bar button callbacks
-        flipCameraButton.setOnClickListener { flipCamera() }
+        flipCameraButton.setOnClickListener { viewModel.flipCamera() }
         googleLensButton.setOnClickListener {
             dismissKeyguardAndRun {
                 GoogleLensUtils.launchGoogleLens(this)
@@ -533,13 +533,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         videoRecordingStateButton.setOnClickListener {
             viewModel.onVideoRecordingStateButtonPress()
-        }
-
-        // Initialize shutter drawable
-        when (viewModel.cameraMode.value) {
-            CameraMode.PHOTO -> startShutterAnimation(ShutterAnimation.InitPhoto)
-            CameraMode.VIDEO -> startShutterAnimation(ShutterAnimation.InitVideo)
-            else -> {}
         }
 
         shutterButton.setOnClickListener {
@@ -598,7 +591,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         // Set mode selector callback
         cameraModeSelectorLayout.onModeSelectedCallback = {
-            changeCameraMode(it)
+            viewModel.setCameraMode(it)
         }
 
         // Bind viewfinder and preview blur view
@@ -682,6 +675,53 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
     private fun CoroutineScope.loadData() {
         launch {
+            viewModel.event.collect { event ->
+                when (event) {
+                    is Event.NoCamera -> noCamera()
+
+                    is Event.ShowForceTorchHelp -> if (!forceTorchSnackbar.isShownOrQueued) {
+                        forceTorchSnackbar.show()
+                    }
+
+                    is Event.FlipCameraAnimation ->
+                        (flipCameraButton.drawable as AnimatedVectorDrawable).start()
+
+                    is Event.PhotoCaptureStatus -> when (event) {
+                        is Event.PhotoCaptureStatus.CaptureStarted -> {
+                            viewFinder.foreground = ColorDrawable(Color.BLACK)
+                            ValueAnimator.ofInt(0, 255, 0).apply {
+                                addUpdateListener { anim ->
+                                    viewFinder.foreground.alpha = anim.animatedValue as Int
+                                }
+                            }.start()
+                        }
+
+                        is Event.PhotoCaptureStatus.ImageSaved -> {
+                            if (!viewModel.inSingleCaptureMode.value) {
+                                onCapturedMedia(event.output.savedUri)
+                            } else {
+                                event.output.savedUri?.let {
+                                    openCapturePreview(it, MediaType.PHOTO)
+                                }
+                                event.photoOutputStream?.use {
+                                    openCapturePreview(
+                                        ByteArrayInputStream(
+                                            event.photoOutputStream.toByteArray()
+                                        )
+                                    )
+                                }
+                            }
+                        }
+
+                        is Event.PhotoCaptureStatus.Error -> {
+                            // Do nothing
+                        }
+                    }
+                }
+            }
+        }
+
+        launch {
             viewModel.cameraConfiguration.collectLatest { cameraConfiguration ->
                 bindCameraUseCases(cameraConfiguration)
             }
@@ -691,6 +731,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             viewModel.cameraMode.collectLatest { cameraMode ->
                 // Update info chip
                 infoChipView.setCameraMode(cameraMode)
+
+                // Hide secondary top bar
+                secondaryTopBarLayout.isVisible = false
 
                 // Update secondary top bar buttons
                 aspectRatioButton.isVisible = cameraMode != CameraMode.VIDEO
@@ -710,6 +753,32 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
                 // Update camera mode selector
                 cameraModeSelectorLayout.setCurrentCameraMode(cameraMode)
+            }
+        }
+
+        launch {
+            viewModel.cameraModeTransition.collectLatest { (oldCameraMode, newCameraMode) ->
+                when (oldCameraMode) {
+                    CameraMode.PHOTO -> when (newCameraMode) {
+                        CameraMode.VIDEO -> startShutterAnimation(ShutterAnimation.PhotoToVideo)
+                        else -> startShutterAnimation(ShutterAnimation.InitPhoto)
+                    }
+
+                    CameraMode.VIDEO -> when (newCameraMode) {
+                        CameraMode.PHOTO -> startShutterAnimation(ShutterAnimation.VideoToPhoto)
+                        else -> startShutterAnimation(ShutterAnimation.InitVideo)
+                    }
+
+                    CameraMode.QR -> {}
+
+                    null -> when (newCameraMode) {
+                        CameraMode.PHOTO -> startShutterAnimation(ShutterAnimation.InitPhoto)
+
+                        CameraMode.VIDEO -> startShutterAnimation(ShutterAnimation.InitVideo)
+
+                        CameraMode.QR -> {}
+                    }
+                }
             }
         }
 
@@ -1162,42 +1231,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         launch {
-            viewModel.photoCaptureEvent.collect { photoCaptureEvent ->
-                when (photoCaptureEvent) {
-                    is PhotoCaptureEvent.CaptureStarted -> {
-                        viewFinder.foreground = ColorDrawable(Color.BLACK)
-                        ValueAnimator.ofInt(0, 255, 0).apply {
-                            addUpdateListener { anim ->
-                                viewFinder.foreground.alpha = anim.animatedValue as Int
-                            }
-                        }.start()
-                    }
-
-                    is PhotoCaptureEvent.ImageSaved -> {
-                        if (!viewModel.inSingleCaptureMode.value) {
-                            onCapturedMedia(photoCaptureEvent.output.savedUri)
-                        } else {
-                            photoCaptureEvent.output.savedUri?.let {
-                                openCapturePreview(it, MediaType.PHOTO)
-                            }
-                            photoCaptureEvent.photoOutputStream?.use {
-                                openCapturePreview(
-                                    ByteArrayInputStream(
-                                        photoCaptureEvent.photoOutputStream.toByteArray()
-                                    )
-                                )
-                            }
-                        }
-                    }
-
-                    is PhotoCaptureEvent.Error -> {
-                        // Do nothing
-                    }
-                }
-            }
-        }
-
-        launch {
             viewModel.videoQuality.collectLatest { videoQuality ->
                 // Update secondary bar buttons
                 videoQualityButton.setCompoundDrawablesWithIntrinsicBounds(
@@ -1567,81 +1600,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         // Reset exposure level
         viewModel.setExposureCompensationLevel(0.5f)
-    }
-
-    /**
-     * Change the current camera mode and restarts the stream
-     */
-    private fun changeCameraMode(cameraMode: CameraMode) {
-        val currentCameraMode = viewModel.cameraMode.value
-
-        if (!viewModel.setCameraMode(cameraMode)) {
-            return
-        }
-
-        when (cameraMode) {
-            CameraMode.PHOTO -> {
-                if (currentCameraMode == CameraMode.VIDEO) {
-                    startShutterAnimation(ShutterAnimation.VideoToPhoto)
-                } else {
-                    startShutterAnimation(ShutterAnimation.InitPhoto)
-                }
-            }
-
-            CameraMode.VIDEO -> {
-                if (!viewModel.isVideoRecordingAvailable.value) {
-                    Snackbar.make(
-                        cameraModeSelectorLayout,
-                        R.string.camcorder_unsupported_toast,
-                        Snackbar.LENGTH_SHORT,
-                    ).apply {
-                        anchorView = cameraModeSelectorLayout
-                        setAction(android.R.string.ok) {
-                            // Do nothing
-                        }
-                    }.show()
-
-                    return
-                }
-
-                if (currentCameraMode == CameraMode.PHOTO) {
-                    startShutterAnimation(ShutterAnimation.PhotoToVideo)
-                } else {
-                    startShutterAnimation(ShutterAnimation.InitVideo)
-                }
-            }
-
-            else -> {}
-        }
-
-        // Hide secondary top bar
-        secondaryTopBarLayout.isVisible = false
-    }
-
-    /**
-     * Cycle between cameras
-     */
-    private fun flipCamera() {
-        if (viewModel.flipCamera()) {
-            (flipCameraButton.drawable as AnimatedVectorDrawable).start()
-        }
-    }
-
-    /**
-     * Cycle flash mode
-     * @param forceTorch Whether force torch mode should be toggled
-     * @return false if called with an unsupported configuration, true otherwise
-     */
-    private fun cycleFlashMode(forceTorch: Boolean) = viewModel.cycleFlashMode(forceTorch).also {
-        // Check if we should show the force torch suggestion
-        if (it && !viewModel.forceTorchHelpShown.value) {
-            if (forceTorch) {
-                // The user figured it out by themself
-                viewModel.setForceModeHelpShown(true)
-            } else if (!forceTorchSnackbar.isShownOrQueued) {
-                forceTorchSnackbar.show()
-            }
-        }
     }
 
     private fun updateGalleryButton(uri: Uri?, fromCapture: Boolean) {
