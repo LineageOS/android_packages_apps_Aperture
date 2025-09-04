@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -89,8 +89,6 @@ class Camera private constructor(
                 }.map { dynamicRangeToQualities -> dynamicRangeToQualities.key }.toSet()
             )
         }
-
-    val supportsVideoRecording = supportedVideoQualities.isNotEmpty()
 
     val supportedVideoStabilizationModes = buildList {
         add(VideoStabilizationMode.OFF)
@@ -233,7 +231,7 @@ class Camera private constructor(
 
     fun supportsCameraMode(cameraMode: CameraMode): Boolean {
         return when (cameraMode) {
-            CameraMode.VIDEO -> supportsVideoRecording
+            CameraMode.VIDEO -> supportedVideoQualities.isNotEmpty()
             else -> true
         }
     }

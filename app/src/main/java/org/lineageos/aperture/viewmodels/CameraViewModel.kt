@@ -162,7 +162,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     @OptIn(ExperimentalCoroutinesApi::class)
     val isVideoRecordingAvailable = cameraRepository.cameras
         .mapLatest { cameras ->
-            cameras.any { it.supportsVideoRecording }
+            cameras.any { it.supportsCameraMode(CameraMode.VIDEO) }
         }
         .flowOn(Dispatchers.IO)
         .stateIn(
@@ -270,10 +270,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         cameraMode,
     ) { cameras, camera, cameraMode ->
         camera to cameras.filter {
-            it.cameraFacing == camera.cameraFacing && when (cameraMode) {
-                CameraMode.VIDEO -> it.supportsVideoRecording
-                else -> true
-            }
+            it.cameraFacing == camera.cameraFacing && it.supportsCameraMode(cameraMode)
         }
     }
         .flowOn(Dispatchers.IO)
@@ -1097,20 +1094,14 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             return@updateConfiguration cameraConfiguration
         }
 
-        val camera = when (cameraMode) {
-            CameraMode.PHOTO -> cameraConfiguration.camera
-
-            CameraMode.VIDEO -> cameraConfiguration.camera.takeIf {
-                it.supportsVideoRecording
-            } ?: getSuitableCamera(
-                cameraMode,
-                cameraConfiguration.camera.cameraFacing,
-            ) ?: run {
-                Log.e(LOG_TAG, "No camera supports video recording")
-                return@updateConfiguration cameraConfiguration
-            }
-
-            CameraMode.QR -> cameraConfiguration.camera
+        val camera = cameraConfiguration.camera.takeIf {
+            it.supportsCameraMode(cameraMode)
+        } ?: getSuitableCamera(
+            cameraMode,
+            cameraConfiguration.camera.cameraFacing,
+        ) ?: run {
+            Log.e(LOG_TAG, "No camera supports the requested camera mode $cameraMode")
+            return@updateConfiguration cameraConfiguration
         }
 
         preferencesRepository.lastCameraMode.value = cameraMode
@@ -1540,10 +1531,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     ): Camera? {
         val compatibleCameras = cameraRepository.cameras.value
             .filter { camera ->
-                when (cameraMode) {
-                    CameraMode.VIDEO -> camera.supportsVideoRecording
-                    else -> true
-                }
+                camera.supportsCameraMode(cameraMode)
             }
 
         return compatibleCameras.firstOrNull { camera ->
