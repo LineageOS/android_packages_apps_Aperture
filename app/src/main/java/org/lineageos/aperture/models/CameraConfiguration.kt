@@ -8,7 +8,6 @@ package org.lineageos.aperture.models
 import androidx.camera.core.AspectRatio
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
-import org.lineageos.aperture.camera.Camera
 
 /**
  * Camera configuration. Should only contain information about the session that can only be

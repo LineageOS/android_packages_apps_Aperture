@@ -3,62 +3,76 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.lineageos.aperture.camera
+package org.lineageos.aperture.models
 
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraMetadata
 import android.os.Build
-import android.util.Range
+import androidx.annotation.OptIn
 import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.CameraState
+import androidx.camera.core.ExperimentalLensFacing
 import androidx.camera.core.ExperimentalZeroShutterLag
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.video.Quality
 import androidx.camera.video.Recorder
-import androidx.lifecycle.LiveData
+import androidx.core.util.toClosedRange
+import androidx.lifecycle.asFlow
 import org.lineageos.aperture.ext.getSupportedModes
-import org.lineageos.aperture.models.CameraFacing
-import org.lineageos.aperture.models.CameraMode
-import org.lineageos.aperture.models.ColorCorrectionAberrationMode
-import org.lineageos.aperture.models.DistortionCorrectionMode
-import org.lineageos.aperture.models.EdgeMode
-import org.lineageos.aperture.models.FlashMode
-import org.lineageos.aperture.models.FrameRate
-import org.lineageos.aperture.models.HotPixelMode
-import org.lineageos.aperture.models.NoiseReductionMode
-import org.lineageos.aperture.models.ShadingMode
-import org.lineageos.aperture.models.VideoDynamicRange
-import org.lineageos.aperture.models.VideoQualityInfo
-import org.lineageos.aperture.models.VideoStabilizationMode
 import org.lineageos.aperture.repositories.OverlaysRepository
 import java.util.SortedMap
+import kotlin.reflect.safeCast
 
 /**
  * Class representing a device camera.
  */
-@androidx.annotation.OptIn(ExperimentalCamera2Interop::class, ExperimentalZeroShutterLag::class)
+@OptIn(
+    ExperimentalCamera2Interop::class,
+    ExperimentalLensFacing::class,
+    ExperimentalZeroShutterLag::class,
+)
 class Camera private constructor(
     cameraInfo: CameraInfo,
     val logicalZoomRatios: SortedMap<Float, Float>,
     additionalVideoFrameRates: Map<Quality, Map<FrameRate, Boolean>>,
     val supportedExtensionModes: Set<Int>,
-) : BaseCamera(cameraInfo) {
-    override val cameraSelector: CameraSelector = cameraInfo.cameraSelector
+) {
+    /**
+     * The [androidx.camera.core.CameraSelector] for this camera.
+     */
+    val cameraSelector: CameraSelector = cameraInfo.cameraSelector
 
-    val exposureCompensationRange: Range<Int> = cameraInfo.exposureState.exposureCompensationRange
-    private val hasFlashUnit = cameraInfo.hasFlashUnit()
+    /**
+     * The [androidx.camera.camera2.interop.Camera2CameraInfo] of this camera.
+     */
+    private val camera2CameraInfo: Camera2CameraInfo = Camera2CameraInfo.from(cameraInfo)
 
-    private val physicalCameras = cameraInfo.physicalCameraInfos.map {
-        PhysicalCamera(it)
+    /**
+     * Camera2's camera ID.
+     */
+    val cameraId: String = camera2CameraInfo.cameraId
+
+    /**
+     * The [CameraFacing] of this camera.
+     */
+    val cameraFacing = when (cameraInfo.lensFacing) {
+        CameraSelector.LENS_FACING_UNKNOWN -> CameraFacing.UNKNOWN
+        CameraSelector.LENS_FACING_FRONT -> CameraFacing.FRONT
+        CameraSelector.LENS_FACING_BACK -> CameraFacing.BACK
+        CameraSelector.LENS_FACING_EXTERNAL -> CameraFacing.EXTERNAL
+        else -> throw Exception("Unknown lens facing value")
     }
-    val isLogical = physicalCameras.size > 1
+
+    val exposureCompensationRange =
+        cameraInfo.exposureState.exposureCompensationRange.toClosedRange<Int>()
 
     val intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
 
     private val supportedVideoFrameRates = cameraInfo.supportedFrameRateRanges.mapNotNull {
-        FrameRate.fromRange(it)
+        FrameRate.fromRange(it.toClosedRange())
     }.toSet()
 
     private val videoCapabilities = Recorder.getVideoCapabilities(cameraInfo)
@@ -116,7 +130,7 @@ class Camera private constructor(
 
     val supportsZsl = cameraInfo.isZslSupported
 
-    val cameraState: LiveData<androidx.camera.core.CameraState> = cameraInfo.cameraState
+    val cameraXCameraState = cameraInfo.cameraState.asFlow<CameraState>()
 
     val supportedEdgeModes = camera2CameraInfo.getAndMapCameraCharacteristics(
         CameraCharacteristics.EDGE_AVAILABLE_EDGE_MODES,
@@ -214,7 +228,7 @@ class Camera private constructor(
     val supportedFlashModes = buildSet {
         add(FlashMode.OFF)
 
-        if (hasFlashUnit) {
+        if (cameraInfo.hasFlashUnit()) {
             add(FlashMode.AUTO)
             add(FlashMode.ON)
             add(FlashMode.TORCH)
@@ -224,6 +238,12 @@ class Camera private constructor(
             add(FlashMode.SCREEN)
         }
     }
+
+    override fun equals(other: Any?) = this::class.safeCast(other)?.let {
+        this.cameraId == it.cameraId
+    } ?: false
+
+    override fun hashCode() = this::class.qualifiedName.hashCode() + cameraId.hashCode()
 
     fun supportsExtensionMode(extensionMode: Int): Boolean {
         return supportedExtensionModes.contains(extensionMode)

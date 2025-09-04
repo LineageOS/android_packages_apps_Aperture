@@ -8,7 +8,6 @@ package org.lineageos.aperture.ui
 import android.content.Context
 import android.graphics.RectF
 import android.util.AttributeSet
-import android.util.Range
 import android.view.MotionEvent
 import org.lineageos.aperture.ext.mapToRange
 
@@ -32,7 +31,7 @@ class HorizontalSlider @JvmOverloads constructor(
         val trackWidth = track.width()
 
         val cx = if (steps > 0) {
-            val progress = Int.mapToRange(Range(0, steps), progress).toFloat() / steps
+            val progress = Int.mapToRange(0..steps, progress).toFloat() / steps
             (trackWidth * progress) + track.left
         } else {
             (trackWidth * progress) + track.left

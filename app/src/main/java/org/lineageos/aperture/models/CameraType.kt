@@ -5,8 +5,6 @@
 
 package org.lineageos.aperture.models
 
-import org.lineageos.aperture.camera.Camera
-
 /**
  * [Camera] type.
  */

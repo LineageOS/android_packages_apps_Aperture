@@ -1158,7 +1158,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         launch {
             viewModel.exposureCompensationRangeToLevel.collectLatest { (range, level) ->
-                exposureLevel.steps = range.upper - range.lower
+                exposureLevel.steps = range.endInclusive - range.start
                 exposureLevel.progress = level
                 exposureLevel.textFormatter = {
                     val ev = Int.mapToRange(range, it)

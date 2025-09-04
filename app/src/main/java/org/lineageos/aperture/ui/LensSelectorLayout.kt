@@ -15,9 +15,9 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.children
 import androidx.core.view.setMargins
 import org.lineageos.aperture.R
-import org.lineageos.aperture.camera.Camera
 import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.ext.smoothRotate
+import org.lineageos.aperture.models.Camera
 import org.lineageos.aperture.models.CameraState
 import org.lineageos.aperture.models.Rotation
 import java.util.Locale

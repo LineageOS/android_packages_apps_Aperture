@@ -55,7 +55,6 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
-import org.lineageos.aperture.camera.Camera
 import org.lineageos.aperture.ext.applicationContext
 import org.lineageos.aperture.ext.broadcastReceiverFlow
 import org.lineageos.aperture.ext.flashMode
@@ -66,6 +65,7 @@ import org.lineageos.aperture.ext.nextPowerOfTwo
 import org.lineageos.aperture.ext.previous
 import org.lineageos.aperture.ext.previousPowerOfTwo
 import org.lineageos.aperture.ext.thermalStatusFlow
+import org.lineageos.aperture.models.Camera
 import org.lineageos.aperture.models.CameraConfiguration
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
@@ -286,7 +286,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     @OptIn(ExperimentalCoroutinesApi::class)
     val cameraXCameraState = camera
         .flatMapLatest { camera ->
-            camera.cameraState.asFlow()
+            camera.cameraXCameraState
         }
         .flowOn(Dispatchers.IO)
         .shareIn(

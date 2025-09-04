@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
-import org.lineageos.aperture.camera.Camera
+import org.lineageos.aperture.models.Camera
 
 /**
  * Repository that provides camera devices.

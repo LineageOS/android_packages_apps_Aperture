@@ -9,6 +9,7 @@ import android.hardware.camera2.CameraMetadata
 import android.hardware.camera2.CaptureRequest
 import android.os.Build
 import androidx.camera.camera2.interop.CaptureRequestOptions
+import androidx.core.util.toRange
 import org.lineageos.aperture.models.ColorCorrectionAberrationMode
 import org.lineageos.aperture.models.DistortionCorrectionMode
 import org.lineageos.aperture.models.EdgeMode
@@ -29,7 +30,10 @@ fun <ValueT> CaptureRequestOptions.Builder.setOrClearCaptureRequestOption(
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 fun CaptureRequestOptions.Builder.setFrameRate(
     frameRate: FrameRate?
-) = setOrClearCaptureRequestOption(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, frameRate?.range)
+) = setOrClearCaptureRequestOption(
+    CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE,
+    frameRate?.range?.toRange(),
+)
 
 @androidx.camera.camera2.interop.ExperimentalCamera2Interop
 fun CaptureRequestOptions.Builder.setVideoStabilizationMode(
