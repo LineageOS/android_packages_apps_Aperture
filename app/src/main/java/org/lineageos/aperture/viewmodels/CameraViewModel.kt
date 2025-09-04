@@ -159,31 +159,6 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      */
     val event = _event.asSharedFlow()
 
-    /**
-     * The list of [Camera]s to use for cycling.
-     * Google recommends cycling between all externals, back and front,
-     * we do back, front and all externals instead, makes more sense.
-     */
-    @OptIn(ExperimentalCoroutinesApi::class)
-    private val availableCameras = cameraRepository.externalCameras
-        .mapLatest { externalCameras ->
-            buildList {
-                cameraRepository.mainBackCamera?.let {
-                    add(it)
-                }
-                cameraRepository.mainFrontCamera?.let {
-                    add(it)
-                }
-                addAll(externalCameras)
-            }
-        }
-        .flowOn(Dispatchers.IO)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = listOf(),
-        )
-
     @OptIn(ExperimentalCoroutinesApi::class)
     val isVideoRecordingAvailable = cameraRepository.cameras
         .mapLatest { cameras ->
@@ -254,6 +229,23 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = preferencesRepository.lastCameraMode.value,
+        )
+
+    /**
+     * The list of [Camera]s to use for cycling.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val camerasForCycling = combine(
+        cameraRepository.cameras,
+        cameraMode,
+    ) { cameras, cameraMode ->
+        cameras.filter { it.supportsCameraMode(cameraMode) }.groupBy(Camera::cameraFacing)
+    }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = mapOf(),
         )
 
     /**
@@ -829,11 +821,12 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     /**
      * Whether the camera can be flipped.
      */
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val canFlipCamera = cameraState
-        .mapLatest { cameraState ->
-            !cameraState.isRecordingVideo
-        }
+    val canFlipCamera = combine(
+        camerasForCycling,
+        cameraState,
+    ) { camerasForCycling, cameraState ->
+        camerasForCycling.keys.size > 1 && !cameraState.isRecordingVideo
+    }
         .flowOn(Dispatchers.IO)
         .stateIn(
             viewModelScope,
@@ -1072,27 +1065,20 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      * Flip the camera.
      */
     fun flipCamera() = updateConfiguration<CameraConfiguration> { cameraConfiguration ->
-        val cameras = this@CameraViewModel.availableCameras.value.filter { camera ->
-            when (cameraConfiguration.cameraMode) {
-                CameraMode.VIDEO -> camera.supportsVideoRecording
-                else -> true
-            }
-        }
+        val cameraForCycling = camerasForCycling.value
 
-        // If value is -1 it will just pick the first available camera
-        // This should only happen when an external camera is disconnected
-        val newCameraIndex = cameras.indexOf(
-            when (cameraConfiguration.camera.cameraFacing) {
-                CameraFacing.BACK -> this@CameraViewModel.cameraRepository.mainBackCamera
-                CameraFacing.FRONT -> this@CameraViewModel.cameraRepository.mainFrontCamera
-                CameraFacing.EXTERNAL -> cameraConfiguration.camera
-                else -> error("Unknown facing")
-            }
-        ) + 1
+        val cameraFacing = cameraForCycling.keys.sortedWith(
+            cameraFacingComparator
+        ).next(cameraConfiguration.camera.cameraFacing) ?: error("No camera available")
 
-        val camera = cameras.getOrElse(newCameraIndex) {
-            cameras.firstOrNull() ?: error("No camera available")
-        }
+        val camera = when (cameraFacing) {
+            CameraFacing.UNKNOWN -> null
+            CameraFacing.FRONT -> cameraRepository.mainFrontCamera
+            CameraFacing.BACK -> cameraRepository.mainBackCamera
+            CameraFacing.EXTERNAL -> null
+        } ?: cameraForCycling[cameraFacing]?.firstOrNull() ?: error(
+            "Camera with facing $cameraFacing not available"
+        )
 
         preferencesRepository.lastCameraFacing.value = camera.cameraFacing
 
@@ -1124,7 +1110,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                 return@updateConfiguration cameraConfiguration
             }
 
-            CameraMode.QR -> cameraRepository.mainBackCamera ?: cameraConfiguration.camera
+            CameraMode.QR -> cameraConfiguration.camera
         }
 
         preferencesRepository.lastCameraMode.value = cameraMode
@@ -1670,5 +1656,16 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         private val LOG_TAG = CameraViewModel::class.simpleName!!
 
         private const val SINGLE_CAPTURE_PHOTO_BUFFER_INITIAL_SIZE_BYTES = 8 * 1024 * 1024 // 8 MiB
+
+        private val cameraFacingComparator = Comparator<CameraFacing> { a, b ->
+            compareValuesBy(a!!, b!!) {
+                when (it) {
+                    CameraFacing.UNKNOWN -> 3
+                    CameraFacing.FRONT -> 1
+                    CameraFacing.BACK -> 0
+                    CameraFacing.EXTERNAL -> 2
+                }
+            }
+        }
     }
 }
