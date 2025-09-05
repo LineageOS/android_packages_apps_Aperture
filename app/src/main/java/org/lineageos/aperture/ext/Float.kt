@@ -32,7 +32,3 @@ fun Float.nextPowerOfTwo(): Float {
         result
     }
 }
-
-fun Float.Companion.mapToRange(range: ClosedRange<Float>, percentage: Float): Float {
-    return (((range.endInclusive - range.start) * percentage) + range.start)
-}

@@ -74,6 +74,8 @@ import coil3.request.error
 import coil3.request.fallback
 import coil3.size.Scale
 import coil3.video.VideoFrameDecoder
+import com.google.android.material.slider.LabelFormatter
+import com.google.android.material.slider.Slider
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -121,14 +123,12 @@ import org.lineageos.aperture.ui.CameraModeSelectorLayout
 import org.lineageos.aperture.ui.CapturePreviewLayout
 import org.lineageos.aperture.ui.CountDownView
 import org.lineageos.aperture.ui.GridView
-import org.lineageos.aperture.ui.HorizontalSlider
 import org.lineageos.aperture.ui.InfoChipView
 import org.lineageos.aperture.ui.LensSelectorLayout
 import org.lineageos.aperture.ui.LevelerView
 import org.lineageos.aperture.ui.LocationPermissionsDialog
 import org.lineageos.aperture.ui.PreviewBlurView
 import org.lineageos.aperture.ui.QrBottomSheetDialog
-import org.lineageos.aperture.ui.VerticalSlider
 import org.lineageos.aperture.utils.ExifUtils
 import org.lineageos.aperture.utils.GoogleLensUtils
 import org.lineageos.aperture.utils.PermissionsManager
@@ -153,7 +153,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     private val capturePreviewLayout by lazy { findViewById<CapturePreviewLayout>(R.id.capturePreviewLayout) }
     private val countDownView by lazy { findViewById<CountDownView>(R.id.countDownView) }
     private val effectButton by lazy { findViewById<Button>(R.id.effectButton) }
-    private val exposureLevel by lazy { findViewById<VerticalSlider>(R.id.exposureLevel) }
+    private val exposureLevel by lazy { findViewById<Slider>(R.id.exposureLevel) }
     private val flashButton by lazy { findViewById<ImageButton>(R.id.flashButton) }
     private val flipCameraButton by lazy { findViewById<ImageButton>(R.id.flipCameraButton) }
     private val galleryButtonCardView by lazy { findViewById<CardView>(R.id.galleryButtonCardView) }
@@ -181,7 +181,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     private val videoDynamicRangeButton by lazy { findViewById<Button>(R.id.videoDynamicRangeButton) }
     private val viewFinder by lazy { findViewById<PreviewView>(R.id.viewFinder) }
     private val viewFinderFocus by lazy { findViewById<ImageView>(R.id.viewFinderFocus) }
-    private val zoomLevel by lazy { findViewById<HorizontalSlider>(R.id.zoomLevel) }
+    private val zoomLevel by lazy { findViewById<Slider>(R.id.zoomLevel) }
 
     // System services
     private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
@@ -513,22 +513,27 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             }
         }
 
-        zoomLevel.onProgressChangedByUser = {
-            viewModel.cameraController.setLinearZoom(it)
+        zoomLevel.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) {
+                viewModel.cameraController.setLinearZoom(value)
+            }
         }
-        zoomLevel.textFormatter = {
+        zoomLevel.setLabelFormatter {
             "%.1fx".format(viewModel.zoomState.value?.zoomRatio)
         }
+        zoomLevel.labelBehavior = LabelFormatter.LABEL_VISIBLE
 
         // Set expose level callback & text formatter
         exposureLevel.stepSize = 1f
-        exposureLevel.onProgressChangedByUser = {
-            viewModel.setExposureCompensationIndex(it.roundToInt())
+        exposureLevel.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) {
+                viewModel.setExposureCompensationIndex(value.roundToInt())
+            }
 
             handler.removeMessages(MSG_HIDE_EXPOSURE_SLIDER)
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_EXPOSURE_SLIDER), 2000)
         }
-        exposureLevel.textFormatter = {
+        exposureLevel.setLabelFormatter {
             viewModel.exposureCompensationInfo.value?.let { exposureCompensationInfo ->
                 exposureCompensationInfo.getExposureValue(it.roundToInt()).let { ev ->
                     when (ev == 0f) {
@@ -538,6 +543,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 }
             } ?: "0"
         }
+        exposureLevel.labelBehavior = LabelFormatter.LABEL_VISIBLE
 
         // Set primary bar button callbacks
         flipCameraButton.setOnClickListener { viewModel.flipCamera() }
@@ -920,8 +926,8 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 val compensationValue = screenRotation.compensationValue.toFloat()
 
                 // Rotate sliders
-                exposureLevel.screenRotation = screenRotation
-                zoomLevel.screenRotation = screenRotation
+                //exposureLevel.screenRotation = screenRotation
+                //zoomLevel.screenRotation = screenRotation
 
                 // Rotate info chip
                 infoChipView.setScreenRotation(screenRotation)
