@@ -1366,6 +1366,12 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         _exposureCompensationIndex.value = exposureCompensationIndex
     }
 
+    fun setExposureCompensationValue(exposureCompensationValue: Float) {
+        exposureCompensationInfo.value?.let {
+            _exposureCompensationIndex.value = it.getExposureIndex(exposureCompensationValue)
+        }
+    }
+
     /**
      * Apply the specified zoom smoothly. The value will be automatically clamped
      * between min and max.
