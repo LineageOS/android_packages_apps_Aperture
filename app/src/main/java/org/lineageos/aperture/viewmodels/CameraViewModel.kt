@@ -61,7 +61,6 @@ import org.lineageos.aperture.ext.applicationContext
 import org.lineageos.aperture.ext.broadcastReceiverFlow
 import org.lineageos.aperture.ext.flashMode
 import org.lineageos.aperture.ext.locationFlow
-import org.lineageos.aperture.ext.mapToRange
 import org.lineageos.aperture.ext.next
 import org.lineageos.aperture.ext.nextPowerOfTwo
 import org.lineageos.aperture.ext.previous
@@ -76,6 +75,7 @@ import org.lineageos.aperture.models.ColorCorrectionAberrationMode
 import org.lineageos.aperture.models.DistortionCorrectionMode
 import org.lineageos.aperture.models.EdgeMode
 import org.lineageos.aperture.models.Event
+import org.lineageos.aperture.models.ExposureCompensationInfo
 import org.lineageos.aperture.models.FlashMode
 import org.lineageos.aperture.models.GridMode
 import org.lineageos.aperture.models.HardwareKey
@@ -556,43 +556,54 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         )
 
     /**
-     * The current, exposure compensation level, from 0 to 1
+     * The current [ExposureCompensationInfo].
      */
-    private val exposureCompensationLevel = MutableStateFlow(0.5f)
-
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val exposureCompensationRange = cameraConfiguration
-        .mapLatest { it.camera.exposureCompensationRange }
+    val exposureCompensationInfo = camera
+        .mapLatest { it.exposureCompensationInfo }
         .flowOn(Dispatchers.IO)
-        .shareIn(
-            viewModelScope,
+        .stateIn(
+            scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
-            replay = 1
+            initialValue = null,
         )
 
-    val exposureCompensationRangeToLevel = combine(
-        exposureCompensationLevel,
-        exposureCompensationRange,
-    ) { exposureCompensationLevel, exposureCompensationRange ->
-        exposureCompensationRange to exposureCompensationLevel
+    /**
+     * The requested exposure compensation index, with 0 being 0 EV.
+     */
+    private val _exposureCompensationIndex = MutableStateFlow(0)
+
+    /**
+     * The current exposure compensation information to index.
+     */
+    val exposureCompensationInfoToIndex = combine(
+        exposureCompensationInfo,
+        _exposureCompensationIndex,
+    ) { exposureCompensationInfo, exposureCompensationIndex ->
+        exposureCompensationInfo?.let {
+            it to exposureCompensationIndex.coerceIn(it.indexRange)
+        } ?: (null to 0)
     }
         .flowOn(Dispatchers.IO)
-        .shareIn(
-            viewModelScope,
+        .stateIn(
+            scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
-            replay = 1
+            initialValue = null to 0,
         )
 
+    /**
+     * The current exposure compensation index.
+     */
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val exposureCompensationIndex = exposureCompensationRangeToLevel
-        .mapLatest { (exposureCompensationLevel, exposureCompensationRange) ->
-            Int.mapToRange(exposureCompensationLevel, exposureCompensationRange)
+    private val exposureCompensationIndex = exposureCompensationInfoToIndex
+        .mapLatest { exposureCompensationInfoToIndex ->
+            exposureCompensationInfoToIndex.second
         }
         .flowOn(Dispatchers.IO)
         .shareIn(
-            viewModelScope,
+            scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
-            replay = 1
+            replay = 1,
         )
 
     val isShutterButtonEnabled = combine(
@@ -1536,14 +1547,10 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     /**
      * Set the desired exposure compensation range.
      *
-     * @param exposureCompensationLevel A value between 0 and 1, with 0.5 being 0 EV
+     * @param exposureCompensationIndex The exposure compensation index value, with 0 being 0 EV
      */
-    fun setExposureCompensationLevel(exposureCompensationLevel: Float) {
-        require(exposureCompensationLevel in 0f..1f) {
-            "Exposure compensation level must be between 0 and 1, got $exposureCompensationLevel"
-        }
-
-        this.exposureCompensationLevel.value = exposureCompensationLevel
+    fun setExposureCompensationIndex(exposureCompensationIndex: Int) {
+        _exposureCompensationIndex.value = exposureCompensationIndex
     }
 
     /**
