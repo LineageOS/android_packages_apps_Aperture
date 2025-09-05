@@ -87,36 +87,25 @@
         app:layout_constraintStart_toStartOf="@+id/viewFinder"
         app:layout_constraintTop_toTopOf="@+id/viewFinder" />
 
-    <org.lineageos.aperture.ui.views.HorizontalSlider
+    <com.google.android.material.slider.Slider
         android:id="@+id/zoomLevel"
         android:layout_width="250dp"
         android:layout_height="32dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:thumbColor="@android:color/white"
-        app:thumbTextColor="@android:color/black"
-        app:thumbTextSize="10dp"
-        app:trackColor="#7FCCCCCC" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <org.lineageos.aperture.ui.views.VerticalSlider
+    <com.google.android.material.slider.Slider
         android:id="@+id/exposureLevel"
         android:layout_width="32dp"
         android:layout_height="250dp"
         android:layout_marginEnd="8dp"
+        android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/viewFinder"
-        app:thumbColor="@android:color/white"
-        app:thumbTextColor="@android:color/black"
-        app:thumbTextSize="10dp"
-        app:trackBorderColor="#a9a7aa"
-        app:trackColorGradient="true"
-        app:trackColorGradientCenter="#636363"
-        app:trackColorGradientEnd="#242424"
-        app:trackColorGradientStart="#8d9299" />
+        app:layout_constraintTop_toTopOf="@+id/viewFinder" />
 
     <HorizontalScrollView
         android:id="@+id/secondaryTopBarLayout"
