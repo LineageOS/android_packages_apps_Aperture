@@ -26,8 +26,11 @@ class VerticalSlider @JvmOverloads constructor(
             MotionEvent.ACTION_DOWN,
             MotionEvent.ACTION_MOVE,
             MotionEvent.ACTION_UP -> {
-                progress = (height - event.y.coerceIn(0f, height.toFloat())) / height
-                onProgressChangedByUser?.invoke(progress)
+                value = Float.mapToRange(
+                    valueFrom..valueTo,
+                    (height - event.y.coerceIn(0f, height.toFloat())) / height,
+                )
+                onProgressChangedByUser?.invoke(value)
             }
         }
 
@@ -50,12 +53,14 @@ class VerticalSlider @JvmOverloads constructor(
         val track = track()
         val trackHeight = track.height()
 
+        val value = (value - valueFrom) / (valueTo - valueFrom)
+
         val cx = width / 2f
-        val cy = if (steps > 0) {
-            val progress = Int.mapToRange(0..steps, progress).toFloat() / steps
+        val cy = if (stepSize > 0) {
+            val progress = Float.mapToRange(0f..stepSize, value) / stepSize
             (trackHeight - (trackHeight * progress)) + track.top
         } else {
-            (trackHeight - (trackHeight * progress)) + track.top
+            (trackHeight - (trackHeight * value)) + track.top
         }
 
         return Triple(cx, cy, width / 2.15f)
