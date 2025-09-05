@@ -30,11 +30,13 @@ class HorizontalSlider @JvmOverloads constructor(
         val track = track()
         val trackWidth = track.width()
 
-        val cx = if (steps > 0) {
-            val progress = Int.mapToRange(0..steps, progress).toFloat() / steps
+        val value = (value - valueFrom) / (valueTo - valueFrom)
+
+        val cx = if (stepSize > 0) {
+            val progress = Float.mapToRange(0f..stepSize, value) / stepSize
             (trackWidth * progress) + track.left
         } else {
-            (trackWidth * progress) + track.left
+            (trackWidth * value) + track.left
         }
         val cy = height / 2f
 
@@ -53,8 +55,11 @@ class HorizontalSlider @JvmOverloads constructor(
             MotionEvent.ACTION_DOWN,
             MotionEvent.ACTION_MOVE,
             MotionEvent.ACTION_UP -> {
-                progress = event.x.coerceIn(0f, width.toFloat()) / width
-                onProgressChangedByUser?.invoke(progress)
+                value = Float.mapToRange(
+                    valueFrom..valueTo,
+                    event.x.coerceIn(0f, width.toFloat()) / width,
+                )
+                onProgressChangedByUser?.invoke(value)
             }
         }
 

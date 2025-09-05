@@ -84,7 +84,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.lineageos.aperture.ext.camera2CameraControl
 import org.lineageos.aperture.ext.flashMode
-import org.lineageos.aperture.ext.mapToRange
 import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.ext.scale
 import org.lineageos.aperture.ext.setColorCorrectionAberrationMode
@@ -139,6 +138,7 @@ import java.io.ByteArrayInputStream
 import java.io.FileNotFoundException
 import java.io.InputStream
 import kotlin.math.abs
+import kotlin.math.roundToInt
 import kotlin.reflect.safeCast
 import androidx.camera.core.CameraState as CameraXCameraState
 
@@ -481,7 +481,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
         viewFinder.setOnClickListener {
             // Reset exposure level to 0 EV
-            viewModel.setExposureCompensationLevel(0.5f)
+            viewModel.setExposureCompensationIndex(0)
 
             exposureLevel.isVisible = true
             handler.removeMessages(MSG_HIDE_EXPOSURE_SLIDER)
@@ -521,8 +521,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         // Set expose level callback & text formatter
+        exposureLevel.stepSize = 1f
         exposureLevel.onProgressChangedByUser = {
-            viewModel.setExposureCompensationLevel(it)
+            viewModel.setExposureCompensationIndex(it.roundToInt())
 
             handler.removeMessages(MSG_HIDE_EXPOSURE_SLIDER)
             handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_EXPOSURE_SLIDER), 2000)
@@ -1108,7 +1109,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         launch {
             viewModel.zoomState.collectLatest { zoomState ->
                 zoomState?.takeIf { it.minZoomRatio != it.maxZoomRatio }?.let {
-                    zoomLevel.progress = it.linearZoom
+                    zoomLevel.value = it.linearZoom
                     zoomLevel.isVisible = true
 
                     handler.removeMessages(MSG_HIDE_ZOOM_SLIDER)
@@ -1157,14 +1158,17 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         launch {
-            viewModel.exposureCompensationRangeToLevel.collectLatest { (range, level) ->
-                exposureLevel.steps = range.endInclusive - range.start
-                exposureLevel.progress = level
-                exposureLevel.textFormatter = {
-                    val ev = Int.mapToRange(range, it)
-                    when (ev == 0) {
-                        true -> "0"
-                        false -> EXPOSURE_LEVEL_FORMATTER.format(ev).toString()
+            viewModel.exposureCompensationInfoToIndex.collectLatest { (info, index) ->
+                exposureLevel.value = index.toFloat()
+
+                info?.let {
+                    exposureLevel.valueFrom = it.indexRange.start.toFloat()
+                    exposureLevel.valueTo = it.indexRange.endInclusive.toFloat()
+                    exposureLevel.textFormatter = { value ->
+                        when (val ev = it.getExposureValue(value.roundToInt())) {
+                            0f -> "0"
+                            else -> EXPOSURE_LEVEL_FORMATTER.format(ev)
+                        }
                     }
                 }
             }
@@ -1603,7 +1607,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         viewModel.setVideoMicrophoneEnabled(viewModel.videoMicMode.value)
 
         // Reset exposure level
-        viewModel.setExposureCompensationLevel(0.5f)
+        viewModel.setExposureCompensationIndex(0)
     }
 
     private fun updateGalleryButton(uri: Uri?, fromCapture: Boolean) {
@@ -2025,6 +2029,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         // https://developer.android.com/guide/components/activities/parcelables-and-bundles#sdbp
         private const val SINGLE_CAPTURE_INLINE_MAX_SIDE_LEN_PIXELS = 256
 
-        private val EXPOSURE_LEVEL_FORMATTER = DecimalFormat("+#;-#")
+        private val EXPOSURE_LEVEL_FORMATTER = DecimalFormat("+#.##;-#.##")
     }
 }

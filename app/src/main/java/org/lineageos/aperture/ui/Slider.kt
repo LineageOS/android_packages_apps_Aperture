@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -47,24 +47,40 @@ abstract class Slider @JvmOverloads constructor(
 
     private var gradientColors: IntArray
 
-    var progress = 0.5f
+    var valueFrom: Float = 0f
         set(value) {
-            field = value.coerceIn(0f, 1f)
+            field = value
             invalidate()
         }
+    var valueTo: Float = 1f
+        set(value) {
+            field = value
+            invalidate()
+        }
+    var stepSize: Float = 0f
+        set(value) {
+            field = value
+            invalidate()
+        }
+    var value = 0.5f
+        set(value) {
+            field = value
+            invalidate()
+        }
+
     var onProgressChangedByUser: ((value: Float) -> Unit)? = null
 
-    var textFormatter: (value: Float) -> String = {
-        "%.01f".format(it)
-    }
+    var textFormatter: (value: Float) -> String = { "%.01f".format(it) }
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     var screenRotation = Rotation.ROTATION_0
         set(value) {
             field = value
             invalidate()
         }
-
-    var steps = 0
 
     init {
         context.obtainStyledAttributes(attrs, R.styleable.Slider, 0, 0).apply {
@@ -143,7 +159,7 @@ abstract class Slider @JvmOverloads constructor(
         canvas.drawCircle(thumb.first, thumb.second, thumb.third, thumbPaint)
 
         // Draw text
-        val text = textFormatter(progress)
+        val text = textFormatter(value)
         val textBounds = Rect().apply {
             thumbTextPaint.getTextBounds(text, 0, text.length, this)
         }
