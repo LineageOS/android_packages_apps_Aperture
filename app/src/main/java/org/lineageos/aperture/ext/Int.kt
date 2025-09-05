@@ -13,7 +13,3 @@ val Int.px
 
 val Int.dp
     get() = (this / getSystem().displayMetrics.density).roundToInt()
-
-internal fun Int.Companion.mapToRange(range: ClosedRange<Int>, percentage: Float): Int {
-    return (((range.endInclusive - range.start) * percentage) + range.start).roundToInt()
-}
