@@ -66,8 +66,9 @@ class Camera private constructor(
         else -> throw Exception("Unknown lens facing value")
     }
 
-    val exposureCompensationRange =
-        cameraInfo.exposureState.exposureCompensationRange.toClosedRange<Int>()
+    val exposureCompensationInfo = ExposureCompensationInfo.fromExposureState(
+        cameraInfo.exposureState
+    )
 
     val intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
 
