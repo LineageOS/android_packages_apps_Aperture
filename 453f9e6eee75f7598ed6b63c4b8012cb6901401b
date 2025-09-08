@@ -16,6 +16,24 @@
       "message": "aperture not find mycamera, but in other camera like google camera it  works\n\nAndroidRuntime: Caused by: java.lang.IllegalArgumentException: getCameraCharacteristics:1333: Unable to retrieve camera characteristics for unknown device : No such file or directory (-2)",
       "revId": "453f9e6eee75f7598ed6b63c4b8012cb6901401b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6a6b2f78_6fd6a42a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-09-08T16:30:04Z",
+      "side": 1,
+      "message": "w/o logs and context is hard to guess what\u0027s wrong\n\nOpen a GitLab if it\u0027s an officially supported device, else find another way",
+      "parentUuid": "15969eae_0fe86fd5",
+      "revId": "453f9e6eee75f7598ed6b63c4b8012cb6901401b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
