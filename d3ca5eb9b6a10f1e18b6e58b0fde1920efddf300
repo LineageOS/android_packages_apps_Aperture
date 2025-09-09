@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4661abdf_8f9bd725",
+        "filename": "app/src/main/java/org/lineageos/aperture/viewmodels/CameraViewModel.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 1669,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-09-09T08:05:32Z",
+      "side": 1,
+      "message": "```suggestion\n        private val cameraFacingComparator \u003d Comparator.comparingInt\u003cCameraFacing\u003e {\n            when (it) {\n                CameraFacing.UNKNOWN -\u003e 3\n                CameraFacing.FRONT -\u003e 1\n                CameraFacing.BACK -\u003e 0\n                CameraFacing.EXTERNAL -\u003e 2\n            }\n        }\n```\n\nAvoids the weird null enforcement causes by java.util",
+      "range": {
+        "startLine": 1660,
+        "startChar": 0,
+        "endLine": 1669,
+        "endChar": 9
+      },
+      "revId": "d3ca5eb9b6a10f1e18b6e58b0fde1920efddf300",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
