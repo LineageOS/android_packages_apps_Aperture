@@ -117,6 +117,7 @@ import org.lineageos.aperture.models.PermissionState
 import org.lineageos.aperture.models.PhotoOutputFormat
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.models.TimerMode
+import org.lineageos.aperture.models.VideoDynamicRange
 import org.lineageos.aperture.models.VideoMirrorMode
 import org.lineageos.aperture.models.VideoStabilizationMode
 import org.lineageos.aperture.ui.dialogs.LocationPermissionsDialog
@@ -1279,9 +1280,28 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             viewModel.videoDynamicRange.collectLatest { videoDynamicRange ->
                 // Update secondary bar buttons
                 videoDynamicRangeButton.setCompoundDrawablesWithIntrinsicBounds(
-                    0, videoDynamicRange.icon, 0, 0
+                    0,
+                    when (videoDynamicRange) {
+                        VideoDynamicRange.SDR -> R.drawable.ic_hdr_off
+                        VideoDynamicRange.HLG_10_BIT -> R.drawable.ic_hdr_on
+                        VideoDynamicRange.HDR10_10_BIT -> R.drawable.ic_hdr_on
+                        VideoDynamicRange.HDR10_PLUS_10_BIT -> R.drawable.ic_hdr_on
+                        VideoDynamicRange.DOLBY_VISION_10_BIT -> R.drawable.ic_dolby
+                        VideoDynamicRange.DOLBY_VISION_8_BIT -> R.drawable.ic_dolby
+                    },
+                    0,
+                    0,
                 )
-                videoDynamicRangeButton.setText(videoDynamicRange.title)
+                videoDynamicRangeButton.setText(
+                    when (videoDynamicRange) {
+                        VideoDynamicRange.SDR -> R.string.video_dynamic_range_sdr
+                        VideoDynamicRange.HLG_10_BIT -> R.string.video_dynamic_range_hlg_10_bit
+                        VideoDynamicRange.HDR10_10_BIT -> R.string.video_dynamic_range_hdr10_10_bit
+                        VideoDynamicRange.HDR10_PLUS_10_BIT -> R.string.video_dynamic_range_hdr10_plus_10_bit
+                        VideoDynamicRange.DOLBY_VISION_10_BIT -> R.string.video_dynamic_range_dolby_vision_10_bit
+                        VideoDynamicRange.DOLBY_VISION_8_BIT -> R.string.video_dynamic_range_dolby_vision_8_bit
+                    }
+                )
             }
         }
 
