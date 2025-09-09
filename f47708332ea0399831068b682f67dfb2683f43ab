@@ -20,6 +20,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "dc132c0c_0702c646",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-09-09T11:30:42Z",
+      "side": 1,
+      "message": "I can, but this might get desynced, given EV would emit later than the slider\u0027s own value (which is the index, and needs the step value to convert to EV)\n\nMight be worth updating the text formatter every time the exposure compensation info (the data class with the step value) gets updated, brb",
+      "parentUuid": "f9a88e1f_39b6e174",
+      "revId": "f47708332ea0399831068b682f67dfb2683f43ab",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9a62ddff_7ebab11d",
         "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
         "patchSetId": 6
