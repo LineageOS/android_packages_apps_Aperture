@@ -36,6 +36,24 @@
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4a9c01a0_47baff02",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-09-09T14:07:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc132c0c_0702c646",
+      "revId": "f47708332ea0399831068b682f67dfb2683f43ab",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "9a62ddff_7ebab11d",
@@ -49,6 +67,30 @@
       "writtenOn": "2025-09-09T08:19:37Z",
       "side": 1,
       "message": "val ev \u003d ...\nwhen (ev) {...}\n\nor when(exposureCompensationInfo.getExposureValue(it.roundToInt()))",
+      "range": {
+        "startLine": 533,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 17
+      },
+      "revId": "f47708332ea0399831068b682f67dfb2683f43ab",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "83f882f1_e30a3534",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-09-09T14:07:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a62ddff_7ebab11d",
       "range": {
         "startLine": 533,
         "startChar": 0,
