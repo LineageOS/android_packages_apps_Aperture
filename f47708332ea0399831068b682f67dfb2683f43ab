@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9a88e1f_39b6e174",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-09-09T08:19:37Z",
+      "side": 1,
+      "message": "Can you expose \"ExposureValue\" as a flow? Would make this more readable",
+      "revId": "f47708332ea0399831068b682f67dfb2683f43ab",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a62ddff_7ebab11d",
+        "filename": "app/src/main/java/org/lineageos/aperture/CameraActivity.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-09-09T08:19:37Z",
+      "side": 1,
+      "message": "val ev \u003d ...\nwhen (ev) {...}\n\nor when(exposureCompensationInfo.getExposureValue(it.roundToInt()))",
+      "range": {
+        "startLine": 533,
+        "startChar": 0,
+        "endLine": 538,
+        "endChar": 17
+      },
+      "revId": "f47708332ea0399831068b682f67dfb2683f43ab",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
