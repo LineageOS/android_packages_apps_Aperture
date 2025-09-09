@@ -34,6 +34,23 @@
       "parentUuid": "15969eae_0fe86fd5",
       "revId": "453f9e6eee75f7598ed6b63c4b8012cb6901401b",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c5574a94_c55a4dfa",
+        "filename": "app/src/main/java/org/lineageos/aperture/models/FrameRate.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-09-09T08:14:38Z",
+      "side": 1,
+      "message": "The more I read this class the more cursed it gets.\nI think it can be made much simpler with simple \u003c\u003e checks",
+      "revId": "453f9e6eee75f7598ed6b63c4b8012cb6901401b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
