@@ -45,6 +45,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
@@ -844,6 +845,28 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                     cameraController.cameraControl?.setExposureCompensationIndex(
                         exposureCompensationIndex
                     )
+                }
+            }
+
+            launch {
+                // Track all user preferences that requires a rebind
+                combine<Any?, _>(
+                    preferencesRepository.photoCaptureMode,
+                    preferencesRepository.enableZsl,
+                    preferencesRepository.videoStabilization,
+                    preferencesRepository.edgeMode,
+                    preferencesRepository.noiseReductionMode,
+                    preferencesRepository.shadingMode,
+                    preferencesRepository.colorCorrectionAberrationMode,
+                    preferencesRepository.distortionCorrectionMode,
+                    preferencesRepository.hotPixelMode,
+                ) { }.drop(1).collectLatest {
+                    updateConfiguration<CameraConfiguration> { cameraConfiguration ->
+                        createInitialCameraConfiguration(
+                            camera = cameraConfiguration.camera,
+                            cameraMode = cameraConfiguration.cameraMode,
+                        )
+                    }
                 }
             }
         }
