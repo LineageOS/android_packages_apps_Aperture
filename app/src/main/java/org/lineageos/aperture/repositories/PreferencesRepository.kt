@@ -140,6 +140,30 @@ class PreferencesRepository(
     ).asPreferenceHolder()
 
     /**
+     * Whether JPEG Ultra HDR should be used to store images if available.
+     */
+    val usePhotoJpegUltraHdr = primitivePreference(
+        key = "use_photo_jpeg_ultra_hdr",
+        defaultValue = true,
+    ).asPreferenceHolder()
+
+    /**
+     * Enable RAW image capture.
+     */
+    val enableRawImageCapture = primitivePreference(
+        key = "enable_raw_image_capture",
+        defaultValue = false,
+    ).asPreferenceHolder()
+
+    /**
+     * Whether storing JPEG should be disabled when using RAW.
+     */
+    val disableJpegWithRaw = primitivePreference(
+        key = "disable_jpeg_with_raw",
+        defaultValue = false,
+    ).asPreferenceHolder()
+
+    /**
      * Toggle left-right mirroring of the front facing camera images.
      */
     val photoFfcMirror = primitivePreference(
