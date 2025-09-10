@@ -131,6 +131,11 @@
     <string name="zoom_buttons_invert_summary">Invert zoom in and out behavior</string>
 
     <!-- Photo Preferences -->
+    <string name="photo_output_format_title">Output format</string>
+    <string name="photo_output_format_jpeg">JPEG</string>
+    <string name="photo_output_format_jpeg_ultra_hdr">JPEG Ultra-HDR</string>
+    <string name="photo_output_format_raw">RAW</string>
+    <string name="photo_output_format_raw_jpeg">RAW + JPEG</string>
     <string name="photo_capture_mode_title">Capture mode</string>
     <string name="photo_capture_mode_maximize_quality">Maximize quality</string>
     <string name="photo_capture_mode_minimize_latency">Minimize latency</string>
