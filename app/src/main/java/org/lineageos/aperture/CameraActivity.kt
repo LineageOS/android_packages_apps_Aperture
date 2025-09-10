@@ -1463,6 +1463,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 }
 
                 viewModel.cameraController.imageCaptureMode = cameraConfiguration.photoCaptureMode
+                viewModel.cameraController.imageOutputFormat = cameraConfiguration.outputFormat
 
                 viewModel.cameraController.imageCaptureResolutionSelector =
                     ResolutionSelector.Builder()
