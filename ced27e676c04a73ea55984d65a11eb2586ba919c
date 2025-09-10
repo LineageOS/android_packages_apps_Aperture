@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d05b6e8c_1b4f0c61",
+        "filename": "app/src/main/java/org/lineageos/aperture/models/CameraConfiguration.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-09-10T17:16:29Z",
+      "side": 1,
+      "message": "Should we convert photoCaptureMode here to an enum and elsehwere?\nOtherwise we have weird differences in code\n\nI went with int initially just because it matched, but I agree enum is better",
+      "revId": "ced27e676c04a73ea55984d65a11eb2586ba919c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
