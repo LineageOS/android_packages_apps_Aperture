@@ -33,6 +33,23 @@
       "message": "Can I say my explicit solution is probably saner?\nIt allows us to decide when to reconfigure the camera more granurarly",
       "revId": "25e50b58bf4664ea889ae551490b1f63aa708564",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b86df80a_24cbd018",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 11883
+      },
+      "writtenOn": "2025-09-10T17:31:40Z",
+      "side": 1,
+      "message": "I can\u0027t stomach this approach, sorry",
+      "revId": "25e50b58bf4664ea889ae551490b1f63aa708564",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
