@@ -114,6 +114,7 @@ import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.models.MediaType
 import org.lineageos.aperture.models.Permission
 import org.lineageos.aperture.models.PermissionState
+import org.lineageos.aperture.models.PhotoOutputFormat
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.models.TimerMode
 import org.lineageos.aperture.models.VideoMirrorMode
@@ -1462,7 +1463,26 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     "Requested ZSL capture mode when the camera doesn't support it"
                 }
 
+                require(
+                    cameraConfiguration.camera.supportedPhotoOutputFormats.contains(
+                        cameraConfiguration.photoOutputFormat
+                    )
+                ) {
+                    "Selected photo output format (${
+                        cameraConfiguration.photoOutputFormat
+                    } not supported by camera ${cameraConfiguration.camera.cameraId})"
+                }
+
                 viewModel.cameraController.imageCaptureMode = cameraConfiguration.photoCaptureMode
+
+                viewModel.cameraController.imageOutputFormat = when (
+                    cameraConfiguration.photoOutputFormat
+                ) {
+                    PhotoOutputFormat.JPEG -> ImageCapture.OUTPUT_FORMAT_JPEG
+                    PhotoOutputFormat.JPEG_ULTRA_HDR -> ImageCapture.OUTPUT_FORMAT_JPEG_ULTRA_HDR
+                    PhotoOutputFormat.RAW -> ImageCapture.OUTPUT_FORMAT_RAW
+                    PhotoOutputFormat.RAW_JPEG -> ImageCapture.OUTPUT_FORMAT_RAW_JPEG
+                }
 
                 viewModel.cameraController.imageCaptureResolutionSelector =
                     ResolutionSelector.Builder()
