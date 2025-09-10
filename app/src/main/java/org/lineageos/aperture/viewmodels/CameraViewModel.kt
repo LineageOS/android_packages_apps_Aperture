@@ -9,6 +9,7 @@ import android.animation.ValueAnimator
 import android.app.Application
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.ImageFormat
 import android.location.LocationManager
 import android.net.Uri
 import android.os.Build
@@ -80,6 +81,7 @@ import org.lineageos.aperture.models.GridMode
 import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.models.HotPixelMode
 import org.lineageos.aperture.models.NoiseReductionMode
+import org.lineageos.aperture.models.PhotoOutputFormat
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.models.ShadingMode
 import org.lineageos.aperture.models.TimerMode
@@ -90,6 +92,7 @@ import org.lineageos.aperture.utils.StorageUtils
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.reflect.safeCast
 
 /**
@@ -853,6 +856,9 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                 combine<Any?, _>(
                     preferencesRepository.photoCaptureMode,
                     preferencesRepository.enableZsl,
+                    preferencesRepository.usePhotoJpegUltraHdr,
+                    preferencesRepository.enableRawImageCapture,
+                    preferencesRepository.disableJpegWithRaw,
                     preferencesRepository.videoStabilization,
                     preferencesRepository.videoMirrorMode,
                     preferencesRepository.edgeMode,
@@ -945,6 +951,25 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             null
         }
 
+        val imageOutputFormat = cameraController.imageOutputFormat
+
+        val mimeType = when (imageOutputFormat) {
+            ImageCapture.OUTPUT_FORMAT_JPEG,
+            ImageCapture.OUTPUT_FORMAT_JPEG_ULTRA_HDR,
+            ImageCapture.OUTPUT_FORMAT_RAW_JPEG -> "image/jpeg"
+
+            ImageCapture.OUTPUT_FORMAT_RAW -> "image/x-adobe-dng"
+
+            else -> error("Unknown image output format")
+        }
+
+        val imageCount = AtomicInteger(
+            when (imageOutputFormat) {
+                ImageCapture.OUTPUT_FORMAT_RAW_JPEG -> 2
+                else -> 1
+            }
+        )
+
         // Create output options object which contains file + metadata
         val outputOptions = StorageUtils.getPhotoMediaStoreOutputOptions(
             applicationContext.contentResolver,
@@ -956,46 +981,88 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                     isReversedHorizontal = preferencesRepository.photoFfcMirror.value
                 }
             },
-            photoOutputStream
+            mimeType,
+            photoOutputStream,
         )
 
         // Set up image capture listener, which is triggered after photo has
         // been taken
-        cameraController.takePicture(
-            outputOptions,
-            ContextCompat.getMainExecutor(applicationContext),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onCaptureStarted() {
-                    emitEvent(Event.PhotoCaptureStatus.CaptureStarted)
+        val onImageSavedCallback = object : ImageCapture.OnImageSavedCallback {
+            override fun onCaptureStarted() {
+                emitEvent(Event.PhotoCaptureStatus.CaptureStarted)
 
-                    cameraSoundsUtils.playShutterClick()
-                }
+                cameraSoundsUtils.playShutterClick()
+            }
 
-                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    emitEvent(
-                        Event.PhotoCaptureStatus.ImageSaved(
-                            output,
-                            photoOutputStream,
-                        )
-                    )
+            override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                Log.d(
+                    LOG_TAG,
+                    "Photo capture succeeded: ${output.savedUri} format = ${output.imageFormat}"
+                )
 
-                    Log.d(LOG_TAG, "Photo capture succeeded: ${output.savedUri}")
-                    cameraState.value = CameraState.IDLE
-                    if (!inSingleCaptureMode.value) {
-                        output.savedUri?.let {
-                            mediaRepository.broadcastNewPicture(it)
-                        }
+                if (!inSingleCaptureMode.value) {
+                    output.savedUri?.let {
+                        mediaRepository.broadcastNewPicture(it)
                     }
                 }
 
-                override fun onError(exc: ImageCaptureException) {
-                    emitEvent(Event.PhotoCaptureStatus.Error(exc))
-
-                    Log.e(LOG_TAG, "Photo capture failed", exc)
+                if (imageCount.decrementAndGet() == 0) {
                     cameraState.value = CameraState.IDLE
                 }
+
+                // We only care about JPEG-like formats
+                if (imageOutputFormat == ImageCapture.OUTPUT_FORMAT_RAW_JPEG
+                    && output.imageFormat in RAW_FORMATS
+                ) {
+                    return
+                }
+
+                emitEvent(
+                    Event.PhotoCaptureStatus.ImageSaved(
+                        output,
+                        photoOutputStream,
+                    )
+                )
             }
-        )
+
+            override fun onError(exc: ImageCaptureException) {
+                emitEvent(Event.PhotoCaptureStatus.Error(exc))
+
+                Log.e(LOG_TAG, "Photo capture failed", exc)
+                cameraState.value = CameraState.IDLE
+            }
+        }
+
+        when (imageOutputFormat) {
+            ImageCapture.OUTPUT_FORMAT_RAW_JPEG -> {
+                // Create output options object which contains raw file + metadata
+                val rawOutputOptions = StorageUtils.getPhotoMediaStoreOutputOptions(
+                    applicationContext.contentResolver,
+                    ImageCapture.Metadata().apply {
+                        if (!inSingleCaptureMode.value) {
+                            location = this@CameraViewModel.location.value
+                        }
+                        if (cameraFacing.value == CameraFacing.FRONT) {
+                            isReversedHorizontal = preferencesRepository.photoFfcMirror.value
+                        }
+                    },
+                    "image/x-adobe-dng",
+                )
+
+                cameraController.takePicture(
+                    rawOutputOptions,
+                    outputOptions,
+                    ContextCompat.getMainExecutor(applicationContext),
+                    onImageSavedCallback,
+                )
+            }
+
+            else -> cameraController.takePicture(
+                outputOptions,
+                ContextCompat.getMainExecutor(applicationContext),
+                onImageSavedCallback,
+            )
+        }
     }
 
     fun captureVideo() {
@@ -1494,6 +1561,29 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                 else -> photoCaptureMode
             }
 
+            val usePhotoJpegUltraHdr = preferencesRepository.usePhotoJpegUltraHdr.value
+            val enableRawImageCapture = preferencesRepository.enableRawImageCapture.value
+            val disableJpegWithRaw = preferencesRepository.disableJpegWithRaw.value
+            val photoOutputFormat = when {
+                inSingleCaptureMode.value -> PhotoOutputFormat.JPEG
+
+                enableRawImageCapture
+                        && disableJpegWithRaw
+                        && camera.supportedPhotoOutputFormats.contains(
+                    PhotoOutputFormat.RAW
+                ) -> PhotoOutputFormat.RAW
+
+                enableRawImageCapture && camera.supportedPhotoOutputFormats.contains(
+                    PhotoOutputFormat.RAW_JPEG
+                ) -> PhotoOutputFormat.RAW_JPEG
+
+                usePhotoJpegUltraHdr && camera.supportedPhotoOutputFormats.contains(
+                    PhotoOutputFormat.JPEG_ULTRA_HDR
+                ) -> PhotoOutputFormat.JPEG_ULTRA_HDR
+
+                else -> PhotoOutputFormat.JPEG
+            }
+
             CameraConfiguration.Photo(
                 camera = camera,
                 extensionMode = preferencesRepository.photoEffect.value,
@@ -1501,6 +1591,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                 photoCaptureMode = photoCaptureMode,
                 photoAspectRatio = preferencesRepository.photoAspectRatio.value,
                 enableHighResolution = overlaysRepository.enableHighResolution,
+                photoOutputFormat = photoOutputFormat,
             )
         }
 
@@ -1685,5 +1776,12 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                 CameraFacing.EXTERNAL -> 2
             }
         }
+
+        private val RAW_FORMATS = listOf(
+            ImageFormat.RAW10,
+            ImageFormat.RAW12,
+            ImageFormat.RAW_SENSOR,
+            ImageFormat.RAW_PRIVATE,
+        )
     }
 }
