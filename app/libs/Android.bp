@@ -7,7 +7,7 @@
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-camera2",
-    aars: ["androidx/camera/camera-camera2/1.5.0-rc01/camera-camera2-1.5.0-rc01.aar"],
+    aars: ["androidx/camera/camera-camera2/1.5.0/camera-camera2-1.5.0.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -33,7 +33,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-core",
-    aars: ["androidx/camera/camera-core/1.5.0-rc01/camera-core-1.5.0-rc01.aar"],
+    aars: ["androidx/camera/camera-core/1.5.0/camera-core-1.5.0.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -64,7 +64,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-extensions",
-    aars: ["androidx/camera/camera-extensions/1.5.0-rc01/camera-extensions-1.5.0-rc01.aar"],
+    aars: ["androidx/camera/camera-extensions/1.5.0/camera-extensions-1.5.0.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -87,7 +87,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-lifecycle",
-    aars: ["androidx/camera/camera-lifecycle/1.5.0-rc01/camera-lifecycle-1.5.0-rc01.aar"],
+    aars: ["androidx/camera/camera-lifecycle/1.5.0/camera-lifecycle-1.5.0.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -112,7 +112,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-video",
-    aars: ["androidx/camera/camera-video/1.5.0-rc01/camera-video-1.5.0-rc01.aar"],
+    aars: ["androidx/camera/camera-video/1.5.0/camera-video-1.5.0.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -136,7 +136,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera_camera-view",
-    aars: ["androidx/camera/camera-view/1.5.0-rc01/camera-view-1.5.0-rc01.aar"],
+    aars: ["androidx/camera/camera-view/1.5.0/camera-view-1.5.0.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -165,7 +165,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera.featurecombinationquery_featurecombinationquery",
-    aars: ["androidx/camera/featurecombinationquery/featurecombinationquery/1.5.0-rc01/featurecombinationquery-1.5.0-rc01.aar"],
+    aars: ["androidx/camera/featurecombinationquery/featurecombinationquery/1.5.0/featurecombinationquery-1.5.0.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
@@ -181,7 +181,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.camera.viewfinder_viewfinder-core",
-    aars: ["androidx/camera/viewfinder/viewfinder-core/1.5.0-rc01/viewfinder-core-1.5.0-rc01.aar"],
+    aars: ["androidx/camera/viewfinder/viewfinder-core/1.5.0/viewfinder-core-1.5.0.aar"],
     sdk_version: "35",
     min_sdk_version: "26",
     apex_available: [
