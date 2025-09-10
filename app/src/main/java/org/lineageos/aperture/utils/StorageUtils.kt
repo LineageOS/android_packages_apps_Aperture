@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -22,16 +22,17 @@ object StorageUtils {
     private val STORAGE_DESTINATION = "${Environment.DIRECTORY_DCIM}/Camera"
 
     /**
-     * Returns a new ImageCapture.OutputFileOptions to use to store a JPEG photo
+     * Returns a new ImageCapture.OutputFileOptions to use to store a photo
      */
     fun getPhotoMediaStoreOutputOptions(
         contentResolver: ContentResolver,
         metadata: ImageCapture.Metadata,
-        outputStream: OutputStream? = null
+        mimeType: String,
+        outputStream: OutputStream? = null,
     ): ImageCapture.OutputFileOptions {
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 put(MediaStore.Images.Media.RELATIVE_PATH, STORAGE_DESTINATION)
             }

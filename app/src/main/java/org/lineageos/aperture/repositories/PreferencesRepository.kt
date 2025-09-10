@@ -31,6 +31,7 @@ import org.lineageos.aperture.models.GridMode
 import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.models.HotPixelMode
 import org.lineageos.aperture.models.NoiseReductionMode
+import org.lineageos.aperture.models.OutputFormat
 import org.lineageos.aperture.models.Preference
 import org.lineageos.aperture.models.Preference.Companion.enumPreference
 import org.lineageos.aperture.models.Preference.Companion.primitivePreference
@@ -128,6 +129,20 @@ class PreferencesRepository(
         enumToPreferenceValue = mapOf(
             ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY to "maximize_quality",
             ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY to "minimize_latency",
+        ),
+    ).asPreferenceHolder()
+
+    /**
+     * Desired [ImageCapture.OutputFormat] for photos.
+     */
+    val outputFormat = enumPreference(
+        key = "photo_output_format",
+        defaultValue = OutputFormat.JPEG,
+        enumToPreferenceValue = mapOf(
+            OutputFormat.JPEG to "jpeg",
+            OutputFormat.JPEG_ULTRA_HDR to "jpeg_ultra_hdr",
+            OutputFormat.RAW to "raw",
+            OutputFormat.RAW_JPEG to "raw_jpeg",
         ),
     ).asPreferenceHolder()
 
