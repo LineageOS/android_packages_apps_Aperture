@@ -79,10 +79,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.lineageos.aperture.ext.camera2CameraControl
+import org.lineageos.aperture.ext.emitOnState
 import org.lineageos.aperture.ext.flashMode
 import org.lineageos.aperture.ext.mapToRange
 import org.lineageos.aperture.ext.px
@@ -722,7 +725,13 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         launch {
-            viewModel.cameraConfiguration.collectLatest { cameraConfiguration ->
+            // Rebind camera use cases when the lifecycle is resumed
+            combine(
+                viewModel.cameraConfiguration,
+                lifecycle.emitOnState(Lifecycle.State.RESUMED).onStart { emit(Unit) },
+            ) { cameraConfiguration, _ ->
+                cameraConfiguration
+            }.collectLatest { cameraConfiguration ->
                 bindCameraUseCases(cameraConfiguration)
             }
         }
