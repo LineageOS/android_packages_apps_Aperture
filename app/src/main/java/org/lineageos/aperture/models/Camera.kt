@@ -16,6 +16,7 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.CameraState
 import androidx.camera.core.ExperimentalLensFacing
 import androidx.camera.core.ExperimentalZeroShutterLag
+import androidx.camera.core.ImageCapture
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.video.Quality
 import androidx.camera.video.Recorder
@@ -70,6 +71,18 @@ class Camera private constructor(
         cameraInfo.exposureState.exposureCompensationRange.toClosedRange<Int>()
 
     val intrinsicZoomRatio = cameraInfo.intrinsicZoomRatio
+
+    private val imageCaptureCapabilities = ImageCapture.getImageCaptureCapabilities(cameraInfo)
+
+    val supportedPhotoOutputFormats = imageCaptureCapabilities.supportedOutputFormats.map {
+        when (it) {
+            ImageCapture.OUTPUT_FORMAT_JPEG -> PhotoOutputFormat.JPEG
+            ImageCapture.OUTPUT_FORMAT_JPEG_ULTRA_HDR -> PhotoOutputFormat.JPEG_ULTRA_HDR
+            ImageCapture.OUTPUT_FORMAT_RAW -> PhotoOutputFormat.RAW
+            ImageCapture.OUTPUT_FORMAT_RAW_JPEG -> PhotoOutputFormat.RAW_JPEG
+            else -> error("Unknown CameraX output format $it")
+        }
+    }
 
     private val supportedVideoFrameRates = cameraInfo.supportedFrameRateRanges.mapNotNull {
         FrameRate.fromRange(it.toClosedRange())
