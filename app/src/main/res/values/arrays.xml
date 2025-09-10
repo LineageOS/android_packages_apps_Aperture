@@ -72,6 +72,21 @@
         <item>nothing</item>
     </string-array>
 
+    <!-- Photo format preference -->
+    <string-array name="photo_output_format_entries" translatable="false">
+        <item>@string/photo_output_format_jpeg</item>
+        <item>@string/photo_output_format_jpeg_ultra_hdr</item>
+        <item>@string/photo_output_format_raw</item>
+        <item>@string/photo_output_format_raw_jpeg</item>
+    </string-array>
+
+    <string-array name="photo_output_format_values" translatable="false">
+        <item>jpeg</item>
+        <item>jpeg_ultra_hdr</item>
+        <item>raw</item>
+        <item>raw_jpeg</item>
+    </string-array>
+
     <!-- Photo capture mode Preference -->
     <string-array name="photo_capture_mode_entries" translatable="false">
         <item>@string/photo_capture_mode_maximize_quality</item>
