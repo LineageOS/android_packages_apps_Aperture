@@ -647,6 +647,11 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.reinitializeCameraConfiguration()
+    }
+
     override fun onDestroy() {
         // Detach CameraController from ScreenFlashView
         screenFlashView.setController(null)
@@ -1463,6 +1468,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 }
 
                 viewModel.cameraController.imageCaptureMode = cameraConfiguration.photoCaptureMode
+                viewModel.cameraController.imageOutputFormat = cameraConfiguration.outputFormat
 
                 viewModel.cameraController.imageCaptureResolutionSelector =
                     ResolutionSelector.Builder()
