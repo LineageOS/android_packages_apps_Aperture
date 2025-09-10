@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6472a1cc_c35f7b68",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-09-10T23:38:51Z",
+      "side": 1,
+      "message": "Done\n\nCurrently once a single preference has been changed it will recreate the config, we could actually check each preference with the current context (e.g. rebind when video stabilization changes only if we\u0027re in camera mode), but I think StateFlow should not emit a new value if the generated config is the same as the previous one",
+      "revId": "715705702d328ba5f1f8d65f12875d50109c3d71",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
