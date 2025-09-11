@@ -28,16 +28,16 @@ object StorageUtils {
         contentResolver: ContentResolver,
         metadata: ImageCapture.Metadata,
         mimeType: String,
+        timestamp: Long,
         outputStream: OutputStream? = null,
     ): ImageCapture.OutputFileOptions {
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
+            put(MediaStore.MediaColumns.DISPLAY_NAME, getTimeString(timestamp))
             put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 put(MediaStore.Images.Media.RELATIVE_PATH, STORAGE_DESTINATION)
             }
-            put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis());
-            put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+            put(MediaStore.Images.Media.DATE_TAKEN, timestamp);
         }
 
         val outputFileOptions = outputStream?.let {
@@ -56,10 +56,11 @@ object StorageUtils {
      */
     fun getVideoMediaStoreOutputOptions(
         contentResolver: ContentResolver,
-        location: Location?
+        timestamp: Long,
+        location: Location?,
     ): MediaStoreOutputOptions {
         val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, getCurrentTimeString())
+            put(MediaStore.MediaColumns.DISPLAY_NAME, getTimeString(timestamp))
             put(MediaStore.MediaColumns.MIME_TYPE, "video/mp4")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 put(MediaStore.Video.Media.RELATIVE_PATH, STORAGE_DESTINATION)
@@ -73,8 +74,7 @@ object StorageUtils {
             .build()
     }
 
-    private fun getCurrentTimeString(): String {
-        return SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-            .format(System.currentTimeMillis())
+    private fun getTimeString(timestamp: Long): String {
+        return SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(timestamp)
     }
 }
