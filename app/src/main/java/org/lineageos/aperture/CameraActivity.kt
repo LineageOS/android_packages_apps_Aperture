@@ -1646,9 +1646,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             // When keyguard is unlocked, we want media from MediaStore, else we only trust the
             // ones coming from the capture
             uri?.also {
-                galleryButtonPreviewImageView.isVisible = true
-                galleryButtonIconImageView.isVisible = false
-
                 galleryButtonPreviewImageView.load(uri) {
                     decoderFactory(VideoFrameDecoder.Factory())
                     crossfade(true)
@@ -1665,6 +1662,10 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                             galleryButtonPreviewImageView.isVisible = false
                             galleryButtonIconImageView.isVisible = true
                         },
+                        onSuccess = { _, _ ->
+                            galleryButtonPreviewImageView.isVisible = true
+                            galleryButtonIconImageView.isVisible = false
+                        }
                     )
                 }
             } ?: run {
