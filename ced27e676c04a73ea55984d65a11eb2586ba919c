@@ -34,6 +34,24 @@
       "parentUuid": "d05b6e8c_1b4f0c61",
       "revId": "ced27e676c04a73ea55984d65a11eb2586ba919c",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2282828_08fde21a",
+        "filename": "app/src/main/java/org/lineageos/aperture/models/CameraConfiguration.kt",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-09-11T11:40:30Z",
+      "side": 1,
+      "message": "Sorry, forgot to answer lol\n\nYes, can be done in a follow-up commit, when I made the CameraConfiguration class I kept the Int since we never made an enum class for it",
+      "parentUuid": "bf0a7217_d152fbcc",
+      "revId": "ced27e676c04a73ea55984d65a11eb2586ba919c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
