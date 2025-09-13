@@ -53,7 +53,6 @@ import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.CameraController
 import androidx.camera.view.PreviewView
 import androidx.camera.view.ScreenFlashView
-import androidx.camera.view.onPinchToZoom
 import androidx.camera.viewfinder.core.ZoomGestureDetector
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -230,25 +229,23 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             }
         })
     }
-    private val zoomGestureDetector by lazy {
-        ZoomGestureDetector(this) {
-            when (it) {
-                is ZoomGestureDetector.ZoomEvent.Begin -> {
-                    zoomGestureDetectorIsInProgress = true
-                }
-
-                is ZoomGestureDetector.ZoomEvent.Move -> {
-                    viewModel.cameraController.onPinchToZoom(it.incrementalScaleFactor)
-                    handler.removeMessages(MSG_ON_PINCH_TO_ZOOM)
-                    handler.sendMessageDelayed(handler.obtainMessage(MSG_ON_PINCH_TO_ZOOM), 500)
-                }
-
-                is ZoomGestureDetector.ZoomEvent.End -> {
-                    zoomGestureDetectorIsInProgress = false
-                }
+    private val zoomGestureDetector = ZoomGestureDetector(this) {
+        when (it) {
+            is ZoomGestureDetector.ZoomEvent.Begin -> {
+                zoomGestureDetectorIsInProgress = true
             }
-            true
+
+            is ZoomGestureDetector.ZoomEvent.Move -> {
+                viewModel.cameraController.onPinchToZoom(it.incrementalScaleFactor)
+                handler.removeMessages(MSG_ON_PINCH_TO_ZOOM)
+                handler.sendMessageDelayed(handler.obtainMessage(MSG_ON_PINCH_TO_ZOOM), 500)
+            }
+
+            is ZoomGestureDetector.ZoomEvent.End -> {
+                zoomGestureDetectorIsInProgress = false
+            }
         }
+        true
     }
     private var zoomGestureDetectorIsInProgress = false
 
