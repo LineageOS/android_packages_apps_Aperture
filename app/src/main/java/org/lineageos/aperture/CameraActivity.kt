@@ -60,13 +60,10 @@ import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.camera.video.QualitySelector
 import androidx.camera.video.VideoRecordEvent
-import androidx.camera.video.isAudioSourceConfigured
-import androidx.camera.video.muted
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
 import androidx.camera.view.ScreenFlashView
-import androidx.camera.view.onPinchToZoom
 import androidx.camera.view.video.AudioConfig
 import androidx.camera.viewfinder.core.ZoomGestureDetector
 import androidx.cardview.widget.CardView
@@ -2092,7 +2089,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         } else {
             AudioConfig.AUDIO_DISABLED
         }
-        videoRecording?.muted = !microphoneMode
+        videoRecording?.mute(!microphoneMode)
 
         videoMicMode = microphoneMode
 
