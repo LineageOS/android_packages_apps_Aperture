@@ -53,7 +53,6 @@ import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.CameraController
 import androidx.camera.view.PreviewView
 import androidx.camera.view.ScreenFlashView
-import androidx.camera.view.onPinchToZoom
 import androidx.camera.viewfinder.core.ZoomGestureDetector
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
