@@ -106,6 +106,23 @@
       "parentUuid": "bcf49287_36ae5e1d",
       "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "411bc60d_45eeb874",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-09-13T16:28:18Z",
+      "side": 1,
+      "message": "Hi, given frame rate is now a supported feature with CameraX, can you try opening an issue at Google Issue Tracker? Also give them this patch as an example, they might look into either contacting MTK about this or adding a quirk to CameraX, bypassing my opinion about this :)\n\nExamples:\n- https://issuetracker.google.com/issues/286801438\n- https://issuetracker.google.com/issues/325504773",
+      "revId": "00e7934ce4e08395d4501f259ec901dfcc141bcb",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
