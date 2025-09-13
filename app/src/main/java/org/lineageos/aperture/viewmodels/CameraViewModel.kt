@@ -25,8 +25,6 @@ import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.camera.video.Recording
 import androidx.camera.video.VideoRecordEvent
-import androidx.camera.video.isAudioSourceConfigured
-import androidx.camera.video.muted
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.video.AudioConfig
 import androidx.core.animation.addListener
@@ -1428,7 +1426,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             false -> AudioConfig.AUDIO_DISABLED
         }
 
-        videoRecording.value?.muted = !videoMicrophoneEnabled
+        videoRecording.value?.mute(!videoMicrophoneEnabled)
 
         this.videoMicMode.value = videoMicrophoneEnabled
 
