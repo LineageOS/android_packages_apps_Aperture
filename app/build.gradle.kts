@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
     implementation(libs.androidx.preference)
+    implementation(libs.androidx.recyclerview)
     implementation(libs.material)
     implementation(libs.coil)
     implementation(libs.coil.video)
