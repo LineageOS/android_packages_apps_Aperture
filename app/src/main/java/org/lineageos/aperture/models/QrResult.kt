@@ -26,7 +26,7 @@ data class QrResult(
         val icon: Icon?,
         val canTintIcon: Boolean,
         val pendingIntent: PendingIntent?,
-    ) {
+    ) : UniqueItem<Action> {
         class Builder(private val context: Context) {
             var title: String? = null
             var contentDescription: String? = null
@@ -73,6 +73,10 @@ data class QrResult(
                 pendingIntent = pendingIntent,
             )
         }
+
+        override fun areItemsTheSame(other: Action) = this == other
+
+        override fun areContentsTheSame(other: Action) = true
 
         companion object {
             operator fun invoke(

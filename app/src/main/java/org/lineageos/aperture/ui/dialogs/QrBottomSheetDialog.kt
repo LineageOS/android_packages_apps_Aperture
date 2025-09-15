@@ -13,16 +13,12 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.text.method.LinkMovementMethod
-import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.LinearLayoutCompat.LayoutParams
 import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -31,41 +27,10 @@ import org.lineageos.aperture.ext.getThemeColor
 import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.ext.sendWithBalAllowed
 import org.lineageos.aperture.models.QrResult
-import kotlin.reflect.cast
+import org.lineageos.aperture.ui.recyclerview.SimpleListAdapter
+import org.lineageos.aperture.ui.recyclerview.UniqueItemDiffCallback
 
 class QrBottomSheetDialog(context: Context) : BottomSheetDialog(context) {
-    private inner class ActionViewHolder(
-        private val view: MaterialButton,
-    ) : RecyclerView.ViewHolder(view) {
-        fun bind(item: QrResult.Action) {
-            view.text = item.title
-            view.contentDescription = item.contentDescription
-            view.setOnClickListener {
-                try {
-                    item.pendingIntent?.sendWithBalAllowed()
-                } catch (_: PendingIntent.CanceledException) {
-                    Toast.makeText(
-                        context,
-                        R.string.qr_no_app_available_for_action,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-            if (item.canTintIcon) {
-                item.icon?.setTint(
-                    context.getThemeColor(com.google.android.material.R.attr.colorOnBackground)
-                )
-            }
-            item.icon?.loadDrawable(context)?.also { drawable ->
-                drawable.setBounds(0, 0, 15.px, 15.px)
-
-                view.setCompoundDrawables(
-                    drawable, null, null, null
-                )
-            } ?: view.setCompoundDrawables(null, null, null, null)
-        }
-    }
-
     // System services
     private val clipboardManager = context.getSystemService(ClipboardManager::class.java)
     private val keyguardManager = context.getSystemService(KeyguardManager::class.java)
@@ -103,41 +68,37 @@ class QrBottomSheetDialog(context: Context) : BottomSheetDialog(context) {
 
     // RecyclerView
     private val actionsAdapter by lazy {
-        object : ListAdapter<QrResult.Action, ActionViewHolder>(
-            object : DiffUtil.ItemCallback<QrResult.Action>() {
-                override fun areItemsTheSame(
-                    oldItem: QrResult.Action,
-                    newItem: QrResult.Action
-                ) = oldItem == newItem
-
-                override fun areContentsTheSame(
-                    oldItem: QrResult.Action,
-                    newItem: QrResult.Action
-                ) = true
-            }
+        object : SimpleListAdapter<QrResult.Action, MaterialButton>(
+            UniqueItemDiffCallback(),
+            R.layout.qr_bottom_sheet_action_button,
         ) {
-            override fun onCreateViewHolder(
-                parent: ViewGroup,
-                viewType: Int,
-            ) = ActionViewHolder(
-                MaterialButton::class.cast(
-                    layoutInflater.inflate(
-                        R.layout.qr_bottom_sheet_action_button,
-                        parent,
-                        false,
-                    )
-                ).apply {
-                    layoutParams = LayoutParams(
-                        LayoutParams.WRAP_CONTENT,
-                        LayoutParams.WRAP_CONTENT,
+            override fun ViewHolder.onBindView(item: QrResult.Action) {
+                view.text = item.title
+                view.contentDescription = item.contentDescription
+                view.setOnClickListener {
+                    try {
+                        item.pendingIntent?.sendWithBalAllowed()
+                    } catch (_: PendingIntent.CanceledException) {
+                        Toast.makeText(
+                            context,
+                            R.string.qr_no_app_available_for_action,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+                if (item.canTintIcon) {
+                    item.icon?.setTint(
+                        context.getThemeColor(com.google.android.material.R.attr.colorOnBackground)
                     )
                 }
-            )
+                item.icon?.loadDrawable(context)?.also { drawable ->
+                    drawable.setBounds(0, 0, 15.px, 15.px)
 
-            override fun onBindViewHolder(
-                holder: ActionViewHolder,
-                position: Int,
-            ) = holder.bind(getItem(position))
+                    view.setCompoundDrawables(
+                        drawable, null, null, null
+                    )
+                } ?: view.setCompoundDrawables(null, null, null, null)
+            }
         }
     }
 
