@@ -16,6 +16,24 @@
       "message": "crash , here the log \nhttps://pastebin.com/mC6e2mYy",
       "revId": "d7fa247b257696bd77792c55b387a256234c87a3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ad1dc1c_50d6110c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2025-09-15T10:07:34Z",
+      "side": 1,
+      "message": "Device specific issue, nothing I can help with",
+      "parentUuid": "732ea447_4e16943b",
+      "revId": "d7fa247b257696bd77792c55b387a256234c87a3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": []
