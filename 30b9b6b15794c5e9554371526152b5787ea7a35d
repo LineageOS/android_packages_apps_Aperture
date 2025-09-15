@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15c73ebc_cbc54f8e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35551
+      },
+      "writtenOn": "2025-09-15T02:36:33Z",
+      "side": 1,
+      "message": "app still crash here highlight the log \nat org.lineageos.aperture.viewmodels.CameraViewModel.\u003cinit\u003e(go/retraceme 21be8f84b41826bd8e391f04f8ddaf148bb7281aacefba4a0debb1c892654f91:7)\n\t... 28 more\nCaused by: android.os.ServiceSpecificException: getCameraCharacteristics:1358: Unable to retrieve camera characteristics for unknown device : No such file or directory (-2) (code 3)\n\nfull logcat -b crash\n https://pastebin.com/mC6e2mYy",
+      "revId": "30b9b6b15794c5e9554371526152b5787ea7a35d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
