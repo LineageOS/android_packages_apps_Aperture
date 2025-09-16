@@ -34,6 +34,24 @@
       "parentUuid": "732ea447_4e16943b",
       "revId": "d7fa247b257696bd77792c55b387a256234c87a3",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "825cbf57_876105c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 35551
+      },
+      "writtenOn": "2025-09-16T02:54:15Z",
+      "side": 1,
+      "message": "is camera characterized defined",
+      "parentUuid": "4ad1dc1c_50d6110c",
+      "revId": "d7fa247b257696bd77792c55b387a256234c87a3",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ],
   "submitRequirementResults": []
