@@ -12,6 +12,7 @@ import android.content.IntentFilter
 import android.graphics.ImageFormat
 import android.location.LocationManager
 import android.net.Uri
+import android.os.BatteryManager
 import android.os.Build
 import android.os.PowerManager
 import android.util.Log
@@ -50,6 +51,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
@@ -78,6 +80,7 @@ import org.lineageos.aperture.models.FlashMode
 import org.lineageos.aperture.models.GridMode
 import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.models.HotPixelMode
+import org.lineageos.aperture.models.IslandItem
 import org.lineageos.aperture.models.NoiseReductionMode
 import org.lineageos.aperture.models.PhotoOutputFormat
 import org.lineageos.aperture.models.Rotation
@@ -541,9 +544,10 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             initialValue = preferencesRepository.saveLocation,
         )
 
-    val batteryIntent = applicationContext.broadcastReceiverFlow(
+    private val batteryIntent = applicationContext.broadcastReceiverFlow(
         IntentFilter(Intent.ACTION_BATTERY_CHANGED)
     )
+        .onStart { emit(null) }
         .flowOn(Dispatchers.IO)
         .stateIn(
             viewModelScope,
@@ -847,6 +851,86 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = false
+        )
+
+    /**
+     * Island items.
+     */
+    val islandItems = combine(
+        cameraConfiguration,
+        videoMicMode,
+        batteryIntent,
+        thermalStatus,
+    ) { cameraConfiguration, videoMicMode, batteryIntent, thermalStatus ->
+        buildList {
+            when (thermalStatus) {
+                ThermalStatus.NONE,
+                ThermalStatus.LIGHT -> {}
+
+                ThermalStatus.MODERATE,
+                ThermalStatus.SEVERE -> add(
+                    IslandItem.ThermalThrottling(false)
+                )
+
+                ThermalStatus.CRITICAL,
+                ThermalStatus.EMERGENCY,
+                ThermalStatus.SHUTDOWN -> add(
+                    IslandItem.ThermalThrottling(true)
+                )
+            }
+
+            batteryIntent?.let {
+                val level = it.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+                val scale = it.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+
+                val percentage = level.times(100).div(scale)
+
+                if (percentage <= 15) {
+                    add(
+                        IslandItem.LowBattery(
+                            isCharging = it.getIntExtra(
+                                BatteryManager.EXTRA_PLUGGED,
+                                0,
+                            ) != 0,
+                        )
+                    )
+                }
+
+                when (cameraConfiguration) {
+                    is CameraConfiguration.Photo -> {
+                        when (cameraConfiguration.photoOutputFormat) {
+                            PhotoOutputFormat.JPEG -> {}
+
+                            PhotoOutputFormat.JPEG_ULTRA_HDR -> add(
+                                IslandItem.PhotoJpegUltraHdr
+                            )
+
+                            PhotoOutputFormat.RAW -> add(
+                                IslandItem.PhotoRawEnabled(false)
+                            )
+
+                            PhotoOutputFormat.RAW_JPEG -> add(
+                                IslandItem.PhotoRawEnabled(true)
+                            )
+                        }
+                    }
+
+                    is CameraConfiguration.Video -> {
+                        if (!videoMicMode) {
+                            add(IslandItem.VideoMicMuted)
+                        }
+                    }
+
+                    is CameraConfiguration.Qr -> {}
+                }
+            }
+        }
+    }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = listOf(),
         )
 
     init {

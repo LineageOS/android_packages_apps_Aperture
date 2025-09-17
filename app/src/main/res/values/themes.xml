@@ -50,11 +50,10 @@
     </style>
 
     <!-- Info chip -->
-    <style name="Theme.Aperture.Camera.InfoChip" />
-
-    <style name="Theme.Aperture.Camera.InfoChip.ImageView">
-        <item name="android:layout_width">16dp</item>
-        <item name="android:layout_height">16dp</item>
-        <item name="android:visibility">gone</item>
+    <style name="Theme.Aperture.Camera.Island.ImageView" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingVertical">8dp</item>
+        <item name="android:paddingHorizontal">2dp</item>
     </style>
 </resources>

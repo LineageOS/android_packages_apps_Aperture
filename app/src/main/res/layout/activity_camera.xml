@@ -65,8 +65,8 @@
         app:layout_constraintStart_toStartOf="@+id/viewFinder"
         app:layout_constraintTop_toTopOf="@+id/viewFinder" />
 
-    <org.lineageos.aperture.ui.views.InfoChipView
-        android:id="@+id/infoChipView"
+    <org.lineageos.aperture.ui.views.IslandView
+        android:id="@+id/islandView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"

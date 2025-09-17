@@ -126,7 +126,7 @@ import org.lineageos.aperture.ui.views.CapturePreviewLayout
 import org.lineageos.aperture.ui.views.CountDownView
 import org.lineageos.aperture.ui.views.GridView
 import org.lineageos.aperture.ui.views.HorizontalSlider
-import org.lineageos.aperture.ui.views.InfoChipView
+import org.lineageos.aperture.ui.views.IslandView
 import org.lineageos.aperture.ui.views.LensSelectorLayout
 import org.lineageos.aperture.ui.views.LevelerView
 import org.lineageos.aperture.ui.views.PreviewBlurView
@@ -163,7 +163,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     private val googleLensButton by lazy { findViewById<ImageButton>(R.id.googleLensButton) }
     private val gridButton by lazy { findViewById<Button>(R.id.gridButton) }
     private val gridView by lazy { findViewById<GridView>(R.id.gridView) }
-    private val infoChipView by lazy { findViewById<InfoChipView>(R.id.infoChipView) }
+    private val islandView by lazy { findViewById<IslandView>(R.id.islandView) }
     private val lensSelectorLayout by lazy { findViewById<LensSelectorLayout>(R.id.lensSelectorLayout) }
     private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
     private val mainLayout by lazy { findViewById<ConstraintLayout>(R.id.mainLayout) }
@@ -730,9 +730,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         launch {
             viewModel.cameraMode.collectLatest { cameraMode ->
-                // Update info chip
-                infoChipView.setCameraMode(cameraMode)
-
                 // Hide secondary top bar
                 secondaryTopBarLayout.isVisible = false
 
@@ -914,7 +911,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 zoomLevel.screenRotation = screenRotation
 
                 // Rotate info chip
-                infoChipView.setScreenRotation(screenRotation)
+                islandView.setScreenRotation(screenRotation)
 
                 // Rotate secondary top bar buttons
                 ConstraintLayout::class.safeCast(
@@ -1153,12 +1150,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         launch {
-            viewModel.batteryIntent.collectLatest { batteryIntent ->
-                infoChipView.setBatteryIntent(batteryIntent)
-            }
-        }
-
-        launch {
             viewModel.exposureCompensationRangeToLevel.collectLatest { (range, level) ->
                 exposureLevel.steps = range.endInclusive - range.start
                 exposureLevel.progress = level
@@ -1313,9 +1304,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         launch {
             viewModel.videoMicMode.collectLatest { videoMicMode ->
-                // Update info chip
-                infoChipView.setVideoMicMode(videoMicMode)
-
                 micButton.setCompoundDrawablesWithIntrinsicBounds(
                     0,
                     when (videoMicMode) {
@@ -1399,6 +1387,12 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         launch {
             viewModel.canFlipCamera.collectLatest { canFlipCamera ->
                 flipCameraButton.isInvisible = !canFlipCamera
+            }
+        }
+
+        launch {
+            viewModel.islandItems.collectLatest { islandItems ->
+                islandView.setItems(islandItems)
             }
         }
     }

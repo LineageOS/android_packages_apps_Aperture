@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: Material Design Authors / Google LLC
+     SPDX-FileCopyrightText: 2025 The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp"
+    android:height="24dp"
+    android:tint="#000000"
+    android:viewportWidth="2560"
+    android:viewportHeight="960">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="m200,840q-33,0 -56.5,-23.5Q120,793 120,760v-560q0,-33 23.5,-56.5Q167,120 200,120h560q33,0 56.5,23.5 23.5,23.5 23.5,56.5v560q0,33 -23.5,56.5Q793,840 760,840ZM200,760L760,760L760,200L200,200ZM240,680L720,680L570,480 450,640 360,520ZM200,760v-560z" />
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M1250,510L1070,510l0,-60l180,0l0,-180l60,0l0,180l180,0l0,60L1310,510l0,180l-60,0z" />
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="m1700,600v-240h140q24,0 42,18 18,18 18,42v40q0,18 -9.5,32.5Q1881,507 1864,516l36,84h-60l-36,-80h-44v80zM1930,600 L1990,360h100l60,240h-60l-14,-60h-70l-16,60zM2200,600 L2140,360h60l30,120 30,-120h60l30,120 30,-120h60l-60,240h-60l-30,-122 -30,122zM2020,480h40l-10,-40h-20zM1760,460h80v-40h-80z" />
+</vector>
