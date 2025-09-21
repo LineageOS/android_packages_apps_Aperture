@@ -8,7 +8,7 @@
 android_library_import {
     name: "Aperture_androidx.camera_camera-camera2",
     aars: ["androidx/camera/camera-camera2/1.5.0/camera-camera2-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -34,7 +34,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.camera_camera-core",
     aars: ["androidx/camera/camera-core/1.5.0/camera-core-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -65,7 +65,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.camera_camera-extensions",
     aars: ["androidx/camera/camera-extensions/1.5.0/camera-extensions-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -88,7 +88,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.camera_camera-lifecycle",
     aars: ["androidx/camera/camera-lifecycle/1.5.0/camera-lifecycle-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -113,7 +113,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.camera_camera-video",
     aars: ["androidx/camera/camera-video/1.5.0/camera-video-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -137,7 +137,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.camera_camera-view",
     aars: ["androidx/camera/camera-view/1.5.0/camera-view-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -166,7 +166,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.camera.featurecombinationquery_featurecombinationquery",
     aars: ["androidx/camera/featurecombinationquery/featurecombinationquery/1.5.0/featurecombinationquery-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -182,7 +182,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.camera.viewfinder_viewfinder-core",
     aars: ["androidx/camera/viewfinder/viewfinder-core/1.5.0/viewfinder-core-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -201,7 +201,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.media3_media3-common",
     aars: ["androidx/media3/media3-common/1.5.0/media3-common-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -217,7 +217,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.media3_media3-container",
     aars: ["androidx/media3/media3-container/1.5.0/media3-container-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -232,7 +232,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.media3_media3-database",
     aars: ["androidx/media3/media3-database/1.5.0/media3-database-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -247,7 +247,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.media3_media3-datasource",
     aars: ["androidx/media3/media3-datasource/1.5.0/media3-datasource-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -264,7 +264,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.media3_media3-decoder",
     aars: ["androidx/media3/media3-decoder/1.5.0/media3-decoder-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -279,7 +279,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.media3_media3-exoplayer",
     aars: ["androidx/media3/media3-exoplayer/1.5.0/media3-exoplayer-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -302,7 +302,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.media3_media3-extractor",
     aars: ["androidx/media3/media3-extractor/1.5.0/media3-extractor-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -319,7 +319,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_androidx.media3_media3-ui",
     aars: ["androidx/media3/media3-ui/1.5.0/media3-ui-1.5.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -336,7 +336,7 @@ android_library_import {
 java_import {
     name: "Aperture_com.google.zxing_core",
     jars: ["com/google/zxing/core/3.5.3/core-3.5.3.jar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -348,7 +348,7 @@ java_import {
 
 java_library_static {
     name: "Aperture_com.squareup.okio_okio",
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -362,7 +362,7 @@ java_library_static {
 java_import {
     name: "Aperture_com.squareup.okio_okio-jvm",
     jars: ["com/squareup/okio/okio-jvm/3.9.1/okio-jvm-3.9.1.jar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -375,7 +375,7 @@ java_import {
 
 java_library_static {
     name: "Aperture_io.coil-kt.coil3_coil",
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -389,7 +389,7 @@ java_library_static {
 android_library_import {
     name: "Aperture_io.coil-kt.coil3_coil-android",
     aars: ["io/coil-kt/coil3/coil-android/3.0.4/coil-release.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -403,7 +403,7 @@ android_library_import {
 
 java_library_static {
     name: "Aperture_io.coil-kt.coil3_coil-core",
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -417,7 +417,7 @@ java_library_static {
 android_library_import {
     name: "Aperture_io.coil-kt.coil3_coil-core-android",
     aars: ["io/coil-kt/coil3/coil-core-android/3.0.4/coil-core-release.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -440,7 +440,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_io.coil-kt.coil3_coil-video",
     aars: ["io/coil-kt/coil3/coil-video/3.0.4/coil-video-3.0.4.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -456,7 +456,7 @@ android_library_import {
 android_library_import {
     name: "Aperture_io.github.zxing-cpp_android",
     aars: ["io/github/zxing-cpp/android/2.3.0/android-2.3.0.aar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
@@ -472,7 +472,7 @@ android_library_import {
 java_import {
     name: "Aperture_org.jspecify_jspecify",
     jars: ["org/jspecify/jspecify/1.0.0/jspecify-1.0.0.jar"],
-    sdk_version: "35",
+    sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
         "//apex_available:platform",
