@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">Ελαχιστοποίηση καθυστέρησης</string>
     <string name="enable_zsl_title">Ενεργοποίηση ZSL όταν είναι διαθέσιμο</string>
     <string name="enable_zsl_summary">Χρήση της λειτουργίας Zero-Shutter Lag όταν η κάμερα την υποστηρίζει. Σε αυτή τη λειτουργία τα εφέ φωτογραφίας είναι απενεργοποιημένα. Σημειώστε ότι αυτή η λειτουργία είναι προς το παρόν πειραματική</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">Αποθήκευση εικόνων ως JPEG Ultra HDR</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">Αποθήκευση εικόνων ως JPEG Ultra HDR όταν είναι διαθέσιμο για τη βελτίωση των εικόνων HDR</string>
+    <string name="enable_raw_image_capture_title">Ενεργοποίηση λήψης εικόνων RAW</string>
+    <string name="enable_raw_image_capture_summary">Ενεργοποίηση λήψης εικόνων RAW. Οι φωτογραφίες δεν μπορούν να αποθηκευτούν ως JPEG Ultra HDR όταν η λήψη RAW είναι ενεργοποιημένη</string>
+    <string name="disable_jpeg_with_raw_title">Απενεργοποίηση JPEG με RAW</string>
+    <string name="disable_jpeg_with_raw_summary">Απενεργοποίηση JPEG όταν η λήψη RAW είναι ενεργοποιημένη</string>
     <string name="photo_ffc_mirror_title">Καθρεπτισμός εμπρόσθιας κάμερας</string>
     <string name="photo_ffc_mirror_summary">Αποθηκεύστε τις φωτογραφίες της μπροστινής κάμερας όπως εμφανίζονται στην προεπισκόπηση</string>
     <string name="video_stabilization_title">Ενεργοποίηση σταθεροποίησης βίντεο</string>
