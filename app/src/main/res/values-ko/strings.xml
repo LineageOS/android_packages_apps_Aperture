@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -97,51 +97,51 @@
     <string name="photo_capture_mode_title">캡처 모드</string>
     <string name="photo_capture_mode_maximize_quality">최고 품질</string>
     <string name="photo_capture_mode_minimize_latency">반응 속도 최대화</string>
-    <string name="enable_zsl_title">저지연 촬영 사용</string>
-    <string name="enable_zsl_summary">기기가 지원하는 경우 저지연 촬영을 사용합니다. 이 모드에서는 사진 효과가 비활성화됩니다. 이 모드는 아직 실험 단계입니다.</string>
+    <string name="enable_zsl_title">제로 셔터 랙 모드 사용</string>
+    <string name="enable_zsl_summary">기기가 지원하는 경우 제로 셔터 랙 모드를 사용합니다. 이 모드에서는 사진 효과가 비활성화됩니다. 이 모드는 아직 실험 단계입니다.</string>
     <string name="photo_ffc_mirror_title">전면 카메라 반전</string>
-    <string name="photo_ffc_mirror_summary">미리보기에 보이는 대로 전면 카메라 사진 저장</string>
+    <string name="photo_ffc_mirror_summary">전면 카메라로 찍은 사진의 좌우를 반전하여 미리보기에 보이는 대로 저장합니다. </string>
     <string name="video_stabilization_title">동영상 떨림 안정화 사용</string>
     <string name="video_stabilization_summary">기기가 지원하는 경우 동영상 떨림 안정화를 사용하여 동영상 촬영 중 카메라 떨림을 줄입니다.</string>
     <string name="video_mirror_mode_title">동영상 미러링 사용</string>
-    <string name="processing_title">프로세싱</string>
-    <string name="processing_info">사진 모드에서 ZSL 모드를 사용하면 기본값과 꺼짐 값만 고려됩니다. 동영상 모드의 경우, 기본값, 끄기 및 빠른 값만 고려됩니다.</string>
+    <string name="processing_title">후처리</string>
+    <string name="processing_info">사진 모드에서 제로 셔터 랙 모드를 사용하면, 모든 후처리 옵션은 기본값과 끔 값만 적용됩니다. 동영상 모드에서는 기본값, 끔, 빠르게 값만 적용됩니다.</string>
     <string name="edge_mode_title">선명화</string>
-    <string name="edge_mode_summary">가장자리 향상은 촬영한 이미지의 선명도와 디테일을 향상시킵니다.</string>
+    <string name="edge_mode_summary">사진의 가장자리를 또렷하게 하여 전체적으로 더 선명하고 디테일이 살아 있는 이미지를 만듭니다.</string>
     <string name="edge_mode_default">기본값</string>
     <string name="edge_mode_off">끔</string>
-    <string name="edge_mode_fast">빠름</string>
+    <string name="edge_mode_fast">빠르게</string>
     <string name="edge_mode_high_quality">고품질</string>
     <string name="noise_reduction_mode_title">노이즈 제거</string>
-    <string name="noise_reduction_mode_summary">노이즈 감소 알고리즘은 어두운 조건에서 촬영으로 인해 발생한 과도한 노이즈를 제거하며 이미지 품질을 향상시킵니다.</string>
+    <string name="noise_reduction_mode_summary">어두운 환경에서 촬영할 때 찍히는 불필요한 노이즈를 줄여 이미지 품질을 개선합니다.</string>
     <string name="noise_reduction_mode_default">기본값</string>
     <string name="noise_reduction_mode_off">끔</string>
     <string name="noise_reduction_mode_fast">빠르게</string>
     <string name="noise_reduction_mode_high_quality">고품질</string>
     <string name="noise_reduction_mode_minimal">최소</string>
     <string name="shading_mode_title">비네트 보정</string>
-    <string name="shading_mode_summary">이미지 데이터에 적용되는 렌즈 음영 보정 품질</string>
+    <string name="shading_mode_summary">사진의 가장자리까지 밝기와 색상을 균일하게 맞추는 렌즈 음영 보정 품질을 설정합니다.</string>
     <string name="shading_mode_default">기본값</string>
     <string name="shading_mode_off">끔</string>
-    <string name="shading_mode_fast">빠름</string>
+    <string name="shading_mode_fast">빠르게</string>
     <string name="shading_mode_high_quality">고품질</string>
     <string name="color_correction_aberration_mode_title">색수차 보정</string>
-    <string name="color_correction_aberration_mode_summary">색수차는 서로 다른 파장의 빛이 렌즈에서 나온 후 같은 지점에 초점을 맞출 수 없기 때문에 발생합니다.</string>
+    <string name="color_correction_aberration_mode_summary">빛의 파장 차이로 인해 발생하는 색 번짐을 줄여 더욱 정확한 색상을 표현합니다.</string>
     <string name="color_correction_aberration_mode_default">기본값</string>
     <string name="color_correction_aberration_mode_off">끔</string>
-    <string name="color_correction_aberration_mode_fast">빠름</string>
+    <string name="color_correction_aberration_mode_fast">빠르게</string>
     <string name="color_correction_aberration_mode_high_quality">고품질</string>
     <string name="distortion_correction_mode_title">왜곡 보정</string>
     <string name="distortion_correction_mode_summary">렌즈 왜곡 보정 블럭을 위한 동작 모드</string>
     <string name="distortion_correction_mode_default">기본값</string>
     <string name="distortion_correction_mode_off">끔</string>
-    <string name="distortion_correction_mode_fast">빠름</string>
+    <string name="distortion_correction_mode_fast">빠르게</string>
     <string name="distortion_correction_mode_high_quality">고품질</string>
     <string name="hot_pixel_mode_title">핫픽셀 보정</string>
-    <string name="hot_pixel_mode_summary">핫픽셀 보정은 들어오는 빛을 정확하게 측정하지 못하는 픽셀(예: 임의 값에 고정되어 있거나 지나치게 민감한 픽셀)을 보간하거나 제거합니다.</string>
+    <string name="hot_pixel_mode_summary">지나치게 민감하거나 임의 값에 고정되어 있어, 들어오는 빛을 정확하게 측정하지 못하는 픽셀을 보간하거나 제거합니다.</string>
     <string name="hot_pixel_mode_default">기본값</string>
     <string name="hot_pixel_mode_off">끔</string>
-    <string name="hot_pixel_mode_fast">빠름</string>
+    <string name="hot_pixel_mode_fast">빠르게</string>
     <string name="hot_pixel_mode_high_quality">고품질</string>
     <string name="shortcut_selfie">셀피 찍기</string>
     <string name="shortcut_video">동영상 촬영</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">Minimalizuj opóźnienie</string>
     <string name="enable_zsl_title">Włącz ZSL, jeżeli dostępny </string>
     <string name="enable_zsl_summary">Używanie trybu zerowego opóźnienia migawki, jeśli aparat go obsługuje. W tym trybie dodatkowe efekty zdjęć są wyłączone. Ten tryb jest obecnie w wersji testowej.</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">Zapisuj obrazy jako JPEG Ultra HDR</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">Zapisywanie obrazów w formacie JPEG Ultra HDR, jeśli jest on dostępny, aby poprawić jakość obrazów HDR</string>
+    <string name="enable_raw_image_capture_title">Włącz przechwytywanie obrazów RAW</string>
+    <string name="enable_raw_image_capture_summary">Włącz przechwytywanie obrazów RAW. Zdjęcia nie mogą być zapisywane w formacie JPEG Ultra HDR, gdy włączone jest przechwytywanie RAW</string>
+    <string name="disable_jpeg_with_raw_title">Wyłącz JPEG z RAW</string>
+    <string name="disable_jpeg_with_raw_summary">Wyłączaj format JPEG, gdy włączone jest przechwytywanie obrazów RAW</string>
     <string name="photo_ffc_mirror_title">Lustrzane odbicie przedniego aparatu</string>
     <string name="photo_ffc_mirror_summary">Zapisywanie zdjęć z przedniego aparatu tak, jak są widoczne na podglądzie</string>
     <string name="video_stabilization_title">Włącz stabilizację wideo</string>

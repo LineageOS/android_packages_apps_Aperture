@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">Késleltetés minimalizálása</string>
     <string name="enable_zsl_title">Zero-Shutter Lag, ha elérhető</string>
     <string name="enable_zsl_summary">Ha a kamera támogatja a ZSL-t, akkor használhatja. Ebben a módban a fotóeffektek nem működnek. Vegye figyelembe hogy a ZSL még kisérleti stádiumban van.</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">Képek mentése JPEG Ultra HDR-ben</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">Amennyiben lehetőség van a tökéletesítésre, JPEG Ultra HDR-ben menti a képeket</string>
+    <string name="enable_raw_image_capture_title">RAW képrögzítés</string>
+    <string name="enable_raw_image_capture_summary">Bekapcsolja a RAW képrögzítést. Ha ez be van kapcsolva a képek NEM JPEG Ultra HDR-ben  tárolódnak</string>
+    <string name="disable_jpeg_with_raw_title">JPEG letiltása RAW-val</string>
+    <string name="disable_jpeg_with_raw_summary">A JPEG letiltásra kerül, ha a \'RAW képrögzítés\' engedélyezve van</string>
     <string name="photo_ffc_mirror_title">Az előlapi kamera tükrözése</string>
     <string name="photo_ffc_mirror_summary">Úgy menti a képeket, ahogy az előnézetben megjelennek</string>
     <string name="video_stabilization_title">A Videó-képstabilizáció engedélyezése</string>

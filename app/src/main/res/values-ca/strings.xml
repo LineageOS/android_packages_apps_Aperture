@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">Minimitza la latència</string>
     <string name="enable_zsl_title">Activa el ZSL quan estigui disponible</string>
     <string name="enable_zsl_summary">Utilitza el mode Zero-Shutter Lag (sense retard de l\'obturador) quan la càmera ho admeti. En aquest mode, els efectes fotogràfics estan desactivats. Tingueu en compte que aquest mode és actualment experimental</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">Desa les imatges com a JPEG Ultra HDR</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">Desa les imatges com a JPEG Ultra HDR quan estigui disponible per millorar les imatges HDR</string>
+    <string name="enable_raw_image_capture_title">Habilita la captura d\'imatges RAW</string>
+    <string name="enable_raw_image_capture_summary">Habilita la captura d\'imatges RAW. Les fotos no es poden emmagatzemar com a JPEG Ultra HDR quan la captura RAW està habilitada.</string>
+    <string name="disable_jpeg_with_raw_title">Deshabilita JPEG amb RAW</string>
+    <string name="disable_jpeg_with_raw_summary">Deshabilita JPEG quan la captura d\'imatges RAW està habilitada</string>
     <string name="photo_ffc_mirror_title">Càmera frontal en mirall</string>
     <string name="photo_ffc_mirror_summary">Desa les fotos de la càmera frontal tal com apareixen a la vista prèvia</string>
     <string name="video_stabilization_title">Activa l\'estabilització de vídeo</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">ئەڭ ئاز كېچىكىش</string>
     <string name="enable_zsl_title">ئىشلەتكىلى بولسا ZSL نى قوزغىتىدۇ</string>
     <string name="enable_zsl_summary">كامېرا قوللىسا قاپقاق نۆل كېچىكىش ھالىتىنى ئىشلىتىدۇ. بۇ ھالەتتە سۈرەت ئۈنۈمى چەكلىنىدۇ. دىققەت نۆۋەتتە بۇ تەجرىبە باسقۇچىدىكى ئىقتىدار</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">سۈرەتنى JPEG Ultra HDR سۈپىتىدە ساقلايدۇ</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">ئىشلەتكىلى بولسا HDR سۈرەتنىڭ سۈپىتىنى ياخشىلاش ئۈچۈن سۈرەتنى JPEG Ultra HDR سۈپىتىدە ساقلايدۇ</string>
+    <string name="enable_raw_image_capture_title">RAW سۈرەتتە سىنغا ئېلىشنى قوزغىتىدۇ</string>
+    <string name="enable_raw_image_capture_summary">RAW سۈرەتتە سىنغا ئېلىشنى قوزغىتىدۇ. RAW سۈرەتتە سىنغا ئېلىش قوزغىتىلغاندىن كېيىن، سۈرەتنى JPEG Ultra HDR پىچىمىدا ساقلىغىلى بولمايدۇ</string>
+    <string name="disable_jpeg_with_raw_title">RAW ئىشلەتكەندە JPEG نى چەكلەيدۇ</string>
+    <string name="disable_jpeg_with_raw_summary">RAW سۈرەتتە سىنغا ئېلىشنى قوزغاتقاندا JPEG نى چەكلەيدۇ</string>
     <string name="photo_ffc_mirror_title">ئالدى كامېرانى ئۆرۈيدۇ</string>
     <string name="photo_ffc_mirror_summary">ئالدىن كۆزىتىشتە ئالدى كامېرادا كۆرۈنگەن سۈرەتنى ساقلايدۇ</string>
     <string name="video_stabilization_title">سىن مۇقىملاشتۇرۇشنى قوزغىتىدۇ</string>
