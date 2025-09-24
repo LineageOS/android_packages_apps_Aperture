@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -37,6 +37,7 @@
     <string name="qr_copy_description">Zkopírovat do schránky</string>
     <string name="qr_icon_description">Ikona</string>
     <string name="qr_share_description">Sdílet</string>
+    <string name="qr_share_with_action">Sdílet s</string>
     <string name="qr_no_app_available_for_action">Není k dispozici použitelná aplikace</string>
     <string name="qr_address_title">Přidat kontakt</string>
     <string name="qr_address_content_description">Přidat kontakt</string>
@@ -58,6 +59,8 @@
     <string name="qr_tel_title">Volat telefonní číslo</string>
     <string name="qr_tel_content_description">Volat telefonní číslo</string>
     <string name="qr_text">Text</string>
+    <string name="qr_upi_title">Vyberte aplikaci pro platbu</string>
+    <string name="qr_upi_content_description">Otevřete tento odkaz UPI pomocí příslušné aplikace, pokud je podporována.</string>
     <string name="qr_uri_title">Otevřít URL</string>
     <string name="qr_uri_content_description">Otevřete tuto adresu URL s příslušnou aplikací, pokud je podporována</string>
     <string name="qr_vin_title">Vyhledat VIN</string>
@@ -78,7 +81,19 @@
     <string name="shutter_sound_summary">Přehrát zvuk závěrky</string>
     <string name="leveler_title">Umělý horizont</string>
     <string name="leveler_summary">Indikátor orientace zařízení</string>
+    <string name="gestures_title">Gesta</string>
+    <string name="single_buttons_title">Jednotlivá tlačítka</string>
+    <string name="camera_button_action_title">Akce tlačítka fotoaparátu</string>
+    <string name="focus_button_action_title">Akce tlačítka zaostřit</string>
+    <string name="mute_button_action_title">Akce tlačítka ztlumit</string>
+    <string name="volume_buttons_title">Tlačítka hlasitosti</string>
     <string name="volume_buttons_action_title">Akce tlačítek hlasitosti</string>
+    <string name="volume_buttons_invert_title">Invertovat tlačítka hlasitosti</string>
+    <string name="volume_buttons_invert_summary">Invertovat chování tlačítek pro zvýšení a snížení hlasitosti</string>
+    <string name="zoom_buttons_title">Tlačítka přiblížení</string>
+    <string name="zoom_buttons_action_title">Akce tlačítek přiblížení</string>
+    <string name="zoom_buttons_invert_title">Invertovat tlačítka přiblížení</string>
+    <string name="zoom_buttons_invert_summary">Invertovat chování tlačítek pro přiblížení a oddálení</string>
     <string name="photo_capture_mode_title">Režim snímání</string>
     <string name="photo_capture_mode_maximize_quality">Maximalizovat kvalitu</string>
     <string name="photo_capture_mode_minimize_latency">Minimalizovat latenci</string>
@@ -146,7 +161,10 @@
     <string name="error_unknown_critical">Byla nalezena neznámá kritická chyba. Nahlaste ji prosím vývojářům.</string>
     <string name="error_no_cameras_available">Na zařízení nebyly nalezeny žádné fotoaparáty, nelze spustit aplikaci.</string>
     <string name="gesture_action_shutter">Závěrka</string>
+    <string name="gesture_action_focus">Ostření</string>
+    <string name="gesture_action_mic_mute">Ztlumení mikrofonu</string>
     <string name="gesture_action_zoom">Přiblížení</string>
+    <string name="gesture_action_default">Výchozí nastavení systému Android</string>
     <string name="gesture_action_nothing">Žádná akce</string>
     <string name="thermal_status_moderate">Mírné tepelné omezení, ujistěte se, že zařízení není na přímém slunečním světle.</string>
     <string name="thermal_status_severe">Silné tepelné omezení, doporučuje se nechat zařízení trochu vychladnout.</string>

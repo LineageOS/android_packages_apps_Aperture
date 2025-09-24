@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">最小延迟</string>
     <string name="enable_zsl_title">可用时启用 ZSL</string>
     <string name="enable_zsl_summary">当相机支持零快门延迟模式时使用它。此模式下相片效果被禁用。请注意此模式当前处于实验状态</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">将图像另存为 JPEG Ultra HDR</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">如果可用，将图像保存为 JPEG Ultra HDR 以改善 HDR 图像</string>
+    <string name="enable_raw_image_capture_title">启用 RAW 图像拍摄</string>
+    <string name="enable_raw_image_capture_summary">启用 RAW 图像拍摄。启用 RAW 拍摄后，照片无法存储为 JPEG Ultra HDR 格式</string>
+    <string name="disable_jpeg_with_raw_title">使用 RAW 时禁用 JPEG</string>
+    <string name="disable_jpeg_with_raw_summary">启用 RAW 拍摄时禁用 JPEG</string>
     <string name="photo_ffc_mirror_title">镜像前置摄像头</string>
     <string name="photo_ffc_mirror_summary">保存预览中显示的前置摄像头照片</string>
     <string name="video_stabilization_title">启用视频防抖</string>

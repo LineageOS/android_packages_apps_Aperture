@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">Minimise latency</string>
     <string name="enable_zsl_title">Enable ZSL when available</string>
     <string name="enable_zsl_summary">Use Zero-Shutter Lag mode when the camera supports it. On this mode photo effects are disabled. Note that this mode is currently experimental</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">Save images as JPEG Ultra HDR</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">Save images as JPEG Ultra HDR when available to improve HDR images</string>
+    <string name="enable_raw_image_capture_title">Enable RAW image capture</string>
+    <string name="enable_raw_image_capture_summary">Enable RAW image capture. Photos cannot be stored as JPEG Ultra HDR when RAW capture is enabled</string>
+    <string name="disable_jpeg_with_raw_title">Disable JPEG with RAW</string>
+    <string name="disable_jpeg_with_raw_summary">Disable JPEG when RAW image capture is enabled</string>
     <string name="photo_ffc_mirror_title">Mirror front camera</string>
     <string name="photo_ffc_mirror_summary">Save front camera photos as they appear in the preview</string>
     <string name="video_stabilization_title">Enable video stabilisation</string>

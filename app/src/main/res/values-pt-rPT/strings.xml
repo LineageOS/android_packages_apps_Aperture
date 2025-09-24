@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2024 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">Minimizar latência</string>
     <string name="enable_zsl_title">Ativar ZSL quando disponível</string>
     <string name="enable_zsl_summary">Use o modo ZSL (sem atraso no obturador) quando a câmara o suportar. Neste modo, os efeitos fotográficos são desativados. Note que, atualmente, este modo é experimental</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">Guardar imagens como JPEG Ultra HDR</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">Guardar imagens como JPEG Ultra HDR quando disponível, para melhores imagens em HDR</string>
+    <string name="enable_raw_image_capture_title">Ativar captura de imagens RAW</string>
+    <string name="enable_raw_image_capture_summary">Ativar a captura de imagens RAW. As fotografias não podem ser guardadas em JPEG Ultra HDR quando a captura RAW está ativada.</string>
+    <string name="disable_jpeg_with_raw_title">Desativar JPEG com RAW</string>
+    <string name="disable_jpeg_with_raw_summary">Não guardar imagens JPEG quando a captura RAW estiver ativada</string>
     <string name="photo_ffc_mirror_title">Espelhar câmara frontal</string>
     <string name="photo_ffc_mirror_summary">Guardar as fotos da câmara frontal como aparecem na pre-visualização</string>
     <string name="video_stabilization_title">Ativar estabilização de vídeo</string>
