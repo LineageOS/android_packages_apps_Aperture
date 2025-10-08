@@ -47,6 +47,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -165,18 +166,6 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      */
     val event = _event.asSharedFlow()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val isVideoRecordingAvailable = cameraRepository.cameras
-        .mapLatest { cameras ->
-            cameras.any { it.supportsCameraMode(CameraMode.VIDEO) }
-        }
-        .flowOn(Dispatchers.IO)
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = true,
-        )
-
     /**
      * The initial camera mode.
      */
@@ -250,7 +239,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         .flowOn(Dispatchers.IO)
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.Eagerly,
+            started = SharingStarted.WhileSubscribed(),
             initialValue = mapOf(),
         )
 
@@ -989,7 +978,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      * Initialize [cameraConfiguration].
      * [initialCameraMode] and [initialCameraFacing] must be initialized.
      */
-    fun initializeCameraConfiguration(): Boolean {
+    suspend fun initializeCameraConfiguration(): Boolean {
         val cameraMode = initialCameraMode
         val cameraFacing = initialCameraFacing
 
@@ -1282,27 +1271,29 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
 
     fun setCameraMode(
         cameraMode: CameraMode,
-    ) = updateConfiguration<CameraConfiguration> { cameraConfiguration ->
-        if (cameraConfiguration.cameraMode == cameraMode) {
-            return@updateConfiguration cameraConfiguration
+    ) = viewModelScope.launch {
+        updateConfiguration<CameraConfiguration> { cameraConfiguration ->
+            if (cameraConfiguration.cameraMode == cameraMode) {
+                return@updateConfiguration cameraConfiguration
+            }
+
+            val camera = cameraConfiguration.camera.takeIf {
+                it.supportsCameraMode(cameraMode)
+            } ?: getSuitableCamera(
+                cameraMode,
+                cameraConfiguration.camera.cameraFacing,
+            ) ?: run {
+                Log.e(LOG_TAG, "No camera supports the requested camera mode $cameraMode")
+                return@updateConfiguration cameraConfiguration
+            }
+
+            preferencesRepository.lastCameraMode.value = cameraMode
+
+            createInitialCameraConfiguration(
+                camera = camera,
+                cameraMode = cameraMode,
+            )
         }
-
-        val camera = cameraConfiguration.camera.takeIf {
-            it.supportsCameraMode(cameraMode)
-        } ?: getSuitableCamera(
-            cameraMode,
-            cameraConfiguration.camera.cameraFacing,
-        ) ?: run {
-            Log.e(LOG_TAG, "No camera supports the requested camera mode $cameraMode")
-            return@updateConfiguration cameraConfiguration
-        }
-
-        preferencesRepository.lastCameraMode.value = cameraMode
-
-        createInitialCameraConfiguration(
-            camera = camera,
-            cameraMode = cameraMode,
-        )
     }
 
     /**
@@ -1616,6 +1607,13 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     fun fileExists(uri: Uri) = mediaRepository.fileExists(uri)
 
     /**
+     * Get whether or not any camera currently supports video mode.
+     */
+    suspend fun isVideoRecordingAvailable() = cameraRepository.cameras.first().any {
+        it.supportsCameraMode(CameraMode.VIDEO)
+    }
+
+    /**
      * Emit a new event to let the activity handle it.
      */
     private fun emitEvent(event: Event) = viewModelScope.launch {
@@ -1629,11 +1627,11 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      * @param cameraFacing The requested [CameraFacing]
      * @return A [Camera] that is compatible with the provided configuration or null
      */
-    private fun getSuitableCamera(
+    private suspend fun getSuitableCamera(
         cameraMode: CameraMode,
         cameraFacing: CameraFacing,
     ): Camera? {
-        val compatibleCameras = cameraRepository.cameras.value
+        val compatibleCameras = cameraRepository.cameras.first()
             .filter { camera ->
                 camera.supportsCameraMode(cameraMode)
             }

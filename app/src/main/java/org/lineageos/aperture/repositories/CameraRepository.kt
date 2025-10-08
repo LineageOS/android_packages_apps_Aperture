@@ -5,6 +5,7 @@
 
 package org.lineageos.aperture.repositories
 
+import android.Manifest
 import android.content.Context
 import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.camera2.interop.ExperimentalCamera2Interop
@@ -17,10 +18,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.shareIn
+import org.lineageos.aperture.ext.permissionGranted
 import org.lineageos.aperture.models.Camera
 
 /**
@@ -28,57 +30,64 @@ import org.lineageos.aperture.models.Camera
  */
 @androidx.annotation.OptIn(ExperimentalCamera2Interop::class, ExperimentalLensFacing::class)
 class CameraRepository(
-    context: Context,
+    private val context: Context,
     coroutineScope: CoroutineScope,
     private val overlaysRepository: OverlaysRepository,
 ) {
     /**
      * CameraX's [ProcessCameraProvider].
      */
-    private val cameraProvider = ProcessCameraProvider.getInstance(
-        context
-    ).get()
+    private val cameraProvider by lazy {
+        requireCameraPermission()
+        ProcessCameraProvider.getInstance(context).get()
+    }
 
     /**
      * CameraX's [ExtensionsManager].
      */
-    val extensionsManager: ExtensionsManager = ExtensionsManager.getInstanceAsync(
-        context, cameraProvider
-    ).get()
+    private val extensionsManager: ExtensionsManager by lazy {
+        ExtensionsManager.getInstanceAsync(context, cameraProvider).get()
+    }
 
     /**
      * List of internal cameras. These should never change.
      */
-    val internalCameras = cameraProvider.availableCameraInfos
-        .filter { cameraXCameraInfo ->
-            cameraXCameraInfo.lensFacing != CameraSelector.LENS_FACING_EXTERNAL
-                    && cameraXCameraInfo.isInternalCameraAllowed()
-        }
-        .mapToCamera()
-
-    val mainBackCamera = internalCameras.firstOrNull { camera ->
-        camera.cameraId == DEFAULT_BACK_CAMERA_ID
+    private val internalCameras by lazy {
+        cameraProvider.availableCameraInfos
+            .filter { cameraXCameraInfo ->
+                cameraXCameraInfo.lensFacing != CameraSelector.LENS_FACING_EXTERNAL
+                        && cameraXCameraInfo.isInternalCameraAllowed()
+            }
+            .mapToCamera()
     }
 
-    val mainFrontCamera = internalCameras.firstOrNull { camera ->
-        camera.cameraId == DEFAULT_FRONT_CAMERA_ID
+    val mainBackCamera by lazy {
+        internalCameras.firstOrNull { camera ->
+            camera.cameraId == DEFAULT_BACK_CAMERA_ID
+        }
+    }
+
+    val mainFrontCamera by lazy {
+        internalCameras.firstOrNull { camera ->
+            camera.cameraId == DEFAULT_FRONT_CAMERA_ID
+        }
     }
 
     /**
      * List of external cameras. These will change once the user connects or disconnects a camera.
      */
-    val externalCameras = flowOf(
+    private val externalCameras = suspend {
         cameraProvider.availableCameraInfos
             .filter { cameraXCameraInfo ->
                 cameraXCameraInfo.lensFacing == CameraSelector.LENS_FACING_EXTERNAL
             }
             .mapToCamera()
-    )
+    }.asFlow()
         .flowOn(Dispatchers.IO)
-        .stateIn(
+        .shareIn(
             scope = coroutineScope,
-            started = SharingStarted.Eagerly,
-            initialValue = listOf(),
+            started = SharingStarted.WhileSubscribed(),
+            replay = 1,
         )
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -86,10 +95,10 @@ class CameraRepository(
         internalCameras + externalCameras
     }
         .flowOn(Dispatchers.IO)
-        .stateIn(
+        .shareIn(
             scope = coroutineScope,
-            started = SharingStarted.Eagerly,
-            initialValue = internalCameras,
+            started = SharingStarted.WhileSubscribed(),
+            replay = 1,
         )
 
     /**
@@ -139,6 +148,10 @@ class CameraRepository(
         extensionsManager,
         overlaysRepository,
     )
+
+    private fun requireCameraPermission() = require(
+        context.permissionGranted(Manifest.permission.CAMERA)
+    ) { "Camera permission not granted" }
 
     companion object {
         private const val DEFAULT_BACK_CAMERA_ID = "0"
