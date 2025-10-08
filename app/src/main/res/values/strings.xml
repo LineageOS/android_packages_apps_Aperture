@@ -8,6 +8,10 @@
     <string name="app_name">Camera</string>
     <string name="video_camera_label">Camcorder</string>
 
+    <!-- Attribution labels -->
+    <string name="camera_activity_attribution_label">Camera activity (camera, audio record)</string>
+    <string name="capture_location_attribution_label">Capture location</string>
+
     <!-- Content descriptions -->
     <string name="cancel_button_description">Cancel</string>
     <string name="confirm_button_description">Confirm</string>
