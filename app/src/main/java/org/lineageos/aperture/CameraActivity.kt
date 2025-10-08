@@ -466,13 +466,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         flashButton.setOnClickListener { viewModel.cycleFlashMode(false) }
         flashButton.setOnLongClickListener { viewModel.cycleFlashMode(true) }
 
-        // Attach CameraController to PreviewView
-        viewFinder.controller = viewModel.cameraController
-
-        // Attach CameraController to ScreenFlashView
-        screenFlashView.setController(viewModel.cameraController)
-        screenFlashView.setScreenFlashWindow(window)
-
         // Observe manual focus
         viewFinder.setOnTouchListener { _, event ->
             if (zoomGestureDetector.onTouchEvent(event) && zoomGestureDetectorIsInProgress) {
@@ -645,6 +638,11 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     }
                 }
             }
+        }
+
+        // Initialize stuff after camera permissions are granted
+        lifecycleScope.launch {
+            queueSetupWithCameraPermissions()
         }
     }
 
@@ -1393,6 +1391,23 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         launch {
             viewModel.islandItems.collectLatest { islandItems ->
                 islandView.setItems(islandItems)
+            }
+        }
+    }
+
+    private suspend fun queueSetupWithCameraPermissions() {
+        var initialized = false
+
+        permissionsManager.permissionStateFlow(Permission.CAMERA).collect { permissionState ->
+            if (permissionState == PermissionState.GRANTED && !initialized) {
+                // Attach CameraController to PreviewView
+                viewFinder.controller = viewModel.cameraController
+
+                // Attach CameraController to ScreenFlashView
+                screenFlashView.setController(viewModel.cameraController)
+                screenFlashView.setScreenFlashWindow(window)
+
+                initialized = true
             }
         }
     }
