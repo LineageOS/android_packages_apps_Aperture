@@ -68,6 +68,8 @@ import org.lineageos.aperture.ext.nextPowerOfTwo
 import org.lineageos.aperture.ext.previous
 import org.lineageos.aperture.ext.previousPowerOfTwo
 import org.lineageos.aperture.ext.thermalStatusFlow
+import org.lineageos.aperture.ext.withAttributionContext
+import org.lineageos.aperture.models.AttributionTag
 import org.lineageos.aperture.models.Camera
 import org.lineageos.aperture.models.CameraConfiguration
 import org.lineageos.aperture.models.CameraFacing
@@ -104,7 +106,9 @@ import kotlin.reflect.safeCast
  */
 class CameraViewModel(application: Application) : ApertureViewModel(application) {
     // System services
-    private val locationManager = applicationContext.getSystemService(LocationManager::class.java)
+    private val locationManager = applicationContext.withAttributionContext(
+        AttributionTag.CAPTURE_LOCATION
+    ).getSystemService(LocationManager::class.java)
     private val powerManager = applicationContext.getSystemService(PowerManager::class.java)
 
     // Camera sounds
@@ -139,7 +143,9 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     /**
      * CameraX's [LifecycleCameraController].
      */
-    val cameraController = LifecycleCameraController(applicationContext)
+    val cameraController = LifecycleCameraController(
+        applicationContext.withAttributionContext(AttributionTag.CAMERA_ACTIVITY)
+    )
 
     /**
      * Mutex used to rebind the camera.

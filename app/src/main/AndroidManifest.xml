@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     SPDX-FileCopyrightText: 2022-2023 The LineageOS Project
+     SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
      SPDX-License-Identifier: Apache-2.0
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,6 +33,16 @@
         <package android:name="org.lineageos.aperture.auto_generated_rro_vendor__" />
     </queries>
 
+    <!-- Camera activity -->
+    <attribution
+        android:label="@string/camera_activity_attribution_label"
+        android:tag="cameraActivity" />
+
+    <!-- Capture location -->
+    <attribution
+        android:label="@string/capture_location_attribution_label"
+        android:tag="captureLocation" />
+
     <application
         android:name=".ApertureApplication"
         android:enableOnBackInvokedCallback="true"
@@ -48,6 +58,7 @@
 
         <activity
             android:name=".CameraActivity"
+            android:attributionTags="cameraActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
             android:exported="true"
@@ -70,6 +81,7 @@
 
         <activity-alias
             android:name=".CameraLauncher"
+            android:attributionTags="cameraActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:targetActivity=".CameraActivity">
@@ -83,6 +95,7 @@
 
         <activity
             android:name=".CaptureActivity"
+            android:attributionTags="cameraActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
             android:exported="true"
             android:screenOrientation="nosensor"
@@ -99,6 +112,7 @@
 
         <activity
             android:name=".QrScannerActivity"
+            android:attributionTags="cameraActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
             android:exported="true"
             android:screenOrientation="nosensor"
@@ -109,6 +123,7 @@
         <!-- Video camera and capture use the Camcorder label and icon. -->
         <activity-alias
             android:name=".VideoCamera"
+            android:attributionTags="cameraActivity"
             android:exported="true"
             android:label="@string/video_camera_label"
             android:targetActivity=".CaptureActivity">
@@ -128,6 +143,7 @@
 
         <activity
             android:name=".SecureCameraActivity"
+            android:attributionTags="cameraActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
             android:excludeFromRecents="true"
@@ -150,6 +166,7 @@
 
         <activity
             android:name=".SettingsActivity"
+            android:attributionTags="cameraActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden"
             android:exported="false"
             android:label="@string/title_activity_settings"

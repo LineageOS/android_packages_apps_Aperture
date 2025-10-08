@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.os.Build
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -19,6 +20,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import org.lineageos.aperture.models.AttributionTag
 
 @ColorInt
 fun Context.getThemeColor(@AttrRes attribute: Int) = TypedValue().let {
@@ -72,4 +74,15 @@ fun Context.broadcastReceiverFlow(
     awaitClose {
         unregisterReceiver(broadcastReceiver)
     }
+}
+
+/**
+ * @see Context.createAttributionContext
+ */
+fun Context.withAttributionContext(
+    attributionTag: AttributionTag,
+) = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+    createAttributionContext(attributionTag.tag)
+} else {
+    this
 }
