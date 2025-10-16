@@ -55,6 +55,7 @@
     <string name="noise_reduction_mode_off">Nonaktif</string>
     <string name="noise_reduction_mode_fast">Cepat</string>
     <string name="noise_reduction_mode_high_quality">Kualitas tinggi</string>
+    <string name="noise_reduction_mode_minimal">Minimal</string>
     <string name="shading_mode_off">Nonaktif</string>
     <string name="shading_mode_fast">Cepat</string>
     <string name="shading_mode_high_quality">Kualitas tinggi</string>
