@@ -68,7 +68,10 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.camera.core)
-    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.camera2) {
+        // Invisible in AOSP, we get it via kotlinx.coroutines anyway
+        exclude("org.jetbrains.kotlinx", "atomicfu")
+    }
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.video)
     implementation(libs.androidx.camera.view)
@@ -107,6 +110,7 @@ configure<GenerateBpPluginExtension> {
             module.group.startsWith("org.jetbrains") -> true
             module.group == "com.google.android.material" -> true
             module.group == "com.google.auto.value" -> true
+            module.group == "com.google.dagger" -> true
             module.group == "com.google.guava" -> true
             else -> false
         }
