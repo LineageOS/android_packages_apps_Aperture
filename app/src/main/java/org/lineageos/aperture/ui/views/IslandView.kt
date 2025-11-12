@@ -17,8 +17,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
 import org.lineageos.aperture.R
-import org.lineageos.aperture.ext.getThemeColor
 import org.lineageos.aperture.models.IslandItem
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.ui.recyclerview.SimpleListAdapter
@@ -87,11 +87,9 @@ class IslandView @JvmOverloads constructor(
                 }
 
                 view.imageTintList = ColorStateList.valueOf(
-                    context.getThemeColor(
-                        when (isWarning) {
-                            true -> com.google.android.material.R.attr.colorError
-                            false -> com.google.android.material.R.attr.colorOnSurface
-                        }
+                    MaterialColors.getColor(
+                        view,
+                        if (isWarning) R.attr.colorError else R.attr.colorOnSurface,
                     )
                 )
             }

@@ -22,8 +22,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.color.MaterialColors
 import org.lineageos.aperture.R
-import org.lineageos.aperture.ext.getThemeColor
 import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.ext.sendWithBalAllowed
 import org.lineageos.aperture.models.QrResult
@@ -88,7 +88,7 @@ class QrBottomSheetDialog(context: Context) : BottomSheetDialog(context) {
                 }
                 if (item.canTintIcon) {
                     item.icon?.setTint(
-                        context.getThemeColor(com.google.android.material.R.attr.colorOnBackground)
+                        MaterialColors.getColor(view, R.attr.colorOnBackground)
                     )
                 }
                 item.icon?.loadDrawable(context)?.also { drawable ->
@@ -160,7 +160,7 @@ class QrBottomSheetDialog(context: Context) : BottomSheetDialog(context) {
         titleTextView.text = firstAction.title
         if (firstAction.canTintIcon) {
             firstAction.icon?.setTint(
-                context.getThemeColor(com.google.android.material.R.attr.colorOnBackground)
+                MaterialColors.getColor(iconImageView, R.attr.colorOnBackground)
             )
         }
         iconImageView.isVisible = firstAction.icon != null
