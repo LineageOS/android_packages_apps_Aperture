@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">Намали латентността</string>
     <string name="enable_zsl_title">Включи ZSL при възможност</string>
     <string name="enable_zsl_summary">Използвай Zero-Shutter Lag режим, ако се поддържа от камерата. При този режим снимковите ефекти са изключени. Този режим е експериментален</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">Запази изображенията като JPEG Ultra HDR </string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">При възможност запази изображенията като JPEG Ultra HDR с цел подобряване на HDR изображенията</string>
+    <string name="enable_raw_image_capture_title">Включи снимане в RAW формат</string>
+    <string name="enable_raw_image_capture_summary">Включи снимане в RAW формат. Изображенията не могат да се записват в JPEG Ultra HDR когато снимате в RAW формат.</string>
+    <string name="disable_jpeg_with_raw_title">Изклюване на JPEG с RAW</string>
+    <string name="disable_jpeg_with_raw_summary">Изключване на JPEG когато снимане в RAW формат е включено</string>
     <string name="photo_ffc_mirror_title">Огледална предна камера</string>
     <string name="photo_ffc_mirror_summary">Запази снимките от предната камера така, както изглеждат на визуализацията</string>
     <string name="video_stabilization_title">Включи видео стабилизация</string>
