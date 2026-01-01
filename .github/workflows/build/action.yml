@@ -4,6 +4,14 @@ runs:
     using: composite
 
     steps:
+    - name: Install dependencies
+      shell: bash
+      run: pip install pre-commit
+
+    - name: Lint
+      shell: bash
+      run: pre-commit run --all
+
     - name: Setup JDK 17
       uses: actions/setup-java@v5
       with:
