@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2023-2024 The LineageOS Project
+# SPDX-FileCopyrightText: The LineageOS Project
 # SPDX-License-Identifier: Apache-2.0
 
 version = 1
@@ -9,7 +9,7 @@ SPDX-PackageDownloadLocation = "https://github.com/LineageOS/android_packages_ap
 [[annotations]]
 path = [".github/workflows/**", ".gitignore", "app/.gitignore", "lens_launcher/.gitignore"]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2023 The LineageOS Project"
+SPDX-FileCopyrightText = "The LineageOS Project"
 SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
