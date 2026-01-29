@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7dad0f7b_4ed20eb7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 33800
+      },
+      "writtenOn": "2026-01-29T10:43:39Z",
+      "side": 1,
+      "message": "Should we update to cameraX **beta** version?",
+      "revId": "113005ab86b0721ac280f3f17fb1045cfa550ebd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
