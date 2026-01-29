@@ -16,6 +16,23 @@
       "message": "Should we update to cameraX **beta** version?",
       "revId": "113005ab86b0721ac280f3f17fb1045cfa550ebd",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c16e43a0_34c8b55a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2026-01-29T10:44:03Z",
+      "side": 1,
+      "message": "can we get it shipped? I don\u0027t know why we need to blob dagger/jakarta/atomicfu, but it works.",
+      "revId": "113005ab86b0721ac280f3f17fb1045cfa550ebd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
