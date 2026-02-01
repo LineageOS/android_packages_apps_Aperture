@@ -143,7 +143,6 @@
     <string name="distortion_correction_mode_off">關閉</string>
     <string name="distortion_correction_mode_fast">快速</string>
     <string name="distortion_correction_mode_high_quality">高畫質</string>
-    <string name="hot_pixel_mode_title">壞點修正</string>
     <string name="hot_pixel_mode_summary">熱燥點修正是對無法準確測量入射光的像素 (即停留在任意值或過敏感的像素) 進行的插入或移除。</string>
     <string name="hot_pixel_mode_default">預設</string>
     <string name="hot_pixel_mode_off">關閉</string>
