@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2022-2025 The LineageOS Project
+ * SPDX-FileCopyrightText: 2022-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -1621,7 +1621,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             val camera2Options = cameraConfiguration.camera2Options
 
             // Set Camera2 CaptureRequest options
-            camera2CameraControl.captureRequestOptions = CaptureRequestOptions.Builder()
+            camera2CameraControl.setCaptureRequestOptions(CaptureRequestOptions.Builder()
                 .setFrameRate(
                     when (cameraConfiguration) {
                         is CameraConfiguration.Video -> cameraConfiguration.videoFrameRate
@@ -1647,6 +1647,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 .setDistortionCorrectionMode(camera2Options.distortionCorrectionMode)
                 .setHotPixelMode(camera2Options.hotPixelMode)
                 .build()
+            )
         }
 
         // Restore settings that can be set on the fly

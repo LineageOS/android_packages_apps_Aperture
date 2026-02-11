@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2023-2025 The LineageOS Project
+ * SPDX-FileCopyrightText: 2023-2026 The LineageOS Project
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -7,7 +7,7 @@ package org.lineageos.aperture
 
 import android.annotation.SuppressLint
 import android.app.Application
-import androidx.camera.camera2.internal.CameraIdUtil
+import androidx.camera.camera2.internal.CameraCompatibilityFilter
 import com.google.android.material.color.DynamicColors
 import kotlinx.coroutines.MainScope
 import org.lineageos.aperture.repositories.CameraRepository
@@ -31,7 +31,7 @@ class ApertureApplication : Application() {
         DynamicColors.applyToActivitiesIfAvailable(this)
 
         // Set backward compatible camera ids
-        CameraIdUtil.setBackwardCompatibleCameraIds(
+        CameraCompatibilityFilter.setBackwardCompatibleCameraIds(
             overlaysRepository.backwardCompatibleCameraIds.asList()
         )
     }
