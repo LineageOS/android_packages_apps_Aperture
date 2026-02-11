@@ -49,6 +49,7 @@ android_app {
         "Aperture_androidx.media3_media3-ui",
         "androidx.preference_preference",
         "androidx.recyclerview_recyclerview",
+        "androidx.tracing_tracing",
         "com.google.android.material_material",
         "Aperture_com.google.zxing_core",
         "Aperture_io.coil-kt.coil3_coil",

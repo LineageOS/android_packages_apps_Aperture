@@ -14,14 +14,14 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
-        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.28/.m2")
+        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.32/.m2")
     }
 }
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        maven("https://raw.githubusercontent.com/lineage-next/camerax-aperture/7e9152aa99af63452f7b35b589e2dca3f61e4534/.m2")
+        maven("https://raw.githubusercontent.com/lineage-next/camerax-aperture/19f0b87aca798f728efc054e68a36da3b6e11456/.m2")
         google()
         mavenCentral()
     }

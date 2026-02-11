@@ -72,10 +72,7 @@ dependencies {
     implementation(libs.androidx.camera.lifecycle)
     implementation(libs.androidx.camera.video)
     implementation(libs.androidx.camera.view)
-    implementation(libs.androidx.camera.viewfinder.core) {
-        // Invisible in AOSP, we get it via kotlinx.coroutines anyway
-        exclude("org.jetbrains.kotlinx", "atomicfu")
-    }
+    implementation(libs.androidx.camera.viewfinder.core)
     implementation(libs.androidx.camera.extensions)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
@@ -96,18 +93,30 @@ dependencies {
 configure<GenerateBpPluginExtension> {
     targetSdk.set(android.defaultConfig.targetSdk!!)
     minSdk.set(android.defaultConfig.minSdk!!)
+    versionCode.set(android.defaultConfig.versionCode!!)
+    versionName.set(android.defaultConfig.versionName!!)
     availableInAOSP.set { module: Module ->
         when {
+            module.group == "androidx.core" -> {
+                // We provide our own core-backported-fixes
+                module.name != "core-backported-fixes"
+            }
+
             module.group.startsWith("androidx") -> {
                 // We provide our own androidx.{camera,media3}
                 !module.group.startsWith("androidx.camera") &&
                         !module.group.startsWith("androidx.media3")
             }
 
-            module.group.startsWith("org.jetbrains") -> true
+            module.group.startsWith("org.jetbrains") -> {
+                // We provide our own atomicfu
+                !module.name.startsWith("atomicfu")
+            }
+
             module.group == "com.google.android.material" -> true
             module.group == "com.google.auto.value" -> true
             module.group == "com.google.guava" -> true
+            module.group == "javax.inject" -> true
             else -> false
         }
     }
