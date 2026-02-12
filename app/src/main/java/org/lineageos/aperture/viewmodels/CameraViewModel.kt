@@ -7,6 +7,7 @@ package org.lineageos.aperture.viewmodels
 
 import android.app.Application
 import android.net.Uri
+import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.Quality
@@ -69,7 +70,11 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
      * The available [Camera]s.
      */
     private val cameras: List<Camera>
-        get() = cameraProvider.availableCameraInfos.map {
+        get() = cameraProvider.availableCameraInfos.filter {
+            !overlayConfiguration.ignoredAuxCameraIds.contains(
+                Camera2CameraInfo.from(it).cameraId
+            )
+        }.map {
             Camera(it, this)
         }.sortedBy { it.cameraId }
 
@@ -79,7 +84,6 @@ class CameraViewModel(application: Application) : AndroidViewModel(application) 
      */
     private val internalCameras = cameras.filter {
         it.cameraType == CameraType.INTERNAL
-                && !overlayConfiguration.ignoredAuxCameraIds.contains(it.cameraId)
     }
 
     /**
