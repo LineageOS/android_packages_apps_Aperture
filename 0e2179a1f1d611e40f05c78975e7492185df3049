@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31e5024d_feb6ab65",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28798
+      },
+      "writtenOn": "2026-02-12T10:32:25Z",
+      "side": 1,
+      "message": "On Oneplus N10 (billie), the camera HAL fails to expose characteristics for cameras or even logical ones, so since cameraX initialises all available cameras, the HAL fails to return characteristics for logical IDs.\n\nAnd even if we filter out cameraIds or set ignore logical to true, the filter for this runs at a later stage to control the UI, and the app had already crashed.",
+      "revId": "0e2179a1f1d611e40f05c78975e7492185df3049",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
