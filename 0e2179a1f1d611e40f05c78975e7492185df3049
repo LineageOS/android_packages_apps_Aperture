@@ -68,6 +68,24 @@
       "parentUuid": "6d218fc2_0f652824",
       "revId": "0e2179a1f1d611e40f05c78975e7492185df3049",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4cd05e04_8cb49cb9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 28798
+      },
+      "writtenOn": "2026-02-27T10:47:27Z",
+      "side": 1,
+      "message": "^Aux cameras",
+      "parentUuid": "fa2fd1af_3efbe9a7",
+      "revId": "0e2179a1f1d611e40f05c78975e7492185df3049",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
