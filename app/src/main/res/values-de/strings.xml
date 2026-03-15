@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">Minimale Verzögerung</string>
     <string name="enable_zsl_title">„Keine Auslöseverzögerung“ (ZSL) aktivieren, wenn verfügbar</string>
     <string name="enable_zsl_summary">Verwende den Modus \"Keine Auslöseverzögerung\", wenn die Kamera ihn unterstützt. In diesem Modus sind die Fotoeffekte deaktiviert. Beachte, dass dieser Modus derzeit experimentell ist</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">Bilder als JPEG Ultra HDR speichern</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">Speichert Bilder als JPEG Ultra HDR, wenn möglich, um HDR-Bilder zu verbessern</string>
+    <string name="enable_raw_image_capture_title">RAW-Bildaufnahme aktivieren</string>
+    <string name="enable_raw_image_capture_summary">RAW-Bildaufnahme aktivieren. Bilder können nicht als JPEG Ultra HDR gespeichert werden, wenn die RAW-Aufnahme aktiviert ist</string>
+    <string name="disable_jpeg_with_raw_title">JPEG mit RAW deaktivieren</string>
+    <string name="disable_jpeg_with_raw_summary">JPEG deaktivieren, wenn RAW-Bildaufnahme aktiviert ist</string>
     <string name="photo_ffc_mirror_title">Frontkamera spiegeln</string>
     <string name="photo_ffc_mirror_summary">Frontkamerafotos so speichern, wie sie in der Vorschau erscheinen</string>
     <string name="video_stabilization_title">Videostabilisierung aktivieren</string>
