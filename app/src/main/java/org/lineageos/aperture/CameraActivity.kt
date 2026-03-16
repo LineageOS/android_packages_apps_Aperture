@@ -2066,7 +2066,6 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             CameraMode.PHOTO -> {
                 if (photoCaptureMode != ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY) {
                     photoCaptureMode = ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY
-                    sharedPreferences.photoCaptureMode = photoCaptureMode
                     changed = true
                 } else if (photoEffect != ExtensionMode.NONE) {
                     photoEffect = ExtensionMode.NONE
