@@ -80,6 +80,7 @@ import androidx.core.view.children
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -291,6 +292,8 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     private val secureMediaUris = ArrayDeque<Uri>()
 
     private var zoomGestureMutex = Mutex()
+    private var observedCameraState: LiveData<CameraXCameraState>? = null
+    private var streamConfigRecoveryAttempts = 0
 
     private val supportedFlashModes: Set<FlashMode>
         get() = cameraMode.supportedFlashModes.intersect(camera.supportedFlashModes)
@@ -785,6 +788,8 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         viewFinder.previewStreamState.observe(this) {
             when (it) {
                 PreviewView.StreamState.STREAMING -> {
+                    streamConfigRecoveryAttempts = 0
+
                     // Show grid
                     gridView.alpha = 1f
                     gridView.previewView = viewFinder
@@ -1568,6 +1573,8 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         cameraController.bindToLifecycle(this)
 
         // Observe camera state
+        observedCameraState?.removeObservers(this)
+        observedCameraState = camera.cameraState
         camera.cameraState.observe(this) { cameraState ->
             cameraState.error?.let {
                 // Log the error
@@ -1596,9 +1603,20 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     }
 
                     CameraXCameraState.ERROR_STREAM_CONFIG -> {
-                        // CameraX use case misconfiguration, no way to recover
+                        if (tryRecoverFromStreamConfigError()) {
+                            return@let
+                        }
+
                         showToast(R.string.error_stream_config)
-                        finish()
+
+                        // Video mode uses the most demanding stream combination.
+                        // Fall back to photo mode before bailing out.
+                        if (cameraMode == CameraMode.VIDEO) {
+                            cameraMode = CameraMode.PHOTO
+                            bindCameraUseCases()
+                        } else {
+                            finish()
+                        }
                     }
 
                     CameraXCameraState.ERROR_CAMERA_DISABLED -> {
@@ -1773,7 +1791,19 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         // Update lens selector
         lensSelectorLayout.setCamera(
-            camera, viewModel.getCameras(cameraMode, camera.cameraFacing)
+            camera, getLensSelectorCameras()
+        )
+    }
+
+    private fun getLensSelectorCameras(): List<org.lineageos.aperture.camera.Camera> {
+        if (cameraMode != CameraMode.VIDEO) {
+            return viewModel.getCameras(cameraMode, camera.cameraFacing)
+        }
+
+        // Keep video mode on the primary camera for the current facing.
+        // This avoids fragile aux-camera stream combinations on some devices.
+        return listOfNotNull(
+            viewModel.getCameraOfFacingOrFirstAvailable(camera.cameraFacing, cameraMode)
         )
     }
 
@@ -1983,6 +2013,101 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
             bindCameraUseCases()
         }
+    }
+
+    private fun sortedSupportedVideoQualities() = supportedVideoQualities.toList().sortedWith { a, b ->
+        listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.UHD).let {
+            it.indexOf(a) - it.indexOf(b)
+        }
+    }
+
+    private fun tryRecoverFromStreamConfigError(): Boolean {
+        if (cameraState.isRecordingVideo ||
+            streamConfigRecoveryAttempts >= MAX_STREAM_CONFIG_RECOVERY_ATTEMPTS
+        ) {
+            return false
+        }
+
+        var changed = false
+
+        when (cameraMode) {
+            CameraMode.VIDEO -> {
+                // Prefer the most conservative quality first.
+                sortedSupportedVideoQualities().firstOrNull()?.let { fallbackQuality ->
+                    if (videoQuality != fallbackQuality) {
+                        videoQuality = fallbackQuality
+                        sharedPreferences.videoQuality = fallbackQuality
+                        changed = true
+                    }
+                }
+
+                // Then force SDR.
+                if (!changed &&
+                    videoDynamicRange != VideoDynamicRange.SDR &&
+                    supportedVideoDynamicRanges.contains(VideoDynamicRange.SDR)
+                ) {
+                    videoDynamicRange = VideoDynamicRange.SDR
+                    sharedPreferences.videoDynamicRange = VideoDynamicRange.SDR
+                    changed = true
+                }
+
+                // Finally, lower frame rate if possible.
+                if (!changed) {
+                    FrameRate.FPS_30.getLowerOrHigher(supportedVideoFrameRates)?.let { fallbackFps ->
+                        if (videoFrameRate != fallbackFps) {
+                            videoFrameRate = fallbackFps
+                            sharedPreferences.videoFrameRate = fallbackFps
+                            changed = true
+                        }
+                    }
+                }
+            }
+
+            CameraMode.PHOTO -> {
+                if (photoCaptureMode != ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY) {
+                    photoCaptureMode = ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY
+                    sharedPreferences.photoCaptureMode = photoCaptureMode
+                    changed = true
+                } else if (photoEffect != ExtensionMode.NONE) {
+                    photoEffect = ExtensionMode.NONE
+                    sharedPreferences.photoEffect = photoEffect
+                    changed = true
+                } else if (photoAspectRatio != AspectRatio.RATIO_4_3) {
+                    photoAspectRatio = AspectRatio.RATIO_4_3
+                    sharedPreferences.aspectRatio = photoAspectRatio
+                    changed = true
+                }
+            }
+
+            CameraMode.QR -> {
+                // Nothing to tune here.
+            }
+        }
+
+        // If parameters are already conservative, try switching back to the primary
+        // camera for the current facing.
+        if (!changed) {
+            val fallbackCamera = viewModel.getCameraOfFacingOrFirstAvailable(
+                camera.cameraFacing, cameraMode
+            )
+            if (fallbackCamera != null && fallbackCamera != camera) {
+                camera = fallbackCamera
+                changed = true
+            }
+        }
+
+        if (!changed) {
+            return false
+        }
+
+        streamConfigRecoveryAttempts++
+        Log.w(
+            LOG_TAG,
+            "Stream config recovery attempt $streamConfigRecoveryAttempts/" +
+                "$MAX_STREAM_CONFIG_RECOVERY_ATTEMPTS for camera=${camera.cameraId} mode=$cameraMode"
+        )
+        bindCameraUseCases()
+        return true
     }
 
     /**
@@ -2626,6 +2751,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
     companion object {
         private const val LOG_TAG = "Aperture"
+        private const val MAX_STREAM_CONFIG_RECOVERY_ATTEMPTS = 3
 
         private const val MSG_HIDE_ZOOM_SLIDER = 0
         private const val MSG_HIDE_FOCUS_RING = 1
