@@ -99,6 +99,12 @@
     <string name="photo_capture_mode_minimize_latency">Minimizo vonesën</string>
     <string name="enable_zsl_title">Aktivizo ZSL kur është e disponueshme</string>
     <string name="enable_zsl_summary">Përdorni modalitetin Zero-Shutter Lag kur kamera e mbështet atë. Në këtë modalitet, efektet e fotografisë janë të çaktivizuara. Vini re se kjo mënyrë është aktualisht eksperimentale</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">Ruani imazhet si JPEG Ultra HDR</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">Ruani imazhet si JPEG Ultra HDR kur është e mundur për të përmirësuar imazhet HDR.</string>
+    <string name="enable_raw_image_capture_title">Aktivizo kapjen e imazhit RAW</string>
+    <string name="enable_raw_image_capture_summary">Aktivizo kapjen e imazheve RAW. Fotot nuk mund të ruhen si JPEG Ultra HDR kur kapja RAW është e aktivizuar.</string>
+    <string name="disable_jpeg_with_raw_title">Çaktivizo JPEG me RAW</string>
+    <string name="disable_jpeg_with_raw_summary">Çaktivizo JPEG kur kapja e imazhit RAW është e aktivizuar</string>
     <string name="photo_ffc_mirror_title">Pasqyra e Kamerës së përparme</string>
     <string name="photo_ffc_mirror_summary">Ruani fotot e kamerës së përparme siç shfaqen në pamjen paraprake</string>
     <string name="video_stabilization_title">Aktivizo stabilizimin e videos</string>
