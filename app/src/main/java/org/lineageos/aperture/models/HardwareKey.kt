@@ -11,6 +11,7 @@ import org.lineageos.aperture.R
 
 /**
  * Collection of keys that can be used to do things.
+ *
  * @param firstKeycode The main [KeyEvent] for this key. If [secondKeycode] is defined, this keycode
  *   will be treated as the increase (or up) keycode
  * @param secondKeycode The [KeyEvent] keycode for decrease (or down)
@@ -74,28 +75,28 @@ enum class HardwareKey(
 
     init {
         require(
-            !isTwoWayKey || (preferenceCategoryTitleStringResId != null
-                    && invertPreferenceTitleStringResId != null
-                    && invertPreferenceSummaryStringResId != null)
+            !isTwoWayKey ||
+                (preferenceCategoryTitleStringResId != null &&
+                    invertPreferenceTitleStringResId != null &&
+                    invertPreferenceSummaryStringResId != null)
         )
     }
 
     companion object {
-        /**
-         * keycode to ([HardwareKey], first or increase)
-         */
-        private val ALL_KEYCODES = mutableMapOf<Int, Pair<HardwareKey, Boolean>>().apply {
-            for (key in HardwareKey.entries) {
-                this[key.firstKeycode] = Pair(key, true)
-                key.secondKeycode?.let {
-                    this[it] = Pair(key, false)
+        /** keycode to ([HardwareKey], first or increase) */
+        private val ALL_KEYCODES =
+            mutableMapOf<Int, Pair<HardwareKey, Boolean>>()
+                .apply {
+                    for (key in HardwareKey.entries) {
+                        this[key.firstKeycode] = Pair(key, true)
+                        key.secondKeycode?.let { this[it] = Pair(key, false) }
+                    }
                 }
-            }
-        }.toMap()
+                .toMap()
 
         /**
-         * Check if the [keyCode] matches one of the [HardwareKey] and returns
-         * ([TwoWayKey, first or increase]).
+         * Check if the [keyCode] matches one of the [HardwareKey] and returns ([TwoWayKey, first or
+         * increase]).
          *
          * @param keyCode The [KeyEvent] keycode
          */

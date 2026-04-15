@@ -11,10 +11,11 @@ enum class VideoStabilizationMode {
     ON_PREVIEW;
 
     companion object {
-        fun getMode(camera: Camera) = when {
-            camera.supportedVideoStabilizationModes.contains(ON_PREVIEW) -> ON_PREVIEW
-            camera.supportedVideoStabilizationModes.contains(ON) -> ON
-            else -> OFF
-        }
+        fun getMode(camera: Camera) =
+            when {
+                camera.supportedVideoStabilizationModes.contains(ON_PREVIEW) -> ON_PREVIEW
+                camera.supportedVideoStabilizationModes.contains(ON) -> ON
+                else -> OFF
+            }
     }
 }

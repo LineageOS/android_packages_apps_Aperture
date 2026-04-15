@@ -12,13 +12,13 @@ object GoogleLensUtils {
     private const val GSA_PACKAGE_NAME = "com.google.android.googlequicksearchbox"
     private const val LAUNCHER_PACKAGE_NAME = "com.google.android.apps.googlecamera.fishfood"
 
-    private fun isGsaAvailable(context: Context) = runCatching {
-        context.packageManager.getApplicationInfo(GSA_PACKAGE_NAME, 0).enabled
-    }.getOrDefault(false)
+    private fun isGsaAvailable(context: Context) =
+        runCatching { context.packageManager.getApplicationInfo(GSA_PACKAGE_NAME, 0).enabled }
+            .getOrDefault(false)
 
-    private fun isLensLauncherAvailable(context: Context) = runCatching {
-        context.packageManager.getApplicationInfo(LAUNCHER_PACKAGE_NAME, 0).enabled
-    }.getOrDefault(false)
+    private fun isLensLauncherAvailable(context: Context) =
+        runCatching { context.packageManager.getApplicationInfo(LAUNCHER_PACKAGE_NAME, 0).enabled }
+            .getOrDefault(false)
 
     fun isGoogleLensAvailable(context: Context) =
         isGsaAvailable(context) && isLensLauncherAvailable(context)

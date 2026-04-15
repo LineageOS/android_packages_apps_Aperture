@@ -5,17 +5,11 @@
 
 package org.lineageos.aperture.models
 
-/**
- * [Camera] type.
- */
+/** [Camera] type. */
 enum class CameraType {
-    /**
-     * Camera bundled with the device.
-     */
+    /** Camera bundled with the device. */
     INTERNAL,
 
-    /**
-     * Camera connected to the device with hot-swap support.
-     */
+    /** Camera connected to the device with hot-swap support. */
     EXTERNAL,
 }

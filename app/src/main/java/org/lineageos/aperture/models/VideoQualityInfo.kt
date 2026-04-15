@@ -9,6 +9,7 @@ import androidx.camera.video.Quality
 
 /**
  * Video [Quality] info.
+ *
  * @param quality The quality
  * @param supportedFrameRates The supported frame rates for this quality
  * @param supportedDynamicRanges The supported dynamic ranges for this quality

@@ -5,9 +5,7 @@
 
 package org.lineageos.aperture.models
 
-/**
- * Thermal status.
- */
+/** Thermal status. */
 enum class ThermalStatus {
     NONE,
     LIGHT,

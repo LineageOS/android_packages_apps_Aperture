@@ -12,13 +12,6 @@ import kotlin.reflect.safeCast
 
 fun AppBarLayout.setOffset(@Px offsetPx: Int, coordinatorLayout: CoordinatorLayout) {
     val params = CoordinatorLayout.LayoutParams::class.safeCast(layoutParams) ?: return
-    AppBarLayout.Behavior::class.safeCast(params.behavior)?.onNestedPreScroll(
-        coordinatorLayout,
-        this,
-        this,
-        0,
-        offsetPx,
-        intArrayOf(0, 0),
-        0
-    )
+    AppBarLayout.Behavior::class.safeCast(params.behavior)
+        ?.onNestedPreScroll(coordinatorLayout, this, this, 0, offsetPx, intArrayOf(0, 0), 0)
 }

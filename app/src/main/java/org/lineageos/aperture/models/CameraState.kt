@@ -5,9 +5,7 @@
 
 package org.lineageos.aperture.models
 
-enum class CameraState(
-    val isRecordingVideo: Boolean = false,
-) {
+enum class CameraState(val isRecordingVideo: Boolean = false) {
     IDLE,
     COUNTDOWN,
     TAKING_PHOTO,

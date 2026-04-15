@@ -17,19 +17,16 @@ import androidx.core.view.isVisible
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
+import java.io.InputStream
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.smoothRotate
 import org.lineageos.aperture.models.MediaType
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.utils.ExifUtils
-import java.io.InputStream
 
-/**
- * Image/video preview fragment
- */
-class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintLayout(
-    context, attrs
-) {
+/** Image/video preview fragment */
+class CapturePreviewLayout(context: Context, attrs: AttributeSet?) :
+    ConstraintLayout(context, attrs) {
     private var uri: Uri? = null
     private var photoInputStream: InputStream? = null
     private lateinit var mediaType: MediaType
@@ -41,10 +38,7 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
     private val imageView by lazy { findViewById<ImageView>(R.id.imageView) }
     private val videoView by lazy { findViewById<PlayerView>(R.id.videoView) }
 
-    /**
-     * input is null == canceled
-     * input is not null == confirmed
-     */
+    /** input is null == canceled input is not null == confirmed */
     internal var onChoiceCallback: (input: Any?) -> Unit = {}
 
     private var screenRotation = Rotation.ROTATION_0
@@ -114,21 +108,20 @@ class CapturePreviewLayout(context: Context, attrs: AttributeSet?) : ConstraintL
                     val bitmap = BitmapFactory.decodeStream(inputStream)
                     inputStream.reset()
                     Log.d(LOG_TAG, "Preview transform=$transform screenRotation=$screenRotation")
-                    imageView.rotation =
-                        transform.rotation.offset.toFloat() - screenRotation.offset
-                    imageView.scaleX = if (transform.mirror) {
-                        -1f
-                    } else {
-                        1f
-                    }
+                    imageView.rotation = transform.rotation.offset.toFloat() - screenRotation.offset
+                    imageView.scaleX =
+                        if (transform.mirror) {
+                            -1f
+                        } else {
+                            1f
+                        }
                     imageView.setImageBitmap(bitmap)
                 }
             }
 
             MediaType.VIDEO -> {
-                exoPlayer = ExoPlayer.Builder(context)
-                    .build()
-                    .also {
+                exoPlayer =
+                    ExoPlayer.Builder(context).build().also {
                         videoView.player = it
 
                         it.setMediaItem(MediaItem.fromUri(uri!!))

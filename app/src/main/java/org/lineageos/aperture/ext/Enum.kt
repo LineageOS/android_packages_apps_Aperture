@@ -5,12 +5,8 @@
 
 package org.lineageos.aperture.ext
 
-/**
- * Get the previous value.
- */
+/** Get the previous value. */
 internal inline fun <reified E : Enum<E>> E.previous() = enumValues<E>().previous(this)
 
-/**
- * Get the next value.
- */
+/** Get the next value. */
 internal inline fun <reified E : Enum<E>> E.next() = enumValues<E>().next(this)

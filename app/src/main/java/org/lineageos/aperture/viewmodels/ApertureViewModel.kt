@@ -9,9 +9,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import org.lineageos.aperture.ApertureApplication
 
-/**
- * Base view model for all app view models.
- */
+/** Base view model for all app view models. */
 abstract class ApertureViewModel(application: Application) : AndroidViewModel(application) {
     private val apertureApplication = getApplication<ApertureApplication>()
 

@@ -16,10 +16,8 @@ import kotlinx.coroutines.launch
 import org.lineageos.aperture.models.QrResult
 import zxingcpp.BarcodeReader
 
-class QrImageAnalyzer(
-    private val context: Context,
-    private val coroutineScope: CoroutineScope,
-) : ImageAnalysis.Analyzer {
+class QrImageAnalyzer(private val context: Context, private val coroutineScope: CoroutineScope) :
+    ImageAnalysis.Analyzer {
     // QR
     private val reader by lazy {
         BarcodeReader().apply {

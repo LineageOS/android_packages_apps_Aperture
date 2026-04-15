@@ -22,26 +22,30 @@ import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.models.Rotation
 
 @Suppress("PrivateResource")
-abstract class Slider @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
-    private val trackPaint = Paint().apply {
-        style = Paint.Style.FILL
-        xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
-        setShadowLayer(1f, 0f, 0f, Color.BLACK)
-    }
+abstract class Slider
+@JvmOverloads
+constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    View(context, attrs, defStyleAttr) {
+    private val trackPaint =
+        Paint().apply {
+            style = Paint.Style.FILL
+            xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
+            setShadowLayer(1f, 0f, 0f, Color.BLACK)
+        }
 
-    private val trackBorderPaint = Paint().apply {
-        style = Paint.Style.STROKE
-        xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
-        strokeWidth = 2F
-    }
+    private val trackBorderPaint =
+        Paint().apply {
+            style = Paint.Style.STROKE
+            xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
+            strokeWidth = 2F
+        }
 
-    private val thumbPaint = Paint().apply {
-        style = Paint.Style.FILL
-        xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
-        setShadowLayer(3f, 0f, 0f, Color.BLACK)
-    }
+    private val thumbPaint =
+        Paint().apply {
+            style = Paint.Style.FILL
+            xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC)
+            setShadowLayer(3f, 0f, 0f, Color.BLACK)
+        }
 
     private val thumbTextPaint = Paint()
 
@@ -52,11 +56,10 @@ abstract class Slider @JvmOverloads constructor(
             field = value.coerceIn(0f, 1f)
             invalidate()
         }
+
     var onProgressChangedByUser: ((value: Float) -> Unit)? = null
 
-    var textFormatter: (value: Float) -> String = {
-        "%.01f".format(it)
-    }
+    var textFormatter: (value: Float) -> String = { "%.01f".format(it) }
 
     var screenRotation = Rotation.ROTATION_0
         set(value) {
@@ -76,19 +79,19 @@ abstract class Slider @JvmOverloads constructor(
                         getColor(R.styleable.Slider_trackColorGradientCenter, Color.WHITE)
                     val trackColorGradientEnd =
                         getColor(R.styleable.Slider_trackColorGradientEnd, Color.WHITE)
-                    gradientColors = intArrayOf(
-                        trackColorGradientStart,
-                        trackColorGradientCenter,
-                        trackColorGradientEnd
-                    )
+                    gradientColors =
+                        intArrayOf(
+                            trackColorGradientStart,
+                            trackColorGradientCenter,
+                            trackColorGradientEnd,
+                        )
                 } else {
                     gradientColors = intArrayOf()
                     trackPaint.color = getColor(R.styleable.Slider_trackColor, Color.WHITE)
                 }
                 thumbPaint.color = getColor(R.styleable.Slider_thumbColor, Color.BLACK)
-                trackBorderPaint.color = getColor(
-                    R.styleable.Slider_trackBorderColor, Color.TRANSPARENT
-                )
+                trackBorderPaint.color =
+                    getColor(R.styleable.Slider_trackBorderColor, Color.TRANSPARENT)
                 thumbTextPaint.color = getColor(R.styleable.Slider_thumbTextColor, Color.WHITE)
                 thumbTextPaint.textSize =
                     getDimension(R.styleable.Slider_thumbTextSize, 10.px.toFloat())
@@ -112,15 +115,16 @@ abstract class Slider @JvmOverloads constructor(
         val trackRadius = track.width() * 0.75f
 
         if (gradientColors.isNotEmpty()) {
-            trackPaint.shader = LinearGradient(
-                track().width() / 2,
-                0f,
-                track().width() / 2,
-                track.height(),
-                gradientColors,
-                null,
-                Shader.TileMode.CLAMP
-            )
+            trackPaint.shader =
+                LinearGradient(
+                    track().width() / 2,
+                    0f,
+                    track().width() / 2,
+                    track.height(),
+                    gradientColors,
+                    null,
+                    Shader.TileMode.CLAMP,
+                )
         }
 
         // Draw round rect
@@ -144,14 +148,12 @@ abstract class Slider @JvmOverloads constructor(
 
         // Draw text
         val text = textFormatter(progress)
-        val textBounds = Rect().apply {
-            thumbTextPaint.getTextBounds(text, 0, text.length, this)
-        }
+        val textBounds = Rect().apply { thumbTextPaint.getTextBounds(text, 0, text.length, this) }
         canvas.drawText(
             text,
             thumb.first - (textBounds.width() / 2),
             thumb.second + (textBounds.height() / 2),
-            thumbTextPaint
+            thumbTextPaint,
         )
 
         // Restore original rotation

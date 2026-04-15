@@ -20,37 +20,38 @@ object ShortcutsUtils {
 
     fun registerShortcuts(context: Context) {
         val shortcutManager = context.getSystemService(ShortcutManager::class.java)
-        shortcutManager.dynamicShortcuts = listOf(
-            ShortcutInfo.Builder(context, SHORTCUT_ID_SELFIE)
-                .setShortLabel(context.getString(R.string.shortcut_selfie))
-                .setLongLabel(context.getString(R.string.shortcut_selfie))
-                .setIcon(Icon.createWithResource(context, R.drawable.ic_shortcut_selfie))
-                .setIntent(
-                    Intent(context, CameraActivity::class.java)
-                        .setAction(SHORTCUT_ID_SELFIE)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                )
-                .build(),
-            ShortcutInfo.Builder(context, SHORTCUT_ID_VIDEO)
-                .setShortLabel(context.getString(R.string.shortcut_video))
-                .setLongLabel(context.getString(R.string.shortcut_video))
-                .setIcon(Icon.createWithResource(context, R.drawable.ic_shortcut_video))
-                .setIntent(
-                    Intent(context, CameraActivity::class.java)
-                        .setAction(SHORTCUT_ID_VIDEO)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                )
-                .build(),
-            ShortcutInfo.Builder(context, SHORTCUT_ID_QR)
-                .setShortLabel(context.getString(R.string.shortcut_qr))
-                .setLongLabel(context.getString(R.string.shortcut_qr))
-                .setIcon(Icon.createWithResource(context, R.drawable.ic_shortcut_qr))
-                .setIntent(
-                    Intent(context, CameraActivity::class.java)
-                        .setAction(SHORTCUT_ID_QR)
-                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                )
-                .build()
-        )
+        shortcutManager.dynamicShortcuts =
+            listOf(
+                ShortcutInfo.Builder(context, SHORTCUT_ID_SELFIE)
+                    .setShortLabel(context.getString(R.string.shortcut_selfie))
+                    .setLongLabel(context.getString(R.string.shortcut_selfie))
+                    .setIcon(Icon.createWithResource(context, R.drawable.ic_shortcut_selfie))
+                    .setIntent(
+                        Intent(context, CameraActivity::class.java)
+                            .setAction(SHORTCUT_ID_SELFIE)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    )
+                    .build(),
+                ShortcutInfo.Builder(context, SHORTCUT_ID_VIDEO)
+                    .setShortLabel(context.getString(R.string.shortcut_video))
+                    .setLongLabel(context.getString(R.string.shortcut_video))
+                    .setIcon(Icon.createWithResource(context, R.drawable.ic_shortcut_video))
+                    .setIntent(
+                        Intent(context, CameraActivity::class.java)
+                            .setAction(SHORTCUT_ID_VIDEO)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    )
+                    .build(),
+                ShortcutInfo.Builder(context, SHORTCUT_ID_QR)
+                    .setShortLabel(context.getString(R.string.shortcut_qr))
+                    .setLongLabel(context.getString(R.string.shortcut_qr))
+                    .setIcon(Icon.createWithResource(context, R.drawable.ic_shortcut_qr))
+                    .setIntent(
+                        Intent(context, CameraActivity::class.java)
+                            .setAction(SHORTCUT_ID_QR)
+                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    )
+                    .build(),
+            )
     }
 }

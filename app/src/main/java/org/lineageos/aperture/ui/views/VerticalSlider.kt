@@ -11,9 +11,10 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import org.lineageos.aperture.ext.mapToRange
 
-class VerticalSlider @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : Slider(context, attrs, defStyleAttr) {
+class VerticalSlider
+@JvmOverloads
+constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    Slider(context, attrs, defStyleAttr) {
     @Suppress("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         super.onTouchEvent(event)
@@ -51,12 +52,13 @@ class VerticalSlider @JvmOverloads constructor(
         val trackHeight = track.height()
 
         val cx = width / 2f
-        val cy = if (steps > 0) {
-            val progress = Int.mapToRange(0..steps, progress).toFloat() / steps
-            (trackHeight - (trackHeight * progress)) + track.top
-        } else {
-            (trackHeight - (trackHeight * progress)) + track.top
-        }
+        val cy =
+            if (steps > 0) {
+                val progress = Int.mapToRange(0..steps, progress).toFloat() / steps
+                (trackHeight - (trackHeight * progress)) + track.top
+            } else {
+                (trackHeight - (trackHeight * progress)) + track.top
+            }
 
         return Triple(cx, cy, width / 2.15f)
     }

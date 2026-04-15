@@ -5,22 +5,14 @@
 
 package org.lineageos.aperture.models
 
-/**
- * State of a permission.
- */
+/** State of a permission. */
 enum class PermissionState {
-    /**
-     * The permission is granted.
-     */
+    /** The permission is granted. */
     GRANTED,
 
-    /**
-     * The permission is not granted and the user hasn't been asked for it.
-     */
+    /** The permission is not granted and the user hasn't been asked for it. */
     NOT_GRANTED,
 
-    /**
-     * The user explicitly denied the permission.
-     */
+    /** The user explicitly denied the permission. */
     DENIED,
 }

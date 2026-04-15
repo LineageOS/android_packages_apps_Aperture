@@ -22,16 +22,10 @@ import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.smoothRotate
 import org.lineageos.aperture.models.Rotation
 
-/**
- * This class manages the looks of the countdown.
- */
-class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
-    context, attrs
-) {
+/** This class manages the looks of the countdown. */
+class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
     // Views
-    private val remainingSecondsView by lazy {
-        findViewById<TextView>(R.id.remainingSeconds)
-    }
+    private val remainingSecondsView by lazy { findViewById<TextView>(R.id.remainingSeconds) }
 
     // System services
     private val layoutInflater = context.getSystemService(LayoutInflater::class.java)
@@ -40,18 +34,17 @@ class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
     private lateinit var listener: () -> Unit
     private val previewArea = Rect()
 
-    private val handler = object : Handler(Looper.getMainLooper()) {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            when (msg.what) {
-                SET_TIMER_TEXT -> remainingSecondsChanged(remainingSeconds - 1)
+    private val handler =
+        object : Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
+                when (msg.what) {
+                    SET_TIMER_TEXT -> remainingSecondsChanged(remainingSeconds - 1)
+                }
             }
         }
-    }
 
-    /**
-     * Returns whether countdown is on-going.
-     */
+    /** Returns whether countdown is on-going. */
     private val isCountingDown: Boolean
         get() = remainingSeconds > 0
 
@@ -59,10 +52,7 @@ class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
         layoutInflater.inflate(R.layout.count_down_view, this)
     }
 
-    /**
-     * Responds to preview area change by centering the countdown UI in the new
-     * preview area.
-     */
+    /** Responds to preview area change by centering the countdown UI in the new preview area. */
     fun onPreviewAreaChanged(previewArea: Rect) {
         this.previewArea.set(previewArea)
     }
@@ -93,12 +83,15 @@ class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
         remainingSecondsView.pivotY = textHeight / 2f
         remainingSecondsView.alpha = 1f
         val endScale = 2.5f
-        remainingSecondsView.animate().apply {
-            scaleX(endScale)
-            scaleY(endScale)
-            alpha(0f)
-            duration = ANIMATION_DURATION_MS
-        }.start()
+        remainingSecondsView
+            .animate()
+            .apply {
+                scaleX(endScale)
+                scaleY(endScale)
+                alpha(0f)
+                duration = ANIMATION_DURATION_MS
+            }
+            .start()
     }
 
     /**
@@ -116,9 +109,7 @@ class CountDownView(context: Context, attrs: AttributeSet?) : FrameLayout(
         remainingSecondsChanged(sec)
     }
 
-    /**
-     * Cancels the on-going countdown in the UI, if any.
-     */
+    /** Cancels the on-going countdown in the UI, if any. */
     fun cancelCountDown(): Boolean {
         if (remainingSeconds > 0) {
             remainingSeconds = 0

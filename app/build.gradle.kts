@@ -37,7 +37,7 @@ android {
             setProguardFiles(
                 listOf(
                     getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                    "proguard-rules.pro",
                 )
             )
         }
@@ -53,15 +53,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
+    kotlin { compilerOptions { jvmTarget.set(JvmTarget.JVM_17) } }
 
-    lint {
-        lintConfig = file("lint.xml")
-    }
+    lint { lintConfig = file("lint.xml") }
 }
 
 dependencies {
@@ -101,7 +95,7 @@ configure<GenerateBpPluginExtension> {
             module.group.startsWith("androidx") -> {
                 // We provide our own androidx.{camera,media3}
                 !module.group.startsWith("androidx.camera") &&
-                        !module.group.startsWith("androidx.media3")
+                    !module.group.startsWith("androidx.media3")
             }
 
             module.group.startsWith("org.jetbrains") -> true

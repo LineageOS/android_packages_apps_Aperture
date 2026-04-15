@@ -5,9 +5,7 @@
 
 package org.lineageos.aperture.models
 
-/**
- * Video mirror mode.
- */
+/** Video mirror mode. */
 enum class VideoMirrorMode {
     OFF,
     ON,

@@ -17,19 +17,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
+import java.util.concurrent.atomic.AtomicBoolean
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.getThemeColor
 import org.lineageos.aperture.models.IslandItem
 import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.ui.recyclerview.SimpleListAdapter
 import org.lineageos.aperture.ui.recyclerview.UniqueItemDiffCallback
-import java.util.concurrent.atomic.AtomicBoolean
 
-class IslandView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-) : FrameLayout(context, attrs, defStyleAttr) {
+class IslandView
+@JvmOverloads
+constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    FrameLayout(context, attrs, defStyleAttr) {
     // Views
     private val itemsRecyclerView by lazy { findViewById<RecyclerView>(R.id.itemsRecyclerView) }
 
@@ -48,52 +47,50 @@ class IslandView @JvmOverloads constructor(
 
     // RecyclerView
     private val adapter by lazy {
-        object : SimpleListAdapter<IslandItem, ImageView>(
-            UniqueItemDiffCallback(),
-            {
-                ImageView(
-                    it.context,
-                    null,
-                    0,
-                    R.style.Theme_Aperture_Camera_Island_ImageView,
-                )
-            },
-        ) {
+        object :
+            SimpleListAdapter<IslandItem, ImageView>(
+                UniqueItemDiffCallback(),
+                { ImageView(it.context, null, 0, R.style.Theme_Aperture_Camera_Island_ImageView) },
+            ) {
             override fun ViewHolder.onBindView(item: IslandItem) {
                 view.setImageResource(
                     when (item) {
                         is IslandItem.ThermalThrottling -> R.drawable.ic_thermostat
 
-                        is IslandItem.LowBattery -> when (item.isCharging) {
-                            true -> R.drawable.ic_battery_charging_20
-                            false -> R.drawable.ic_battery_1_bar
-                        }
+                        is IslandItem.LowBattery ->
+                            when (item.isCharging) {
+                                true -> R.drawable.ic_battery_charging_20
+                                false -> R.drawable.ic_battery_1_bar
+                            }
 
                         is IslandItem.PhotoJpegUltraHdr -> R.drawable.ic_hdr_on
 
-                        is IslandItem.PhotoRawEnabled -> when (item.withJpeg) {
-                            true -> R.drawable.ic_image_add_raw_on
-                            false -> R.drawable.ic_raw_on
-                        }
+                        is IslandItem.PhotoRawEnabled ->
+                            when (item.withJpeg) {
+                                true -> R.drawable.ic_image_add_raw_on
+                                false -> R.drawable.ic_raw_on
+                            }
 
                         is IslandItem.VideoMicMuted -> R.drawable.ic_mic_off
                     }
                 )
 
-                val isWarning = when (item) {
-                    is IslandItem.ThermalThrottling -> item.isCritical
-                    is IslandItem.LowBattery -> true
-                    else -> false
-                }
+                val isWarning =
+                    when (item) {
+                        is IslandItem.ThermalThrottling -> item.isCritical
+                        is IslandItem.LowBattery -> true
+                        else -> false
+                    }
 
-                view.imageTintList = ColorStateList.valueOf(
-                    context.getThemeColor(
-                        when (isWarning) {
-                            true -> androidx.appcompat.R.attr.colorError
-                            false -> com.google.android.material.R.attr.colorOnSurface
-                        }
+                view.imageTintList =
+                    ColorStateList.valueOf(
+                        context.getThemeColor(
+                            when (isWarning) {
+                                true -> androidx.appcompat.R.attr.colorError
+                                false -> com.google.android.material.R.attr.colorOnSurface
+                            }
+                        )
                     )
-                )
             }
         }
     }
@@ -164,39 +161,43 @@ class IslandView @JvmOverloads constructor(
         val compensationValue = screenRotation.compensationValue.toFloat()
 
         updateLayoutParams<ConstraintLayout.LayoutParams> {
-            startToStart = when (screenRotation) {
-                Rotation.ROTATION_0,
-                Rotation.ROTATION_90,
-                Rotation.ROTATION_180 -> R.id.viewFinder
+            startToStart =
+                when (screenRotation) {
+                    Rotation.ROTATION_0,
+                    Rotation.ROTATION_90,
+                    Rotation.ROTATION_180 -> R.id.viewFinder
 
-                Rotation.ROTATION_270 -> ConstraintLayout.LayoutParams.UNSET
-            }
-            endToEnd = when (screenRotation) {
-                Rotation.ROTATION_0,
-                Rotation.ROTATION_90,
-                Rotation.ROTATION_180 -> ConstraintLayout.LayoutParams.UNSET
+                    Rotation.ROTATION_270 -> ConstraintLayout.LayoutParams.UNSET
+                }
+            endToEnd =
+                when (screenRotation) {
+                    Rotation.ROTATION_0,
+                    Rotation.ROTATION_90,
+                    Rotation.ROTATION_180 -> ConstraintLayout.LayoutParams.UNSET
 
-                Rotation.ROTATION_270 -> R.id.viewFinder
-            }
+                    Rotation.ROTATION_270 -> R.id.viewFinder
+                }
         }
 
         rotation = compensationValue
 
         measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED)
 
-        translationX = when (screenRotation) {
-            Rotation.ROTATION_0,
-            Rotation.ROTATION_180 -> 0F
+        translationX =
+            when (screenRotation) {
+                Rotation.ROTATION_0,
+                Rotation.ROTATION_180 -> 0F
 
-            Rotation.ROTATION_90 -> -((measuredWidth - measuredHeight) / 2).toFloat()
-            Rotation.ROTATION_270 -> ((measuredWidth - measuredHeight) / 2).toFloat()
-        }
-        translationY = when (screenRotation) {
-            Rotation.ROTATION_0,
-            Rotation.ROTATION_180 -> 0F
+                Rotation.ROTATION_90 -> -((measuredWidth - measuredHeight) / 2).toFloat()
+                Rotation.ROTATION_270 -> ((measuredWidth - measuredHeight) / 2).toFloat()
+            }
+        translationY =
+            when (screenRotation) {
+                Rotation.ROTATION_0,
+                Rotation.ROTATION_180 -> 0F
 
-            Rotation.ROTATION_90,
-            Rotation.ROTATION_270 -> -((measuredHeight - measuredWidth) / 2).toFloat()
-        }
+                Rotation.ROTATION_90,
+                Rotation.ROTATION_270 -> -((measuredHeight - measuredWidth) / 2).toFloat()
+            }
     }
 }

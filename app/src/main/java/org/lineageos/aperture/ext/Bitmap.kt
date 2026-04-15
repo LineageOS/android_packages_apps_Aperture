@@ -7,47 +7,36 @@ package org.lineageos.aperture.ext
 
 import android.graphics.Bitmap
 import androidx.core.graphics.scale
-import org.lineageos.aperture.models.Transform
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import org.lineageos.aperture.models.Transform
 
 /**
- * Stack Blur v1.0 from
- * http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html
- * Java Author: Mario Klingemann <mario at quasimondo.com>
- * http://incubator.quasimondo.com
+ * Stack Blur v1.0 from http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html Java Author:
+ * Mario Klingemann <mario at quasimondo.com> http://incubator.quasimondo.com
  *
- * created Feburary 29, 2004
- * Android port : Yahel Bouaziz <yahel at kayenko.com>
- * http://www.kayenko.com
- * ported april 5th, 2012
+ * created Feburary 29, 2004 Android port : Yahel Bouaziz <yahel at kayenko.com>
+ * http://www.kayenko.com ported april 5th, 2012
  *
- * This is a compromise between Gaussian Blur and Box blur
- * It creates much better looking blurs than Box Blur, but is
- * 7x faster than my Gaussian Blur implementation.
+ * This is a compromise between Gaussian Blur and Box blur It creates much better looking blurs than
+ * Box Blur, but is 7x faster than my Gaussian Blur implementation.
  *
- * I called it Stack Blur because this describes best how this
- * filter works internally: it creates a kind of moving stack
- * of colors whilst scanning through the image. Thereby it
- * just has to add one new block of color to the right side
- * of the stack and remove the leftmost color. The remaining
- * colors on the topmost layer of the stack are either added on
- * or reduced by one, depending on if they are on the right or
- * on the left side of the stack.
+ * I called it Stack Blur because this describes best how this filter works internally: it creates a
+ * kind of moving stack of colors whilst scanning through the image. Thereby it just has to add one
+ * new block of color to the right side of the stack and remove the leftmost color. The remaining
+ * colors on the topmost layer of the stack are either added on or reduced by one, depending on if
+ * they are on the right or on the left side of the stack.
  *
- * If you are using this algorithm in your code please add
- * the following line:
- * Stack Blur Algorithm by Mario Klingemann <mario@quasimondo.com>
+ * If you are using this algorithm in your code please add the following line: Stack Blur Algorithm
+ * by Mario Klingemann <mario@quasimondo.com>
  */
 internal fun Bitmap.stackBlur(radius: Int): Bitmap {
     if (radius < 1) {
         return this
     }
 
-    val bitmap = config?.let {
-        copy(it, true)
-    } ?: return this
+    val bitmap = config?.let { copy(it, true) } ?: return this
 
     val width = bitmap.width
     val height = bitmap.height
@@ -88,11 +77,7 @@ internal fun Bitmap.stackBlur(radius: Int): Bitmap {
     var yw = 0
     yi = 0
 
-    val stack = Array(div) {
-        IntArray(
-            3
-        )
-    }
+    val stack = Array(div) { IntArray(3) }
     var stackpointer: Int
     var stackstart: Int
     var sir: IntArray
@@ -281,18 +266,20 @@ internal fun Bitmap.scale(maxSideLen: Int): Bitmap {
     val newHeight: Int
     if (aspectRatio > 1) {
         newWidth = min(width, maxSideLen)
-        newHeight = if (newWidth == width) {
-            height
-        } else {
-            (newWidth.toFloat() / aspectRatio).toInt()
-        }
+        newHeight =
+            if (newWidth == width) {
+                height
+            } else {
+                (newWidth.toFloat() / aspectRatio).toInt()
+            }
     } else {
         newHeight = min(height, maxSideLen)
-        newWidth = if (newHeight == height) {
-            width
-        } else {
-            (newHeight * aspectRatio).toInt()
-        }
+        newWidth =
+            if (newHeight == height) {
+                width
+            } else {
+                (newHeight * aspectRatio).toInt()
+            }
     }
     return if (width == newWidth) {
         this

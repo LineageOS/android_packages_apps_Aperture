@@ -13,13 +13,9 @@ import kotlinx.coroutines.flow.callbackFlow
 
 @RequiresApi(Build.VERSION_CODES.Q)
 fun PowerManager.thermalStatusFlow() = callbackFlow {
-    val listener = PowerManager.OnThermalStatusChangedListener {
-        trySend(it)
-    }
+    val listener = PowerManager.OnThermalStatusChangedListener { trySend(it) }
 
     addThermalStatusListener(listener)
 
-    awaitClose {
-        removeThermalStatusListener(listener)
-    }
+    awaitClose { removeThermalStatusListener(listener) }
 }

@@ -18,29 +18,22 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 
 @RequiresPermission(
-    anyOf = [
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION,
-    ]
+    anyOf = [Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION]
 )
-fun LocationManager.locationFlow(
-    locationRequest: LocationRequestCompat,
-) = callbackFlow {
+fun LocationManager.locationFlow(locationRequest: LocationRequestCompat) = callbackFlow {
     var currentLocation: Location? = null
 
     val listener = LocationListenerCompat { location ->
         currentLocation?.let {
-            val currentLocationAgeSeconds = SystemClock.elapsedRealtimeNanos()
-                .minus(it.elapsedRealtimeNanos)
+            val currentLocationAgeSeconds =
+                SystemClock.elapsedRealtimeNanos().minus(it.elapsedRealtimeNanos)
 
             if (currentLocationAgeSeconds > 60_000_000_000) { // 60 seconds
                 currentLocation = null
             }
         }
 
-        val isMoreAccurate = currentLocation?.let {
-            it.accuracy < location.accuracy
-        } ?: true
+        val isMoreAccurate = currentLocation?.let { it.accuracy < location.accuracy } ?: true
 
         if (!isMoreAccurate) {
             return@LocationListenerCompat
@@ -56,11 +49,9 @@ fun LocationManager.locationFlow(
             provider,
             locationRequest,
             listener,
-            Looper.getMainLooper()
+            Looper.getMainLooper(),
         )
     }
 
-    awaitClose {
-        LocationManagerCompat.removeUpdates(this@locationFlow, listener)
-    }
+    awaitClose { LocationManagerCompat.removeUpdates(this@locationFlow, listener) }
 }

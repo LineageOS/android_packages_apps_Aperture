@@ -21,55 +21,48 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
 @ColorInt
-fun Context.getThemeColor(@AttrRes attribute: Int) = TypedValue().let {
-    theme.resolveAttribute(attribute, it, true)
-    it.data
-}
+fun Context.getThemeColor(@AttrRes attribute: Int) =
+    TypedValue().let {
+        theme.resolveAttribute(attribute, it, true)
+        it.data
+    }
 
-fun Context.permissionGranted(
-    permission: String
-) = ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+fun Context.permissionGranted(permission: String) =
+    ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 
-fun Context.permissionsGranted(permissions: Array<String>) = permissions.all {
-    permissionGranted(it)
-}
+fun Context.permissionsGranted(permissions: Array<String>) =
+    permissions.all { permissionGranted(it) }
 
-fun Context.permissionsGrantedFlow(
-    lifecycle: Lifecycle,
-    permissions: Array<String>,
-) = lifecycle.eventFlow(Lifecycle.Event.ON_RESUME)
-    .onStart { emit(Unit) }
-    .map { permissionsGranted(permissions) }
+fun Context.permissionsGrantedFlow(lifecycle: Lifecycle, permissions: Array<String>) =
+    lifecycle
+        .eventFlow(Lifecycle.Event.ON_RESUME)
+        .onStart { emit(Unit) }
+        .map { permissionsGranted(permissions) }
 
 fun Context.broadcastReceiverFlow(
     intentFilter: IntentFilter,
     flags: Int = ContextCompat.RECEIVER_NOT_EXPORTED,
 ) = callbackFlow {
-    val broadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val matched = intentFilter.match(
-                contentResolver,
-                intent,
-                true,
-                Context::class.simpleName!!
-            )
+    val broadcastReceiver =
+        object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val matched =
+                    intentFilter.match(contentResolver, intent, true, Context::class.simpleName!!)
 
-            if (matched >= 0) {
-                trySend(intent)
+                if (matched >= 0) {
+                    trySend(intent)
+                }
             }
         }
-    }
 
     trySend(
         ContextCompat.registerReceiver(
             this@broadcastReceiverFlow,
             broadcastReceiver,
             intentFilter,
-            flags
+            flags,
         )
     )
 
-    awaitClose {
-        unregisterReceiver(broadcastReceiver)
-    }
+    awaitClose { unregisterReceiver(broadcastReceiver) }
 }

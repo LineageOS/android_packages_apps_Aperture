@@ -14,12 +14,11 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.camera.view.PreviewView
 import org.lineageos.aperture.ext.stackBlur
 
-/**
- * Display a blurred viewfinder snapshot during camera rebind.
- */
-class PreviewBlurView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : AppCompatImageView(context, attrs, defStyleAttr) {
+/** Display a blurred viewfinder snapshot during camera rebind. */
+class PreviewBlurView
+@JvmOverloads
+constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    AppCompatImageView(context, attrs, defStyleAttr) {
     var previewView: PreviewView? = null
 
     init {
@@ -29,15 +28,18 @@ class PreviewBlurView @JvmOverloads constructor(
     }
 
     fun freeze() {
-        previewView?.takeUnless { it.height <= 0 || it.width <= 0 }?.bitmap?.also {
-            setImageBitmap(
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    it
-                } else {
-                    it.stackBlur(RADIUS.toInt())
-                }
-            )
-        } ?: setImageResource(android.R.color.black)
+        previewView
+            ?.takeUnless { it.height <= 0 || it.width <= 0 }
+            ?.bitmap
+            ?.also {
+                setImageBitmap(
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        it
+                    } else {
+                        it.stackBlur(RADIUS.toInt())
+                    }
+                )
+            } ?: setImageResource(android.R.color.black)
     }
 
     companion object {

@@ -10,28 +10,20 @@ import androidx.camera.core.ImageCaptureException
 import java.io.ByteArrayOutputStream
 
 /**
- * A generic event, emitted by the VM, handled by the activity.
- * Consider those as one-shot events, so they shouldn't be handled more than once per emission.
+ * A generic event, emitted by the VM, handled by the activity. Consider those as one-shot events,
+ * so they shouldn't be handled more than once per emission.
  */
 sealed interface Event {
-    /**
-     * No camera is available on the device, the app should close.
-     */
+    /** No camera is available on the device, the app should close. */
     data object NoCamera : Event
 
-    /**
-     * Show the force torch introduction.
-     */
+    /** Show the force torch introduction. */
     data object ShowForceTorchHelp : Event
 
-    /**
-     * Start the flip camera button animation.
-     */
+    /** Start the flip camera button animation. */
     data object FlipCameraAnimation : Event
 
-    /**
-     * Photo capture event.
-     */
+    /** Photo capture event. */
     sealed interface PhotoCaptureStatus : Event {
         data object CaptureStarted : PhotoCaptureStatus
 
@@ -40,8 +32,6 @@ sealed interface Event {
             val photoOutputStream: ByteArrayOutputStream?,
         ) : PhotoCaptureStatus
 
-        data class Error(
-            val exception: ImageCaptureException,
-        ) : PhotoCaptureStatus
+        data class Error(val exception: ImageCaptureException) : PhotoCaptureStatus
     }
 }

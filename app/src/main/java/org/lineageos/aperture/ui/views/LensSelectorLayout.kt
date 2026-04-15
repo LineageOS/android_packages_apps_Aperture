@@ -14,17 +14,18 @@ import android.widget.Button
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.children
 import androidx.core.view.setMargins
+import java.util.Locale
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.ext.smoothRotate
 import org.lineageos.aperture.models.Camera
 import org.lineageos.aperture.models.CameraState
 import org.lineageos.aperture.models.Rotation
-import java.util.Locale
 
-class LensSelectorLayout @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayoutCompat(context, attrs, defStyleAttr) {
+class LensSelectorLayout
+@JvmOverloads
+constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+    LinearLayoutCompat(context, attrs, defStyleAttr) {
     private val layoutInflater by lazy { context.getSystemService(LayoutInflater::class.java) }
 
     private lateinit var activeCamera: Camera
@@ -56,16 +57,17 @@ class LensSelectorLayout @JvmOverloads constructor(
 
         if (usesLogicalZoomRatio) {
             for ((approximateZoomRatio, exactZoomRatio) in activeCamera.logicalZoomRatios) {
-                val button = inflateButton().apply {
-                    setOnClickListener {
-                        if (!isSelected) {
-                            buttonToZoomRatio[it]?.let(onZoomRatioChangeCallback)
-                        } else {
-                            onResetZoomRatioCallback()
+                val button =
+                    inflateButton().apply {
+                        setOnClickListener {
+                            if (!isSelected) {
+                                buttonToZoomRatio[it]?.let(onZoomRatioChangeCallback)
+                            } else {
+                                onResetZoomRatioCallback()
+                            }
                         }
+                        text = formatZoomRatio(approximateZoomRatio)
                     }
-                    text = formatZoomRatio(approximateZoomRatio)
-                }
 
                 addView(button)
                 buttonToZoomRatio[button] = exactZoomRatio
@@ -73,16 +75,17 @@ class LensSelectorLayout @JvmOverloads constructor(
             }
         } else {
             for (camera in availableCameras.sortedBy { it.intrinsicZoomRatio }) {
-                val button = inflateButton().apply {
-                    setOnClickListener {
-                        if (!isSelected) {
-                            buttonToCamera[it]?.let(onCameraChangeCallback)
-                        } else {
-                            onResetZoomRatioCallback()
+                val button =
+                    inflateButton().apply {
+                        setOnClickListener {
+                            if (!isSelected) {
+                                buttonToCamera[it]?.let(onCameraChangeCallback)
+                            } else {
+                                onResetZoomRatioCallback()
+                            }
                         }
+                        text = formatZoomRatio(camera.intrinsicZoomRatio)
                     }
-                    text = formatZoomRatio(camera.intrinsicZoomRatio)
-                }
 
                 addView(button)
                 buttonToCamera[button] = camera
@@ -99,9 +102,7 @@ class LensSelectorLayout @JvmOverloads constructor(
     }
 
     fun setCameraState(cameraState: CameraState) {
-        children.forEach { view ->
-            view.isSoundEffectsEnabled = cameraState == CameraState.IDLE
-        }
+        children.forEach { view -> view.isSoundEffectsEnabled = cameraState == CameraState.IDLE }
     }
 
     fun setScreenRotation(screenRotation: Rotation) {
@@ -116,11 +117,7 @@ class LensSelectorLayout @JvmOverloads constructor(
 
     private fun inflateButton(): Button {
         val button = layoutInflater.inflate(R.layout.lens_selector_button, this, false) as Button
-        return button.apply {
-            layoutParams = LayoutParams(32.px, 32.px).apply {
-                setMargins(5)
-            }
-        }
+        return button.apply { layoutParams = LayoutParams(32.px, 32.px).apply { setMargins(5) } }
     }
 
     private fun updateButtonsAttributes() {
@@ -156,11 +153,12 @@ class LensSelectorLayout @JvmOverloads constructor(
     private fun updateButtonAttributes(button: Button, currentCamera: Boolean) {
         button.isSelected = currentCamera
         val formattedZoomRatio = formatZoomRatio(buttonToApproximateZoomRatio[button]!!)
-        button.text = if (currentCamera) {
-            "${formattedZoomRatio}×"
-        } else {
-            formattedZoomRatio
-        }
+        button.text =
+            if (currentCamera) {
+                "${formattedZoomRatio}×"
+            } else {
+                formattedZoomRatio
+            }
         button.rotation = screenRotation.compensationValue.toFloat()
     }
 

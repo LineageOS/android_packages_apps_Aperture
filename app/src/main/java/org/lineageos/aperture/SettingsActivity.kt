@@ -45,7 +45,9 @@ import org.lineageos.aperture.utils.PermissionsManager
 class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
     // Views
     private val appBarLayout by lazy { findViewById<AppBarLayout>(R.id.appBarLayout) }
-    private val coordinatorLayout by lazy { findViewById<CoordinatorLayout>(R.id.coordinatorLayout) }
+    private val coordinatorLayout by lazy {
+        findViewById<CoordinatorLayout>(R.id.coordinatorLayout)
+    }
     private val toolbar by lazy { findViewById<MaterialToolbar>(R.id.toolbar) }
 
     // Permissions manager
@@ -71,32 +73,30 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        android.R.id.home -> {
-            onBackPressedDispatcher.onBackPressed()
-            true
+    override fun onOptionsItemSelected(item: MenuItem) =
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressedDispatcher.onBackPressed()
+                true
+            }
+
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
 
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
-
-    abstract class SettingsFragment(
-        @XmlRes private val preferencesResId: Int,
-    ) : PreferenceFragmentCompat() {
+    abstract class SettingsFragment(@XmlRes private val preferencesResId: Int) :
+        PreferenceFragmentCompat() {
         private val settingsActivity
             get() = activity as SettingsActivity
 
         protected val permissionsManager
             get() = settingsActivity.permissionsManager
 
-        @Px
-        private var appBarOffset = -1
+        @Px private var appBarOffset = -1
 
-        private val offsetChangedListener = AppBarLayout.OnOffsetChangedListener { _, i ->
-            appBarOffset = -i
-        }
+        private val offsetChangedListener =
+            AppBarLayout.OnOffsetChangedListener { _, i -> appBarOffset = -i }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
@@ -133,23 +133,20 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         override fun onCreateRecyclerView(
             inflater: LayoutInflater,
             parent: ViewGroup,
-            savedInstanceState: Bundle?
-        ) = super.onCreateRecyclerView(inflater, parent, savedInstanceState).apply {
-            clipToPadding = false
-            isVerticalScrollBarEnabled = false
+            savedInstanceState: Bundle?,
+        ) =
+            super.onCreateRecyclerView(inflater, parent, savedInstanceState).apply {
+                clipToPadding = false
+                isVerticalScrollBarEnabled = false
 
-            ViewCompat.setOnApplyWindowInsetsListener(this) { _, windowInsets ->
-                val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+                ViewCompat.setOnApplyWindowInsetsListener(this) { _, windowInsets ->
+                    val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
-                updatePadding(
-                    bottom = insets.bottom,
-                    left = insets.left,
-                    right = insets.right,
-                )
+                    updatePadding(bottom = insets.bottom, left = insets.left, right = insets.right)
 
-                windowInsets
+                    windowInsets
+                }
             }
-        }
     }
 
     class RootSettingsFragment : SettingsFragment(R.xml.root_preferences) {
@@ -162,11 +159,12 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
         private val photoCaptureModePreferenceChangeListener =
             Preference.OnPreferenceChangeListener { preference, newValue ->
-                val currentPhotoCaptureMode = if (preference == photoCaptureMode) {
-                    newValue as String
-                } else {
-                    photoCaptureMode.value
-                }
+                val currentPhotoCaptureMode =
+                    if (preference == photoCaptureMode) {
+                        newValue as String
+                    } else {
+                        photoCaptureMode.value
+                    }
 
                 val enableZslCanBeEnabled = currentPhotoCaptureMode == "minimize_latency"
                 enableZsl.isChecked = enableZsl.isChecked && enableZslCanBeEnabled
@@ -181,24 +179,25 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
             saveLocation?.let {
                 // Reset location back to off if permissions aren't granted
-                it.isChecked = it.isChecked && permissionsManager.permissionState(
-                    Permission.LOCATION
-                ) == PermissionState.GRANTED
+                it.isChecked =
+                    it.isChecked &&
+                        permissionsManager.permissionState(Permission.LOCATION) ==
+                            PermissionState.GRANTED
                 it.onPreferenceChangeListener =
                     Preference.OnPreferenceChangeListener { _, newValue ->
                         if (newValue as Boolean) {
                             viewLifecycleOwner.lifecycleScope.launch {
-                                val result = permissionsManager.requestPermission(
-                                    Permission.LOCATION
-                                )
+                                val result =
+                                    permissionsManager.requestPermission(Permission.LOCATION)
 
                                 if (result != PermissionState.GRANTED) {
                                     saveLocation?.isChecked = false
                                     Toast.makeText(
-                                        requireContext(),
-                                        getString(R.string.save_location_toast),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                            requireContext(),
+                                            getString(R.string.save_location_toast),
+                                            Toast.LENGTH_SHORT,
+                                        )
+                                        .show()
                                 }
                             }
                         }
@@ -220,19 +219,20 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
         }
 
         // Input device listener
-        private val inputDeviceListener = object : InputManager.InputDeviceListener {
-            override fun onInputDeviceAdded(deviceId: Int) {
-                recheckKeys()
-            }
+        private val inputDeviceListener =
+            object : InputManager.InputDeviceListener {
+                override fun onInputDeviceAdded(deviceId: Int) {
+                    recheckKeys()
+                }
 
-            override fun onInputDeviceRemoved(deviceId: Int) {
-                recheckKeys()
-            }
+                override fun onInputDeviceRemoved(deviceId: Int) {
+                    recheckKeys()
+                }
 
-            override fun onInputDeviceChanged(deviceId: Int) {
-                recheckKeys()
+                override fun onInputDeviceChanged(deviceId: Int) {
+                    recheckKeys()
+                }
             }
-        }
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             super.onCreatePreferences(savedInstanceState, rootKey)
@@ -240,52 +240,55 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
             val context = requireContext()
 
             for (hardwareKey in HardwareKey.entries) {
-                val actionPreference = ListPreference(context, null).apply {
-                    key = hardwareKey.actionSharedPreferenceKey
-                    setTitle(hardwareKey.actionPreferenceTitleStringResId)
-                    setDialogTitle(hardwareKey.actionPreferenceTitleStringResId)
-                    when {
-                        hardwareKey.supportsDefault && hardwareKey.isTwoWayKey -> {
-                            setEntries(R.array.gesture_actions_entries)
-                            setEntryValues(R.array.gesture_actions_values)
-                        }
+                val actionPreference =
+                    ListPreference(context, null).apply {
+                        key = hardwareKey.actionSharedPreferenceKey
+                        setTitle(hardwareKey.actionPreferenceTitleStringResId)
+                        setDialogTitle(hardwareKey.actionPreferenceTitleStringResId)
+                        when {
+                            hardwareKey.supportsDefault && hardwareKey.isTwoWayKey -> {
+                                setEntries(R.array.gesture_actions_entries)
+                                setEntryValues(R.array.gesture_actions_values)
+                            }
 
-                        hardwareKey.supportsDefault && !hardwareKey.isTwoWayKey -> {
-                            setEntries(R.array.gesture_actions_no_two_way_entries)
-                            setEntryValues(R.array.gesture_actions_no_two_way_values)
-                        }
+                            hardwareKey.supportsDefault && !hardwareKey.isTwoWayKey -> {
+                                setEntries(R.array.gesture_actions_no_two_way_entries)
+                                setEntryValues(R.array.gesture_actions_no_two_way_values)
+                            }
 
-                        !hardwareKey.supportsDefault && hardwareKey.isTwoWayKey -> {
-                            setEntries(R.array.gesture_actions_no_two_way_entries)
-                            setEntryValues(R.array.gesture_actions_no_two_way_values)
-                        }
+                            !hardwareKey.supportsDefault && hardwareKey.isTwoWayKey -> {
+                                setEntries(R.array.gesture_actions_no_two_way_entries)
+                                setEntryValues(R.array.gesture_actions_no_two_way_values)
+                            }
 
-                        else -> {
-                            setEntries(R.array.gesture_actions_no_default_no_two_way_entries)
-                            setEntryValues(R.array.gesture_actions_no_default_no_two_way_values)
+                            else -> {
+                                setEntries(R.array.gesture_actions_no_default_no_two_way_entries)
+                                setEntryValues(R.array.gesture_actions_no_default_no_two_way_values)
+                            }
                         }
+                        setDefaultValue(hardwareKey.defaultAction.toPreferenceString())
+                        isIconSpaceReserved = false
+                        summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
                     }
-                    setDefaultValue(hardwareKey.defaultAction.toPreferenceString())
-                    isIconSpaceReserved = false
-                    summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
-                }
 
                 if (!hardwareKey.isTwoWayKey) {
                     singleButtonsPreferenceCategory?.addPreference(actionPreference)
                 } else {
-                    val invertPreference = SwitchPreference(context, null).apply {
-                        key = hardwareKey.invertSharedPreferenceKey
-                        setTitle(hardwareKey.invertPreferenceTitleStringResId!!)
-                        setSummary(hardwareKey.invertPreferenceSummaryStringResId!!)
-                        setDefaultValue(false)
-                        isIconSpaceReserved = false
-                    }
+                    val invertPreference =
+                        SwitchPreference(context, null).apply {
+                            key = hardwareKey.invertSharedPreferenceKey
+                            setTitle(hardwareKey.invertPreferenceTitleStringResId!!)
+                            setSummary(hardwareKey.invertPreferenceSummaryStringResId!!)
+                            setDefaultValue(false)
+                            isIconSpaceReserved = false
+                        }
 
-                    val keyCategory = PreferenceCategory(context, null).apply {
-                        key = hardwareKey.sharedPreferencesKeyPrefix
-                        setTitle(hardwareKey.preferenceCategoryTitleStringResId!!)
-                        isIconSpaceReserved = false
-                    }
+                    val keyCategory =
+                        PreferenceCategory(context, null).apply {
+                            key = hardwareKey.sharedPreferencesKeyPrefix
+                            setTitle(hardwareKey.preferenceCategoryTitleStringResId!!)
+                            isIconSpaceReserved = false
+                        }
 
                     preferenceScreen.addPreference(keyCategory)
 
@@ -294,10 +297,12 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
 
                     actionPreference.setOnPreferenceChangeListener { _, newValue ->
                         val value = newValue as String
-                        val gestureAction = preferenceStringToGestureAction(value) ?: run {
-                            Log.wtf(LOG_TAG, "Got invalid gesture action $value")
-                            null
-                        }
+                        val gestureAction =
+                            preferenceStringToGestureAction(value)
+                                ?: run {
+                                    Log.wtf(LOG_TAG, "Got invalid gesture action $value")
+                                    null
+                                }
 
                         val enableInvert = gestureAction?.isTwoWayAction ?: true
 
@@ -309,7 +314,8 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
                         true
                     }
                     actionPreference.onPreferenceChangeListener!!.onPreferenceChange(
-                        actionPreference, actionPreference.value
+                        actionPreference,
+                        actionPreference.value,
                     )
                 }
             }
@@ -339,24 +345,22 @@ class SettingsActivity : AppCompatActivity(R.layout.activity_settings) {
             var singleKeysPresent = false
 
             for (hardwareKey in HardwareKey.entries) {
-                val present = KeyCharacterMap.deviceHasKeys(
-                    mutableListOf(hardwareKey.firstKeycode).apply {
-                        hardwareKey.secondKeycode?.let {
-                            add(it)
-                        }
-                    }.toIntArray()
-                ).all { it }
+                val present =
+                    KeyCharacterMap.deviceHasKeys(
+                            mutableListOf(hardwareKey.firstKeycode)
+                                .apply { hardwareKey.secondKeycode?.let { add(it) } }
+                                .toIntArray()
+                        )
+                        .all { it }
 
                 if (hardwareKey.isTwoWayKey) {
-                    val keyCategory = findPreference<PreferenceCategory>(
-                        hardwareKey.sharedPreferencesKeyPrefix
-                    )
+                    val keyCategory =
+                        findPreference<PreferenceCategory>(hardwareKey.sharedPreferencesKeyPrefix)
 
                     keyCategory?.isVisible = present
                 } else {
-                    val actionPreference = findPreference<ListPreference>(
-                        hardwareKey.actionSharedPreferenceKey
-                    )
+                    val actionPreference =
+                        findPreference<ListPreference>(hardwareKey.actionSharedPreferenceKey)
 
                     actionPreference?.isVisible = present
 

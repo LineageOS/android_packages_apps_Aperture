@@ -15,10 +15,12 @@ enum class FrameRate(val value: Int) {
 
     companion object {
         fun fromValue(value: Int) = entries.firstOrNull { it.value == value }
-        fun fromRange(range: ClosedRange<Int>) = if (range.start == range.endInclusive) {
-            fromValue(range.endInclusive)
-        } else {
-            null
-        }
+
+        fun fromRange(range: ClosedRange<Int>) =
+            if (range.start == range.endInclusive) {
+                fromValue(range.endInclusive)
+            } else {
+                null
+            }
     }
 }

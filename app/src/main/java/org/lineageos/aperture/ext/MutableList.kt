@@ -6,16 +6,14 @@
 package org.lineageos.aperture.ext
 
 /**
- * Returns the value for the given [index] if the value is present and not `null`.
- * Otherwise, calls the [defaultValue] function,
- * puts its result into the list under the given index and returns the call result.
+ * Returns the value for the given [index] if the value is present and not `null`. Otherwise, calls
+ * the [defaultValue] function, puts its result into the list under the given index and returns the
+ * call result.
  *
  * Note that the operation is not guaranteed to be atomic if the map is being modified concurrently.
  */
 inline fun <E> MutableList<E>.getOrPut(index: Int, defaultValue: () -> E) =
-    get(index) ?: defaultValue().also {
-        set(index, it)
-    }
+    get(index) ?: defaultValue().also { set(index, it) }
 
 inline fun <reified E : MutableList<ListE>, ListE> MutableList<E>.getOrCreate(index: Int) =
     getOrPut(index) {

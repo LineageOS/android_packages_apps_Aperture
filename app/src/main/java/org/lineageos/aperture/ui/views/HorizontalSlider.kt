@@ -11,9 +11,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import org.lineageos.aperture.ext.mapToRange
 
-class HorizontalSlider @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : Slider(context, attrs) {
+class HorizontalSlider @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+    Slider(context, attrs) {
     override fun track(): RectF {
         val trackHeight = height / 5
 
@@ -30,12 +29,13 @@ class HorizontalSlider @JvmOverloads constructor(
         val track = track()
         val trackWidth = track.width()
 
-        val cx = if (steps > 0) {
-            val progress = Int.mapToRange(0..steps, progress).toFloat() / steps
-            (trackWidth * progress) + track.left
-        } else {
-            (trackWidth * progress) + track.left
-        }
+        val cx =
+            if (steps > 0) {
+                val progress = Int.mapToRange(0..steps, progress).toFloat() / steps
+                (trackWidth * progress) + track.left
+            } else {
+                (trackWidth * progress) + track.left
+            }
         val cy = height / 2f
 
         return Triple(cx, cy, height / 2.15f)

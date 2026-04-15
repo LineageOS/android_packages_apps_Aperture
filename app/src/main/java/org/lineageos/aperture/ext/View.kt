@@ -33,14 +33,14 @@ internal fun View.slideUp() {
     isVisible = true
 
     measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-    startAnimation(AnimationSet(true).apply {
-        addAnimation(TranslateAnimation(0f, 0f, measuredHeight.toFloat(), 0f).apply {
-            duration = 250
-        })
-        addAnimation(AlphaAnimation(0.0f, 1.0f).apply {
-            duration = 250
-        })
-    })
+    startAnimation(
+        AnimationSet(true).apply {
+            addAnimation(
+                TranslateAnimation(0f, 0f, measuredHeight.toFloat(), 0f).apply { duration = 250 }
+            )
+            addAnimation(AlphaAnimation(0.0f, 1.0f).apply { duration = 250 })
+        }
+    )
 }
 
 internal fun View.slideDown() {
@@ -50,20 +50,18 @@ internal fun View.slideDown() {
 
     isVisible = false
 
-    startAnimation(AnimationSet(true).apply {
-        addAnimation(TranslateAnimation(0f, 0f, 0f, height.toFloat()).apply {
-            duration = 200
-        })
-        addAnimation(AlphaAnimation(1.0f, 0.0f).apply {
-            duration = 200
-        })
-    })
+    startAnimation(
+        AnimationSet(true).apply {
+            addAnimation(TranslateAnimation(0f, 0f, 0f, height.toFloat()).apply { duration = 200 })
+            addAnimation(AlphaAnimation(1.0f, 0.0f).apply { duration = 200 })
+        }
+    )
 }
 
 internal fun View.smoothRotate(rotation: Float) {
     with(animate()) {
         cancel()
-        rotationBy(Rotation.getDifference(this@smoothRotate.rotation, rotation))
-            .interpolator = AccelerateDecelerateInterpolator()
+        rotationBy(Rotation.getDifference(this@smoothRotate.rotation, rotation)).interpolator =
+            AccelerateDecelerateInterpolator()
     }
 }

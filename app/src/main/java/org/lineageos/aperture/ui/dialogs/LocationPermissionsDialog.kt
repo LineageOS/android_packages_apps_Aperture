@@ -31,9 +31,7 @@ class LocationPermissionsDialog(activity: Activity) : Dialog(activity) {
         setContentView(R.layout.location_permissions_dialog)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        setOnCancelListener {
-            onResultCallback(false)
-        }
+        setOnCancelListener { onResultCallback(false) }
 
         turnOnButton.setOnClickListener {
             dismiss()

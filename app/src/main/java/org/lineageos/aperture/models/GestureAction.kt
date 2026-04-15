@@ -7,38 +7,25 @@ package org.lineageos.aperture.models
 
 /**
  * Available gesture actions.
+ *
  * @param isTwoWayAction Whether this action requires two buttons
  */
-enum class GestureAction(
-    val isTwoWayAction: Boolean,
-) {
-    /**
-     * Simulate a shutter click.
-     */
+enum class GestureAction(val isTwoWayAction: Boolean) {
+    /** Simulate a shutter click. */
     SHUTTER(false),
 
-    /**
-     * Simulate a focus click.
-     */
+    /** Simulate a focus click. */
     FOCUS(false),
 
-    /**
-     * Microphone mute during video recording.
-     */
+    /** Microphone mute during video recording. */
     MIC_MUTE(false),
 
-    /**
-     * Zoom in or out.
-     */
+    /** Zoom in or out. */
     ZOOM(true),
 
-    /**
-     * Let Android handle the key event.
-     */
+    /** Let Android handle the key event. */
     DEFAULT(false),
 
-    /**
-     * Do nothing.
-     */
+    /** Do nothing. */
     NOTHING(false),
 }

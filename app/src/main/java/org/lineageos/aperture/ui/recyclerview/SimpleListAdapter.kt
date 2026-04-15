@@ -34,21 +34,15 @@ abstract class SimpleListAdapter<T, V : View>(
         diffCallback,
         { parent: ViewGroup ->
             @Suppress("UNCHECKED_CAST")
-            LayoutInflater.from(parent.context).inflate(
-                layoutResId,
-                parent,
-                false,
-            ) as V
-        }
+            LayoutInflater.from(parent.context).inflate(layoutResId, parent, false) as V
+        },
     )
 
     abstract fun ViewHolder.onBindView(item: T)
 
     open fun ViewHolder.onPrepareView() {}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
-        factory(parent),
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(factory(parent))
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))

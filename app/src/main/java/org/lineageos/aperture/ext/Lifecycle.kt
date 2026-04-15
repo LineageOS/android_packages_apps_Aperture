@@ -11,10 +11,11 @@ import kotlinx.coroutines.flow.mapNotNull
 
 /**
  * Emit a [Unit] only when the lifecycle reaches the requested event
+ *
  * @see Lifecycle.eventFlow
  */
-fun Lifecycle.eventFlow(event: Lifecycle.Event) = eventFlow
-    .mapNotNull {
+fun Lifecycle.eventFlow(event: Lifecycle.Event) =
+    eventFlow.mapNotNull {
         when (it) {
             event -> Unit
             else -> null

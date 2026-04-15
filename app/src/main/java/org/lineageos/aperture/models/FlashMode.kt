@@ -6,24 +6,16 @@
 package org.lineageos.aperture.models
 
 enum class FlashMode {
-    /**
-     * Flash will not be fired.
-     */
+    /** Flash will not be fired. */
     OFF,
 
-    /**
-     * Flash will be fired automatically when required
-     */
+    /** Flash will be fired automatically when required */
     AUTO,
 
-    /**
-     * Flash will always be fired during snapshot.
-     */
+    /** Flash will always be fired during snapshot. */
     ON,
 
-    /**
-     * Constant emission of light during preview, auto-focus and snapshot.
-     */
+    /** Constant emission of light during preview, auto-focus and snapshot. */
     TORCH,
 
     /**

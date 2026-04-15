@@ -12,21 +12,15 @@ enum class HotPixelMode {
 
     companion object {
         /**
-         * We don't want to slow down ZSL, when it's enabled allow
-         * only default (the HAL will decide what to do) and OFF (zero latency).
+         * We don't want to slow down ZSL, when it's enabled allow only default (the HAL will decide
+         * what to do) and OFF (zero latency).
          */
-        val ALLOWED_MODES_ON_ZSL = setOf(
-            OFF,
-        )
+        val ALLOWED_MODES_ON_ZSL = setOf(OFF)
 
         /**
-         * We don't want to drop frames, when it's enabled allow
-         * only default (the HAL will decide what to do), OFF (zero latency),
-         * FAST (no frame drop guaranteed) and ZERO_SHUTTER_LAG.
+         * We don't want to drop frames, when it's enabled allow only default (the HAL will decide
+         * what to do), OFF (zero latency), FAST (no frame drop guaranteed) and ZERO_SHUTTER_LAG.
          */
-        val ALLOWED_MODES_ON_VIDEO_MODE = setOf(
-            OFF,
-            FAST,
-        )
+        val ALLOWED_MODES_ON_VIDEO_MODE = setOf(OFF, FAST)
     }
 }

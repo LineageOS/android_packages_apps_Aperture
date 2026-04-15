@@ -14,15 +14,16 @@ private val Window.windowInsetsController
 
 /**
  * Update the window bars visibility.
+ *
  * @param behavior One of [WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE],
- *   [WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE]
- *   or null to not change the current behavior
- * @param systemBars Whether the system bars should be visible, or null to not
- *   change the current behavior
- * @param statusBars Whether the status bars should be visible, or null to not
- *   change the current behavior
- * @param navigationBars Whether the navigation bars should be visible, or null to not
- *   change the current behavior
+ *   [WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE] or null to not change the
+ *   current behavior
+ * @param systemBars Whether the system bars should be visible, or null to not change the current
+ *   behavior
+ * @param statusBars Whether the status bars should be visible, or null to not change the current
+ *   behavior
+ * @param navigationBars Whether the navigation bars should be visible, or null to not change the
+ *   current behavior
  */
 fun Window.updateBarsVisibility(
     behavior: Int? = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE,
@@ -31,9 +32,7 @@ fun Window.updateBarsVisibility(
     navigationBars: Boolean? = null,
 ) {
     // Configure the behavior of the hidden bars
-    behavior?.let {
-        windowInsetsController.systemBarsBehavior = it
-    }
+    behavior?.let { windowInsetsController.systemBarsBehavior = it }
 
     // Set the system bars visibility
     systemBars?.let {

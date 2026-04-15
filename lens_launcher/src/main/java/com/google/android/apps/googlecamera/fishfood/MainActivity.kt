@@ -19,7 +19,7 @@ class MainActivity : Activity() {
                 .setAction(Intent.ACTION_VIEW)
                 .setData(Uri.parse("googleapp://lens"))
                 .setPackage("com.google.android.googlequicksearchbox"),
-            0
+            0,
         )
 
         finish()

@@ -13,13 +13,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.app.PendingIntentCompat
 
-/**
- * QR result.
- */
-data class QrResult(
-    val text: String?,
-    val actions: List<Action>,
-) {
+/** QR result. */
+data class QrResult(val text: String?, val actions: List<Action>) {
     data class Action(
         val title: String?,
         val contentDescription: String?,
@@ -42,10 +37,7 @@ data class QrResult(
                 contentDescription = context.getString(stringResId)
             }
 
-            fun setIcon(
-                @DrawableRes drawableResId: Int,
-                canTint: Boolean = true,
-            ) {
+            fun setIcon(@DrawableRes drawableResId: Int, canTint: Boolean = true) {
                 icon = Icon.createWithResource(context, drawableResId)
                 canTintIcon = canTint
             }
@@ -56,22 +48,18 @@ data class QrResult(
                 @PendingIntentCompat.Flags flags: Int = PendingIntent.FLAG_UPDATE_CURRENT,
                 isMutable: Boolean = false,
             ) {
-                pendingIntent = PendingIntentCompat.getActivity(
-                    context,
-                    requestCode,
-                    intent,
-                    flags,
-                    isMutable,
-                )
+                pendingIntent =
+                    PendingIntentCompat.getActivity(context, requestCode, intent, flags, isMutable)
             }
 
-            fun build() = Action(
-                title = title,
-                contentDescription = contentDescription,
-                icon = icon,
-                canTintIcon = canTintIcon,
-                pendingIntent = pendingIntent,
-            )
+            fun build() =
+                Action(
+                    title = title,
+                    contentDescription = contentDescription,
+                    icon = icon,
+                    canTintIcon = canTintIcon,
+                    pendingIntent = pendingIntent,
+                )
         }
 
         override fun areItemsTheSame(other: Action) = this == other
@@ -79,10 +67,8 @@ data class QrResult(
         override fun areContentsTheSame(other: Action) = true
 
         companion object {
-            operator fun invoke(
-                context: Context,
-                block: Builder.() -> Unit,
-            ) = Builder(context).apply(block).build()
+            operator fun invoke(context: Context, block: Builder.() -> Unit) =
+                Builder(context).apply(block).build()
         }
     }
 
@@ -94,20 +80,13 @@ data class QrResult(
             text = context.getString(stringResId)
         }
 
-        fun addAction(
-            block: Action.Builder.() -> Unit,
-        ) = actions.add(Action(context, block))
+        fun addAction(block: Action.Builder.() -> Unit) = actions.add(Action(context, block))
 
-        fun build() = QrResult(
-            text = text,
-            actions = actions.toList(),
-        )
+        fun build() = QrResult(text = text, actions = actions.toList())
     }
 
     companion object {
-        operator fun invoke(
-            context: Context,
-            block: Builder.() -> Unit,
-        ) = Builder(context).apply(block).build()
+        operator fun invoke(context: Context, block: Builder.() -> Unit) =
+            Builder(context).apply(block).build()
     }
 }

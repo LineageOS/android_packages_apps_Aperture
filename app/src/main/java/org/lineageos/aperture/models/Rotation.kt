@@ -16,40 +16,34 @@ enum class Rotation(val offset: Int) {
     ROTATION_180(180),
     ROTATION_270(270);
 
-    /**
-     * Get the rotation needed to compensate for the rotation compared to 0°.
-     */
+    /** Get the rotation needed to compensate for the rotation compared to 0°. */
     val compensationValue = 360 - if (offset > 180) offset - 360 else offset
 
-    private val apertureRanges = mutableListOf<IntRange>().apply {
-        // Left side
-        if (offset < 45) {
-            add(360 - offset - 45 until 360)
-            add(0 until offset)
-        } else {
-            add(offset - 45 until offset)
-        }
+    private val apertureRanges =
+        mutableListOf<IntRange>().apply {
+            // Left side
+            if (offset < 45) {
+                add(360 - offset - 45 until 360)
+                add(0 until offset)
+            } else {
+                add(offset - 45 until offset)
+            }
 
-        // Right side
-        if (offset > 360 - 45) {
-            add(offset until 360)
-            add(0 until 360 - offset + 45)
-        } else {
-            add(offset until offset + 45)
+            // Right side
+            if (offset > 360 - 45) {
+                add(offset until 360)
+                add(0 until 360 - offset + 45)
+            } else {
+                add(offset until offset + 45)
+            }
         }
-    }
 
     companion object {
-        /**
-         * Get the rotation where the value is in [rotation - 45°, rotation + 45°]
-         */
-        fun fromDegreesInAperture(degrees: Int) = entries.first {
-            it.apertureRanges.any { range -> degrees in range }
-        }
+        /** Get the rotation where the value is in [rotation - 45°, rotation + 45°] */
+        fun fromDegreesInAperture(degrees: Int) =
+            entries.first { it.apertureRanges.any { range -> degrees in range } }
 
-        /**
-         * Returns an angle in the range [-360°, 360°] in the same quadrant.
-         */
+        /** Returns an angle in the range [-360°, 360°] in the same quadrant. */
         private fun normalizeAngle(angle: Float) = angle % 360
 
         /**

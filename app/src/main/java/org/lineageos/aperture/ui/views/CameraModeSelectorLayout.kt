@@ -15,20 +15,26 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import com.google.android.material.button.MaterialButton
+import kotlin.reflect.cast
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.CameraState
 import org.lineageos.aperture.utils.TimeUtils
-import kotlin.reflect.cast
 
-class CameraModeSelectorLayout @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : FrameLayout(context, attrs) {
+class CameraModeSelectorLayout
+@JvmOverloads
+constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
     // Views
-    private val cameraModeButtonsLinearLayout by lazy { findViewById<LinearLayout>(R.id.cameraModeButtonsLinearLayout) }
-    private val cameraModeHighlightButton by lazy { findViewById<MaterialButton>(R.id.cameraModeHighlightButton) }
-    private val videoDurationButton by lazy { findViewById<MaterialButton>(R.id.videoDurationButton) }
+    private val cameraModeButtonsLinearLayout by lazy {
+        findViewById<LinearLayout>(R.id.cameraModeButtonsLinearLayout)
+    }
+    private val cameraModeHighlightButton by lazy {
+        findViewById<MaterialButton>(R.id.cameraModeHighlightButton)
+    }
+    private val videoDurationButton by lazy {
+        findViewById<MaterialButton>(R.id.videoDurationButton)
+    }
 
     // System services
     private val layoutInflater by lazy { context.getSystemService(LayoutInflater::class.java) }
@@ -44,22 +50,21 @@ class CameraModeSelectorLayout @JvmOverloads constructor(
         inflate(context, R.layout.camera_mode_selector_layout, this)
 
         for (cameraMode in CameraMode.entries) {
-            cameraToButton[cameraMode] = MaterialButton::class.cast(
-                layoutInflater.inflate(
-                    R.layout.camera_mode_button, this, false
-                )
-            ).apply {
-                setText(
-                    when (cameraMode) {
-                        CameraMode.PHOTO -> R.string.camera_mode_photo
-                        CameraMode.VIDEO -> R.string.camera_mode_video
-                        CameraMode.QR -> R.string.camera_mode_qr
+            cameraToButton[cameraMode] =
+                MaterialButton::class.cast(
+                        layoutInflater.inflate(R.layout.camera_mode_button, this, false)
+                    )
+                    .apply {
+                        setText(
+                            when (cameraMode) {
+                                CameraMode.PHOTO -> R.string.camera_mode_photo
+                                CameraMode.VIDEO -> R.string.camera_mode_video
+                                CameraMode.QR -> R.string.camera_mode_qr
+                            }
+                        )
+                        setOnClickListener { onModeSelectedCallback(cameraMode) }
                     }
-                )
-                setOnClickListener { onModeSelectedCallback(cameraMode) }
-            }.also {
-                cameraModeButtonsLinearLayout.addView(it)
-            }
+                    .also { cameraModeButtonsLinearLayout.addView(it) }
         }
     }
 
@@ -67,29 +72,27 @@ class CameraModeSelectorLayout @JvmOverloads constructor(
         val currentCameraModeButton =
             cameraToButton[cameraMode] ?: throw Exception("No button for $cameraMode")
 
-        cameraToButton.forEach {
-            it.value.isEnabled = cameraMode != it.key
-        }
+        cameraToButton.forEach { it.value.isEnabled = cameraMode != it.key }
 
         // Animate camera mode change
         doOnLayout {
             // Animate position
-            ValueAnimator.ofFloat(
-                cameraModeHighlightButton.x, currentCameraModeButton.x + 16.px
-            ).apply {
-                addUpdateListener { valueAnimator ->
-                    cameraModeHighlightButton.x = valueAnimator.animatedValue as Float
+            ValueAnimator.ofFloat(cameraModeHighlightButton.x, currentCameraModeButton.x + 16.px)
+                .apply {
+                    addUpdateListener { valueAnimator ->
+                        cameraModeHighlightButton.x = valueAnimator.animatedValue as Float
+                    }
                 }
-            }.start()
+                .start()
 
             // Animate width
-            ValueAnimator.ofInt(
-                cameraModeHighlightButton.width, currentCameraModeButton.width
-            ).apply {
-                addUpdateListener { valueAnimator ->
-                    cameraModeHighlightButton.width = valueAnimator.animatedValue as Int
+            ValueAnimator.ofInt(cameraModeHighlightButton.width, currentCameraModeButton.width)
+                .apply {
+                    addUpdateListener { valueAnimator ->
+                        cameraModeHighlightButton.width = valueAnimator.animatedValue as Int
+                    }
                 }
-            }.start()
+                .start()
         }
     }
 

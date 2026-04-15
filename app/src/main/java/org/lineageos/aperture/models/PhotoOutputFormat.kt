@@ -6,23 +6,15 @@
 package org.lineageos.aperture.models
 
 enum class PhotoOutputFormat {
-    /**
-     * JPEG format.
-     */
+    /** JPEG format. */
     JPEG,
 
-    /**
-     * JPEG Ultra HDR format.
-     */
+    /** JPEG Ultra HDR format. */
     JPEG_ULTRA_HDR,
 
-    /**
-     * RAW format.
-     */
+    /** RAW format. */
     RAW,
 
-    /**
-     * RAW + JPEG format.
-     */
-    RAW_JPEG
+    /** RAW + JPEG format. */
+    RAW_JPEG,
 }

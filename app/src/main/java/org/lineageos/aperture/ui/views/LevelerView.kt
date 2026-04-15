@@ -13,48 +13,53 @@ import android.util.AttributeSet
 import android.view.OrientationEventListener
 import android.view.OrientationEventListener.ORIENTATION_UNKNOWN
 import android.view.View
-import org.lineageos.aperture.R
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sin
+import org.lineageos.aperture.R
 
 class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context, attributeSet) {
     private var currentOrientation = ORIENTATION_UNKNOWN
-    private val orientationEventListener = runCatching {
-        object : OrientationEventListener(context, SensorManager.SENSOR_DELAY_UI) {
-            override fun onOrientationChanged(orientation: Int) {
-                if (orientation == ORIENTATION_UNKNOWN) {
-                    return
+    private val orientationEventListener =
+        runCatching {
+                object : OrientationEventListener(context, SensorManager.SENSOR_DELAY_UI) {
+                    override fun onOrientationChanged(orientation: Int) {
+                        if (orientation == ORIENTATION_UNKNOWN) {
+                            return
+                        }
+
+                        currentOrientation = orientation
+                        postInvalidate()
+                    }
                 }
-
-                currentOrientation = orientation
-                postInvalidate()
             }
+            .getOrNull()
+
+    private val defaultLevelPaint =
+        Paint().apply {
+            isAntiAlias = true
+            strokeWidth = 4f
+            style = Paint.Style.STROKE
+            color = 0x7FFFFFFF
         }
-    }.getOrNull()
 
-    private val defaultLevelPaint = Paint().apply {
-        isAntiAlias = true
-        strokeWidth = 4f
-        style = Paint.Style.STROKE
-        color = 0x7FFFFFFF
-    }
+    private val defaultBasePaint =
+        Paint().apply {
+            isAntiAlias = true
+            strokeWidth = 4f
+            style = Paint.Style.STROKE
+            color = 0x7FFFFFFF
+        }
 
-    private val defaultBasePaint = Paint().apply {
-        isAntiAlias = true
-        strokeWidth = 4f
-        style = Paint.Style.STROKE
-        color = 0x7FFFFFFF
-    }
-
-    private val highlightPaint = Paint().apply {
-        isAntiAlias = true
-        strokeWidth = 4f
-        style = Paint.Style.STROKE
-        color = context.getColor(R.color.yellow)
-    }
+    private val highlightPaint =
+        Paint().apply {
+            isAntiAlias = true
+            strokeWidth = 4f
+            style = Paint.Style.STROKE
+            color = context.getColor(R.color.yellow)
+        }
 
     override fun setVisibility(visibility: Int) {
         super.setVisibility(visibility)
@@ -69,15 +74,17 @@ class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context,
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        currentOrientation.takeUnless { it == ORIENTATION_UNKNOWN }?.let {
-            val isLevel = isLevel(it)
-            drawBase(canvas, isLevel, isLandscape(it))
+        currentOrientation
+            .takeUnless { it == ORIENTATION_UNKNOWN }
+            ?.let {
+                val isLevel = isLevel(it)
+                drawBase(canvas, isLevel, isLandscape(it))
 
-            if (!isLevel) {
-                val radians = -((it.toFloat() / 180F) * PI.toFloat())
-                drawLevelLine(canvas, radians)
+                if (!isLevel) {
+                    val radians = -((it.toFloat() / 180F) * PI.toFloat())
+                    drawLevelLine(canvas, radians)
+                }
             }
-        }
     }
 
     private fun drawBase(canvas: Canvas, isLevel: Boolean, isLandscape: Boolean) {
@@ -97,14 +104,14 @@ class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context,
             hCenter.toFloat(),
             (wCenter + xLength).toFloat(),
             hCenter.toFloat(),
-            paint
+            paint,
         )
         canvas.drawLine(
             wCenter.toFloat(),
             (hCenter - yLength).toFloat(),
             wCenter.toFloat(),
             (hCenter + yLength).toFloat(),
-            paint
+            paint,
         )
     }
 

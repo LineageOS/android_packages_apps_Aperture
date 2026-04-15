@@ -5,18 +5,14 @@
 
 package org.lineageos.aperture.models
 
-/**
- * An item that can be uniquely identified.
- */
+/** An item that can be uniquely identified. */
 interface UniqueItem<T> {
-    /**
-     * Return whether this item is the same as the other.
-     */
+    /** Return whether this item is the same as the other. */
     fun areItemsTheSame(other: T): Boolean
 
     /**
-     * Return whether this item has the same content as the other.
-     * This is called only when [UniqueItem.areItemsTheSame] returns true.
+     * Return whether this item has the same content as the other. This is called only when
+     * [UniqueItem.areItemsTheSame] returns true.
      */
     fun areContentsTheSame(other: T): Boolean
 }
