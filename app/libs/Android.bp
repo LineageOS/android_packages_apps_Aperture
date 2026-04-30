@@ -249,7 +249,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.media3_media3-common",
-    aars: ["androidx/media3/media3-common/1.9.0/media3-common-1.9.0.aar"],
+    aars: ["androidx/media3/media3-common/1.10.0/media3-common-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
@@ -265,7 +265,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.media3_media3-container",
-    aars: ["androidx/media3/media3-container/1.9.0/media3-container-1.9.0.aar"],
+    aars: ["androidx/media3/media3-container/1.10.0/media3-container-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
@@ -280,7 +280,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.media3_media3-database",
-    aars: ["androidx/media3/media3-database/1.9.0/media3-database-1.9.0.aar"],
+    aars: ["androidx/media3/media3-database/1.10.0/media3-database-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
@@ -295,7 +295,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.media3_media3-datasource",
-    aars: ["androidx/media3/media3-datasource/1.9.0/media3-datasource-1.9.0.aar"],
+    aars: ["androidx/media3/media3-datasource/1.10.0/media3-datasource-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
@@ -312,7 +312,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.media3_media3-decoder",
-    aars: ["androidx/media3/media3-decoder/1.9.0/media3-decoder-1.9.0.aar"],
+    aars: ["androidx/media3/media3-decoder/1.10.0/media3-decoder-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
@@ -327,7 +327,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.media3_media3-exoplayer",
-    aars: ["androidx/media3/media3-exoplayer/1.9.0/media3-exoplayer-1.9.0.aar"],
+    aars: ["androidx/media3/media3-exoplayer/1.10.0/media3-exoplayer-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
@@ -336,8 +336,6 @@ android_library_import {
     ],
     static_libs: [
         "androidx.annotation_annotation",
-        "androidx.collection_collection",
-        "androidx.core_core",
         "androidx.exifinterface_exifinterface",
         "Aperture_androidx.media3_media3-common",
         "Aperture_androidx.media3_media3-container",
@@ -351,7 +349,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.media3_media3-extractor",
-    aars: ["androidx/media3/media3-extractor/1.9.0/media3-extractor-1.9.0.aar"],
+    aars: ["androidx/media3/media3-extractor/1.10.0/media3-extractor-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
@@ -368,7 +366,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.media3_media3-muxer",
-    aars: ["androidx/media3/media3-muxer/1.9.0/media3-muxer-1.9.0.aar"],
+    aars: ["androidx/media3/media3-muxer/1.10.0/media3-muxer-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
@@ -384,7 +382,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_androidx.media3_media3-ui",
-    aars: ["androidx/media3/media3-ui/1.9.0/media3-ui-1.9.0.aar"],
+    aars: ["androidx/media3/media3-ui/1.10.0/media3-ui-1.10.0.aar"],
     sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
