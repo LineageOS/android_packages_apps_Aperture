@@ -46,6 +46,12 @@
     <string name="zoom_buttons_title">Tombol zoom</string>
     <string name="photo_capture_mode_maximize_quality">Maksimalkan kualitas</string>
     <string name="photo_capture_mode_minimize_latency">Minimalkan latensi</string>
+    <string name="use_photo_jpeg_ultra_hdr_title">Simpan gambar sebagai JPEG Ultra HDR</string>
+    <string name="use_photo_jpeg_ultra_hdr_summary">Simpan gambar sebagai JPEG Ultra HDR jika tersedia untuk meningkatkan gambar HDR</string>
+    <string name="enable_raw_image_capture_title">Aktifkan pengambilan gambar RAW</string>
+    <string name="enable_raw_image_capture_summary">Aktifkan pengambilan gambar RAW. Foto tidak dapat disimpan sebagai JPEG Ultra HDR saat pengambilan gambar RAW diaktifkan</string>
+    <string name="disable_jpeg_with_raw_title">Nonaktifkan JPEG dengan RAW</string>
+    <string name="disable_jpeg_with_raw_summary">Nonaktifkan JPEG saat gambar RAW diaktifkan</string>
     <string name="video_stabilization_title">Aktifkan stabilisasi video</string>
     <string name="video_stabilization_summary">Ketika tersedia, aktifkan stabilisasi video untuk meminimalisir guncangan kamera saat perekaman</string>
     <string name="processing_title">Memproses</string>
