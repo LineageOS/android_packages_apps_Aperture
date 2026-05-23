@@ -1668,7 +1668,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 }
             )
 
-            if (keyguardLocked != fromCapture) {
+            if (keyguardLocked && !fromCapture) {
                 return@runOnUiThread
             }
 
