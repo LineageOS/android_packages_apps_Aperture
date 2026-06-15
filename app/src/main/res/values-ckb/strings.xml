@@ -17,8 +17,8 @@
     <string name="shutter_button_description">وێنەگرتن (Shutter)</string>
     <string name="video_recording_state_button_description">وەستانی کاتی/دەستپێکردنەوەی تۆمارکردنی ڤیدیۆ</string>
     <string name="timer_off">کاتژمێر ناچالاکە</string>
-    <string name="timer_3">کاتژمێر ٣ چرکە</string>
-    <string name="timer_10">کاتژمێر ١٠ چرکە</string>
+    <string name="timer_3">کاتپێو 3 چرکە</string>
+    <string name="timer_10">کاتپێو 10 چرکە</string>
     <string name="video_framerate_auto">فڕەیمی خۆکار (AUTO FPS)</string>
     <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
     <string name="effect_none">بێ کاریگەری</string>
@@ -26,13 +26,13 @@
     <string name="effect_face_retouch">جوانکاریی دەموچاو</string>
     <string name="effect_auto">خۆکار</string>
     <string name="grid_off">هێڵی هاوکار ناچالاکە</string>
-    <string name="grid_on_3">هێڵی ٣x٣</string>
-    <string name="grid_on_4">هێڵی ٤x٤</string>
+    <string name="grid_on_3">هێڵی 3x3</string>
+    <string name="grid_on_4">هێڵی 4x4</string>
     <string name="grid_on_goldenratio">ڕێژەی زێڕین (φ)</string>
     <string name="mic_off">مایکرۆفۆن ناچالاکە</string>
     <string name="mic_on">مایکرۆفۆن چالاکە</string>
     <string name="settings">ڕێکخستنەکان</string>
-    <string name="app_permissions_toast">مۆڵەتەکان لەلایەن بەکارهێنەرەوە نەدراون.</string>
+    <string name="app_permissions_toast">ڕێپێدانەکان لەلایەن بەکارهێنەرەوە نەدراون.</string>
     <string name="camcorder_unsupported_toast">هیچ کامێرایەک پاڵپشتیی تۆمارکردنی ڤیدیۆ ناکات.</string>
     <string name="qr_copy_description">کۆپیکردن بۆ حافیزە</string>
     <string name="qr_icon_description">وێنۆچکە</string>
@@ -76,7 +76,7 @@
     <string name="bright_screen_summary" formatted="false">چەسپاندنی ڕووناکی لەسەر %100</string>
     <string name="save_location_title">پاراستنی زانیاریی شوێن</string>
     <string name="save_location_summary">زیادکردنی شوێنی GPS بۆ زانیارییەکانی وێنە</string>
-    <string name="save_location_toast">مۆڵەتی دەستگەیشتن بە شوێن نەدراوە.</string>
+    <string name="save_location_toast">ڕێپێدانی دەستگەیشتن بە شوێن نەدراوە.</string>
     <string name="shutter_sound_title">دەنگی وێنەگرتن</string>
     <string name="shutter_sound_summary">لەکاتی وێنەگرتندا دەنگێک لێ بدە</string>
     <string name="leveler_title">ڕێکخەری ئاست (Leveler)</string>
@@ -144,7 +144,7 @@
     <string name="distortion_correction_mode_fast">خێرا</string>
     <string name="distortion_correction_mode_high_quality">کوالێتیی بەرز</string>
     <string name="hot_pixel_mode_title">چاککردنی پیکسڵی سووتاو</string>
-    <string name="hot_pixel_mode_summary">لابردنی ئەو پیکسڵانەی کە زانیاریی ڕاستەقینەی ڕووناکی ناپێون (پیکسڵە گیرخواردووەکان).</string>
+    <string name="hot_pixel_mode_summary">چاککردنەوەی پێکسڵە زۆر گەرمەکان بە تێکەڵکردنی زانیارییەکان، یان بە هەر شێوازێکی تر، ئەو پێکسڵانە لادەبات کە ناتوانن بە دروستی ڕووناکیی هاتوو بپێون (واتە ئەو پێکسڵانەی لەسەر بەهایەکی هەڕەمەکی ماونەتەوە یان زۆر هەستیارن)</string>
     <string name="hot_pixel_mode_default">بنەڕەتی</string>
     <string name="hot_pixel_mode_off">ناچالاک</string>
     <string name="hot_pixel_mode_fast">خێرا</string>
@@ -177,7 +177,7 @@
     <string name="thermal_status_critical">پلەی گەرمی مەترسیدارە، ڕەنگە بەرنامەکە بەم زووانە دابخرێت.</string>
     <string name="thermal_status_emergency">باری نائاسایی گەرمی، بەرنامەکە ئێستا دادەخرێت.</string>
     <string name="thermal_status_shutdown">کوژانەوە بەهۆی گەرمی، ئامێرەکە دەکوژێتەوە.</string>
-    <string name="force_torch_help">لەکاتی وێنەگرتندا، دەتوانیت دەست لەسەر دوگمەی فلاش دابگریت بۆ ئەوەی وەک لایت (Torch) بەکاربێت.</string>
+    <string name="force_torch_help">لە دۆخی وێنەگرتندا، دەتوانیت بۆ ماوەیەکی درێژ دەست لەسەر دوگمەی فلاش دابگریت بۆ ئەوەی بچیتە سەر دۆخی چرا.</string>
     <string name="camera_mode_photo">وێنە</string>
     <string name="camera_mode_video">ڤیدیۆ</string>
     <string name="camera_mode_qr">پشکنین</string>
