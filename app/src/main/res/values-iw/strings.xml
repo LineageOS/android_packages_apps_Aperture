@@ -5,13 +5,13 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">מצלמה</string>
-    <string name="video_camera_label">מצלמת ווידאו</string>
+    <string name="video_camera_label">מצלמת וידאו</string>
     <string name="cancel_button_description">ביטול</string>
     <string name="confirm_button_description">אישור</string>
     <string name="flash_button_description">מצב מבזק</string>
     <string name="flip_camera_button_description">החלפת מצלמה</string>
     <string name="gallery_button_description">גלריה</string>
-    <string name="google_lens_button_description">פתיחת עדשות גוגל</string>
+    <string name="google_lens_button_description">פתיחת Google Lens</string>
     <string name="image_view_description">תצוגה מקדימה של תמונה</string>
     <string name="pro_button_description">הגדרות למתקדמים</string>
     <string name="shutter_button_description">צמצם</string>
@@ -172,7 +172,8 @@
     <string name="gesture_action_zoom">זום</string>
     <string name="gesture_action_default">ברירת המחדל של אנדרואיד</string>
     <string name="gesture_action_nothing">כלום</string>
-    <string name="thermal_status_moderate">האטה תרמית מתונה. יש ודא שההתקן אינו חשוף לאור שמש ישירה.</string>
+    <string name="thermal_status_moderate">האטה תרמית מתונה. יש ודא שההתקן אינו חשוף לאור שמש ישירה.
+</string>
     <string name="thermal_status_severe">האטה תרמית חמורה. מומלץ לאפשר להתקן להתקרר מעט.</string>
     <string name="thermal_status_critical">האטה תרמית קריטית. ייתכן שהיישום ייסגר בקרוב.</string>
     <string name="thermal_status_emergency">האטת חירום תרמית. היישום ייסגר כעת.</string>

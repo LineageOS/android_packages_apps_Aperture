@@ -132,7 +132,9 @@
     <string name="shading_mode_fast">Tapaidh</string>
     <string name="shading_mode_high_quality">Ardchaighdeáin</string>
     <string name="color_correction_aberration_mode_title">Ceartú aimhrialtachta datha</string>
-    <string name="color_correction_aberration_mode_summary">Tarlaíonn aimhrialtacht chrómatach (dath) toisc nach féidir le tonnfhaid éagsúla solais díriú ar an bpointe céanna tar éis dóibh fágáil ón lionsa.</string>
+    <string name="color_correction_aberration_mode_summary">Tarlaíonn aimhrialtacht chrómatach (dath) toisc nach féidir le tonnfhaid éagsúla solais díriú ar an bpointe céanna tar éis dóibh fágáil ón lionsa.
+
+</string>
     <string name="color_correction_aberration_mode_default">Réamhshocrú</string>
     <string name="color_correction_aberration_mode_off">As</string>
     <string name="color_correction_aberration_mode_fast">Tapaidh</string>
