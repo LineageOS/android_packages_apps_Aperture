@@ -65,7 +65,8 @@
     <string name="qr_uri_content_description">如果支持的话，用适当的应用程序打开此网址</string>
     <string name="qr_vin_title">查找 VIN</string>
     <string name="qr_vin_content_description">通过车辆识别编号 (VIN) 进行查找</string>
-    <string name="qr_wifi_title">连接到此 Wi-Fi 网络</string>
+    <string name="qr_wifi_title">连接到此 Wi-Fi 网络
+</string>
     <string name="qr_wifi_content_description">将此 Wi-Fi 网络添加到已知网络列表并连接到设备</string>
     <string name="title_activity_settings">设置</string>
     <string name="general_header">常规</string>
