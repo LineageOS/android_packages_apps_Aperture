@@ -5,7 +5,7 @@
 
 [versions]
 agp = "8.13.0"
-kotlin = "2.1.10"
+kotlin = "2.2.0"
 activity = "1.9.2"
 appcompat = "1.7.0"
 camera = "1.7.0-alpha01"
