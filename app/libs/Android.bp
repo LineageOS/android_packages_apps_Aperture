@@ -534,7 +534,7 @@ android_library_import {
 
 android_library_import {
     name: "Aperture_io.github.zxing-cpp_android",
-    aars: ["io/github/zxing-cpp/android/2.3.0/android-2.3.0.aar"],
+    aars: ["io/github/zxing-cpp/android/3.1.1/android-3.1.1.aar"],
     sdk_version: "36",
     min_sdk_version: "26",
     apex_available: [
@@ -543,7 +543,7 @@ android_library_import {
     ],
     static_libs: [
         "Aperture_androidx.camera_camera-core",
-        "kotlin-stdlib-jdk8",
+        "kotlin-stdlib",
     ],
     extract_jni: true,
 }
