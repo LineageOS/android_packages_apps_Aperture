@@ -146,24 +146,55 @@ class QrTextClassifier(private val context: Context) {
         null,
         when (format) {
             BarcodeReader.Format.NONE -> null
+            BarcodeReader.Format.ALL -> null
+            BarcodeReader.Format.ALL_CREATABLE -> null
+            BarcodeReader.Format.ALL_GS1 -> null
+            BarcodeReader.Format.ALL_INDUSTRIAL -> null
+            BarcodeReader.Format.ALL_LINEAR -> null
+            BarcodeReader.Format.ALL_MATRIX -> null
+            BarcodeReader.Format.ALL_READABLE -> null
+            BarcodeReader.Format.ALL_RETAIL -> null
             BarcodeReader.Format.AZTEC -> BarcodeFormat.AZTEC
+            BarcodeReader.Format.AZTEC_CODE -> BarcodeFormat.AZTEC
+            BarcodeReader.Format.AZTEC_RUNE -> BarcodeFormat.AZTEC
             BarcodeReader.Format.CODABAR -> BarcodeFormat.CODABAR
+            BarcodeReader.Format.CODE_32 -> null
             BarcodeReader.Format.CODE_39 -> BarcodeFormat.CODE_39
+            BarcodeReader.Format.CODE_39_EXT -> BarcodeFormat.CODE_39
+            BarcodeReader.Format.CODE_39_STD -> BarcodeFormat.CODE_39
             BarcodeReader.Format.CODE_93 -> BarcodeFormat.CODE_93
             BarcodeReader.Format.CODE_128 -> BarcodeFormat.CODE_128
+            BarcodeReader.Format.COMPACT_PDF_417 -> BarcodeFormat.PDF_417
             BarcodeReader.Format.DATA_BAR -> null
-            BarcodeReader.Format.DATA_BAR_EXPANDED -> null
-            BarcodeReader.Format.DATA_BAR_LIMITED -> null
+            BarcodeReader.Format.DATA_BAR_EXP -> null
+            BarcodeReader.Format.DATA_BAR_EXP_STK -> null
+            BarcodeReader.Format.DATA_BAR_LTD -> null
+            BarcodeReader.Format.DATA_BAR_OMNI -> null
+            BarcodeReader.Format.DATA_BAR_STK -> null
+            BarcodeReader.Format.DATA_BAR_STK_OMNI -> null
             BarcodeReader.Format.DATA_MATRIX -> BarcodeFormat.DATA_MATRIX
             BarcodeReader.Format.DX_FILM_EDGE -> null
+            BarcodeReader.Format.EAN_2 -> null
+            BarcodeReader.Format.EAN_5 -> null
             BarcodeReader.Format.EAN_8 -> BarcodeFormat.EAN_8
             BarcodeReader.Format.EAN_13 -> BarcodeFormat.EAN_13
+            BarcodeReader.Format.EAN_UPC -> BarcodeFormat.UPC_EAN_EXTENSION
+            BarcodeReader.Format.ISBN -> null
             BarcodeReader.Format.ITF -> BarcodeFormat.ITF
-            BarcodeReader.Format.MAXICODE -> BarcodeFormat.MAXICODE
-            BarcodeReader.Format.PDF_417 -> BarcodeFormat.PDF_417
-            BarcodeReader.Format.QR_CODE -> BarcodeFormat.QR_CODE
+            BarcodeReader.Format.ITF_14 -> null
+            BarcodeReader.Format.MAXI_CODE -> BarcodeFormat.MAXICODE
+            BarcodeReader.Format.MICRO_PDF_417 -> BarcodeFormat.PDF_417
             BarcodeReader.Format.MICRO_QR_CODE -> BarcodeFormat.QR_CODE
+            BarcodeReader.Format.OTHER_BARCODE -> null
+            BarcodeReader.Format.PDF_417 -> BarcodeFormat.PDF_417
+            BarcodeReader.Format.PZN -> null
+            BarcodeReader.Format.QR_CODE -> BarcodeFormat.QR_CODE
+            BarcodeReader.Format.QR_CODE_MODEL_1 -> BarcodeFormat.QR_CODE
+            BarcodeReader.Format.QR_CODE_MODEL_2 -> BarcodeFormat.QR_CODE
             BarcodeReader.Format.RMQR_CODE -> BarcodeFormat.QR_CODE
+            BarcodeReader.Format.TELEPEN -> null
+            BarcodeReader.Format.TELEPEN_ALPHA -> null
+            BarcodeReader.Format.TELEPEN_NUMERIC -> null
             BarcodeReader.Format.UPC_A -> BarcodeFormat.UPC_A
             BarcodeReader.Format.UPC_E -> BarcodeFormat.UPC_E
         },
