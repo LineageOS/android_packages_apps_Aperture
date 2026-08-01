@@ -107,7 +107,7 @@
     <string name="disable_jpeg_with_raw_summary">השבתת צילום JPEG כאשר צילום RAW מופעל</string>
     <string name="photo_ffc_mirror_title">היפוך תמונת מצלמה קדמית</string>
     <string name="photo_ffc_mirror_summary">שמירת תמונות מהמצלמה הקדמית כפי שהן מופיעות בתצוגה המקדימה</string>
-    <string name="video_stabilization_title">הפעלת ייצוב ווידאו</string>
+    <string name="video_stabilization_title">הפעלת ייצוב וידאו</string>
     <string name="video_stabilization_summary">כאשר זמין, יש להפעיל ייצוב וידאו להפחתת רעידות ההתקן במהלך ההקלטה</string>
     <string name="video_mirror_mode_title">הפעלת שיקוף וידאו</string>
     <string name="processing_title">מעבד</string>
@@ -172,7 +172,7 @@
     <string name="gesture_action_zoom">זום</string>
     <string name="gesture_action_default">ברירת המחדל של אנדרואיד</string>
     <string name="gesture_action_nothing">כלום</string>
-    <string name="thermal_status_moderate">האטה תרמית מתונה. יש ודא שההתקן אינו חשוף לאור שמש ישירה.
+    <string name="thermal_status_moderate">האטה תרמית מתונה. יש ודא שההתקן אינו חשוף לאור שמש ישיר.
 </string>
     <string name="thermal_status_severe">האטה תרמית חמורה. מומלץ לאפשר להתקן להתקרר מעט.</string>
     <string name="thermal_status_critical">האטה תרמית קריטית. ייתכן שהיישום ייסגר בקרוב.</string>
