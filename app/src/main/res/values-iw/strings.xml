@@ -101,7 +101,7 @@
     <string name="enable_zsl_summary">שימוש במצב Zero-Shutter Lag כאשר ההתקן תומך בכך. במצב זה אפקטים של תמונה מבוטלים. לתשמת ליבך: מצב זה נמצא כרגע בשלב ניסיוני.</string>
     <string name="photo_ffc_mirror_title">היפוך תמונת מצלמה קדמית</string>
     <string name="photo_ffc_mirror_summary">שמירת תמונות מהמצלמה הקדמית כפי שהן מופיעות בתצוגה המקדימה</string>
-    <string name="video_stabilization_title">הפעלת ייצוב ווידאו</string>
+    <string name="video_stabilization_title">הפעלת ייצוב וידאו</string>
     <string name="video_stabilization_summary">כאשר זמין, יש להפעיל ייצוב וידאו להפחתת רעידות ההתקן במהלך ההקלטה</string>
     <string name="video_mirror_mode_title">הפעלת שיקוף וידאו</string>
     <string name="processing_title">מעבד</string>
