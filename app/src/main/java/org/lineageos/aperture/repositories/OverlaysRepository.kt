@@ -126,6 +126,22 @@ class OverlaysRepository(private val context: Context) {
     }.toMap()
 
     /**
+     * @see R.array.config_vendorRequestTags
+     */
+    val vendorRequestTags: List<Triple<String, String, String>> = buildList {
+        getStringArray(R.array.config_vendorRequestTags).let {
+            if (it.size % 3 != 0) {
+                // Invalid configuration
+                return@buildList
+            }
+
+            for (i in it.indices step 3) {
+                add(Triple(it[i], it[i + 1], it[i + 2]))
+            }
+        }
+    }
+
+    /**
      * @see R.bool.config_enableHighResolution
      */
     val enableHighResolution = getBoolean(R.bool.config_enableHighResolution)

@@ -81,6 +81,22 @@
         <!-- No configuration by default. -->
     </string-array>
 
+    <!-- An array of triplets made of (vendor tag name, type, value).
+         The values will be set on every capture request via
+         CaptureRequestOptions. This allows devices whose camera HAL
+         requires vendor-specific request keys (e.g. to enable the
+         multi-camera SAT lens switching) to provide them through the
+         device overlay instead of patching the app. Valid types are
+         "byte", "int", "float" and "string".
+         Example:
+             <string-array name="config_vendorRequestTags">
+                 <item>com.example.vendor.request.flag</item> <item>byte</item> <item>1</item>
+             </string-array>
+     -->
+    <string-array name="config_vendorRequestTags">
+        <!-- No configuration by default. -->
+    </string-array>
+
     <!-- Whether we should use high resolution output size or not.
          See: StreamConfigurationMap.getHighResolutionOutputSizes() for more info. -->
     <bool name="config_enableHighResolution">true</bool>

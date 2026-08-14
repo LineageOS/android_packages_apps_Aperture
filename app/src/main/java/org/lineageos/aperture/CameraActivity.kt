@@ -15,6 +15,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.ColorDrawable
+import android.hardware.camera2.CaptureRequest
 import android.icu.text.DecimalFormat
 import android.net.Uri
 import android.os.Build
@@ -94,6 +95,7 @@ import org.lineageos.aperture.ext.setHotPixelMode
 import org.lineageos.aperture.ext.setNoiseReductionMode
 import org.lineageos.aperture.ext.setPadding
 import org.lineageos.aperture.ext.setShadingMode
+import org.lineageos.aperture.ext.setVendorRequestTags
 import org.lineageos.aperture.ext.setVideoStabilizationMode
 import org.lineageos.aperture.ext.slide
 import org.lineageos.aperture.ext.slideDown
@@ -120,6 +122,7 @@ import org.lineageos.aperture.models.TimerMode
 import org.lineageos.aperture.models.VideoDynamicRange
 import org.lineageos.aperture.models.VideoMirrorMode
 import org.lineageos.aperture.models.VideoStabilizationMode
+import org.lineageos.aperture.repositories.OverlaysRepository
 import org.lineageos.aperture.ui.dialogs.LocationPermissionsDialog
 import org.lineageos.aperture.ui.dialogs.QrBottomSheetDialog
 import org.lineageos.aperture.ui.views.CameraModeSelectorLayout
@@ -1625,6 +1628,33 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
             val camera2Options = cameraConfiguration.camera2Options
 
+            // Vendor request tags from the device overlay.
+            val vendorRequestTags: List<Pair<CaptureRequest.Key<Any>, Any>> =
+                OverlaysRepository(applicationContext)
+                    .vendorRequestTags
+                    .mapNotNull { (name, type, value) ->
+                        @Suppress("UNCHECKED_CAST")
+                        val resolved: Pair<CaptureRequest.Key<Any>, Any> = when (type) {
+                            "byte" -> value.toByteOrNull()?.let {
+                                CaptureRequest.Key(name, Byte::class.java) as
+                                    CaptureRequest.Key<Any> to it
+                            }
+                            "int" -> value.toIntOrNull()?.let {
+                                CaptureRequest.Key(name, Int::class.java) as
+                                    CaptureRequest.Key<Any> to it
+                            }
+                            "float" -> value.toFloatOrNull()?.let {
+                                CaptureRequest.Key(name, Float::class.java) as
+                                    CaptureRequest.Key<Any> to it
+                            }
+                            "string" -> CaptureRequest.Key(
+                                name, ByteArray::class.java
+                            ) as CaptureRequest.Key<Any> to value.toByteArray()
+                            else -> null
+                        } ?: return@mapNotNull null
+                        resolved
+                    }
+
             // Set Camera2 CaptureRequest options
             camera2CameraControl.setCaptureRequestOptions(CaptureRequestOptions.Builder()
                 .setFrameRate(
@@ -1651,6 +1681,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 .setColorCorrectionAberrationMode(camera2Options.colorCorrectionAberrationMode)
                 .setDistortionCorrectionMode(camera2Options.distortionCorrectionMode)
                 .setHotPixelMode(camera2Options.hotPixelMode)
+                .setVendorRequestTags(vendorRequestTags)
                 .build()
             )
         }

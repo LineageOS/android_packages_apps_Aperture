@@ -8,6 +8,7 @@ package org.lineageos.aperture.ext
 import android.hardware.camera2.CameraMetadata
 import android.hardware.camera2.CaptureRequest
 import android.os.Build
+import android.util.Log
 import androidx.camera.camera2.interop.CaptureRequestOptions
 import androidx.core.util.toRange
 import org.lineageos.aperture.models.ColorCorrectionAberrationMode
@@ -142,3 +143,22 @@ fun CaptureRequestOptions.Builder.setHotPixelMode(
         null -> null
     }
 )
+
+@androidx.camera.camera2.interop.ExperimentalCamera2Interop
+fun CaptureRequestOptions.Builder.setVendorRequestTags(
+    vendorRequestTags: List<Pair<CaptureRequest.Key<Any>, Any>>
+): CaptureRequestOptions.Builder = apply {
+    vendorRequestTags.forEach { (key, value) ->
+        // The device overlay is trusted input, but the declared value type
+        // may not match the key's actual type. Never let a bad config
+        // break the whole request options build.
+        try {
+            setCaptureRequestOption(key, value)
+        } catch (_: IllegalArgumentException) {
+            Log.w(
+                "CaptureRequestOptionsBuilder",
+                "Failed to set vendor tag ${key.name}, ignoring"
+            )
+        }
+    }
+}
