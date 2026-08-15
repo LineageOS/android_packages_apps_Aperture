@@ -75,7 +75,7 @@
     <string name="bright_screen_title">Parlaq ekran</string>
     <string name="bright_screen_summary" formatted="false">Parlaqlığı 100%-ə kilidləyir</string>
     <string name="save_location_title">Yer verilərini saxla</string>
-    <string name="save_location_summary">Metadataya GPS yerini daxil et</string>
+    <string name="save_location_summary">Meta veriyə GPS yerləşməsini daxil et</string>
     <string name="save_location_toast">İstifadəçi tərəfindən verilməyən yerləşmə icazələri.</string>
     <string name="shutter_sound_title">Çəkiliş səsi</string>
     <string name="shutter_sound_summary">Çəkiliş edərkən səs oxut</string>
@@ -102,7 +102,7 @@
     <string name="use_photo_jpeg_ultra_hdr_title">Təsvirləri JPEG Ultra HDR kimi saxla</string>
     <string name="use_photo_jpeg_ultra_hdr_summary">HDR təsvirləri təkmilləşdirmək mümkün olduqda, təsvirləri JPEG Ultra HDR kimi saxla</string>
     <string name="enable_raw_image_capture_title">RAW təsvir yaxalamanı fəallaşdır</string>
-    <string name="enable_raw_image_capture_summary">RAW təsvir yaxalamanı fəallaşdır. RAW yaxalama fəal olduqda, fotolar JPEG Ultra HDR kimi saxlanıla bilməz</string>
+    <string name="enable_raw_image_capture_summary">RAW təsvir yaxalamanı fəallaşdır. RAW yaxalama fəal olduqda, fotolar JPEG Ultra HDR kimi depolana bilməz</string>
     <string name="disable_jpeg_with_raw_title">RAW ilə JPEG-i sıradan çıxart</string>
     <string name="disable_jpeg_with_raw_summary">RAW təsvir yaxalama fəal olduqda, JPEG-i sıradan çıxart</string>
     <string name="photo_ffc_mirror_title">Güzgü ön kamera</string>
