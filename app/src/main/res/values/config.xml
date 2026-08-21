@@ -29,6 +29,16 @@
         <!-- No camera is unignored by default. -->
     </string-array>
 
+    <!-- List of ID of main cameras. Override this if your
+         camera HAL exposes the main back or front camera on a
+         different ID, for example a logical multi-camera on ID 3.
+         Note that overriding replaces the whole list, so include
+         both the back and front camera IDs. -->
+    <string-array name="config_mainCameraIds">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
     <!-- An array of triplets made of (camera ID, qualities, frame rates).
          These video modes will be added to the available
          quality/frame rate combinations of a camera device.

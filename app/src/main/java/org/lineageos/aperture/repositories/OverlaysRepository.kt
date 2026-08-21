@@ -59,6 +59,11 @@ class OverlaysRepository(private val context: Context) {
     val backwardCompatibleCameraIds = getStringArray(R.array.config_backwardCompatibleCameraIds)
 
     /**
+     * @see R.array.config_mainCameraIds
+     */
+    val mainCameraIds = getStringArray(R.array.config_mainCameraIds)
+
+    /**
      * @see R.array.config_additionalVideoConfigurations
      */
     val additionalVideoConfigurations =
