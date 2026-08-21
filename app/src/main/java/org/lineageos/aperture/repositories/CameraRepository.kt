@@ -116,7 +116,7 @@ class CameraRepository(
         val camera2CameraInfo = Camera2CameraInfo.from(this)
 
         return when (camera2CameraInfo.cameraId) {
-            in mainCameraIds -> true
+            in overlaysRepository.mainCameraIds -> true
 
             else -> {
                 val isIgnoredAuxCamera = overlaysRepository.ignoredAuxCameraIds.contains(
@@ -143,14 +143,4 @@ class CameraRepository(
     private fun requireCameraPermission() = require(
         context.permissionGranted(Manifest.permission.CAMERA)
     ) { "Camera permission not granted" }
-
-    companion object {
-        /**
-         * List of main camera IDs. These should never be excluded.
-         */
-        private val mainCameraIds = setOf(
-            "0",
-            "1",
-        )
-    }
 }
