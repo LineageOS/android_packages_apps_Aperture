@@ -32,7 +32,7 @@
     <string name="mic_off">MİKRF BAĞLIDIR</string>
     <string name="mic_on">MİKRF AÇIQDIR</string>
     <string name="settings">AYARLAR</string>
-    <string name="app_permissions_toast">İstifadəçi tərəfindən verilməyən icazələr.</string>
+    <string name="app_permissions_toast">İstifadəçi izinləri vermədi.</string>
     <string name="camcorder_unsupported_toast">Heç bir kamera videoyazını dəstəkləmir.</string>
     <string name="qr_copy_description">Lövhəyə kopyala</string>
     <string name="qr_icon_description">İkon</string>
@@ -76,7 +76,7 @@
     <string name="bright_screen_summary" formatted="false">Parlaqlığı 100%-ə kilidləyir</string>
     <string name="save_location_title">Yer verilərini saxla</string>
     <string name="save_location_summary">Meta veriyə GPS yerləşməsini daxil et</string>
-    <string name="save_location_toast">İstifadəçi tərəfindən verilməyən yerləşmə icazələri.</string>
+    <string name="save_location_toast">İstifadəçi yerləşmə izinlərini vermədi.</string>
     <string name="shutter_sound_title">Çəkiliş səsi</string>
     <string name="shutter_sound_summary">Çəkiliş edərkən səs oxut</string>
     <string name="leveler_title">Düzləşdirici</string>
