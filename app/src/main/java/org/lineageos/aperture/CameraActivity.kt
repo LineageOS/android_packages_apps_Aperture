@@ -414,6 +414,36 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         ViewCompat.setOnApplyWindowInsetsListener(mainLayout) { _, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
+            // Keep the viewfinder out of the display cutout.
+            //
+            // Rendering the preview beside a punch-hole camera puts near-maximum
+            // brightness pixels immediately around the front lens; that light enters
+            // the lens through the cover glass and causes visible veiling glare in the
+            // front camera. Measured on a53x (cutout at y=32..88px): screen luminance
+            // beside the cutout 166-196/255 when the preview extends into it, 0 when
+            // it does not.
+            //
+            // Clearing the cutout rectangle alone is not enough. The safe inset stops
+            // at the bottom edge of the punch-hole, so the first bright row lands
+            // directly against the lens rim and light still couples into the cover
+            // glass. Measured on a53x: with topMargin = cutoutInsets.top the preview
+            // begins at y=88, the exact bottom of the cutout, and glare persists.
+            // Open Camera, which does not glare on this device, begins its preview at
+            // y=159. CUTOUT_GLARE_BAND_DP adds that clearance.
+            //
+            // Note this cannot be fixed with layoutInDisplayCutoutMode: apps targeting
+            // SDK 35+ have NEVER and DEFAULT treated as ALWAYS by the platform, so the
+            // theme value, a runtime window attribute, and the
+            // OVERRIDE_LAYOUT_IN_DISPLAY_CUTOUT_MODE compat change are all ignored.
+            val cutoutInsets = windowInsets.getInsets(WindowInsetsCompat.Type.displayCutout())
+            val band = (CUTOUT_GLARE_BAND_DP * resources.displayMetrics.density).toInt()
+            viewFinder.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = cutoutInsets.top + if (cutoutInsets.top > 0) band else 0
+                bottomMargin = cutoutInsets.bottom + if (cutoutInsets.bottom > 0) band else 0
+                leftMargin = cutoutInsets.left + if (cutoutInsets.left > 0) band else 0
+                rightMargin = cutoutInsets.right + if (cutoutInsets.right > 0) band else 0
+            }
+
             cameraModeSelectorLayout.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = insets.bottom
                 leftMargin = insets.left
@@ -2068,6 +2098,12 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
     companion object {
         private val LOG_TAG = CameraActivity::class.simpleName!!
+
+        // Extra clearance, beyond the display cutout's own safe inset, kept free of
+        // preview pixels on the side the cutout is on. See the window insets listener.
+        // 28dp is 79px at this device's density, putting the first bright row at y=167
+        // against Open Camera's measured y=159.
+        private const val CUTOUT_GLARE_BAND_DP = 28f
 
         private const val MSG_HIDE_ZOOM_SLIDER = 0
         private const val MSG_HIDE_FOCUS_RING = 1
