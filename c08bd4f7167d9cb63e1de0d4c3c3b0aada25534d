@@ -16,6 +16,23 @@
       "message": "https://github.com/LineageOS/charter/blob/main/ai-coding-assistants.md",
       "revId": "c08bd4f7167d9cb63e1de0d4c3c3b0aada25534d",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c97857df_b137c9ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4550
+      },
+      "writtenOn": "2026-09-12T21:18:39Z",
+      "side": 1,
+      "message": "Your device should set up proper camera protection cutouts instead",
+      "revId": "c08bd4f7167d9cb63e1de0d4c3c3b0aada25534d",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
