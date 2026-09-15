@@ -23,6 +23,7 @@
     <string name="qr_copy_description">Salin ke papan klip</string>
     <string name="qr_icon_description">Ikon</string>
     <string name="qr_share_description">Bagikan</string>
+    <string name="qr_share_with_action">Bagikan dengan</string>
     <string name="qr_address_title">Tambahkan kontak</string>
     <string name="qr_address_content_description">Tambahkan kontak</string>
     <string name="qr_calendar_title">Tambahkan kegiatan ke kalender</string>
@@ -31,7 +32,10 @@
     <string name="qr_email_title">Kirim email baru</string>
     <string name="qr_geo_title">Buka lokasi ini</string>
     <string name="qr_geo_content_description">Buka lokasi ini</string>
+    <string name="qr_sms_title">Kirim SMS baru</string>
+    <string name="qr_sms_content_description">Kirim SMS baru untuk penerima tertentu</string>
     <string name="qr_text">Teks</string>
+    <string name="qr_upi_title">Pilih aplikasi untuk pembayaran</string>
     <string name="qr_uri_title">Buka URL</string>
     <string name="qr_wifi_title">Sambungkan ke jaringan Wi-Fi ini</string>
     <string name="title_activity_settings">Pengaturan</string>
@@ -42,6 +46,8 @@
     <string name="bright_screen_summary" formatted="false">Kunci kecerahan ke 100%</string>
     <string name="save_location_title">Lokasi penyimpanan data</string>
     <string name="shutter_sound_title">Suara rana</string>
+    <string name="shutter_sound_summary">Hidupkan suara saat mengambil gambar</string>
+    <string name="gestures_title">Gerakan</string>
     <string name="volume_buttons_title">Tombol volume</string>
     <string name="zoom_buttons_title">Tombol zoom</string>
     <string name="photo_capture_mode_maximize_quality">Maksimalkan kualitas</string>
@@ -55,6 +61,7 @@
     <string name="video_stabilization_title">Aktifkan stabilisasi video</string>
     <string name="video_stabilization_summary">Ketika tersedia, aktifkan stabilisasi video untuk meminimalisir guncangan kamera saat perekaman</string>
     <string name="processing_title">Memproses</string>
+    <string name="edge_mode_title">Mempertajam</string>
     <string name="edge_mode_off">Nonaktif</string>
     <string name="edge_mode_fast">Cepat</string>
     <string name="edge_mode_high_quality">Kualitas tinggi</string>

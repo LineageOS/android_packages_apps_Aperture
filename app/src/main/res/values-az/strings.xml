@@ -113,7 +113,7 @@
     <string name="processing_title">Emal olunur</string>
     <string name="processing_info">Foto rejimində, ZSL rejimi istifadə edildikdə, yalnız ilkin və bağlı dəyərlər nəzərə alınacaq. Video rejimi üçün yalnız ilkin, bağlı və sürətli dəyərlər nəzərə alınacaq.</string>
     <string name="edge_mode_title">Kəskinlik</string>
-    <string name="edge_mode_summary">Kənar təkmilləşdirmə, yaxalanmış təsvirdəki kəskinliyi və detalları yaxşılaşdırır.</string>
+    <string name="edge_mode_summary">Kənar təkmilləşdirmə, yaxalanmış təsvirdəki kəskinliyi və ayrıntıları yaxşılaşdırır.</string>
     <string name="edge_mode_default">İlkin</string>
     <string name="edge_mode_off">Bağlı</string>
     <string name="edge_mode_fast">Sürətli</string>
