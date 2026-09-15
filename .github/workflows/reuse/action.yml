@@ -1,0 +1,19 @@
+name: reuse
+
+runs:
+  using: composite
+
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v7
+      with:
+        python-version: '>=3.10'
+        cache: 'pip'
+
+    - name: Install reuse
+      shell: bash
+      run: pip install -r requirements.txt
+
+    - name: Run reuse lint
+      shell: bash
+      run: reuse lint
