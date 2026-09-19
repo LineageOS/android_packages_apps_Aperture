@@ -708,7 +708,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         launch {
             viewModel.cameraConfiguration.collectLatest { cameraConfiguration ->
-                bindCameraUseCases(cameraConfiguration)
+                if (viewModel.canRestartCamera()) {
+                    bindCameraUseCases(cameraConfiguration)
+                }
             }
         }
 
