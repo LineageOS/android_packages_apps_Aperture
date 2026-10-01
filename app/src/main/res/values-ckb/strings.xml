@@ -177,7 +177,8 @@
     <string name="thermal_status_critical">پلەی گەرمی مەترسیدارە، ڕەنگە بەرنامەکە بەم زووانە دابخرێت.</string>
     <string name="thermal_status_emergency">باری نائاسایی گەرمی، بەرنامەکە ئێستا دادەخرێت.</string>
     <string name="thermal_status_shutdown">کوژانەوە بەهۆی گەرمی، ئامێرەکە دەکوژێتەوە.</string>
-    <string name="force_torch_help">لە دۆخی وێنەگرتندا، دەتوانیت بۆ ماوەیەکی درێژ دەست لەسەر دوگمەی فلاش دابگریت بۆ ئەوەی بچیتە سەر دۆخی چرا.</string>
+    <string name="force_torch_help">لە دۆخی وێنەگرتندا، دەتوانیت بۆ ماوەیەکی درێژ دەست لەسەر دوگمەی فلاش دابگریت بۆ ئەوەی بچیتە سەر دۆخی چرا.
+</string>
     <string name="camera_mode_photo">وێنە</string>
     <string name="camera_mode_video">ڤیدیۆ</string>
     <string name="camera_mode_qr">پشکنین</string>

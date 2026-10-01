@@ -144,7 +144,7 @@
     <string name="distortion_correction_mode_fast">Rapide</string>
     <string name="distortion_correction_mode_high_quality">Haute qualité</string>
     <string name="hot_pixel_mode_title">Correction de pixel chaud</string>
-    <string name="hot_pixel_mode_summary">La correction des pixels chauds interpole, ou sinon supprime, les pixels qui ne mesurent pas précisément la lumière entrante (i.e. Les pixels qui sont coincés sur une valeur arbitraire ou sont hypersensibles).</string>
+    <string name="hot_pixel_mode_summary">La correction des pixels chauds interpole, ou sinon supprime, les pixels qui ne mesurent pas précisément la lumière entrante (c.-à-d. les pixels qui sont coincés sur une valeur arbitraire ou sont hypersensibles).</string>
     <string name="hot_pixel_mode_default">Par défaut</string>
     <string name="hot_pixel_mode_off">Désactivée</string>
     <string name="hot_pixel_mode_fast">Rapide</string>
