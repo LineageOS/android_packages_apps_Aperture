@@ -37,7 +37,6 @@
     <string name="qr_copy_description">Copïo i\'r clipfwrdd</string>
     <string name="qr_icon_description">Eicon</string>
     <string name="qr_share_description">Rhannu</string>
-    <string name="qr_share_with_action">Rhannu gyda</string>
     <string name="qr_no_app_available_for_action">Dim ap ar gael i ymdrin â\'r weithred hon</string>
     <string name="qr_address_title">Ychwanegu cyswllt</string>
     <string name="qr_address_content_description">Ychwanegu cyswllt</string>

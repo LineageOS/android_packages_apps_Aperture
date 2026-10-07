@@ -46,7 +46,7 @@
     <string name="qr_dpp_description">Configurar este dispositivo</string>
     <string name="qr_email_title">Enviar um novo e-mail</string>
     <string name="qr_email_content_description">Criar um novo e-mail para os e-mails indicados</string>
-    <string name="qr_fido_title">Usar Passkey</string>
+    <string name="qr_fido_title">Utilizar Passkey</string>
     <string name="qr_fido_content_description">Lidar com este código QR FIDO</string>
     <string name="qr_geo_title">Abrir esta localização</string>
     <string name="qr_geo_content_description">Abrir esta localização</string>
@@ -83,7 +83,7 @@
     <string name="leveler_summary">Indicador que mostra a orientação do dispositivo</string>
     <string name="gestures_title">Gestos</string>
     <string name="single_buttons_title">Botões individuais</string>
-    <string name="camera_button_action_title">Ação do botão da câmara</string>
+    <string name="camera_button_action_title">Função do botão da câmara</string>
     <string name="focus_button_action_title">Função do botão de foco</string>
     <string name="mute_button_action_title">Função do botão de silenciar</string>
     <string name="volume_buttons_title">Botões de volume</string>
@@ -111,7 +111,7 @@
     <string name="video_stabilization_summary">Quando disponível, ativar a estabilização de video para reduzir as vibrações da câmara durante a gravação</string>
     <string name="video_mirror_mode_title">Ativar espelhamento de vídeo</string>
     <string name="processing_title">A processar</string>
-    <string name="processing_info">No modo de foto, quando o modo ZSL é utilizado, apenas serão tidos em consideração os valores \"predefinido\" ou \"desligado\". Para o modo de vídeo, apenas serão tidos em consideração os valores \"predefinido\", \"desligado\" e \"rápido\".</string>
+    <string name="processing_info">No modo de foto, quando o modo ZSL é usado, apenas serão tidos em consideração os valores \"predefinido\" ou \"desligado\". Para o modo de vídeo, apenas serão tidos em consideração os valores \"predefinido\", \"desligado\" e \"rápido\".</string>
     <string name="edge_mode_title">Nitidez</string>
     <string name="edge_mode_summary">O melhoramento de periferia melhora a nitidez e os detalhes na imagem capturada.</string>
     <string name="edge_mode_default">Predefinido</string>
