@@ -10,7 +10,7 @@
     <string name="confirm_button_description">پەسەندکردن</string>
     <string name="flash_button_description">دۆخی فلاش</string>
     <string name="flip_camera_button_description">گۆڕینی لای کامێرا</string>
-    <string name="gallery_button_description">گەلەری</string>
+    <string name="gallery_button_description">پێشانگا</string>
     <string name="google_lens_button_description">کردنەوەی Google Lens</string>
     <string name="image_view_description">پێشبینینی وێنە</string>
     <string name="pro_button_description">ڕێکخستنی پێشکەوتوو (Pro)</string>
@@ -44,8 +44,8 @@
     <string name="qr_calendar_title">زیادکردنی چالاکی بۆ ڕۆژژمێر</string>
     <string name="qr_calendar_content_description">ئەم چالاکییە بۆ ڕۆژژمێر زیاد بکە</string>
     <string name="qr_dpp_description">ڕێکخستنی ئەم ئامێرە</string>
-    <string name="qr_email_title">ناردنی ئیمەیڵێکی نوێ</string>
-    <string name="qr_email_content_description">نووسینی ئیمەیڵێکی نوێ بۆ ناونیشانە دیاریکراوەکان</string>
+    <string name="qr_email_title">ناردنی پۆستێکی ئەلیکترۆنیی نوێ</string>
+    <string name="qr_email_content_description">نووسینی پۆستێکی ئەلیکترۆنیی نوێ بۆ ناونیشانە دیاریکراوەکان</string>
     <string name="qr_fido_title">بەکارهێنانی Passkey</string>
     <string name="qr_fido_content_description">چارەسەرکردنی کۆدی FIDO QR</string>
     <string name="qr_geo_title">کردنەوەی ئەم شوێنە</string>
@@ -79,7 +79,7 @@
     <string name="save_location_toast">ڕێپێدانی دەستگەیشتن بە شوێن نەدراوە.</string>
     <string name="shutter_sound_title">دەنگی وێنەگرتن</string>
     <string name="shutter_sound_summary">لەکاتی وێنەگرتندا دەنگێک لێ بدە</string>
-    <string name="leveler_title">ڕێکخەری ئاست (Leveler)</string>
+    <string name="leveler_title">ڕێکخەری ئاست</string>
     <string name="leveler_summary">نیشاندەرێک کە هاوسەنگیی ئاراستەی ئامێرەکە نیشان دەدات</string>
     <string name="gestures_title">ئاماژە جوڵەییەکان (Gestures)</string>
     <string name="single_buttons_title">دوگمە تاکەکان</string>
@@ -106,7 +106,7 @@
     <string name="video_mirror_mode_title">چالاککردنی ئاوێنەکردنی ڤیدیۆ</string>
     <string name="processing_title">چارەسەرکردنی وێنە (Processing)</string>
     <string name="processing_info">لەکاتی بەکارهێنانی ZSL، تەنها بەهاکانی بنەڕەتی و ناچالاک کار دەکەن. بۆ ڤیدیۆش تەنها بنەڕەتی، ناچالاک و خێرا کار دەکەن.</string>
-    <string name="edge_mode_title">تیژکردنەوە (Sharpening)</string>
+    <string name="edge_mode_title">تیژکردنەوە</string>
     <string name="edge_mode_summary">باشترکردنی تیژی و وردەکارییەکانی لێوار لە وێنەدا.</string>
     <string name="edge_mode_default">بنەڕەتی</string>
     <string name="edge_mode_off">ناچالاک</string>
