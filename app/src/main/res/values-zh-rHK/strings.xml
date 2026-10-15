@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     SPDX-FileCopyrightText: The LineageOS Project
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">相機</string>
+    <string name="cancel_button_description">取消</string>
+    <string name="confirm_button_description">確認</string>
+    <string name="flash_button_description">閃光燈模式</string>
+    <string name="google_lens_button_description">開啟 Google 智慧鏡頭</string>
+    <string name="pro_button_description">專業設定</string>
+    <string name="shutter_button_description">快門</string>
+    <string name="timer_off">計時器關閉</string>
+    <string name="timer_3">計時 3 秒</string>
+    <string name="timer_10">計時 10 秒</string>
+    <string name="video_framerate_value"><xliff:g example="60" id="fps">%d</xliff:g> FPS</string>
+    <string name="effect_none">無</string>
+    <string name="effect_night">夜景</string>
+    <string name="effect_auto">自動</string>
+    <string name="grid_off">網格關</string>
+    <string name="grid_on_3">3x3 網格</string>
+    <string name="grid_on_4">4x4 網格</string>
+    <string name="grid_on_goldenratio">φ 網格</string>
+    <string name="settings">設定</string>
+    <string name="app_permissions_toast">使用者未授予權限。</string>
+    <string name="qr_icon_description">圖示</string>
+    <string name="qr_share_description">分享</string>
+    <string name="qr_no_app_available_for_action">無應用程式可處理此動作</string>
+    <string name="qr_address_title">新增聯絡人</string>
+    <string name="qr_address_content_description">新增聯絡人</string>
+    <string name="qr_calendar_title">加入日曆活動</string>
+    <string name="qr_calendar_content_description">將此活動加入日曆</string>
+    <string name="qr_dpp_description">設定此裝置</string>
+    <string name="qr_email_title">傳送新電子郵件</string>
+</resources>
