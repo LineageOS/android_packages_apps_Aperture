@@ -177,7 +177,7 @@
     <string name="thermal_status_critical">האטה תרמית קריטית. ייתכן שהיישום ייסגר בקרוב.</string>
     <string name="thermal_status_emergency">האטת חירום תרמית. היישום ייסגר כעת.</string>
     <string name="thermal_status_shutdown">כיבוי עקב האטה תרמית קריטית. המכשיר יכבה.</string>
-    <string name="force_torch_help">במצב תמונה, ניתן ללחוץ לחיצה ארוכה על כפתור המבזק כדי לעבור למצב פנס.</string>
+    <string name="force_torch_help">במצב תמונה, ניתן ללחוץ לחיצה ארוכה על לחצן המבזק כדי לעבור למצב פנס.</string>
     <string name="camera_mode_photo">תמונה</string>
     <string name="camera_mode_video">סרטון</string>
     <string name="camera_mode_qr">סריקה</string>
