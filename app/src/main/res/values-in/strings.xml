@@ -20,6 +20,7 @@
     <string name="effect_night">MALAM</string>
     <string name="effect_auto">OTOMATIS</string>
     <string name="settings">PENGATURAN</string>
+    <string name="camcorder_unsupported_toast">Tidak ada dukungan kamera untuk perekaman video</string>
     <string name="qr_copy_description">Salin ke papan klip</string>
     <string name="qr_icon_description">Ikon</string>
     <string name="qr_share_description">Bagikan</string>
