@@ -240,6 +240,7 @@ class PreferencesRepository(
             Quality.SD to "sd",
             Quality.HD to "hd",
             Quality.FHD to "fhd",
+            Quality.QHD to "qhd",
             Quality.UHD to "uhd",
         ),
     ).asPreferenceHolder()

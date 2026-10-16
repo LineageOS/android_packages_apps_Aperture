@@ -83,6 +83,7 @@ class OverlaysRepository(private val context: Context) {
                                 "sd" -> Quality.SD
                                 "hd" -> Quality.HD
                                 "fhd" -> Quality.FHD
+                                "qhd" -> Quality.QHD
                                 "uhd" -> Quality.UHD
                                 else -> null
                             }
