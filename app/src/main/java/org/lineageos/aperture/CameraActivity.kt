@@ -1212,6 +1212,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                         Quality.SD -> R.drawable.ic_sd
                         Quality.HD -> R.drawable.ic_hd
                         Quality.FHD -> R.drawable.ic_full_hd
+                        Quality.QHD -> R.drawable.ic_qhd
                         Quality.UHD -> R.drawable.ic_4k
                         else -> throw Exception("Unknown video quality $videoQuality")
                     },
@@ -1223,6 +1224,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                         Quality.SD -> R.string.video_quality_sd
                         Quality.HD -> R.string.video_quality_hd
                         Quality.FHD -> R.string.video_quality_fhd
+                        Quality.QHD -> R.string.video_quality_qhd
                         Quality.UHD -> R.string.video_quality_uhd
                         else -> throw Exception("Unknown video quality $videoQuality")
                     }

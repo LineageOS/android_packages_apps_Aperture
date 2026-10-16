@@ -31,6 +31,7 @@
     <string name="video_quality_sd" translatable="false">480p</string>
     <string name="video_quality_hd" translatable="false">720p</string>
     <string name="video_quality_fhd" translatable="false">1080p</string>
+    <string name="video_quality_qhd" translatable="false">1440p</string>
     <string name="video_quality_uhd" translatable="false">2160p</string>
 
     <string name="video_framerate_auto">AUTO FPS</string>
