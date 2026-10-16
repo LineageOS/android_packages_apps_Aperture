@@ -40,6 +40,7 @@
           - "sd" (480p)
           - "hd" (720p)
           - "fhd" (1080p)
+          - "qhd" (1440p)
           - "uhd" (2160p)
          Valid values of frame rate are:
           - "24"

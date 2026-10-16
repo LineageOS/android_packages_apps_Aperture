@@ -1426,7 +1426,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             val videoQuality =
                 cameraConfiguration.camera.supportedVideoQualities.keys.toList()
                     .sortedWith { a, b ->
-                        listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.UHD).let {
+                        listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.QHD, Quality.UHD).let {
                             it.indexOf(a) - it.indexOf(b)
                         }
                     }.next(cameraConfiguration.videoQuality) ?: error(
