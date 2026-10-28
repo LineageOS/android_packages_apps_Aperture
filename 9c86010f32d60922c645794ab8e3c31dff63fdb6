@@ -106,6 +106,24 @@
       "parentUuid": "87fba294_0e576f0b",
       "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "11ee6170_ab67828c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29415
+      },
+      "writtenOn": "2026-10-28T15:48:38Z",
+      "side": 1,
+      "message": "Do you mean modifying the camera blobs to incorporate the physical telephoto into the main logical? That seems kind of fragile esp with blob updates, and I\u0027m not sure how that would be better than just letting Aperture handle the existing case without modifying blobs.\n\nIt seems like regardless of if the fix is in Aperture or in the device\u0027s blobs, the end result is the same (for Aperture anyways). So why would we want it in device blobs instead?",
+      "parentUuid": "f2f2a11e_68c881cb",
+      "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
