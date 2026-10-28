@@ -124,6 +124,24 @@
       "parentUuid": "f2f2a11e_68c881cb",
       "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38ca554b_43785f5e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2026-10-28T16:00:08Z",
+      "side": 1,
+      "message": "I mean supporting this usecase on Aperture, that\u0027s fine, but the main camera ID won\u0027t be changed",
+      "parentUuid": "11ee6170_ab67828c",
+      "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
