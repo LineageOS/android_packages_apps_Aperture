@@ -52,6 +52,24 @@
       "parentUuid": "56dd78b6_c528a680",
       "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10454a95_04b809f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2026-10-28T12:12:32Z",
+      "side": 1,
+      "message": "The logical camera on ingot doesn\u0027t pass VTS tests, it might die on other apps, including Aperture\n\nThis is the same reason why OEMs don\u0027t expose it, because it\u0027s not compliant, and I don\u0027t want the main camera app to misbehave, since shooting photos and recording videos is a delicate task, I just cannot risk it, especially only on Aperture, that would be bad UX and bad PR, given a lot of people here care about that\n\nGiven I had the chance to be around during ingot certification at OSOM, yes, it\u0027s a hard no for me, let alone for other OEMs where you don\u0027t know what the hell did to those camera IDs",
+      "parentUuid": "e35d19e0_e503d72e",
+      "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
