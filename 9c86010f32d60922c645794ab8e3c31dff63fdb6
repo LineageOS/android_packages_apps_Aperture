@@ -16,6 +16,24 @@
       "message": "Can you explain your review?",
       "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56dd78b6_c528a680",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2026-10-28T10:54:07Z",
+      "side": 1,
+      "message": "Already been very well explained on Discord, see discussions regarding ingot.",
+      "parentUuid": "ffc86abe_f111c16c",
+      "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
