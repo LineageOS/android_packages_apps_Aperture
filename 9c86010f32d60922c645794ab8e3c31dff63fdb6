@@ -34,6 +34,24 @@
       "parentUuid": "ffc86abe_f111c16c",
       "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e35d19e0_e503d72e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29415
+      },
+      "writtenOn": "2026-10-28T12:00:06Z",
+      "side": 1,
+      "message": "Can you elaborate here for people who aren\u0027t privy to that thread? This change is applicable beyond just ingot\u0027s case. For example, the OnePlus 12 has a partial logical camera at ID 0, so its telephoto is only reachable by mixing logical and physical IDs or using a main camera other than ID 0. We already allow physical cameras but can\u0027t exclude redundant IDs, which is what this fixes. Swapping IDs in the HAL would mean patching and reverifying every device, without any guarantee 3rd party apps will behave.\n\nMakes more sense IMO to just allow this in Aperture as it\u0027s a fairly common case, much easier to validate the logical camera behaves properly in a single app than every other app that could be used.",
+      "parentUuid": "56dd78b6_c528a680",
+      "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
