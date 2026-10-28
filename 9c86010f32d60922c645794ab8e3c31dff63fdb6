@@ -70,6 +70,24 @@
       "parentUuid": "e35d19e0_e503d72e",
       "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87fba294_0e576f0b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 29415
+      },
+      "writtenOn": "2026-10-28T14:20:24Z",
+      "side": 1,
+      "message": "So for the OnePlus 12, do they just expose logical 0 + physical telephoto? Or would they just skip telephoto completely?",
+      "parentUuid": "10454a95_04b809f4",
+      "revId": "9c86010f32d60922c645794ab8e3c31dff63fdb6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
