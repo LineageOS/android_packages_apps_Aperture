@@ -39,7 +39,7 @@ fun LocationManager.locationFlow(
         }
 
         val isMoreAccurate = currentLocation?.let {
-            it.accuracy < location.accuracy
+            it.accuracy >= location.accuracy
         } ?: true
 
         if (!isMoreAccurate) {
