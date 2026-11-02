@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e895c72_6ae9c537",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 38504
+      },
+      "writtenOn": "2026-11-02T03:42:02Z",
+      "side": 1,
+      "message": "Pretty similar to the other change for Glimpse...\nThe status bar is still hidden by default, it\u0027s just easier to see against both light and dark backgrounds when it\u0027s swiped down.",
+      "revId": "f81418d7a4aba6859fcba12d2a40282be7573aba",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
