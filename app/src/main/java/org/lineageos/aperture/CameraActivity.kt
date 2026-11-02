@@ -366,8 +366,10 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Enable edge-to-edge
+        // Enable edge-to-edge with light status bar icons
         enableEdgeToEdge()
+        WindowCompat.getInsetsController(window, window.decorView)
+            .isAppearanceLightStatusBars = false
 
         // Hide the status bars
         window.updateBarsVisibility(
