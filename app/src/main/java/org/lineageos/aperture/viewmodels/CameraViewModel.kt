@@ -10,13 +10,18 @@ import android.app.Application
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.ImageFormat
+import android.hardware.display.DisplayManager
 import android.location.LocationManager
 import android.net.Uri
 import android.os.BatteryManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.PowerManager
 import android.util.Log
+import android.view.Display
 import android.view.OrientationEventListener
+import android.view.Surface
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.ExperimentalZeroShutterLag
 import androidx.camera.core.ImageCapture
@@ -44,6 +49,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
@@ -130,6 +136,34 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             started = SharingStarted.WhileSubscribed(),
             replay = 1
         )
+
+    // Large screens can ignore the orientation lock, so the UI may already be rotated
+    private val displayRotationDegrees = callbackFlow {
+        val displayManager = applicationContext.getSystemService(DisplayManager::class.java)
+        val sendRotation = {
+            displayManager.getDisplay(Display.DEFAULT_DISPLAY)?.let {
+                trySend(it.rotation.toDegrees())
+            }
+        }
+        val displayListener = object : DisplayManager.DisplayListener {
+            override fun onDisplayAdded(displayId: Int) = Unit
+            override fun onDisplayRemoved(displayId: Int) = Unit
+            override fun onDisplayChanged(displayId: Int) {
+                if (displayId == Display.DEFAULT_DISPLAY) {
+                    sendRotation()
+                }
+            }
+        }
+
+        sendRotation()
+        displayManager.registerDisplayListener(
+            displayListener, Handler(Looper.getMainLooper())
+        )
+
+        awaitClose {
+            displayManager.unregisterDisplayListener(displayListener)
+        }
+    }
 
     /**
      * [ExecutorService] for camera related operations.
@@ -298,11 +332,10 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     /**
      * Current screen rotation.
      */
-    @OptIn(ExperimentalCoroutinesApi::class)
     val screenRotation = orientation
         .filter { it != OrientationEventListener.ORIENTATION_UNKNOWN }
-        .mapLatest { orientation ->
-            Rotation.fromDegreesInAperture(orientation)
+        .combine(displayRotationDegrees.distinctUntilChanged()) { orientation, displayRotation ->
+            Rotation.fromDegreesInAperture((orientation + displayRotation) % 360)
         }
         .flowOn(Dispatchers.IO)
         .stateIn(
@@ -1884,4 +1917,11 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             ImageFormat.RAW_PRIVATE,
         )
     }
+}
+
+private fun Int.toDegrees() = when (this) {
+    Surface.ROTATION_90 -> 90
+    Surface.ROTATION_180 -> 180
+    Surface.ROTATION_270 -> 270
+    else -> 0
 }
