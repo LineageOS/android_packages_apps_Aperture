@@ -1355,7 +1355,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         _highSpeedVideoSession.value = HighSpeedVideoSession(
             cameraRepository.cameraProvider.bindToLifecycle(
                 lifecycleOwner,
-                cameraConfiguration.camera.cameraSelector,
+                cameraConfiguration.camera.slowMotionCamera.cameraSelector,
                 sessionConfig,
             ),
             videoCapture,

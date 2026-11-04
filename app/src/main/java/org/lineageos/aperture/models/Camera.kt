@@ -61,6 +61,19 @@ class Camera private constructor(
     val cameraId: String = camera2CameraInfo.cameraId
 
     /**
+     * Camera2's IDs of the physical cameras behind this camera.
+     */
+    val physicalCameraIds = cameraInfo.physicalCameraInfos.map {
+        Camera2CameraInfo.from(it).cameraId
+    }.toSet()
+
+    /**
+     * The camera that records slow motion video, this one or a physical camera behind it.
+     */
+    var slowMotionCamera: Camera = this
+        internal set
+
+    /**
      * The [CameraFacing] of this camera.
      */
     val cameraFacing = when (cameraInfo.lensFacing) {
@@ -124,10 +137,13 @@ class Camera private constructor(
             )
         }
 
-    val supportsSlowMotion = supportedVideoQualities.values.any { it.supportsSlowMotion }
+    private val supportsOwnSlowMotion = supportedVideoQualities.values.any { it.supportsSlowMotion }
+
+    val supportsSlowMotion
+        get() = slowMotionCamera.supportsOwnSlowMotion
 
     fun videoQualitiesFor(slowMotion: Boolean) = when (slowMotion) {
-        true -> supportedVideoQualities.filterValues { it.supportsSlowMotion }
+        true -> slowMotionCamera.supportedVideoQualities.filterValues { it.supportsSlowMotion }
         false -> supportedVideoQualities
     }
 

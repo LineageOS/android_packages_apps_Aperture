@@ -7,8 +7,6 @@ package org.lineageos.aperture.repositories
 
 import android.Manifest
 import android.content.Context
-import androidx.camera.camera2.interop.Camera2CameraInfo
-import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalLensFacing
@@ -25,11 +23,12 @@ import kotlinx.coroutines.flow.shareIn
 import org.lineageos.aperture.ext.permissionGranted
 import org.lineageos.aperture.models.Camera
 import org.lineageos.aperture.models.CameraFacing
+import kotlin.math.abs
 
 /**
  * Repository that provides camera devices.
  */
-@androidx.annotation.OptIn(ExperimentalCamera2Interop::class, ExperimentalLensFacing::class)
+@androidx.annotation.OptIn(ExperimentalLensFacing::class)
 class CameraRepository(
     private val context: Context,
     coroutineScope: CoroutineScope,
@@ -54,12 +53,17 @@ class CameraRepository(
      * List of internal cameras. These should never change.
      */
     private val internalCameras by lazy {
-        cameraProvider.availableCameraInfos
+        val cameras = cameraProvider.availableCameraInfos
             .filter { cameraXCameraInfo ->
                 cameraXCameraInfo.lensFacing != CameraSelector.LENS_FACING_EXTERNAL
-                        && cameraXCameraInfo.isInternalCameraAllowed()
             }
             .mapToCamera()
+
+        cameras.forEach { camera ->
+            camera.slowMotionCamera = cameras.slowMotionCameraFor(camera)
+        }
+
+        cameras.filter { it.isInternalCameraAllowed() }
     }
 
     val mainBackCamera by lazy {
@@ -112,18 +116,25 @@ class CameraRepository(
         camera.cameraSelector, mode
     )
 
-    private fun CameraInfo.isInternalCameraAllowed(): Boolean {
-        val camera2CameraInfo = Camera2CameraInfo.from(this)
+    /**
+     * [camera] when it records slow motion video, else the physical camera behind it that
+     * does, closest to its 1x lens.
+     */
+    private fun List<Camera>.slowMotionCameraFor(camera: Camera) =
+        camera.takeIf { it.supportsSlowMotion } ?: filter {
+            it.cameraId in camera.physicalCameraIds && it.supportsSlowMotion
+        }.minByOrNull { abs(it.intrinsicZoomRatio - 1f) } ?: camera
 
-        return when (camera2CameraInfo.cameraId) {
+    private fun Camera.isInternalCameraAllowed(): Boolean {
+        return when (cameraId) {
             in mainCameraIds -> true
 
             else -> {
                 val isIgnoredAuxCamera = overlaysRepository.ignoredAuxCameraIds.contains(
-                    camera2CameraInfo.cameraId
+                    cameraId
                 )
                 val isIgnoredLogicalCamera = overlaysRepository.ignoreLogicalAuxCameras
-                        && physicalCameraInfos.size > 1
+                        && physicalCameraIds.size > 1
 
                 overlaysRepository.enableAuxCameras
                         && !isIgnoredAuxCamera
