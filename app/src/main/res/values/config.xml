@@ -82,6 +82,17 @@
         <!-- No configuration by default. -->
     </string-array>
 
+    <!-- Names for single cameras in the lens selector, shown instead of their zoom ratio, for
+         example for a second rear lens with the same focal length as the main one.
+         Format: "<camera ID>:<label>", one item per camera. Example:
+             <string-array name="config_lensSelectorLabels" translatable="false">
+                 <item>2:Night</item>
+             </string-array>
+    -->
+    <string-array name="config_lensSelectorLabels" translatable="false">
+        <!-- No configuration by default. -->
+    </string-array>
+
     <!-- Whether we should use high resolution output size or not.
          See: StreamConfigurationMap.getHighResolutionOutputSizes() for more info. -->
     <bool name="config_enableHighResolution">true</bool>
