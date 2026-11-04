@@ -14,7 +14,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
-        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.32/.m2")
+        maven("https://raw.githubusercontent.com/lineage-next/gradle-generatebp/v1.33/.m2")
     }
 }
 
