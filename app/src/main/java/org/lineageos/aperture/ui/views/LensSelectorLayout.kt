@@ -30,6 +30,15 @@ class LensSelectorLayout @JvmOverloads constructor(
     private lateinit var activeCamera: Camera
 
     private var usesLogicalZoomRatio = false
+
+    // Lens names from config_lensSelectorLabels ("<camera ID>:<label>"), shown instead of the zoom ratio
+    private val lensLabels by lazy {
+        resources.getStringArray(R.array.config_lensSelectorLabels).mapNotNull { entry ->
+            entry.split(':', limit = 2).takeIf { it.size == 2 && it[1].isNotBlank() }
+                ?.let { it[0].trim() to it[1].trim() }
+        }.toMap()
+    }
+    private val buttonToLabel = mutableMapOf<Button, String>()
     private var currentZoomRatio = 1.0f
 
     private val buttonToApproximateZoomRatio = mutableMapOf<Button, Float>()
@@ -51,6 +60,7 @@ class LensSelectorLayout @JvmOverloads constructor(
 
         buttonToCamera.clear()
         buttonToZoomRatio.clear()
+        buttonToLabel.clear()
 
         usesLogicalZoomRatio = activeCamera.logicalZoomRatios.size > 1
 
@@ -81,11 +91,17 @@ class LensSelectorLayout @JvmOverloads constructor(
                             onResetZoomRatioCallback()
                         }
                     }
-                    text = formatZoomRatio(camera.intrinsicZoomRatio)
+                    text = lensLabels[camera.cameraId] ?: formatZoomRatio(camera.intrinsicZoomRatio)
                 }
 
                 addView(button)
                 buttonToCamera[button] = camera
+                lensLabels[camera.cameraId]?.let {
+                    buttonToLabel[button] = it
+                    button.contentDescription = it
+                    // As written: all caps does not fit a word in the 32 dp button
+                    button.isAllCaps = false
+                }
                 buttonToApproximateZoomRatio[button] = camera.intrinsicZoomRatio
             }
         }
@@ -156,7 +172,7 @@ class LensSelectorLayout @JvmOverloads constructor(
     private fun updateButtonAttributes(button: Button, currentCamera: Boolean) {
         button.isSelected = currentCamera
         val formattedZoomRatio = formatZoomRatio(buttonToApproximateZoomRatio[button]!!)
-        button.text = if (currentCamera) {
+        button.text = buttonToLabel[button] ?: if (currentCamera) {
             "${formattedZoomRatio}×"
         } else {
             formattedZoomRatio
