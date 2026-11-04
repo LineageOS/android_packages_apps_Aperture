@@ -5,6 +5,7 @@
 
 package org.lineageos.aperture.viewmodels
 
+import android.Manifest
 import android.animation.ValueAnimator
 import android.app.Application
 import android.content.Intent
@@ -16,21 +17,32 @@ import android.os.BatteryManager
 import android.os.Build
 import android.os.PowerManager
 import android.util.Log
+import android.util.Range
 import android.view.OrientationEventListener
+import androidx.annotation.MainThread
 import androidx.camera.core.AspectRatio
+import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalZeroShutterLag
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
 import androidx.camera.extensions.ExtensionMode
+import androidx.camera.video.HighSpeedVideoSessionConfig
+import androidx.camera.video.MediaStoreOutputOptions
 import androidx.camera.video.Quality
+import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
+import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.video.AudioConfig
 import androidx.core.animation.addListener
 import androidx.core.content.ContextCompat
+import androidx.core.content.PermissionChecker
+import androidx.core.util.Consumer
 import androidx.core.location.LocationRequestCompat
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +52,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -78,6 +91,8 @@ import org.lineageos.aperture.models.DistortionCorrectionMode
 import org.lineageos.aperture.models.EdgeMode
 import org.lineageos.aperture.models.Event
 import org.lineageos.aperture.models.FlashMode
+import org.lineageos.aperture.models.VideoQualityInfo
+import org.lineageos.aperture.models.FrameRate
 import org.lineageos.aperture.models.GridMode
 import org.lineageos.aperture.models.HardwareKey
 import org.lineageos.aperture.models.HotPixelMode
@@ -140,6 +155,18 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      * CameraX's [LifecycleCameraController].
      */
     val cameraController = LifecycleCameraController(applicationContext)
+
+    /**
+     * A bound CameraX high speed session. [cameraController] cannot drive these.
+     */
+    class HighSpeedVideoSession(
+        val camera: androidx.camera.core.Camera,
+        val videoCapture: VideoCapture<Recorder>,
+        val sessionConfig: HighSpeedVideoSessionConfig,
+    )
+
+    private val _highSpeedVideoSession = MutableStateFlow<HighSpeedVideoSession?>(null)
+    val highSpeedVideoSession: StateFlow<HighSpeedVideoSession?> = _highSpeedVideoSession
 
     /**
      * Mutex used to rebind the camera.
@@ -487,7 +514,13 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     /**
      * The current zoom state.
      */
-    val zoomState = cameraController.zoomState.asFlow()
+    private val cameraControllerZoomState = cameraController.zoomState.asFlow()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val zoomState = highSpeedVideoSession
+        .flatMapLatest {
+            it?.camera?.cameraInfo?.zoomState?.asFlow() ?: cameraControllerZoomState
+        }
         .flowOn(Dispatchers.IO)
         .stateIn(
             viewModelScope,
@@ -731,11 +764,11 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     ) { cameraConfiguration, cameraState ->
         cameraState == CameraState.IDLE && when (cameraConfiguration) {
             is CameraConfiguration.Video -> {
-                val videoQualityInfo = cameraConfiguration.camera.supportedVideoQualities[
-                    cameraConfiguration.videoQuality
-                ] ?: error("Video quality not supported")
+                val videoQualityInfo = cameraConfiguration.camera.videoQualitiesFor(
+                    cameraConfiguration.enableSlowMotion
+                )[cameraConfiguration.videoQuality] ?: error("Video quality not supported")
 
-                videoQualityInfo.supportedFrameRates.size > 1
+                videoQualityInfo.frameRatesFor(cameraConfiguration.enableSlowMotion).size > 1
             }
 
             else -> false
@@ -772,11 +805,12 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     ) { cameraConfiguration, cameraState ->
         cameraState == CameraState.IDLE && when (cameraConfiguration) {
             is CameraConfiguration.Video -> {
-                val videoQualityInfo = cameraConfiguration.camera.supportedVideoQualities[
-                    cameraConfiguration.videoQuality
-                ] ?: error("Video quality not supported")
+                val videoQualityInfo = cameraConfiguration.camera.videoQualitiesFor(
+                    cameraConfiguration.enableSlowMotion
+                )[cameraConfiguration.videoQuality] ?: error("Video quality not supported")
 
                 videoQualityInfo.supportedDynamicRanges.size > 1
+                        && !cameraConfiguration.isHighSpeed
             }
 
             else -> false
@@ -797,6 +831,32 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      * Video [Recording].
      */
     val videoRecording = MutableStateFlow<Recording?>(null)
+
+    /**
+     * Whether slow motion video is enabled.
+     */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val videoSlowMotion = cameraConfiguration
+        .mapLatest { cameraConfiguration ->
+            when (cameraConfiguration) {
+                is CameraConfiguration.Video -> cameraConfiguration.enableSlowMotion
+                else -> preferencesRepository.videoSlowMotion.value
+            }
+        }
+        .flowOn(Dispatchers.IO)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = preferencesRepository.videoSlowMotion.value,
+        )
+
+    val isVideoSlowMotionButtonEnabled = combine(
+        cameraConfiguration,
+        cameraState,
+    ) { cameraConfiguration, cameraState ->
+        cameraState == CameraState.IDLE && cameraConfiguration is CameraConfiguration.Video &&
+                cameraConfiguration.camera.supportsSlowMotion
+    }
 
     val isVideoMicButtonEnabled = combine(
         cameraState,
@@ -925,16 +985,23 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     init {
         viewModelScope.launch {
             launch {
-                flashMode.collectLatest { flashMode ->
-                    cameraController.flashMode = flashMode
+                combine(flashMode, highSpeedVideoSession, ::Pair).collectLatest {
+                    val (flashMode, highSpeedVideoSession) = it
+                    when (highSpeedVideoSession) {
+                        null -> cameraController.flashMode = flashMode
+                        else -> highSpeedVideoSession.camera.cameraControl.enableTorch(
+                            flashMode == FlashMode.TORCH
+                        )
+                    }
                 }
             }
 
             launch {
-                exposureCompensationIndex.collectLatest { exposureCompensationIndex ->
-                    cameraController.cameraControl?.setExposureCompensationIndex(
-                        exposureCompensationIndex
-                    )
+                combine(exposureCompensationIndex, highSpeedVideoSession, ::Pair).collectLatest {
+                    val (exposureCompensationIndex, highSpeedVideoSession) = it
+                    val cameraControl = highSpeedVideoSession?.camera?.cameraControl
+                        ?: cameraController.cameraControl
+                    cameraControl?.setExposureCompensationIndex(exposureCompensationIndex)
                 }
             }
 
@@ -967,6 +1034,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     }
 
     override fun onCleared() {
+        unbindHighSpeedVideo()
         cameraController.unbind()
 
         cameraExecutor.shutdown()
@@ -1157,7 +1225,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
 
     fun captureVideo() {
         if (cameraState.value != CameraState.IDLE) {
-            if (cameraController.isRecording) {
+            if (videoRecording.value != null) {
                 // Stop the current recording session.
                 videoRecording.value?.stop()
             }
@@ -1183,12 +1251,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         viewModelScope.launch {
             delay(delayTime)
 
-            // Start recording
-            videoRecording.value = cameraController.startRecording(
-                outputOptions,
-                videoAudioConfig,
-                cameraExecutor,
-            ) {
+            val onVideoRecordEvent = Consumer<VideoRecordEvent> {
                 viewModelScope.launch {
                     videoRecordEvent.emit(it)
                 }
@@ -1227,7 +1290,128 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                     }
                 }
             }
+
+            // Start recording
+            videoRecording.value = highSpeedVideoSession.value?.let {
+                startHighSpeedRecording(it, outputOptions, onVideoRecordEvent)
+            } ?: cameraController.startRecording(
+                outputOptions,
+                videoAudioConfig,
+                cameraExecutor,
+                onVideoRecordEvent,
+            )
         }
+    }
+
+    private fun startHighSpeedRecording(
+        highSpeedVideoSession: HighSpeedVideoSession,
+        outputOptions: MediaStoreOutputOptions,
+        onVideoRecordEvent: Consumer<VideoRecordEvent>,
+    ) = highSpeedVideoSession.videoCapture.output
+        .prepareRecording(applicationContext, outputOptions)
+        .apply {
+            if (videoAudioConfig.audioEnabled && hasRecordAudioPermission()) {
+                @Suppress("MissingPermission")
+                withAudioEnabled()
+            }
+        }
+        .start(cameraExecutor, onVideoRecordEvent)
+
+    private fun hasRecordAudioPermission() = PermissionChecker.checkSelfPermission(
+        applicationContext, Manifest.permission.RECORD_AUDIO
+    ) == PermissionChecker.PERMISSION_GRANTED
+
+    /**
+     * Bind a high speed video session, replacing [cameraController] while it is active.
+     */
+    @MainThread
+    fun bindHighSpeedVideo(
+        lifecycleOwner: LifecycleOwner,
+        cameraConfiguration: CameraConfiguration.Video,
+        videoMirrorMode: Int,
+        surfaceProvider: Preview.SurfaceProvider,
+    ) {
+        val frameRate = requireNotNull(cameraConfiguration.videoFrameRate) {
+            "High speed video requires a fixed frame rate"
+        }
+
+        val videoCapture = VideoCapture.Builder(
+            Camera.highSpeedRecorder(cameraConfiguration.videoQuality)
+        )
+            .setMirrorMode(videoMirrorMode)
+            .build()
+
+        val preview = Preview.Builder().build().apply {
+            setSurfaceProvider(surfaceProvider)
+        }
+
+        val sessionConfig = HighSpeedVideoSessionConfig.Builder(videoCapture)
+            .setPreview(preview)
+            .setFrameRateRange(Range(frameRate.value, frameRate.value))
+            .setSlowMotionEnabled(true)
+            .setAutoRotationEnabled(true)
+            .build()
+
+        _highSpeedVideoSession.value = HighSpeedVideoSession(
+            cameraRepository.cameraProvider.bindToLifecycle(
+                lifecycleOwner,
+                cameraConfiguration.camera.cameraSelector,
+                sessionConfig,
+            ),
+            videoCapture,
+            sessionConfig,
+        )
+    }
+
+    /**
+     * Fall back to a frame rate that doesn't need a high speed session.
+     */
+    fun disableHighSpeedVideo() =
+        updateConfiguration<CameraConfiguration.Video> { cameraConfiguration ->
+            preferencesRepository.videoSlowMotion.value = false
+
+            cameraConfiguration.copy(
+                videoFrameRate = cameraConfiguration.camera.supportedVideoQualities[
+                    cameraConfiguration.videoQuality
+                ]?.supportedFrameRates?.firstOrNull(),
+                enableSlowMotion = false,
+            )
+        }
+
+    @MainThread
+    fun unbindHighSpeedVideo() {
+        val highSpeedVideoSession = _highSpeedVideoSession.value ?: return
+        _highSpeedVideoSession.value = null
+
+        cameraRepository.cameraProvider.unbind(highSpeedVideoSession.sessionConfig)
+    }
+
+    fun setZoomRatio(zoomRatio: Float) {
+        when (val highSpeedVideoSession = highSpeedVideoSession.value) {
+            null -> cameraController.setZoomRatio(zoomRatio)
+            else -> highSpeedVideoSession.camera.cameraControl.setZoomRatio(zoomRatio)
+        }
+    }
+
+    fun setLinearZoom(linearZoom: Float) {
+        when (val highSpeedVideoSession = highSpeedVideoSession.value) {
+            null -> cameraController.setLinearZoom(linearZoom)
+            else -> highSpeedVideoSession.camera.cameraControl.setLinearZoom(linearZoom)
+        }
+    }
+
+    fun onPinchToZoom(scaleFactor: Float) {
+        val highSpeedVideoSession = highSpeedVideoSession.value ?: run {
+            cameraController.onPinchToZoom(scaleFactor)
+            return
+        }
+
+        val zoomState = highSpeedVideoSession.camera.cameraInfo.zoomState.value ?: return
+        highSpeedVideoSession.camera.cameraControl.setZoomRatio(
+            (zoomState.zoomRatio * scaleFactor).coerceIn(
+                zoomState.minZoomRatio, zoomState.maxZoomRatio
+            )
+        )
     }
 
     fun onVideoRecordingStateButtonPress() {
@@ -1423,23 +1607,25 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      */
     fun cycleVideoQuality() =
         updateConfiguration<CameraConfiguration.Video> { cameraConfiguration ->
-            val videoQuality =
-                cameraConfiguration.camera.supportedVideoQualities.keys.toList()
-                    .sortedWith { a, b ->
-                        listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.QHD, Quality.UHD).let {
-                            it.indexOf(a) - it.indexOf(b)
-                        }
-                    }.next(cameraConfiguration.videoQuality) ?: error(
+            val videoQualities = cameraConfiguration.camera.videoQualitiesFor(
+                cameraConfiguration.enableSlowMotion
+            )
+            val videoQuality = videoQualities.keys.toList()
+                .sortedWith { a, b ->
+                    listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.QHD, Quality.UHD).let {
+                        it.indexOf(a) - it.indexOf(b)
+                    }
+                }.next(cameraConfiguration.videoQuality) ?: error(
                     "No video quality supported by the camera"
                 )
 
-            val videoQualityInfo = cameraConfiguration.camera.supportedVideoQualities[
-                videoQuality
-            ] ?: error("Video quality not supported")
+            val videoQualityInfo = videoQualities[videoQuality] ?: error(
+                "Video quality not supported"
+            )
 
-            val videoFrameRate = cameraConfiguration.videoFrameRate.takeIf {
-                videoQualityInfo.supportedFrameRates.contains(it)
-            } ?: videoQualityInfo.supportedFrameRates.firstOrNull()
+            val videoFrameRate = resolveVideoFrameRate(
+                videoQualityInfo, cameraConfiguration.enableSlowMotion, cameraConfiguration.videoFrameRate
+            )
 
             val videoDynamicRange = cameraConfiguration.videoDynamicRange.takeIf {
                 videoQualityInfo.supportedDynamicRanges.contains(it)
@@ -1461,17 +1647,18 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      */
     fun cycleVideoFrameRate() =
         updateConfiguration<CameraConfiguration.Video> { cameraConfiguration ->
-            val videoQualityInfo = cameraConfiguration.camera.supportedVideoQualities[
-                cameraConfiguration.videoQuality
-            ] ?: error(
+            val videoQualityInfo = cameraConfiguration.camera.videoQualitiesFor(
+                cameraConfiguration.enableSlowMotion
+            )[cameraConfiguration.videoQuality] ?: error(
                 "Camera ${cameraConfiguration.camera.cameraId} does not support video quality ${cameraConfiguration.videoQuality}"
             )
 
-            val videoFrameRate = videoQualityInfo.supportedFrameRates.toList().sorted().next(
-                cameraConfiguration.videoFrameRate
-            )
+            val videoFrameRate = videoQualityInfo.frameRatesFor(cameraConfiguration.enableSlowMotion)
+                .toList().sorted().next(cameraConfiguration.videoFrameRate)
 
-            preferencesRepository.videoFrameRate.value = videoFrameRate
+            if (!cameraConfiguration.enableSlowMotion) {
+                preferencesRepository.videoFrameRate.value = videoFrameRate
+            }
 
             cameraConfiguration.copy(
                 videoFrameRate = videoFrameRate,
@@ -1483,9 +1670,9 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      */
     fun cycleVideoDynamicRange() =
         updateConfiguration<CameraConfiguration.Video> { cameraConfiguration ->
-            val videoQualityInfo = cameraConfiguration.camera.supportedVideoQualities[
-                cameraConfiguration.videoQuality
-            ] ?: error(
+            val videoQualityInfo = cameraConfiguration.camera.videoQualitiesFor(
+                cameraConfiguration.enableSlowMotion
+            )[cameraConfiguration.videoQuality] ?: error(
                 "Camera ${cameraConfiguration.camera.cameraId} does not support video quality ${cameraConfiguration.videoQuality}"
             )
 
@@ -1503,6 +1690,46 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     /**
      * Toggle the video microphone status.
      */
+    fun toggleVideoSlowMotion() =
+        updateConfiguration<CameraConfiguration.Video> { cameraConfiguration ->
+            val enableSlowMotion = !cameraConfiguration.enableSlowMotion
+            val camera = cameraConfiguration.camera
+            if (enableSlowMotion && !camera.supportsSlowMotion) {
+                return@updateConfiguration cameraConfiguration
+            }
+
+            val videoQualities = camera.videoQualitiesFor(enableSlowMotion)
+            val videoQuality = cameraConfiguration.videoQuality.takeIf {
+                videoQualities.contains(it)
+            } ?: videoQualities.keys.first()
+
+            val videoQualityInfo = videoQualities[videoQuality] ?: error(
+                "Video quality not supported"
+            )
+
+            preferencesRepository.videoSlowMotion.value = enableSlowMotion
+
+            cameraConfiguration.copy(
+                videoQuality = videoQuality,
+                videoFrameRate = resolveVideoFrameRate(
+                    videoQualityInfo, enableSlowMotion, preferencesRepository.videoFrameRate.value
+                ),
+                enableSlowMotion = enableSlowMotion,
+            )
+        }
+
+    private fun resolveVideoFrameRate(
+        videoQualityInfo: VideoQualityInfo,
+        slowMotion: Boolean,
+        preferred: FrameRate?,
+    ): FrameRate? {
+        val frameRates = videoQualityInfo.frameRatesFor(slowMotion)
+        return preferred.takeIf { frameRates.contains(it) } ?: when (slowMotion) {
+            true -> frameRates.minOrNull()
+            false -> frameRates.firstOrNull()
+        }
+    }
+
     fun toggleVideoMicrophoneEnabled() = setVideoMicrophoneEnabled(!videoMicMode.value)
 
     /**
@@ -1555,7 +1782,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             zoomRatio.coerceIn(zoomState.minZoomRatio, zoomState.maxZoomRatio)
         ).apply {
             addUpdateListener {
-                cameraController.setZoomRatio(it.animatedValue as Float)
+                setZoomRatio(it.animatedValue as Float)
             }
             addListener(
                 onEnd = {
@@ -1696,19 +1923,24 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         }
 
         CameraMode.VIDEO -> {
+            val enableSlowMotion =
+                preferencesRepository.videoSlowMotion.value && camera.supportsSlowMotion
+
+            val videoQualities = camera.videoQualitiesFor(enableSlowMotion)
+
             val videoQuality = preferencesRepository.videoQuality.value.takeIf {
-                camera.supportedVideoQualities.contains(it)
-            } ?: camera.supportedVideoQualities.keys.firstOrNull() ?: error(
+                videoQualities.contains(it)
+            } ?: videoQualities.keys.firstOrNull() ?: error(
                 "Camera ${camera.cameraId} does not support any video quality"
             )
 
-            val videoQualityInfo = camera.supportedVideoQualities[videoQuality] ?: error(
+            val videoQualityInfo = videoQualities[videoQuality] ?: error(
                 "Camera ${camera.cameraId} does not support video quality $videoQuality"
             )
 
-            val videoFrameRate = preferencesRepository.videoFrameRate.value.takeIf {
-                videoQualityInfo.supportedFrameRates.contains(it)
-            } ?: videoQualityInfo.supportedFrameRates.firstOrNull()
+            val videoFrameRate = resolveVideoFrameRate(
+                videoQualityInfo, enableSlowMotion, preferencesRepository.videoFrameRate.value
+            )
 
             val videoDynamicRange = preferencesRepository.videoDynamicRange.value.takeIf {
                 videoQualityInfo.supportedDynamicRanges.contains(it)
@@ -1724,6 +1956,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                 videoDynamicRange = videoDynamicRange,
                 videoMirrorMode = preferencesRepository.videoMirrorMode.value,
                 enableVideoStabilization = preferencesRepository.videoStabilization.value,
+                enableSlowMotion = enableSlowMotion,
             )
         }
 

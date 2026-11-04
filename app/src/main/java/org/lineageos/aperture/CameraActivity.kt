@@ -169,6 +169,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
     private val levelerView by lazy { findViewById<LevelerView>(R.id.levelerView) }
     private val mainLayout by lazy { findViewById<ConstraintLayout>(R.id.mainLayout) }
     private val micButton by lazy { findViewById<Button>(R.id.micButton) }
+    private val slowMotionButton by lazy { findViewById<Button>(R.id.slowMotionButton) }
     private val previewBlurView by lazy { findViewById<PreviewBlurView>(R.id.previewBlurView) }
     private val proButton by lazy { findViewById<ImageButton>(R.id.proButton) }
     private val screenFlashView by lazy { findViewById<ScreenFlashView>(R.id.screenFlashView) }
@@ -239,7 +240,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 }
 
                 is ZoomGestureDetector.ZoomEvent.Move -> {
-                    viewModel.cameraController.onPinchToZoom(it.incrementalScaleFactor)
+                    viewModel.onPinchToZoom(it.incrementalScaleFactor)
                     handler.removeMessages(MSG_ON_PINCH_TO_ZOOM)
                     handler.sendMessageDelayed(handler.obtainMessage(MSG_ON_PINCH_TO_ZOOM), 500)
                 }
@@ -438,6 +439,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         gridButton.setOnClickListener { viewModel.cycleGridMode() }
         timerButton.setOnClickListener { viewModel.toggleTimerMode() }
         micButton.setOnClickListener { viewModel.toggleVideoMicrophoneEnabled() }
+        slowMotionButton.setOnClickListener { viewModel.toggleVideoSlowMotion() }
         settingsButton.setOnClickListener { openSettings() }
 
         // Set secondary bottom bar button callbacks
@@ -494,7 +496,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         zoomLevel.onProgressChangedByUser = {
-            viewModel.cameraController.setLinearZoom(it)
+            viewModel.setLinearZoom(it)
         }
         zoomLevel.textFormatter = {
             "%.1fx".format(viewModel.zoomState.value?.zoomRatio)
@@ -723,6 +725,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 videoFrameRateButton.isVisible = cameraMode == CameraMode.VIDEO
                 videoDynamicRangeButton.isVisible = cameraMode == CameraMode.VIDEO
                 micButton.isVisible = cameraMode == CameraMode.VIDEO
+                slowMotionButton.isVisible = cameraMode == CameraMode.VIDEO
 
                 // Update secondary bottom bar buttons
                 proButton.isVisible = cameraMode != CameraMode.QR
@@ -1309,6 +1312,32 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
 
         launch {
+            viewModel.videoSlowMotion.collectLatest { videoSlowMotion ->
+                slowMotionButton.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    when (videoSlowMotion) {
+                        true -> R.drawable.ic_slow_motion_on
+                        false -> R.drawable.ic_slow_motion_off
+                    },
+                    0,
+                    0
+                )
+                slowMotionButton.setText(
+                    when (videoSlowMotion) {
+                        true -> R.string.slow_motion_on
+                        false -> R.string.slow_motion_off
+                    }
+                )
+            }
+        }
+
+        launch {
+            viewModel.isVideoSlowMotionButtonEnabled.collectLatest {
+                slowMotionButton.isEnabled = it
+            }
+        }
+
+        launch {
             viewModel.isVideoMicButtonEnabled.collectLatest { isVideoMicButtonEnabled ->
                 micButton.isEnabled = isVideoMicButtonEnabled
             }
@@ -1467,6 +1496,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         previewBlurView.isVisible = true
 
         // Unbind previous use cases
+        viewModel.unbindHighSpeedVideo()
         viewModel.cameraController.unbind()
 
         // Hide grid until preview is ready
@@ -1488,6 +1518,11 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             "Selected extension mode (${
                 cameraConfiguration.extensionMode
             }) not supported by camera ${cameraConfiguration.camera.cameraId}"
+        }
+
+        if (cameraConfiguration is CameraConfiguration.Video && cameraConfiguration.isHighSpeed) {
+            bindHighSpeedVideoUseCases(cameraConfiguration)
+            return
         }
 
         // Initialize the use case we want and set its properties
@@ -1573,16 +1608,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
                 // Set video mirror mode
                 viewModel.cameraController.videoCaptureMirrorMode =
-                    when (cameraConfiguration.videoMirrorMode) {
-                        VideoMirrorMode.OFF -> MirrorMode.MIRROR_MODE_OFF
-                        VideoMirrorMode.ON -> MirrorMode.MIRROR_MODE_ON
-                        VideoMirrorMode.ON_FFC_ONLY -> when (
-                            cameraConfiguration.camera.cameraFacing
-                        ) {
-                            CameraFacing.FRONT -> MirrorMode.MIRROR_MODE_ON
-                            else -> MirrorMode.MIRROR_MODE_OFF
-                        }
-                    }
+                    getVideoMirrorMode(cameraConfiguration)
 
                 CameraController.VIDEO_CAPTURE
             }
@@ -1661,6 +1687,35 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         viewModel.setVideoMicrophoneEnabled(viewModel.videoMicMode.value)
 
         // Reset exposure level
+        viewModel.setExposureCompensationLevel(0.5f)
+    }
+
+    private fun getVideoMirrorMode(
+        cameraConfiguration: CameraConfiguration.Video,
+    ) = when (cameraConfiguration.videoMirrorMode) {
+        VideoMirrorMode.OFF -> MirrorMode.MIRROR_MODE_OFF
+        VideoMirrorMode.ON -> MirrorMode.MIRROR_MODE_ON
+        VideoMirrorMode.ON_FFC_ONLY -> when (cameraConfiguration.camera.cameraFacing) {
+            CameraFacing.FRONT -> MirrorMode.MIRROR_MODE_ON
+            else -> MirrorMode.MIRROR_MODE_OFF
+        }
+    }
+
+    private fun bindHighSpeedVideoUseCases(cameraConfiguration: CameraConfiguration.Video) {
+        runCatching {
+            viewModel.bindHighSpeedVideo(
+                this,
+                cameraConfiguration,
+                getVideoMirrorMode(cameraConfiguration),
+                viewFinder.surfaceProvider,
+            )
+        }.onFailure {
+            Log.e(LOG_TAG, "Failed to bind high speed video session", it)
+            viewModel.disableHighSpeedVideo()
+            return
+        }
+
+        viewModel.setVideoMicrophoneEnabled(viewModel.videoMicMode.value)
         viewModel.setExposureCompensationLevel(0.5f)
     }
 
