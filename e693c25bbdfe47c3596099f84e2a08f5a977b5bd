@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d9bb27b_5f59d87c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2026-11-06T11:37:47Z",
+      "side": 1,
+      "message": "I\u0027m totally ok about getting rid of CameraController, I hate it, but we cannot mix using and not using it\n\nAsk your clanker to migrate to non-CameraController as a whole, in a separate commit pls",
+      "revId": "e693c25bbdfe47c3596099f84e2a08f5a977b5bd",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
