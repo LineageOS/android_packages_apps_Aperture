@@ -50,6 +50,24 @@
       "message": "This solution sucks, we\u0027re mixing sensor + display sw rotation, I\u0027m sure that\u0027s not how it should happen",
       "revId": "db906b88387623645bf84e154507fbb9ba5e81b1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "53ac2110_3e31dabc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34519
+      },
+      "writtenOn": "2026-11-06T16:35:40Z",
+      "side": 1,
+      "message": "Ok so how is it to be handled as in a proper solution?",
+      "parentUuid": "df0ff842_558d86a8",
+      "revId": "db906b88387623645bf84e154507fbb9ba5e81b1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
