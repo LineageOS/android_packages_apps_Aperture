@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "36ba10b6_5abc52ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2026-11-06T16:57:40Z",
+      "side": 1,
+      "message": "Nice, will look at the whole change once ready",
+      "revId": "963207c4a329f685788f95c03eac9121d52d8654",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5223faf3_8f2e4c38",
+        "filename": "app/src/main/java/org/lineageos/aperture/repositories/CameraRepository.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 25732
+      },
+      "writtenOn": "2026-11-06T16:57:40Z",
+      "side": 1,
+      "message": "Can you encapsulate needed `CameraProvider` methods rather than exposing the object?",
+      "revId": "963207c4a329f685788f95c03eac9121d52d8654",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
