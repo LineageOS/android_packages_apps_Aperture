@@ -12,8 +12,10 @@ import androidx.camera.camera2.interop.ExperimentalCamera2Interop
 import androidx.camera.core.CameraInfo
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalLensFacing
+import androidx.camera.core.SessionConfig
 import androidx.camera.extensions.ExtensionsManager
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.lifecycle.LifecycleOwner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -111,6 +113,20 @@ class CameraRepository(
     ): CameraSelector = extensionsManager.getExtensionEnabledCameraSelector(
         camera.cameraSelector, mode
     )
+
+    /**
+     * @see ProcessCameraProvider.bindToLifecycle
+     */
+    fun bindToLifecycle(
+        lifecycleOwner: LifecycleOwner,
+        cameraSelector: CameraSelector,
+        sessionConfig: SessionConfig,
+    ) = cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, sessionConfig)
+
+    /**
+     * @see ProcessCameraProvider.unbindAll
+     */
+    fun unbindAll() = cameraProvider.unbindAll()
 
     private fun CameraInfo.isInternalCameraAllowed(): Boolean {
         val camera2CameraInfo = Camera2CameraInfo.from(this)
