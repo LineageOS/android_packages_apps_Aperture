@@ -7,7 +7,10 @@ package org.lineageos.aperture.models
 
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraMetadata
+import android.media.MediaCodecList
+import android.media.MediaFormat
 import android.os.Build
+import android.util.Size
 import androidx.annotation.OptIn
 import androidx.camera.camera2.interop.Camera2CameraInfo
 import androidx.camera.camera2.interop.ExperimentalCamera2Interop
@@ -17,9 +20,13 @@ import androidx.camera.core.CameraState
 import androidx.camera.core.ExperimentalLensFacing
 import androidx.camera.core.ExperimentalZeroShutterLag
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.Preview
 import androidx.camera.extensions.ExtensionsManager
+import androidx.camera.video.HighSpeedVideoSessionConfig
 import androidx.camera.video.Quality
+import androidx.camera.video.QualitySelector
 import androidx.camera.video.Recorder
+import androidx.camera.video.VideoCapture
 import androidx.core.util.toClosedRange
 import androidx.lifecycle.asFlow
 import org.lineageos.aperture.ext.getSupportedModes
@@ -100,22 +107,32 @@ class Camera private constructor(
 
     val supportedVideoQualities =
         videoQualityForDynamicRanges.values.flatten().toSet().associateWith {
+            val frameRates = supportedVideoFrameRates.toMutableSet().apply {
+                additionalVideoFrameRates[it].orEmpty().forEach { (frameRate, remove) ->
+                    if (remove) {
+                        remove(frameRate)
+                    } else {
+                        add(frameRate)
+                    }
+                }
+            }.toSet()
+
             VideoQualityInfo(
                 it,
-                supportedVideoFrameRates.toMutableSet().apply {
-                    additionalVideoFrameRates[it].orEmpty().forEach { (frameRate, remove) ->
-                        if (remove) {
-                            remove(frameRate)
-                        } else {
-                            add(frameRate)
-                        }
-                    }
-                }.toSet(),
+                frameRates,
                 videoQualityForDynamicRanges.entries.filter { dynamicRangeToQualities ->
                     dynamicRangeToQualities.value.contains(it)
-                }.map { dynamicRangeToQualities -> dynamicRangeToQualities.key }.toSet()
+                }.map { dynamicRangeToQualities -> dynamicRangeToQualities.key }.toSet(),
+                getHighSpeedVideoFrameRates(cameraInfo, it) - frameRates,
             )
         }
+
+    val supportsSlowMotion = supportedVideoQualities.values.any { it.supportsSlowMotion }
+
+    fun videoQualitiesFor(slowMotion: Boolean) = when (slowMotion) {
+        true -> supportedVideoQualities.filterValues { it.supportsSlowMotion }
+        false -> supportedVideoQualities
+    }
 
     val supportedVideoStabilizationModes = buildList {
         add(VideoStabilizationMode.OFF)
@@ -269,6 +286,45 @@ class Camera private constructor(
         }
     }
 
+    private fun getHighSpeedVideoFrameRates(
+        cameraInfo: CameraInfo,
+        quality: Quality,
+    ): Set<FrameRate> {
+        // CameraX previews at the recording size in high speed sessions, which the HAL
+        // cannot sustain above 1080p.
+        if (quality !in slowMotionQualities) {
+            return setOf()
+        }
+
+        val sessionConfig = HighSpeedVideoSessionConfig(
+            VideoCapture.withOutput(highSpeedRecorder(quality)),
+            Preview.Builder().build(),
+        )
+
+        return runCatching {
+            cameraInfo.getSupportedFrameRateRanges(sessionConfig)
+        }.getOrDefault(setOf()).mapNotNull {
+            FrameRate.fromRange(it.toClosedRange())
+        }.filter { frameRate ->
+            QualitySelector.getResolution(cameraInfo, quality)?.let {
+                canEncode(it, frameRate)
+            } ?: true
+        }.toSet()
+    }
+
+    // A rate no encoder has been measured to reach only drops frames, unmeasured ones are trusted.
+    private fun canEncode(size: Size, frameRate: FrameRate) =
+        MediaCodecList(MediaCodecList.REGULAR_CODECS).codecInfos.filter {
+            it.isEncoder && MediaFormat.MIMETYPE_VIDEO_AVC in it.supportedTypes
+        }.mapNotNull {
+            it.getCapabilitiesForType(MediaFormat.MIMETYPE_VIDEO_AVC).videoCapabilities
+        }.filter {
+            it.isSizeSupported(size.width, size.height)
+        }.any {
+            val achievable = it.getAchievableFrameRatesFor(size.width, size.height)
+            achievable == null || achievable.upper >= frameRate.value
+        }
+
     private inline fun <T : Enum<T>> Camera2CameraInfo.getAndMapCameraCharacteristics(
         key: CameraCharacteristics.Key<IntArray>,
         mapper: (Int) -> T?,
@@ -277,6 +333,12 @@ class Camera private constructor(
     }.toSet()
 
     companion object {
+        private val slowMotionQualities = setOf(Quality.SD, Quality.HD, Quality.FHD)
+
+        fun highSpeedRecorder(quality: Quality) = Recorder.Builder()
+            .setQualitySelector(QualitySelector.from(quality))
+            .build()
+
         fun fromCameraX(
             cameraXCameraInfo: CameraInfo,
             extensionsManager: ExtensionsManager,
