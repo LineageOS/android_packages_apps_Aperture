@@ -28,6 +28,7 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.MeteringPointFactory
 import androidx.camera.core.SessionConfig
+import androidx.camera.core.ZoomState
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
 import androidx.camera.video.Recorder
@@ -748,9 +749,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     ) { cameraConfiguration, cameraState ->
         cameraState == CameraState.IDLE && when (cameraConfiguration) {
             is CameraConfiguration.Video -> {
-                val videoQualityInfo = cameraConfiguration.camera.videoQualitiesFor(
-                    cameraConfiguration.enableSlowMotion
-                )[cameraConfiguration.videoQuality] ?: error("Video quality not supported")
+                val videoQualityInfo = cameraConfiguration.videoQualities[cameraConfiguration.videoQuality] ?: error("Video quality not supported")
 
                 videoQualityInfo.frameRatesFor(cameraConfiguration.enableSlowMotion).size > 1
             }
@@ -789,9 +788,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     ) { cameraConfiguration, cameraState ->
         cameraState == CameraState.IDLE && when (cameraConfiguration) {
             is CameraConfiguration.Video -> {
-                val videoQualityInfo = cameraConfiguration.camera.videoQualitiesFor(
-                    cameraConfiguration.enableSlowMotion
-                )[cameraConfiguration.videoQuality] ?: error("Video quality not supported")
+                val videoQualityInfo = cameraConfiguration.videoQualities[cameraConfiguration.videoQuality] ?: error("Video quality not supported")
 
                 videoQualityInfo.supportedDynamicRanges.size > 1
                         && !cameraConfiguration.isHighSpeed
@@ -1513,9 +1510,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      */
     fun cycleVideoQuality() =
         updateConfiguration<CameraConfiguration.Video> { cameraConfiguration ->
-            val videoQualities = cameraConfiguration.camera.videoQualitiesFor(
-                cameraConfiguration.enableSlowMotion
-            )
+            val videoQualities = cameraConfiguration.videoQualities
             val videoQuality = videoQualities.keys.toList()
                 .sortedWith { a, b ->
                     listOf(Quality.SD, Quality.HD, Quality.FHD, Quality.QHD, Quality.UHD).let {
@@ -1556,9 +1551,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      */
     fun cycleVideoFrameRate() =
         updateConfiguration<CameraConfiguration.Video> { cameraConfiguration ->
-            val videoQualityInfo = cameraConfiguration.camera.videoQualitiesFor(
-                cameraConfiguration.enableSlowMotion
-            )[cameraConfiguration.videoQuality] ?: error(
+            val videoQualityInfo = cameraConfiguration.videoQualities[cameraConfiguration.videoQuality] ?: error(
                 "Camera ${cameraConfiguration.camera.cameraId} does not support video quality ${cameraConfiguration.videoQuality}"
             )
 
@@ -1580,9 +1573,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      */
     fun cycleVideoDynamicRange() =
         updateConfiguration<CameraConfiguration.Video> { cameraConfiguration ->
-            val videoQualityInfo = cameraConfiguration.camera.videoQualitiesFor(
-                cameraConfiguration.enableSlowMotion
-            )[cameraConfiguration.videoQuality] ?: error(
+            val videoQualityInfo = cameraConfiguration.videoQualities[cameraConfiguration.videoQuality] ?: error(
                 "Camera ${cameraConfiguration.camera.cameraId} does not support video quality ${cameraConfiguration.videoQuality}"
             )
 
@@ -1626,6 +1617,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                     videoQualityInfo, enableSlowMotion, preferencesRepository.videoFrameRate.value
                 ),
                 enableSlowMotion = enableSlowMotion,
+                slowMotionCamera = camera.slowMotionCamera,
             )
         }
 
@@ -1717,16 +1709,46 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      */
     fun pinchToZoom(scaleFactor: Float) {
         val zoomState = zoomState.value ?: return
+        val zoomRatio = zoomState.zoomRatio * (1f + (scaleFactor - 1f) * 2)
 
-        cameraSession.value?.camera?.cameraControl?.setZoomRatio(
-            (zoomState.zoomRatio * (1f + (scaleFactor - 1f) * 2)).coerceIn(
-                zoomState.minZoomRatio, zoomState.maxZoomRatio
+        when (val range = slowMotionZoomRange) {
+            null -> setZoomRatioClamped(zoomRatio)
+            else -> selectLensZoomRatio(
+                (zoomRatio * lensZoomRatio).coerceIn(range.start, range.endInclusive),
+                false,
             )
-        )
+        }
     }
 
     fun setLinearZoom(linearZoom: Float) {
-        cameraSession.value?.camera?.cameraControl?.setLinearZoom(linearZoom)
+        val range = slowMotionZoomRange ?: run {
+            cameraSession.value?.camera?.cameraControl?.setLinearZoom(linearZoom)
+            return
+        }
+
+        val minCrop = 1f / range.start
+        selectLensZoomRatio(
+            1f / (minCrop - linearZoom * (minCrop - 1f / range.endInclusive)), false
+        )
+    }
+
+    /**
+     * The position of the zoom slider for a zoom state, across every lens in slow motion.
+     */
+    fun getLinearZoom(zoomState: ZoomState): Float {
+        val range = slowMotionZoomRange ?: return zoomState.linearZoom
+
+        val minCrop = 1f / range.start
+        return (minCrop - 1f / (zoomState.zoomRatio * lensZoomRatio)) /
+                (minCrop - 1f / range.endInclusive)
+    }
+
+    private fun setZoomRatioClamped(zoomRatio: Float) {
+        val zoomState = zoomState.value ?: return
+
+        cameraSession.value?.camera?.cameraControl?.setZoomRatio(
+            zoomRatio.coerceIn(zoomState.minZoomRatio, zoomState.maxZoomRatio)
+        )
     }
 
     /**
@@ -1767,20 +1789,115 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     /**
      * Reset the zoom to 1.0x (value relative to the lens, not of the FOV).
      */
-    fun resetZoom() = smoothZoom(1f)
+    fun resetZoom() = selectLensZoomRatio(1f)
 
     /**
      * Zoom in by a power of 2.
      */
     fun zoomIn() = zoomState.value?.zoomRatio?.let {
-        smoothZoom(it.nextPowerOfTwo())
+        selectLensZoomRatio((it * lensZoomRatio).nextPowerOfTwo())
     }
 
     /**
      * Zoom out by a power of 2.
      */
     fun zoomOut() = zoomState.value?.zoomRatio?.let {
-        smoothZoom(it.previousPowerOfTwo())
+        selectLensZoomRatio((it * lensZoomRatio).previousPowerOfTwo())
+    }
+
+    /**
+     * The zoom ratio of the bound camera relative to the camera the lens selector shows.
+     */
+    val lensZoomRatio
+        get() = (_cameraConfiguration.value as? CameraConfiguration.Video)
+            ?.takeIf { it.isHighSpeed }
+            ?.let { it.slowMotionCamera.intrinsicZoomRatio / it.camera.intrinsicZoomRatio }
+            ?: 1f
+
+    /**
+     * The zoom ratio to start the next high speed session at, after switching lens.
+     */
+    private var pendingLensZoomRatio = 1f
+
+    private var lensSwitchJob: Job? = null
+
+    /**
+     * Take the zoom ratio to start a high speed session at, it only applies once.
+     */
+    fun takeLensZoomRatio() = pendingLensZoomRatio.also { pendingLensZoomRatio = 1f }
+
+    /**
+     * The zoom ratios the lens selector can reach across every lens in slow motion.
+     */
+    private val slowMotionZoomRange
+        get() = (_cameraConfiguration.value as? CameraConfiguration.Video)
+            ?.takeIf { it.isHighSpeed }
+            ?.camera
+            ?.takeIf { it.slowMotionCameras.size > 1 }
+            ?.let { camera ->
+                val first = camera.slowMotionCameras.first()
+                val last = camera.slowMotionCameras.last()
+
+                first.intrinsicZoomRatio / camera.intrinsicZoomRatio..
+                        last.intrinsicZoomRatio / camera.intrinsicZoomRatio * last.maxZoomRatio
+            }
+
+    /**
+     * Go to a zoom ratio of the lens selector. High speed sessions cannot switch lens while
+     * running, so the session is replaced with one on the camera that reaches it.
+     */
+    fun selectLensZoomRatio(zoomRatio: Float, smooth: Boolean = true) {
+        lensSwitchJob?.cancel()
+
+        val cameraConfiguration = (_cameraConfiguration.value as? CameraConfiguration.Video)
+            ?.takeIf { it.isHighSpeed }
+
+        val lensZoomRatio = slowMotionZoomRange?.let {
+            zoomRatio.coerceIn(it.start, it.endInclusive)
+        } ?: zoomRatio
+
+        val slowMotionCamera = cameraConfiguration?.camera?.slowMotionCameraFor(
+            lensZoomRatio * cameraConfiguration.camera.intrinsicZoomRatio
+        )
+
+        val switchesCamera = slowMotionCamera != null &&
+                slowMotionCamera != cameraConfiguration.slowMotionCamera && canRestartCamera()
+
+        if (!switchesCamera || !smooth) {
+            val cameraZoomRatio = lensZoomRatio / this.lensZoomRatio
+            when (smooth) {
+                true -> smoothZoom(cameraZoomRatio)
+                false -> setZoomRatioClamped(cameraZoomRatio)
+            }
+        }
+
+        if (!switchesCamera) {
+            return
+        }
+
+        // Gestures wait to settle, the HAL can hang when sessions come and go too quickly.
+        lensSwitchJob = viewModelScope.launch {
+            if (!smooth) {
+                delay(LENS_SWITCH_SETTLE_MS)
+            }
+
+            pendingLensZoomRatio = lensZoomRatio * cameraConfiguration.camera.intrinsicZoomRatio /
+                    slowMotionCamera.intrinsicZoomRatio
+
+            updateConfiguration<CameraConfiguration.Video> {
+                val videoQualities = slowMotionCamera.slowMotionVideoQualities
+                val videoQuality = it.videoQuality.takeIf(videoQualities::contains)
+                    ?: videoQualities.keys.first()
+
+                it.copy(
+                    videoQuality = videoQuality,
+                    videoFrameRate = resolveSlowMotionFrameRate(
+                        videoQualities.getValue(videoQuality), it
+                    ),
+                    slowMotionCamera = slowMotionCamera,
+                )
+            }
+        }
     }
 
     fun setSaveLocation(saveLocation: Boolean?) {
@@ -2071,6 +2188,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     companion object {
         private const val FOCUS_POINT_SIZE = 1f / 6f
         private const val METERING_POINT_SIZE = FOCUS_POINT_SIZE * 1.5f
+        private const val LENS_SWITCH_SETTLE_MS = 500L
 
         private val LOG_TAG = CameraViewModel::class.simpleName!!
 

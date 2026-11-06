@@ -32,6 +32,7 @@ import androidx.lifecycle.asFlow
 import org.lineageos.aperture.ext.getSupportedModes
 import org.lineageos.aperture.repositories.OverlaysRepository
 import java.util.SortedMap
+import kotlin.math.abs
 import kotlin.reflect.safeCast
 
 /**
@@ -62,6 +63,38 @@ class Camera private constructor(
      * Camera2's camera ID.
      */
     val cameraId: String = camera2CameraInfo.cameraId
+
+    /**
+     * Camera2's IDs of the physical cameras behind this camera.
+     */
+    val physicalCameraIds = cameraInfo.physicalCameraInfos.map {
+        Camera2CameraInfo.from(it).cameraId
+    }.toSet()
+
+    /**
+     * The cameras that record slow motion video, this one or the physical cameras behind it,
+     * sorted by zoom ratio.
+     */
+    var slowMotionCameras: List<Camera> = listOf(this)
+        internal set
+
+    /**
+     * The slow motion camera used by default, closest to 1x.
+     */
+    val slowMotionCamera
+        get() = slowMotionCameras.minBy { abs(it.intrinsicZoomRatio - 1f) }
+
+    /**
+     * The slow motion camera to use to reach a zoom ratio, it must not need to zoom out.
+     */
+    fun slowMotionCameraFor(zoomRatio: Float) = slowMotionCameras.lastOrNull {
+        it.intrinsicZoomRatio <= zoomRatio * ZOOM_RATIO_TOLERANCE
+    } ?: slowMotionCameras.first()
+
+    /**
+     * The highest zoom ratio this camera can reach on its own.
+     */
+    val maxZoomRatio = cameraInfo.zoomState.value?.maxZoomRatio ?: 1f
 
     /**
      * The [CameraFacing] of this camera.
@@ -127,12 +160,18 @@ class Camera private constructor(
             )
         }
 
-    val supportsSlowMotion = supportedVideoQualities.values.any { it.supportsSlowMotion }
+    val supportsOwnSlowMotion = supportedVideoQualities.values.any { it.supportsSlowMotion }
+
+    val supportsSlowMotion
+        get() = slowMotionCamera.supportsOwnSlowMotion
 
     fun videoQualitiesFor(slowMotion: Boolean) = when (slowMotion) {
-        true -> supportedVideoQualities.filterValues { it.supportsSlowMotion }
+        true -> slowMotionCamera.slowMotionVideoQualities
         false -> supportedVideoQualities
     }
+
+    val slowMotionVideoQualities
+        get() = supportedVideoQualities.filterValues { it.supportsSlowMotion }
 
     val supportedVideoStabilizationModes = buildList {
         add(VideoStabilizationMode.OFF)
@@ -333,6 +372,8 @@ class Camera private constructor(
     }.toSet()
 
     companion object {
+        private const val ZOOM_RATIO_TOLERANCE = 1.05f
+
         private val slowMotionQualities = setOf(Quality.SD, Quality.HD, Quality.FHD)
 
         fun highSpeedRecorder(quality: Quality) = Recorder.Builder()

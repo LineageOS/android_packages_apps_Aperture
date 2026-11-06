@@ -524,7 +524,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             viewModel.setLinearZoom(it)
         }
         zoomLevel.textFormatter = {
-            "%.1fx".format(viewModel.zoomState.value?.zoomRatio)
+            "%.1fx".format(viewModel.zoomState.value?.zoomRatio?.times(viewModel.lensZoomRatio))
         }
 
         // Set expose level callback & text formatter
@@ -576,7 +576,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             viewModel.selectCamera(it)
         }
         lensSelectorLayout.onZoomRatioChangeCallback = {
-            viewModel.smoothZoom(it)
+            viewModel.selectLensZoomRatio(it)
         }
         lensSelectorLayout.onResetZoomRatioCallback = {
             viewModel.resetZoom()
@@ -1115,13 +1115,13 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         launch {
             viewModel.zoomState.collectLatest { zoomState ->
                 zoomState?.takeIf { it.minZoomRatio != it.maxZoomRatio }?.let {
-                    zoomLevel.progress = it.linearZoom
+                    zoomLevel.progress = viewModel.getLinearZoom(it)
                     zoomLevel.isVisible = true
 
                     handler.removeMessages(MSG_HIDE_ZOOM_SLIDER)
                     handler.sendMessageDelayed(handler.obtainMessage(MSG_HIDE_ZOOM_SLIDER), 2000)
 
-                    lensSelectorLayout.onZoomRatioChanged(it.zoomRatio)
+                    lensSelectorLayout.onZoomRatioChanged(it.zoomRatio * viewModel.lensZoomRatio)
                 }
             }
         }
@@ -1730,7 +1730,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         runCatching {
             viewModel.bindCameraSession(
                 this,
-                cameraConfiguration.camera.cameraSelector,
+                cameraConfiguration.slowMotionCamera.cameraSelector,
                 HighSpeedVideoSessionConfig.Builder(videoCapture)
                     .setPreview(preview)
                     .setFrameRateRange(Range(frameRate.value, frameRate.value))
@@ -1738,7 +1738,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                     .setAutoRotationEnabled(true)
                     .build(),
                 videoCapture = videoCapture,
-            )
+            ).camera.cameraControl.setZoomRatio(viewModel.takeLensZoomRatio())
         }.onFailure {
             Log.e(LOG_TAG, "Failed to bind high speed video session", it)
             viewModel.disableHighSpeedVideo()
