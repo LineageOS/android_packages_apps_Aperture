@@ -1640,8 +1640,19 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             }
         }
 
+        // Readouts above 30fps tend to be 16:9 only, a HAL can stretch them into a 4:3 preview.
+        val previewResolutionSelector = when {
+            cameraConfiguration is CameraConfiguration.Video &&
+                    (cameraConfiguration.videoFrameRate?.value ?: 0) > 30 ->
+                ResolutionSelector.Builder()
+                    .setAspectRatioStrategy(AspectRatioStrategy.RATIO_16_9_FALLBACK_AUTO_STRATEGY)
+                    .build()
+
+            else -> viewPort.resolutionSelector
+        }
+
         val preview = Preview.Builder()
-            .apply { viewPort.resolutionSelector?.let(::setResolutionSelector) }
+            .apply { previewResolutionSelector?.let(::setResolutionSelector) }
             .build()
             .apply { setSurfaceProvider(viewFinder.surfaceProvider) }
 
