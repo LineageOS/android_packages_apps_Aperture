@@ -16,6 +16,23 @@
       "message": "Verified the the flash and the other buttons rotates fine on large screen tablet (iceland)",
       "revId": "db906b88387623645bf84e154507fbb9ba5e81b1",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dee2fa94_88279cc5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34519
+      },
+      "writtenOn": "2026-11-06T04:35:27Z",
+      "side": 1,
+      "message": "Small bump on this\nWell as currently shipped builds for tablets suffer from this on orientation changes as the icons are locked to portrait for them, irrespective of the chosen orientation",
+      "revId": "db906b88387623645bf84e154507fbb9ba5e81b1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
