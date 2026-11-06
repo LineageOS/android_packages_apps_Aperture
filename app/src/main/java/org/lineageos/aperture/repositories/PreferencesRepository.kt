@@ -307,6 +307,14 @@ class PreferencesRepository(
     ).asPreferenceHolder()
 
     /**
+     * Whether high speed videos should be saved to play back in slow motion.
+     */
+    val videoSlowMotion = primitivePreference(
+        key = "video_slow_motion",
+        defaultValue = false,
+    ).asPreferenceHolder()
+
+    /**
      * Desired [EdgeMode].
      */
     val edgeMode = enumPreference(

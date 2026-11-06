@@ -9,7 +9,9 @@ enum class FrameRate(val value: Int) {
     FPS_24(24),
     FPS_30(30),
     FPS_60(60),
-    FPS_120(120);
+    FPS_120(120),
+    FPS_240(240),
+    FPS_480(480);
 
     val range = value..value
 

@@ -51,6 +51,8 @@
 
     <string name="mic_off">MIC OFF</string>
     <string name="mic_on">MIC ON</string>
+    <string name="slow_motion_off">SLOW-MO OFF</string>
+    <string name="slow_motion_on">SLOW-MO ON</string>
 
     <string name="settings">SETTINGS</string>
 

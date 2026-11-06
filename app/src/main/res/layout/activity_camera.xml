@@ -179,6 +179,13 @@
                 android:drawableTop="@drawable/ic_mic_off"
                 android:text="@string/mic_off" />
 
+            <Button
+                android:id="@+id/slowMotionButton"
+                style="@style/Theme.Aperture.Camera.SecondaryTopBarButton"
+                android:drawableTop="@drawable/ic_slow_motion_on"
+                android:text="@string/slow_motion_on"
+                android:visibility="gone" />
+
             <!-- Common settings -->
             <Button
                 android:id="@+id/timerButton"
