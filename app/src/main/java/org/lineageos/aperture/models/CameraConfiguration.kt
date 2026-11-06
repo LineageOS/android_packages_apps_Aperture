@@ -97,6 +97,7 @@ sealed interface CameraConfiguration {
      * @param videoMirrorMode The [VideoMirrorMode] to use
      * @param enableVideoStabilization Whether to enable video stabilization or not
      * @param enableSlowMotion Whether to record slow motion through a high speed session
+     * @param slowMotionCamera The camera recording slow motion video
      */
     data class Video(
         override val camera: Camera,
@@ -107,12 +108,18 @@ sealed interface CameraConfiguration {
         val videoMirrorMode: VideoMirrorMode,
         val enableVideoStabilization: Boolean,
         val enableSlowMotion: Boolean,
+        val slowMotionCamera: Camera = camera.slowMotionCamera,
     ) : CameraConfiguration {
         override val cameraMode = CameraMode.VIDEO
         override val extensionMode = ExtensionMode.NONE
 
+        val videoQualities = when (enableSlowMotion) {
+            true -> slowMotionCamera.slowMotionVideoQualities
+            false -> camera.supportedVideoQualities
+        }
+
         val isHighSpeed = enableSlowMotion && videoFrameRate != null &&
-                camera.videoQualitiesFor(true)[videoQuality]
+                videoQualities[videoQuality]
                     ?.supportedHighSpeedFrameRates?.contains(videoFrameRate) == true
     }
 
