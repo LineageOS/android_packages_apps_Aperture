@@ -10,6 +10,7 @@ import android.app.Application
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.ImageFormat
+import android.graphics.PointF
 import android.location.LocationManager
 import android.net.Uri
 import android.os.BatteryManager
@@ -17,30 +18,39 @@ import android.os.Build
 import android.os.PowerManager
 import android.util.Log
 import android.view.OrientationEventListener
+import androidx.annotation.MainThread
 import androidx.camera.core.AspectRatio
+import androidx.camera.core.CameraSelector
 import androidx.camera.core.ExperimentalZeroShutterLag
+import androidx.camera.core.FocusMeteringAction
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.MeteringPointFactory
+import androidx.camera.core.SessionConfig
 import androidx.camera.extensions.ExtensionMode
 import androidx.camera.video.Quality
+import androidx.camera.video.Recorder
 import androidx.camera.video.Recording
+import androidx.camera.video.VideoCapture
 import androidx.camera.video.VideoRecordEvent
-import androidx.camera.view.LifecycleCameraController
-import androidx.camera.view.video.AudioConfig
 import androidx.core.animation.addListener
 import androidx.core.content.ContextCompat
 import androidx.core.location.LocationRequestCompat
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -56,11 +66,11 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.runningFold
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import org.lineageos.aperture.ext.applicationContext
 import org.lineageos.aperture.ext.broadcastReceiverFlow
-import org.lineageos.aperture.ext.flashMode
 import org.lineageos.aperture.ext.locationFlow
 import org.lineageos.aperture.ext.mapToRange
 import org.lineageos.aperture.ext.next
@@ -72,6 +82,7 @@ import org.lineageos.aperture.models.Camera
 import org.lineageos.aperture.models.CameraConfiguration
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
+import org.lineageos.aperture.models.CameraSession
 import org.lineageos.aperture.models.CameraState
 import org.lineageos.aperture.models.ColorCorrectionAberrationMode
 import org.lineageos.aperture.models.DistortionCorrectionMode
@@ -137,9 +148,9 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     val cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
     /**
-     * CameraX's [LifecycleCameraController].
+     * The currently bound [CameraSession].
      */
-    val cameraController = LifecycleCameraController(applicationContext)
+    private val cameraSession = MutableStateFlow<CameraSession?>(null)
 
     /**
      * Mutex used to rebind the camera.
@@ -487,7 +498,9 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     /**
      * The current zoom state.
      */
-    val zoomState = cameraController.zoomState.asFlow()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val zoomState = cameraSession
+        .flatMapLatest { it?.camera?.cameraInfo?.zoomState?.asFlow() ?: flowOf(null) }
         .flowOn(Dispatchers.IO)
         .stateIn(
             viewModelScope,
@@ -495,13 +508,14 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             initialValue = null
         )
 
-    val tapToFocusInfoState = cameraController.tapToFocusInfoState.asFlow()
-        .flowOn(Dispatchers.IO)
-        .shareIn(
-            viewModelScope,
-            started = SharingStarted.WhileSubscribed(),
-            replay = 1
-        )
+    private val _tapToFocusPoint = MutableStateFlow<PointF?>(null)
+
+    /**
+     * The point being focused on after a tap, null when no focus is in progress.
+     */
+    val tapToFocusPoint = _tapToFocusPoint.asStateFlow()
+
+    private var tapToFocusJob: Job? = null
 
     @Suppress("MissingPermission")
     val location = locationManager.locationFlow(
@@ -789,11 +803,6 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     val videoMicMode = MutableStateFlow(preferencesRepository.videoMicMode.value)
 
     /**
-     * Video [AudioConfig].
-     */
-    var videoAudioConfig: AudioConfig = AudioConfig.AUDIO_DISABLED
-
-    /**
      * Video [Recording].
      */
     val videoRecording = MutableStateFlow<Recording?>(null)
@@ -925,14 +934,14 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     init {
         viewModelScope.launch {
             launch {
-                flashMode.collectLatest { flashMode ->
-                    cameraController.flashMode = flashMode
+                combine(flashMode, cameraSession, ::Pair).collectLatest { (flashMode, session) ->
+                    session?.setFlashMode(flashMode)
                 }
             }
 
             launch {
                 exposureCompensationIndex.collectLatest { exposureCompensationIndex ->
-                    cameraController.cameraControl?.setExposureCompensationIndex(
+                    cameraSession.value?.camera?.cameraControl?.setExposureCompensationIndex(
                         exposureCompensationIndex
                     )
                 }
@@ -967,7 +976,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     }
 
     override fun onCleared() {
-        cameraController.unbind()
+        unbindCameraSession()
 
         cameraExecutor.shutdown()
 
@@ -1024,11 +1033,39 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         )
     }
 
+    /**
+     * Bind a session to the camera, keeping track of the use cases we drive ourselves.
+     */
+    @MainThread
+    fun bindCameraSession(
+        lifecycleOwner: LifecycleOwner,
+        cameraSelector: CameraSelector,
+        sessionConfig: SessionConfig,
+        imageCapture: ImageCapture? = null,
+        videoCapture: VideoCapture<Recorder>? = null,
+    ) = CameraSession(
+        cameraRepository.cameraProvider.bindToLifecycle(
+            lifecycleOwner, cameraSelector, sessionConfig
+        ),
+        imageCapture,
+        videoCapture,
+    ).also { cameraSession.value = it }
+
+    @MainThread
+    fun unbindCameraSession() {
+        cameraSession.value ?: return
+        cameraSession.value = null
+
+        cameraRepository.cameraProvider.unbindAll()
+    }
+
     fun takePhoto() {
         // Bail out if a photo is already being taken
         if (cameraState.value == CameraState.TAKING_PHOTO) {
             return
         }
+
+        val imageCapture = cameraSession.value?.imageCapture ?: return
 
         cameraState.value = CameraState.TAKING_PHOTO
 
@@ -1038,7 +1075,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             null
         }
 
-        val imageOutputFormat = cameraController.imageOutputFormat
+        val imageOutputFormat = imageCapture.outputFormat
 
         val mimeType = when (imageOutputFormat) {
             ImageCapture.OUTPUT_FORMAT_JPEG,
@@ -1139,7 +1176,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                     timestamp,
                 )
 
-                cameraController.takePicture(
+                imageCapture.takePicture(
                     rawOutputOptions,
                     outputOptions,
                     ContextCompat.getMainExecutor(applicationContext),
@@ -1147,7 +1184,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                 )
             }
 
-            else -> cameraController.takePicture(
+            else -> imageCapture.takePicture(
                 outputOptions,
                 ContextCompat.getMainExecutor(applicationContext),
                 onImageSavedCallback,
@@ -1155,14 +1192,15 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         }
     }
 
+    @Suppress("MissingPermission")
     fun captureVideo() {
         if (cameraState.value != CameraState.IDLE) {
-            if (cameraController.isRecording) {
-                // Stop the current recording session.
-                videoRecording.value?.stop()
-            }
+            // Stop the current recording session.
+            videoRecording.value?.stop()
             return
         }
+
+        val videoCapture = cameraSession.value?.videoCapture ?: return
 
         // Disallow state changes while we are about to prepare for recording video
         cameraState.value = CameraState.PRE_RECORDING_VIDEO
@@ -1184,11 +1222,13 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             delay(delayTime)
 
             // Start recording
-            videoRecording.value = cameraController.startRecording(
-                outputOptions,
-                videoAudioConfig,
-                cameraExecutor,
-            ) {
+            val pendingRecording = videoCapture.output
+                .prepareRecording(applicationContext, outputOptions)
+            if (videoMicMode.value) {
+                pendingRecording.withAudioEnabled()
+            }
+
+            videoRecording.value = pendingRecording.start(cameraExecutor) {
                 viewModelScope.launch {
                     videoRecordEvent.emit(it)
                 }
@@ -1510,13 +1550,7 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      *
      * @param videoMicrophoneEnabled Whether the video microphone should be enabled
      */
-    @Suppress("MissingPermission")
     fun setVideoMicrophoneEnabled(videoMicrophoneEnabled: Boolean) {
-        videoAudioConfig = when (videoMicrophoneEnabled) {
-            true -> AudioConfig.create(true)
-            false -> AudioConfig.AUDIO_DISABLED
-        }
-
         videoRecording.value?.mute(!videoMicrophoneEnabled)
 
         this.videoMicMode.value = videoMicrophoneEnabled
@@ -1543,19 +1577,19 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      * @param zoomRatio The zoom ratio to apply
      */
     fun smoothZoom(zoomRatio: Float) {
+        val zoomState = zoomState.value ?: return
+
         val acquired = zoomGestureMutex.tryLock()
         if (!acquired) {
             return
         }
-
-        val zoomState = zoomState.value ?: return
 
         ValueAnimator.ofFloat(
             zoomState.zoomRatio,
             zoomRatio.coerceIn(zoomState.minZoomRatio, zoomState.maxZoomRatio)
         ).apply {
             addUpdateListener {
-                cameraController.setZoomRatio(it.animatedValue as Float)
+                cameraSession.value?.camera?.cameraControl?.setZoomRatio(it.animatedValue as Float)
             }
             addListener(
                 onEnd = {
@@ -1563,6 +1597,54 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
                 }
             )
         }.start()
+    }
+
+    /**
+     * Apply a pinch gesture, its scale factor moves the zoom twice as fast.
+     */
+    fun pinchToZoom(scaleFactor: Float) {
+        val zoomState = zoomState.value ?: return
+
+        cameraSession.value?.camera?.cameraControl?.setZoomRatio(
+            (zoomState.zoomRatio * (1f + (scaleFactor - 1f) * 2)).coerceIn(
+                zoomState.minZoomRatio, zoomState.maxZoomRatio
+            )
+        )
+    }
+
+    fun setLinearZoom(linearZoom: Float) {
+        cameraSession.value?.camera?.cameraControl?.setLinearZoom(linearZoom)
+    }
+
+    /**
+     * Focus and meter on a point of the viewfinder.
+     */
+    fun tapToFocus(meteringPointFactory: MeteringPointFactory, tapPoint: PointF) {
+        val cameraControl = cameraSession.value?.camera?.cameraControl ?: return
+
+        val action = FocusMeteringAction.Builder(
+            meteringPointFactory.createPoint(tapPoint.x, tapPoint.y, FOCUS_POINT_SIZE),
+            FocusMeteringAction.FLAG_AF,
+        )
+            .addPoint(
+                meteringPointFactory.createPoint(tapPoint.x, tapPoint.y, METERING_POINT_SIZE),
+                FocusMeteringAction.FLAG_AE,
+            )
+            .build()
+
+        tapToFocusJob?.cancel()
+        _tapToFocusPoint.value = tapPoint
+        tapToFocusJob = viewModelScope.launch {
+            try {
+                cameraControl.startFocusAndMetering(action).await()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Log.d(LOG_TAG, "Tap to focus failed", e)
+            }
+
+            _tapToFocusPoint.value = null
+        }
     }
 
     /**
@@ -1864,6 +1946,9 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     }
 
     companion object {
+        private const val FOCUS_POINT_SIZE = 1f / 6f
+        private const val METERING_POINT_SIZE = FOCUS_POINT_SIZE * 1.5f
+
         private val LOG_TAG = CameraViewModel::class.simpleName!!
 
         private const val SINGLE_CAPTURE_PHOTO_BUFFER_INITIAL_SIZE_BYTES = 8 * 1024 * 1024 // 8 MiB

@@ -38,7 +38,7 @@ class CameraRepository(
     /**
      * CameraX's [ProcessCameraProvider].
      */
-    private val cameraProvider by lazy {
+    val cameraProvider by lazy {
         requireCameraPermission()
         ProcessCameraProvider.getInstance(context).get()
     }
