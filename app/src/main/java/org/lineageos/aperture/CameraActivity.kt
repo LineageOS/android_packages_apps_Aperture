@@ -73,6 +73,7 @@ import coil3.request.error
 import coil3.request.fallback
 import coil3.size.Scale
 import coil3.video.VideoFrameDecoder
+import com.google.android.material.divider.MaterialDivider
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -151,6 +152,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
     // Views
     private val aspectRatioButton by lazy { findViewById<Button>(R.id.aspectRatioButton) }
+    private val cameraButtonsDivider by lazy { findViewById<MaterialDivider>(R.id.cameraButtonsDivider) }
     private val cameraModeSelectorLayout by lazy { findViewById<CameraModeSelectorLayout>(R.id.cameraModeSelectorLayout) }
     private val capturePreviewLayout by lazy { findViewById<CapturePreviewLayout>(R.id.capturePreviewLayout) }
     private val countDownView by lazy { findViewById<CountDownView>(R.id.countDownView) }
@@ -733,6 +735,8 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
                 // Update camera mode selector
                 cameraModeSelectorLayout.setCurrentCameraMode(cameraMode)
+
+                UpdateViewFinderLayout()
             }
         }
 
@@ -1107,9 +1111,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 when (tapToFocusInfoState.focusState) {
                     CameraController.TAP_TO_FOCUS_STARTED -> {
                         viewFinderFocus.x =
-                            tapToFocusInfoState.tapPoint!!.x - (viewFinderFocus.width / 2)
+                            viewFinder.x + tapToFocusInfoState.tapPoint!!.x - (viewFinderFocus.width / 2)
                         viewFinderFocus.y =
-                            tapToFocusInfoState.tapPoint!!.y - (viewFinderFocus.height / 2)
+                            viewFinder.y + tapToFocusInfoState.tapPoint!!.y - (viewFinderFocus.height / 2)
                         viewFinderFocus.isVisible = true
                         handler.removeMessages(MSG_HIDE_FOCUS_RING)
                         ValueAnimator.ofInt(0.px, 8.px).apply {
@@ -1163,6 +1167,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                         else -> throw Exception("Unknown aspect ratio $photoAspectRatio")
                     }
                 )
+                UpdateViewFinderLayout()
             }
         }
 
@@ -1454,6 +1459,36 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
     }
 
+    private fun UpdateViewFinderLayout() {
+        val fullBleed = viewModel.cameraMode.value == CameraMode.PHOTO && viewModel.photoAspectRatio.value == AspectRatio.RATIO_16_9
+        viewFinder.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            if (fullBleed) {
+                // change aspect ratio of camera view to 9:16
+                bottomToTop = R.id.cameraModeSelectorLayout
+                dimensionRatio = "9:16"
+                verticalBias = 1.0f
+            } else {
+                // revert aspect ratio to original
+                bottomToTop = R.id.secondaryBottomBarLayout
+                dimensionRatio = null
+                verticalBias = 0.5f
+            }
+        }
+
+        // zoom bar is constrained by viewFinder, bind it to the top button row instead
+        zoomLevel.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            if (fullBleed) {
+                bottomToTop = R.id.secondaryBottomBarLayout
+                bottomToBottom = ConstraintLayout.LayoutParams.UNSET
+            } else {
+                bottomToTop = ConstraintLayout.LayoutParams.UNSET
+                bottomToBottom = R.id.viewFinder
+            }
+        }
+
+        //hide divider between camera controls and flashlight/zoom controls when in 16:9 mode
+        cameraButtonsDivider.isVisible = !fullBleed
+    }
     /**
      * Rebind cameraProvider use cases
      */
@@ -1538,6 +1573,17 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                         )
                         .build()
 
+                // set preview aspect ratio as identical as resulting aspect ratio
+                viewModel.cameraController.previewResolutionSelector =
+                    ResolutionSelector.Builder()
+                        .setAspectRatioStrategy(
+                            AspectRatioStrategy(
+                                cameraConfiguration.photoAspectRatio,
+                                AspectRatioStrategy.FALLBACK_RULE_AUTO,
+                            )
+                        )
+                        .build()
+
                 CameraController.IMAGE_CAPTURE
             }
 
@@ -1562,6 +1608,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 ) {
                     "Video dynamic range not supported with the requested video quality"
                 }
+
+                // Reset aspect ratio settings in Video mode
+                viewModel.cameraController.previewResolutionSelector = null
 
                 // Set the quality
                 viewModel.cameraController.videoCaptureQualitySelector =
@@ -1588,6 +1637,8 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             }
 
             is CameraConfiguration.Qr -> {
+                // Reset aspect ratio settings in QR mode
+                viewModel.cameraController.previewResolutionSelector = null
                 viewModel.cameraController.setImageAnalysisAnalyzer(
                     viewModel.cameraExecutor, viewModel.qrImageAnalyzer
                 )
