@@ -211,11 +211,13 @@
         android:id="@+id/secondaryBottomBarLayout"
         android:layout_width="0dp"
         android:layout_height="72dp"
+        android:background="#99000000"
         app:layout_constraintBottom_toTopOf="@+id/primaryBarLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/cameraButtonsDivider"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -270,6 +272,7 @@
         android:id="@+id/primaryBarLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#99000000"
         android:paddingTop="16dp"
         app:layout_constraintBottom_toTopOf="@+id/cameraModeSelectorLayout"
         app:layout_constraintEnd_toEndOf="parent"
