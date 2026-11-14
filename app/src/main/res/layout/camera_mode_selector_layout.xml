@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorSecondaryContainer"
         android:enabled="false"
+        android:importantForAccessibility="no"
         android:padding="0dp"
         app:iconPadding="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

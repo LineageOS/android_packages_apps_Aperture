@@ -4,6 +4,6 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/dark_grey" android:state_enabled="true" />
-    <item android:color="@android:color/white" android:state_enabled="false" />
+    <item android:color="@color/dark_grey" android:state_selected="false" />
+    <item android:color="@android:color/white" android:state_selected="true" />
 </selector>

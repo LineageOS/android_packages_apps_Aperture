@@ -56,7 +56,14 @@ class CameraModeSelectorLayout @JvmOverloads constructor(
                         CameraMode.QR -> R.string.camera_mode_qr
                     }
                 )
-                setOnClickListener { onModeSelectedCallback(cameraMode) }
+                setOnClickListener { view ->
+                    // Раньше кнопка текущего режима просто выключалась, а
+                    // выключенную кнопку скрин-ридер читает как «недоступно».
+                    // Теперь она остаётся нажимаемой и помечена выбранной
+                    if (!view.isSelected) {
+                        onModeSelectedCallback(cameraMode)
+                    }
+                }
             }.also {
                 cameraModeButtonsLinearLayout.addView(it)
             }
@@ -68,7 +75,9 @@ class CameraModeSelectorLayout @JvmOverloads constructor(
             cameraToButton[cameraMode] ?: throw Exception("No button for $cameraMode")
 
         cameraToButton.forEach {
-            it.value.isEnabled = cameraMode != it.key
+            // isSelected вместо isEnabled: подсветка текста задана в
+            // camera_mode_selector_text.xml по состоянию «выбрано»
+            it.value.isSelected = cameraMode == it.key
         }
 
         // Animate camera mode change

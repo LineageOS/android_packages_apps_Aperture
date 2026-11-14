@@ -162,6 +162,15 @@ class LensSelectorLayout @JvmOverloads constructor(
             formattedZoomRatio
         }
         button.rotation = screenRotation.compensationValue.toFloat()
+
+        // Иначе скрин-ридер читает просто «1», «2,5» и непонятно, что это кнопки
+        button.contentDescription = context.getString(
+            when (usesLogicalZoomRatio) {
+                true -> R.string.lens_selector_zoom_description
+                false -> R.string.lens_selector_camera_description
+            },
+            formattedZoomRatio
+        )
     }
 
     private fun formatZoomRatio(zoomRatio: Float): String =

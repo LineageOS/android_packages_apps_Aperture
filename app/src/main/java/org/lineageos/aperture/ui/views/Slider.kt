@@ -6,6 +6,7 @@
 package org.lineageos.aperture.ui.views
 
 import android.content.Context
+import android.os.Bundle
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
@@ -17,6 +18,8 @@ import android.graphics.RectF
 import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.View
+import android.view.accessibility.AccessibilityNodeInfo
+import android.widget.SeekBar
 import org.lineageos.aperture.R
 import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.models.Rotation
@@ -67,6 +70,10 @@ abstract class Slider @JvmOverloads constructor(
     var steps = 0
 
     init {
+        // Ползунок должен попадать в обход экранным диктором: иначе он молчит,
+        // а приближение и экспозицию незрячему взять неоткуда
+        isFocusable = true
+
         context.obtainStyledAttributes(attrs, R.styleable.Slider, 0, 0).apply {
             try {
                 if (getBoolean(R.styleable.Slider_trackColorGradient, false)) {
@@ -103,6 +110,50 @@ abstract class Slider @JvmOverloads constructor(
 
         drawTrack(canvas)
         drawThumb(canvas)
+    }
+
+    override fun onInitializeAccessibilityNodeInfo(info: AccessibilityNodeInfo) {
+        super.onInitializeAccessibilityNodeInfo(info)
+
+        // Представляемся экранному диктору как ползунок с диапазоном от 0 до 1:
+        // тогда работают смахивания вверх и вниз для изменения значения
+        info.className = SeekBar::class.java.name
+        info.rangeInfo = AccessibilityNodeInfo.RangeInfo.obtain(
+            AccessibilityNodeInfo.RangeInfo.RANGE_TYPE_FLOAT, 0f, 1f, progress
+        )
+        info.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_FORWARD)
+        info.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SCROLL_BACKWARD)
+        info.addAction(AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS)
+    }
+
+    override fun performAccessibilityAction(action: Int, arguments: Bundle?): Boolean =
+        when (action) {
+            AccessibilityNodeInfo.ACTION_SCROLL_FORWARD ->
+                setProgressSilently(progress + ACCESSIBILITY_STEP)
+
+            AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD ->
+                setProgressSilently(progress - ACCESSIBILITY_STEP)
+
+            AccessibilityNodeInfo.AccessibilityAction.ACTION_SET_PROGRESS.id -> arguments?.getFloat(
+                AccessibilityNodeInfo.ACTION_ARGUMENT_PROGRESS_VALUE
+            )?.let { setProgressSilently(it) } ?: false
+
+            else -> super.performAccessibilityAction(action, arguments)
+        }
+
+    private fun setProgressSilently(value: Float): Boolean {
+        val clamped = value.coerceIn(0f, 1f)
+        if (clamped == progress) {
+            return false
+        }
+
+        progress = clamped
+        onProgressChangedByUser?.invoke(clamped)
+
+        // Сразу говорим новое значение, иначе непонятно, куда сдвинулось
+        announceForAccessibility(textFormatter(clamped))
+
+        return true
     }
 
     abstract fun track(): RectF
@@ -156,5 +207,10 @@ abstract class Slider @JvmOverloads constructor(
 
         // Restore original rotation
         canvas.restore()
+    }
+
+    companion object {
+        // Шаг изменения ползунка для экранного диктора: 5 процентов за смахивание
+        private const val ACCESSIBILITY_STEP = 0.05f
     }
 }

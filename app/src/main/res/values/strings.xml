@@ -16,6 +16,9 @@
     <string name="gallery_button_description">Gallery</string>
     <string name="google_lens_button_description">Open Google Lens</string>
     <string name="image_view_description">Image preview</string>
+    <string name="view_finder_description">Viewfinder. Tap to focus</string>
+    <string name="zoom_slider_description">Zoom</string>
+    <string name="exposure_slider_description">Exposure</string>
     <string name="pro_button_description">Pro settings</string>
     <string name="shutter_button_description">Shutter</string>
     <string name="video_recording_state_button_description">Pause/resume video recording</string>
@@ -252,4 +255,10 @@
     <string name="video_mirror_mode_off">Off</string>
     <string name="video_mirror_mode_on">On</string>
     <string name="video_mirror_mode_on_ffc_only">Front facing camera only</string>
+    <!-- Lens selector buttons -->
+    <string name="lens_selector_zoom_description">Zoom <xliff:g example="2" id="ratio">%1$s</xliff:g>x</string>
+    <string name="lens_selector_camera_description">Lens <xliff:g example="1" id="ratio">%1$s</xliff:g>x</string>
+
+
+
 </resources>
