@@ -16,6 +16,24 @@
       "message": "Too hacky... There might be a ViewFinder property to set",
       "revId": "09c07d8039255099dba8a8d218ed8c7caabe5073",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a4ca63a5_1ef924bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 10067
+      },
+      "writtenOn": "2026-11-14T11:54:15Z",
+      "side": 1,
+      "message": "possibly https://review.lineageos.org/c/LineageOS/android_packages_apps_Aperture/+/512479 + setTargetAspectRatio() for Preview.Builder().",
+      "parentUuid": "e586b601_f66ac9d5",
+      "revId": "09c07d8039255099dba8a8d218ed8c7caabe5073",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
