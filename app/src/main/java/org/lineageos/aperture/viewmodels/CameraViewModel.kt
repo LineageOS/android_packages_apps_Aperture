@@ -59,6 +59,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import org.lineageos.aperture.ext.applicationContext
+import org.lineageos.aperture.face.FaceImageAnalyzer
 import org.lineageos.aperture.ext.broadcastReceiverFlow
 import org.lineageos.aperture.ext.flashMode
 import org.lineageos.aperture.ext.locationFlow
@@ -155,6 +156,11 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
      * QR image analyzer.
      */
     val qrImageAnalyzer = QrImageAnalyzer(applicationContext, viewModelScope)
+
+    /**
+     * Анализатор кадров для счёта лиц в кадре (офлайн).
+     */
+    val faceImageAnalyzer = FaceImageAnalyzer()
 
     /**
      * Do not emit here directly, use [emitEvent].

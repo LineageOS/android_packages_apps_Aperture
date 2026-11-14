@@ -259,6 +259,26 @@
     <string name="lens_selector_zoom_description">Zoom <xliff:g example="2" id="ratio">%1$s</xliff:g>x</string>
     <string name="lens_selector_camera_description">Lens <xliff:g example="1" id="ratio">%1$s</xliff:g>x</string>
 
+    <!-- Face announcements -->
+    <string name="face_none">No faces in frame</string>
+    <string name="face_one">One face in frame</string>
+    <string name="face_two">Two faces in frame</string>
+    <string name="face_three">Three faces in frame</string>
+    <string name="face_four">Four faces in frame</string>
+    <string name="face_many"><xliff:g example="5" id="count">%d</xliff:g> faces in frame</string>
+    <string name="face_closest">Closest face</string>
 
+    <!-- Where the face is -->
+    <string name="face_position_top_left">top left</string>
+    <string name="face_position_top">top</string>
+    <string name="face_position_top_right">top right</string>
+    <string name="face_position_left">left</string>
+    <string name="face_position_center">center</string>
+    <string name="face_position_right">right</string>
+    <string name="face_position_bottom_left">bottom left</string>
+    <string name="face_position_bottom">bottom</string>
+    <string name="face_position_bottom_right">bottom right</string>
 
+    <string name="face_too_close">very close</string>
+    <string name="face_too_far">far away</string>
 </resources>

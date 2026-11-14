@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.os.SystemClock
 import android.provider.MediaStore
 import android.util.Log
 import android.view.GestureDetector
@@ -78,6 +79,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -100,6 +102,8 @@ import org.lineageos.aperture.ext.slideDown
 import org.lineageos.aperture.ext.smoothRotate
 import org.lineageos.aperture.ext.transform
 import org.lineageos.aperture.ext.updateBarsVisibility
+import org.lineageos.aperture.face.FaceInfo
+import org.lineageos.aperture.face.cell
 import org.lineageos.aperture.models.AssistantIntent
 import org.lineageos.aperture.models.CameraConfiguration
 import org.lineageos.aperture.models.CameraFacing
@@ -622,6 +626,27 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                             finish()
                         }
                     }
+                }
+            }
+        }
+
+        // Озвучка лиц в кадре: говорим, когда изменилось число лиц или место,
+        // где они находятся
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.faceImageAnalyzer.faces
+                    .debounce(FACE_ANNOUNCE_DEBOUNCE_MS)
+                    .collect { faces -> announceFaces(faces) }
+            }
+        }
+
+        // Фронтальная камера показывает зеркало, поэтому «слева» и «справа»
+        // для неё считаем наоборот
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.cameraFacing.collect { facing ->
+                    viewModel.faceImageAnalyzer.mirrorHorizontally =
+                        facing == CameraFacing.FRONT
                 }
             }
         }
@@ -1512,13 +1537,20 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
                 viewModel.cameraController.imageCaptureMode = cameraConfiguration.photoCaptureMode
 
-                viewModel.cameraController.imageOutputFormat = when (
-                    cameraConfiguration.photoOutputFormat
-                ) {
-                    PhotoOutputFormat.JPEG -> ImageCapture.OUTPUT_FORMAT_JPEG
-                    PhotoOutputFormat.JPEG_ULTRA_HDR -> ImageCapture.OUTPUT_FORMAT_JPEG_ULTRA_HDR
-                    PhotoOutputFormat.RAW -> ImageCapture.OUTPUT_FORMAT_RAW
-                    PhotoOutputFormat.RAW_JPEG -> ImageCapture.OUTPUT_FORMAT_RAW_JPEG
+                // Озвучка лиц включается вместе с разбором кадров. Тогда к камере
+                // привязан лишний поток анализа, и 10-битный Ultra HDR телефон не
+                // тянет: снимаем в обычный JPEG, иначе камера вообще не стартует.
+                val faceAnalysis = FACE_ANALYSIS_ENABLED
+
+                viewModel.cameraController.imageOutputFormat = when {
+                    faceAnalysis -> ImageCapture.OUTPUT_FORMAT_JPEG
+
+                    else -> when (cameraConfiguration.photoOutputFormat) {
+                        PhotoOutputFormat.JPEG -> ImageCapture.OUTPUT_FORMAT_JPEG
+                        PhotoOutputFormat.JPEG_ULTRA_HDR -> ImageCapture.OUTPUT_FORMAT_JPEG_ULTRA_HDR
+                        PhotoOutputFormat.RAW -> ImageCapture.OUTPUT_FORMAT_RAW
+                        PhotoOutputFormat.RAW_JPEG -> ImageCapture.OUTPUT_FORMAT_RAW_JPEG
+                    }
                 }
 
                 viewModel.cameraController.imageCaptureResolutionSelector =
@@ -1538,7 +1570,16 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                         )
                         .build()
 
-                CameraController.IMAGE_CAPTURE
+                // Озвучка лиц: параллельно с фото разбираем кадры и считаем лица
+                if (faceAnalysis) {
+                    viewModel.cameraController.setImageAnalysisAnalyzer(
+                        viewModel.cameraExecutor, viewModel.faceImageAnalyzer
+                    )
+
+                    CameraController.IMAGE_CAPTURE or CameraController.IMAGE_ANALYSIS
+                } else {
+                    CameraController.IMAGE_CAPTURE
+                }
             }
 
             is CameraConfiguration.Video -> {
@@ -1662,6 +1703,103 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
         // Reset exposure level
         viewModel.setExposureCompensationLevel(0.5f)
+    }
+
+    /**
+     * Озвучивает, сколько лиц в кадре и где они. Говорим только при изменении
+     * и не чаще, чем раз в [FACE_ANNOUNCE_MIN_INTERVAL_MS], чтобы не заболтать
+     * съёмку, пока человек наводит камеру.
+     */
+    private fun announceFaces(faces: List<FaceInfo>) {
+        val text = buildFacesText(faces)
+        val now = SystemClock.elapsedRealtime()
+
+        // Первый кадр после открытия камеры только запоминаем: иначе камера
+        // сразу говорит «лиц в кадре нет», хотя человек ещё ничего не навёл
+        if (!faceAnnouncementStarted) {
+            faceAnnouncementStarted = true
+            lastFaceAnnouncement = text
+            lastFaceAnnounceAt = now
+            return
+        }
+
+        if (text == lastFaceAnnouncement) {
+            return
+        }
+
+        if (now - lastFaceAnnounceAt < FACE_ANNOUNCE_MIN_INTERVAL_MS) {
+            return
+        }
+
+        lastFaceAnnouncement = text
+        lastFaceAnnounceAt = now
+
+        viewFinder.announceForAccessibility(text)
+    }
+
+    private fun buildFacesText(faces: List<FaceInfo>): String {
+        if (faces.isEmpty()) {
+            return getString(R.string.face_none)
+        }
+
+        val count = faces.size
+        val builder = StringBuilder(
+            when (count) {
+                1 -> getString(R.string.face_one)
+                2 -> getString(R.string.face_two)
+                3 -> getString(R.string.face_three)
+                4 -> getString(R.string.face_four)
+                else -> getString(R.string.face_many, count)
+            }
+        )
+
+        when {
+            count == 1 -> {
+                val face = faces.first()
+                builder.append(", ").append(getString(facePosition(face)))
+                faceSizeHint(face)?.let { builder.append(", ").append(it) }
+            }
+
+            count <= 3 -> {
+                builder.append(": ")
+                faces.forEachIndexed { index, face ->
+                    if (index > 0) {
+                        builder.append(", ")
+                    }
+                    builder.append(getString(facePosition(face)))
+                }
+            }
+
+            // Когда лиц много, места в подсказке не хватит на всех: говорим про
+            // того, кто ближе к камере — его и снимать в первую очередь
+            else -> {
+                val closest = faces.maxByOrNull { it.widthFraction }
+                if (closest != null) {
+                    builder.append(", ").append(getString(R.string.face_closest))
+                    builder.append(" ").append(getString(facePosition(closest)))
+                }
+            }
+        }
+
+        return builder.toString()
+    }
+
+    private fun facePosition(face: FaceInfo): Int = when (face.cell()) {
+        0 -> R.string.face_position_top_left
+        1 -> R.string.face_position_top
+        2 -> R.string.face_position_top_right
+        3 -> R.string.face_position_left
+        4 -> R.string.face_position_center
+        5 -> R.string.face_position_right
+        6 -> R.string.face_position_bottom_left
+        7 -> R.string.face_position_bottom
+        else -> R.string.face_position_bottom_right
+    }
+
+    private fun faceSizeHint(face: FaceInfo): String? = when {
+        face.widthFraction >= FACE_TOO_CLOSE_WIDTH -> getString(R.string.face_too_close)
+        face.widthFraction <= FACE_TOO_FAR_WIDTH -> getString(R.string.face_too_far)
+        else -> null
     }
 
     private fun updateGalleryButton(uri: Uri?, fromCapture: Boolean) {
@@ -2068,8 +2206,23 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
     }
 
+    private var lastFaceAnnouncement = ""
+    private var lastFaceAnnounceAt = 0L
+    private var faceAnnouncementStarted = false
+
     companion object {
         private val LOG_TAG = CameraActivity::class.simpleName!!
+
+        // Озвучка лиц в кадре. Выключить — вернуть штатное поведение камеры.
+        private const val FACE_ANALYSIS_ENABLED = true
+
+        private const val FACE_ANNOUNCE_DEBOUNCE_MS = 400L
+        private const val FACE_ANNOUNCE_MIN_INTERVAL_MS = 1500L
+
+        // Лицо шире половины кадра — человек упёрся в объектив; уже десятой
+        // части — он далеко и на снимке будет мелким
+        private const val FACE_TOO_CLOSE_WIDTH = 0.55f
+        private const val FACE_TOO_FAR_WIDTH = 0.10f
 
         private const val MSG_HIDE_ZOOM_SLIDER = 0
         private const val MSG_HIDE_FOCUS_RING = 1
