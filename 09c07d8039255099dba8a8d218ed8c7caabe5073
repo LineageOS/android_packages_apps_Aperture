@@ -34,6 +34,24 @@
       "parentUuid": "e586b601_f66ac9d5",
       "revId": "09c07d8039255099dba8a8d218ed8c7caabe5073",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d977aa38_1a055ef4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 38572
+      },
+      "writtenOn": "2026-11-15T08:40:54Z",
+      "side": 1,
+      "message": "isnt setTargetAspectRatio() deprecated?",
+      "parentUuid": "a4ca63a5_1ef924bf",
+      "revId": "09c07d8039255099dba8a8d218ed8c7caabe5073",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
