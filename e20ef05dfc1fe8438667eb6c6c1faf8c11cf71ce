@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d248d863_af5c6cb8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34512
+      },
+      "writtenOn": "2026-11-15T10:43:52Z",
+      "side": 1,
+      "message": "Fixes the thumbnail when recording videos on Aperture.",
+      "revId": "e20ef05dfc1fe8438667eb6c6c1faf8c11cf71ce",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
