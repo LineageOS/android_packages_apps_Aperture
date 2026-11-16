@@ -34,6 +34,24 @@
       "parentUuid": "d248d863_af5c6cb8",
       "revId": "e20ef05dfc1fe8438667eb6c6c1faf8c11cf71ce",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e97cafff_520c1913",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34512
+      },
+      "writtenOn": "2026-11-16T15:47:44Z",
+      "side": 1,
+      "message": "not that I am aware of, but I have seen this bug on multiple devices of mine across manufacturers and SoCs.\n\nSome devices have this which may have been a past attempt to fix this, but I have a device running this code and it does nothing.\n\nI86f92335af282d3de508150bbbcb3026993ec48c",
+      "parentUuid": "45d6ad2d_bb555303",
+      "revId": "e20ef05dfc1fe8438667eb6c6c1faf8c11cf71ce",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
