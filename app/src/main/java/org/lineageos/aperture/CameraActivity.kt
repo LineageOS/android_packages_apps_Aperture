@@ -782,6 +782,10 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                         it.cause
                     )
 
+                    if (!lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                        return@collect
+                    }
+
                     val showToast = { stringId: Int ->
                         Toast.makeText(
                             this@CameraActivity,
