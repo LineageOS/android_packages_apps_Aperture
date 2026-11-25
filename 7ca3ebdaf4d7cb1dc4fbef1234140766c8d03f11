@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb3c54ac_0303ca2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 34519
+      },
+      "writtenOn": "2026-11-25T05:19:47Z",
+      "side": 1,
+      "message": "Entire chain is verified on iceland and i did see a weird bug which i\u0027m sure that wasn\u0027t caused by this chain which is when u rotate on a video being recorded, the recording dies somehow\nNot sure its something i had to look into, so its left out",
+      "revId": "7ca3ebdaf4d7cb1dc4fbef1234140766c8d03f11",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    }
+  ]
+}
