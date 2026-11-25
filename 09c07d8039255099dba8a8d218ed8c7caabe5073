@@ -52,6 +52,24 @@
       "parentUuid": "a4ca63a5_1ef924bf",
       "revId": "09c07d8039255099dba8a8d218ed8c7caabe5073",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3ce97c28_363e0690",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 38572
+      },
+      "writtenOn": "2026-11-25T16:41:26Z",
+      "side": 1,
+      "message": "ok seems like ViewFinder already handles the aspect ratio, just only needed to resize the viewport",
+      "parentUuid": "d977aa38_1a055ef4",
+      "revId": "09c07d8039255099dba8a8d218ed8c7caabe5073",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71"
     }
   ]
 }
