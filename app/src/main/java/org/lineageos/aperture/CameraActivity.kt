@@ -34,6 +34,7 @@ import android.widget.Button
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -121,7 +122,6 @@ import org.lineageos.aperture.models.MediaType
 import org.lineageos.aperture.models.Permission
 import org.lineageos.aperture.models.PermissionState
 import org.lineageos.aperture.models.PhotoOutputFormat
-import org.lineageos.aperture.models.Rotation
 import org.lineageos.aperture.models.ThermalStatus
 import org.lineageos.aperture.models.TimerMode
 import org.lineageos.aperture.models.VideoDynamicRange
@@ -948,28 +948,11 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
                 islandView.setScreenRotation(screenRotation)
 
                 // Rotate secondary top bar buttons
-                ConstraintLayout::class.safeCast(
+                LinearLayout::class.safeCast(
                     secondaryTopBarLayout.getChildAt(0)
                 )?.let { layout ->
                     for (child in layout.children) {
-                        Button::class.safeCast(child)?.let {
-                            it.smoothRotate(compensationValue)
-                            ValueAnimator.ofFloat(
-                                (it.layoutParams as ConstraintLayout.LayoutParams).verticalBias,
-                                when (screenRotation) {
-                                    Rotation.ROTATION_0 -> 0.0f
-                                    Rotation.ROTATION_180 -> 1.0f
-                                    Rotation.ROTATION_90,
-                                    Rotation.ROTATION_270 -> 0.5f
-                                }
-                            ).apply {
-                                addUpdateListener { anim ->
-                                    it.updateLayoutParams<ConstraintLayout.LayoutParams> {
-                                        verticalBias = anim.animatedValue as Float
-                                    }
-                                }
-                            }.start()
-                        }
+                        Button::class.safeCast(child)?.smoothRotate(compensationValue)
                     }
                 }
 
