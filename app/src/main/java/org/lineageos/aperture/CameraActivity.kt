@@ -10,6 +10,7 @@ import android.app.KeyguardManager
 import android.content.ClipData
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Rect
@@ -83,6 +84,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.lineageos.aperture.ext.camera2CameraControl
 import org.lineageos.aperture.ext.flashMode
+import org.lineageos.aperture.ext.isLargeScreen
 import org.lineageos.aperture.ext.mapToRange
 import org.lineageos.aperture.ext.px
 import org.lineageos.aperture.ext.scale
@@ -187,6 +189,11 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
 
     // System services
     private val keyguardManager by lazy { getSystemService(KeyguardManager::class.java) }
+
+    private val manifestScreenOrientation by lazy {
+        packageManager.getActivityInfo(componentName, 0).screenOrientation
+    }
+    private var isPortraitForced = false
 
     /**
      * The currently shown URI.
@@ -383,10 +390,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             && keyguardManager.isKeyguardLocked
         ) {
             setShowWhenLocked(true)
-
-            @Suppress("SourceLockedOrientationActivity")
-            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            isPortraitForced = true
         }
+        updateRequestedOrientation(resources.configuration)
 
         // Register shortcuts
         ShortcutsUtils.registerShortcuts(this)
@@ -632,6 +638,12 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         }
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        updateRequestedOrientation(newConfig)
+    }
+
     override fun onDestroy() {
         // Detach CameraController from ScreenFlashView
         screenFlashView.setController(null)
@@ -657,6 +669,18 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
      * It's gonna have priority over shared preferences and intents.
      */
     protected open fun overrideInitialCameraMode(): CameraMode? = null
+
+    @Suppress("SourceLockedOrientationActivity")
+    private fun updateRequestedOrientation(configuration: Configuration) {
+        val orientation = when {
+            isPortraitForced -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            configuration.isLargeScreen -> ActivityInfo.SCREEN_ORIENTATION_FULL_USER
+            else -> manifestScreenOrientation
+        }
+        if (requestedOrientation != orientation) {
+            requestedOrientation = orientation
+        }
+    }
 
     private fun CoroutineScope.loadData() {
         launch {
