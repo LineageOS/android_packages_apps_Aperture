@@ -77,12 +77,16 @@ import coil3.video.VideoFrameDecoder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.lineageos.aperture.ext.autoRotateEnabledFlow
 import org.lineageos.aperture.ext.camera2CameraControl
+import org.lineageos.aperture.ext.displayRotationFlow
 import org.lineageos.aperture.ext.flashMode
 import org.lineageos.aperture.ext.isLargeScreen
 import org.lineageos.aperture.ext.mapToRange
@@ -107,6 +111,7 @@ import org.lineageos.aperture.models.CameraConfiguration
 import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.CameraState
+import org.lineageos.aperture.models.DisplayRotation
 import org.lineageos.aperture.models.Event
 import org.lineageos.aperture.models.FlashMode
 import org.lineageos.aperture.models.GestureAction
@@ -194,6 +199,9 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         packageManager.getActivityInfo(componentName, 0).screenOrientation
     }
     private var isPortraitForced = false
+    private val isLargeScreenFlow by lazy {
+        MutableStateFlow(resources.configuration.isLargeScreen)
+    }
 
     /**
      * The currently shown URI.
@@ -596,6 +604,19 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
             }
         }
 
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                combine(
+                    displayRotationFlow(), autoRotateEnabledFlow(), isLargeScreenFlow
+                ) { rotation, isAutoRotateEnabled, isLargeScreen ->
+                    DisplayRotation(
+                        rotation,
+                        isLargeScreen && isAutoRotateEnabled && !isPortraitForced,
+                    )
+                }.collect(viewModel::setDisplayRotation)
+            }
+        }
+
         // Also collect location
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -642,6 +663,7 @@ open class CameraActivity : AppCompatActivity(R.layout.activity_camera) {
         super.onConfigurationChanged(newConfig)
 
         updateRequestedOrientation(newConfig)
+        isLargeScreenFlow.value = newConfig.isLargeScreen
     }
 
     override fun onDestroy() {

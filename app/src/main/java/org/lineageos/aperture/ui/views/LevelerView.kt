@@ -12,8 +12,10 @@ import android.hardware.SensorManager
 import android.util.AttributeSet
 import android.view.OrientationEventListener
 import android.view.OrientationEventListener.ORIENTATION_UNKNOWN
+import android.view.Surface
 import android.view.View
 import org.lineageos.aperture.R
+import org.lineageos.aperture.models.Rotation
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.min
@@ -29,7 +31,10 @@ class LevelerView(context: Context, attributeSet: AttributeSet?) : View(context,
                     return
                 }
 
-                currentOrientation = orientation
+                currentOrientation = Rotation.relativeToDisplay(
+                    orientation,
+                    Rotation.fromSurfaceRotation(display?.rotation ?: Surface.ROTATION_0),
+                )
                 postInvalidate()
             }
         }

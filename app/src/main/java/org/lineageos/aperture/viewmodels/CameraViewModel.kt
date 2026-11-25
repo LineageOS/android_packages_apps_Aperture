@@ -44,6 +44,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
@@ -74,6 +75,7 @@ import org.lineageos.aperture.models.CameraFacing
 import org.lineageos.aperture.models.CameraMode
 import org.lineageos.aperture.models.CameraState
 import org.lineageos.aperture.models.ColorCorrectionAberrationMode
+import org.lineageos.aperture.models.DisplayRotation
 import org.lineageos.aperture.models.DistortionCorrectionMode
 import org.lineageos.aperture.models.EdgeMode
 import org.lineageos.aperture.models.Event
@@ -290,6 +292,8 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
             replay = 1
         )
 
+    private val displayRotation = MutableStateFlow(DisplayRotation())
+
     /**
      * Current camera state.
      */
@@ -298,12 +302,17 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
     /**
      * Current screen rotation.
      */
-    @OptIn(ExperimentalCoroutinesApi::class)
     val screenRotation = orientation
         .filter { it != OrientationEventListener.ORIENTATION_UNKNOWN }
-        .mapLatest { orientation ->
-            Rotation.fromDegreesInAperture(orientation)
+        .combine(displayRotation) { orientation, displayRotation ->
+            when (displayRotation.followsDevice) {
+                true -> Rotation.ROTATION_0
+                false -> Rotation.fromDegreesInAperture(
+                    Rotation.relativeToDisplay(orientation, displayRotation.rotation)
+                )
+            }
         }
+        .distinctUntilChanged()
         .flowOn(Dispatchers.IO)
         .stateIn(
             viewModelScope,
@@ -995,6 +1004,13 @@ class CameraViewModel(application: Application) : ApertureViewModel(application)
         _cameraConfiguration.value = cameraConfiguration
 
         return true
+    }
+
+    /**
+     * Update the rotation of the display the UI is drawn on.
+     */
+    fun setDisplayRotation(displayRotation: DisplayRotation) {
+        this.displayRotation.value = displayRotation
     }
 
     /**

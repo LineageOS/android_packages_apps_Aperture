@@ -5,6 +5,8 @@
 
 package org.lineageos.aperture.models
 
+import android.view.Surface
+
 /**
  * Rotation utils.
  *
@@ -46,6 +48,22 @@ enum class Rotation(val offset: Int) {
         fun fromDegreesInAperture(degrees: Int) = entries.first {
             it.apertureRanges.any { range -> degrees in range }
         }
+
+        /**
+         * Get the rotation matching a [Surface] rotation constant.
+         */
+        fun fromSurfaceRotation(surfaceRotation: Int) = when (surfaceRotation) {
+            Surface.ROTATION_90 -> ROTATION_90
+            Surface.ROTATION_180 -> ROTATION_180
+            Surface.ROTATION_270 -> ROTATION_270
+            else -> ROTATION_0
+        }
+
+        /**
+         * Get the device orientation relative to the display, both in degrees.
+         */
+        fun relativeToDisplay(orientation: Int, displayRotation: Rotation) =
+            (orientation + displayRotation.offset) % 360
 
         /**
          * Returns an angle in the range [-360°, 360°] in the same quadrant.

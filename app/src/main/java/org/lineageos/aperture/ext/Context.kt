@@ -10,6 +10,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.database.ContentObserver
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -17,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
@@ -73,3 +78,29 @@ fun Context.broadcastReceiverFlow(
         unregisterReceiver(broadcastReceiver)
     }
 }
+
+private const val ACCELEROMETER_ROTATION_ENABLED = 1
+
+fun Context.autoRotateEnabledFlow() = callbackFlow {
+    val sendAutoRotateEnabled = {
+        trySend(
+            Settings.System.getInt(
+                contentResolver, Settings.System.ACCELEROMETER_ROTATION, 0
+            ) == ACCELEROMETER_ROTATION_ENABLED
+        )
+    }
+    val contentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
+        override fun onChange(selfChange: Boolean) {
+            sendAutoRotateEnabled()
+        }
+    }
+
+    sendAutoRotateEnabled()
+    contentResolver.registerContentObserver(
+        Settings.System.getUriFor(Settings.System.ACCELEROMETER_ROTATION), false, contentObserver
+    )
+
+    awaitClose {
+        contentResolver.unregisterContentObserver(contentObserver)
+    }
+}.distinctUntilChanged()
